@@ -1,0 +1,14 @@
+/* Reset พื้นฐาน */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ตั้งค่า font และสีพื้นหลัง */
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  line-height: 1.5;
+}
