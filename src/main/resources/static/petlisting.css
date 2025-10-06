@@ -44,4 +44,36 @@ body {
   margin-bottom: 2rem;
 }
 
+/*ส่วนของ filter*/
+.filter {
+  background: var(--gray-bg);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  max-width: 900px;
+  margin: 0 auto 3rem;
+}
+
+.filter-group {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.filter button {
+  border: 1px solid #333;
+  background: none;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.filter button:hover,
+.filter button.active {
+  background: var(--primary);
+  color: #fff;
+}
+
 
