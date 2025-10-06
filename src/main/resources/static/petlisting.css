@@ -1,79 +1,121 @@
 /* Reset พื้นฐาน */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 /* ตั้งค่า font และสีพื้นหลัง */
 body {
-  font-family: 'Segoe UI', Tahoma, sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
-  line-height: 1.5;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.5;
 }
 
 :root {
-  --primary: #2b6cb0;
-  --gray-bg: #f2f2f2;
-  --border-radius: 10px;
-  --text-color: #222;
-  --transition: all 0.3s ease;
+    --primary: #2b6cb0;
+    --gray-bg: #f2f2f2;
+    --border-radius: 10px;
+    --text-color: #222;
+    --transition: all 0.3s ease;
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, sans-serif;
-  background-color: #fff;
-  color: var(--text-color);
-  line-height: 1.6;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #fff;
+    color: var(--text-color);
+    line-height: 1.6;
 }
 
 /*ส่วนหัวของเนื้อหา*/
 .pet-listing {
-  text-align: center;
-  padding: 2rem 1rem;
+    text-align: center;
+    padding: 2rem 1rem;
 }
 
 .pet-listing h1 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
 }
 
 .pet-listing .description {
-  color: #555;
-  margin-bottom: 2rem;
+    color: #555;
+    margin-bottom: 2rem;
 }
 
 /*ส่วนของ filter*/
 .filter {
-  background: var(--gray-bg);
-  padding: 2rem;
-  border-radius: var(--border-radius);
-  max-width: 900px;
-  margin: 0 auto 3rem;
+    background: var(--gray-bg);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    max-width: 900px;
+    margin: 0 auto 3rem;
 }
 
 .filter-group {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  flex-wrap: wrap;
-  margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
 }
 
 .filter button {
-  border: 1px solid #333;
-  background: none;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: var(--transition);
+    border: 1px solid #333;
+    background: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: var(--transition);
 }
 
 .filter button:hover,
 .filter button.active {
-  background: var(--primary);
-  color: #fff;
+    background: var(--primary);
+    color: #fff;
 }
 
+/*ส่วนของ pet listing*/
+.pet-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1rem; 
+}
+
+.pet-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 180px;
+    margin: 0 auto;
+    overflow: hidden;
+    text-align: center;
+    transition: var(--transition);
+    gap: 1rem;
+}
+
+.pet-card img {
+    height: 220px;
+    width: max-content;
+}
+
+.pet-card:hover {
+    transform: translateY(-5px);
+}
+
+.pet-card .image {
+    background: #ccc;
+    height: 180px;
+}
+
+.pet-card .name {
+    border: 1px solid #aaa;
+    padding: 0.8rem;
+    background: #fff;
+    margin-top: auto;
+}
 
