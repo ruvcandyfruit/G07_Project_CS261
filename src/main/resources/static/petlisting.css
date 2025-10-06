@@ -27,3 +27,21 @@ body {
   color: var(--text-color);
   line-height: 1.6;
 }
+
+/*ส่วนหัวของเนื้อหา*/
+.pet-listing {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.pet-listing h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.pet-listing .description {
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+
