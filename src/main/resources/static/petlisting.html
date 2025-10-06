@@ -3,12 +3,13 @@
     <meta charset="UTF-8" />
     <meta name="veiwport" content="width=device-width, initial-scale=1.0" />
     <title>Pet Listing</title>
+    <link rel="stylesheet" href="petlisting.css">
 
     <body>
         <header>
             <nav>
                 <ul>
-                    <li><a href="hompage.html">Homepage</a></li>
+                    <li><a href="homepage.html">Homepage</a></li>
                     <li><a href="petlisting.html">Pet Listing</a></li>
                     <li><a href="contact.html">About/contact</a></li>
                     <li><a href="login.html">Log in</a></li>
@@ -16,16 +17,48 @@
             </nav>
         </header>
 
-        <main>
+        <main class="pet-listing">
             <h1>Pet Listing</h1>
-            <p>Short Description</p>
+            <p class="description">Short Description</p>
+
+            <section class="filter">
+            <!-- ตัวกรอง Type, Gender, Health, Breed, Age -->
+            </section>
 
             <div class="pet-list">
                 <div class="pet-card">
-                    <a href="petdetail.html?id=1">
                         <img src="https://i.pinimg.com/736x/0e/a3/6e/0ea36ee7bc893407525f1d30b72702cb.jpg" alt="image" width="100">
-                        <p>น้องส้ม</p>
-                    </a>
+                        <p class="name">น้องส้ม</p>
+                </div>
+
+                <div class="pet-card">
+                        <img src="https://i.pinimg.com/736x/0e/a3/6e/0ea36ee7bc893407525f1d30b72702cb.jpg" alt="image" width="100">
+                        <p class="name">น้องส้ม</p>
+                </div>
+
+                <div class="pet-card">
+                        <img src="https://i.pinimg.com/736x/0e/a3/6e/0ea36ee7bc893407525f1d30b72702cb.jpg" alt="image" width="100">
+                        <p class="name">น้องส้ม</p>
+                </div>
+
+                <div class="pet-card">
+                        <img src="https://i.pinimg.com/736x/0e/a3/6e/0ea36ee7bc893407525f1d30b72702cb.jpg" alt="image" width="100">
+                        <p class="name">น้องส้ม</p>
+                </div>
+
+                <div class="pet-card">
+                        <img src="https://i.pinimg.com/736x/0e/a3/6e/0ea36ee7bc893407525f1d30b72702cb.jpg" alt="image" width="100">
+                        <p class="name">น้องส้ม</p>
+                </div>
+
+                <div class="pet-card">
+                        <img src="https://i.pinimg.com/736x/0e/a3/6e/0ea36ee7bc893407525f1d30b72702cb.jpg" alt="image" width="100">
+                        <p class="name">น้องส้ม</p>
+                </div>
+
+                <div class="pet-card">
+                        <img src="https://i.pinimg.com/736x/0e/a3/6e/0ea36ee7bc893407525f1d30b72702cb.jpg" alt="image" width="100">
+                        <p class="name">น้องส้ม</p>
                 </div>
             </div>
 
@@ -34,6 +67,8 @@
         <footer>
         
         </footer>
+
+        <script scr="petlisting.js"></script>
     </body>
 </html>
 
