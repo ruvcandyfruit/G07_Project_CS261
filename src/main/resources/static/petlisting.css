@@ -13,3 +13,17 @@ body {
   line-height: 1.5;
 }
 
+:root {
+  --primary: #2b6cb0;
+  --gray-bg: #f2f2f2;
+  --border-radius: 10px;
+  --text-color: #222;
+  --transition: all 0.3s ease;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background-color: #fff;
+  color: var(--text-color);
+  line-height: 1.6;
+}
