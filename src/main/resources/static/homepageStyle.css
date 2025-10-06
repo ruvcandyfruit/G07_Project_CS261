@@ -1,0 +1,75 @@
+/*----- header -----*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+header {
+    border: 1px solid grey;
+}
+
+/*----- Navigation bar -----*/
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px 40px;
+}
+
+/*----- Logo -----*/
+.logo img {
+    border: 1px solid grey;
+    width: 50px;
+    height: 50px;
+}
+
+/*----- Menu -----*/
+.nav-links {
+    border: 1px solid grey;
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    border: 1px solid grey;
+    text-decoration: none;
+    color: #222;
+    padding: 8px 15px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  background-color: #e6e6e6;
+}
+
+/*----- Login button -----*/
+.login-btn {
+  border: 1px solid #000;
+  background: transparent;
+  border-radius: 20px;
+  padding: 6px 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.login-btn:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+/*----- main -----*/
+main {
+    border: 1px solid grey; 
+    width: 100%;
+    height: 1000px;
+}
+/*----- footer -----*/
+footer {
+    border: 1px solid grey;
+    width: 100%;
+    height: 500px;
+}
