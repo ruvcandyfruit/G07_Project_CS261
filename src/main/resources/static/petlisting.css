@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 /* Reset พื้นฐาน */
 * {
     margin: 0;
@@ -7,7 +9,7 @@
 
 /* ตั้งค่า font และสีพื้นหลัง */
 body {
-    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-family: "Inter", sans-serif;
     background-color: #f9f9f9;
     color: #333;
     line-height: 1.5;
@@ -21,13 +23,6 @@ body {
     --transition: all 0.3s ease;
 }
 
-body {
-    font-family: 'Segoe UI', Tahoma, sans-serif;
-    background-color: #fff;
-    color: var(--text-color);
-    line-height: 1.6;
-}
-
 /*ส่วนหัวของเนื้อหา*/
 .pet-listing {
     text-align: center;
@@ -35,7 +30,7 @@ body {
 }
 
 .pet-listing h1 {
-    font-size: 2rem;
+    font-size: 3rem;
     margin-bottom: 0.5rem;
 }
 
