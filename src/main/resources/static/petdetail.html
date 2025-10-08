@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ทำความรู้จักน้อง - Pet Adoption</title>
+    <link rel="stylesheet" href="petdetail.css">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">
+            <div class="logo-icon">🏠</div>
+        </div>
+        <div class="nav">
+            <a href="#">Homepage</a>
+            <a href="#">Pet Listing</a>
+            <a href="#">About/Contact Us</a>
+        </div>
+        <div class="lang-selector" id="langSelector">E ▼</div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <h1>ทำความรู้จักน้อง</h1>
+        
+        <div class="pet-profile">
+            <!-- Pet Image Section -->
+            <div class="pet-image-section">
+                <div class="pet-image" id="petImage">🖼️</div>
+                <div class="pet-name" id="petName">เมกาทรอน</div>
+            </div>
+
+            <!-- Pet Details -->
+            <div class="pet-details">
+                <div class="detail-section">
+                    <h3>ข้อมูลน้อง</h3>
+                    <ul id="petInfo">
+                        <li>รหัสประจำตัว : #8792</li>
+                        <li>ชื่อ เมกาทรอน</li>
+                        <li>ชนิด แมว</li>
+                        <li>เพศ ♀</li>
+                        <li>อายุ 2 ปี</li>
+                        <li>สายพันธุ์ ไม่ม่ให</li>
+                        <li>น้ำหนัก 5 กิโลกรัม</li>
+                    </ul>
+                </div>
+
+                <div class="detail-section">
+                    <h3>สุขภาพและการดูแล</h3>
+                    <ul id="healthInfo">
+                        <li>การทำหมัน : ทำแล้ว</li>
+                        <li>การฉีดวัคซีน : ครบถ้วนแล้ว</li>
+                        <li>โรคประจำตัว : ไม่มี</li>
+                        <li>แพ้อาหาร : ปลาที่มีก้างในปลา</li>
+                    </ul>
+
+                    <h3 style="margin-top: 20px;">ช่องทางการติดต่อ</h3>
+                    <ul id="contactInfo">
+                        <li>เบอร์โทร : 0821569909</li>
+                        <li>Facebook : เจ้าของสุขภาษา</li>
+                        <li>Line : 0821569909</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="buttons">
+            <button class="btn btn-secondary" id="backBtn">ย้อนกลับ</button>
+            <button class="btn btn-primary" id="adoptBtn">ขอรับเลี่้ยง</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-left">
+            <h4>Pet Adoption</h4>
+            <p>เลขที่ 111 ซึ่ง 111 ถนนการสารพระ 1 ถนนสารพระเนื่อง แขวงลีบ<br>
+            แขนนจริก กรุงเทพมหานคร 10100<br>
+            Tel : 011-111-1111</p>
+        </div>
+        <div class="footer-right">
+            <a href="#" class="social-link">
+                <div class="social-icon">f</div>
+                <span>Pet Adoption</span>
+            </a>
+            <a href="#" class="social-link">
+                <div class="social-icon">📷</div>
+                <span>pet_adoption</span>
+            </a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+    
+
+    <!-- Inline JavaScript (script.js) -->
+    <script>
+        // Pet data object
+        const petData = {
+            id: '#8792',
+            name: 'จันทรา',
+            type: 'แมว',
+            gender: '♀',
+            age: '2 ปี',
+            breed: 'ไม่ใหม่',
+            weight: '5 กิโลกรัม',
+            health: {
+                neutered: 'ทำแล้ว',
+                vaccinated: 'ครบถ้วนแล้ว',
+                diseases: 'ไม่มี',
+                allergies: 'ปลาที่มีก้างในปลา'
+            },
+            contact: {
+                phone: '0821569909',
+                facebook: 'เจ้าของสุขภาษา',
+                line: '0821569909'
+            }
+        };
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Pet Adoption Page Loaded');
+            setupEventListeners();
+        });
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Back button
+            const backBtn = document.getElementById('backBtn');
+            backBtn.addEventListener('click', function() {
+                console.log('Going back...');
+                alert('กลับไปหน้ารายการสัตว์เลี้ยง');
+                // window.history.back();
+            });
+
+            // Adopt button
+            const adoptBtn = document.getElementById('adoptBtn');
+            adoptBtn.addEventListener('click', function() {
+                console.log('Adoption request for:', petData.name);
+                alert('ส่งคำขอรับเลี้ยง ' + petData.name + ' แล้ว!\nเจ้าหน้าที่จะติดต่อกลับเร็วๆ นี้');
+            });
+
+            // Language selector
+            const langSelector = document.getElementById('langSelector');
+            langSelector.addEventListener('click', function() {
+                const currentLang = this.textContent.trim().charAt(0);
+                if (currentLang === 'E') {
+                    this.textContent = 'ไทย ▼';
+                    console.log('Switched to Thai');
+                } else {
+                    this.textContent = 'E ▼';
+                    console.log('Switched to English');
+                }
+            });
+
+            // Pet image hover effect
+            const petImage = document.getElementById('petImage');
+            petImage.addEventListener('click', function() {
+                console.log('Pet image clicked');
+                alert('คลิกเพื่อดูรูปภาพเพิ่มเติม');
+            });
+        }
+
+        // Function to update pet data (for future use)
+        function updatePetData(newData) {
+            Object.assign(petData, newData);
+            console.log('Pet data updated:', petData);
+        }
+
+        // Function to load pet details dynamically (for future use)
+        function loadPetDetails(id) {
+            console.log('Loading pet details for ID:', id);
+            // This would typically fetch data from an API
+        }
+    </script>
+</body>
+</html>
