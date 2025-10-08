@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Mali&family=Itim&family=Kodchasan&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap');
+
+/*----- header -----*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+header {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    background-color: #E5EEFF;
+}
+
+/*----- Navigation bar -----*/
+.navbar {
+    width: 100%;
+    margin: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/*----- Logo -----*/
+.logo img {
+    width: 60px;
+    height: 60px;
+    /*margin: 10px 40px;*/
+}
+
+/*----- Menu -----*/
+.nav-links {
+    list-style: none;
+    display: flex;
+    /*margin: 10px 100px 0 0;*/
+    padding: 0;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #222;
+    padding: 15px 20px;
+    border-radius: 50px;
+    transition: background 0.2s;
+    font-family: 'Manrope', sans-serif;
+    font-size: 16px;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  background-color: #FFFFFF;
+}
+
+/*----- Login button -----*/
+.login-btn {
+  border: 1px solid #000;
+  background: transparent;
+  border-radius: 20px;
+  padding: 6px 20px;
+  /*margin: 10px 20px;*/
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Manrope', sans-serif;
+}
+
+.login-btn:hover {
+  background-color: #000;
+  color: #fff;
+}
