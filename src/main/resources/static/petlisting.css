@@ -229,3 +229,7 @@ footer {
   margin-right: 12px;
   object-fit: contain;
 }
+
+.social-btn:hover {
+    transform: scale(1.05);
+}
