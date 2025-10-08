@@ -1,24 +1,32 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="th-en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ทำความรู้จักน้อง - Pet Adoption</title>
+    <title>Pet details | Pet Adoption System</title>
     <link rel="stylesheet" href="petdetail.css">
+    <link rel="icon" href="homepageResources/icon.png" type="image/x-icon">
 </head>
 <body>
     <!-- Header -->
-    <div class="header">
-        <div class="logo">
-            <div class="logo-icon">🏠</div>
-        </div>
-        <div class="nav">
-            <a href="#">Homepage</a>
-            <a href="#">Pet Listing</a>
-            <a href="#">About/Contact Us</a>
-        </div>
-        <div class="lang-selector" id="langSelector">E ▼</div>
-    </div>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="homepageResources/icon.png" alt="Logo">
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="homepage.html">Homepage</a></li>
+                <li><a href="petlisting.html" class="active">Pet Listing</a></li>
+                <li><a href="contact.html">About/Contact Us</a></li>
+            </ul> 
+
+            <a href="login.html">
+                <button class="login-btn">Log in</button> 
+            </a>
+        </nav>        
+    </header>
+
 
     <!-- Main Container -->
     <div class="container">
@@ -73,24 +81,29 @@
     </div>
 
     <!-- Footer -->
-    <div class="footer">
-        <div class="footer-left">
-            <h4>Pet Adoption</h4>
-            <p>เลขที่ 111 ซึ่ง 111 ถนนการสารพระ 1 ถนนสารพระเนื่อง แขวงลีบ<br>
-            แขนนจริก กรุงเทพมหานคร 10100<br>
-            Tel : 011-111-1111</p>
+    <footer>
+        <div class="footer">
+            <div class="about">
+                <div class="logo">
+                    <img src="homepageResources/icon.png" alt="Logo">
+                </div>
+                <p>Pet Adoption System</p>
+                <p class="location">เลขที่ 11/1 ชั้น 1 ห้อง 111 อาคารสาทรธานี 1 ถนนสาทรเหนือ<br>แขวงสีลม เขตบางรัก กรุงเทพมหานคร 10100<br>Tel : 011-111-1111</p>
+            </div>
+
+            <div class="social-container">
+                <a href="#" class="social-btn">
+                    <img src="homepageResources/FacebookLogo.png" alt="Facebook icon">
+                    <span>Pet Adoption</span>
+                </a>
+
+                <a href="#" class="social-btn">
+                    <img src="homepageResources/InstagramLogo.png" alt="Instagram icon">
+                    <span>pet_adoption</span>
+                </a>
+            </div>                
         </div>
-        <div class="footer-right">
-            <a href="#" class="social-link">
-                <div class="social-icon">f</div>
-                <span>Pet Adoption</span>
-            </a>
-            <a href="#" class="social-link">
-                <div class="social-icon">📷</div>
-                <span>pet_adoption</span>
-            </a>
-        </div>
-    </div>
+    </footer>
 
     <script src="petdetail.js"></script>
     
