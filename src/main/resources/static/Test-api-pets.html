@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Test /api/pets</title>
+  <style>
+    :root{
+      --bg:#f6f9fc; --card:#ffffff; --muted:#6b7280; --accent:#2563eb;
+    }
+    body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:var(--bg); margin:24px}
+    .card{background:var(--card); border-radius:12px; padding:18px; box-shadow:0 6px 18px rgba(20,20,40,0.06); max-width:960px; margin:auto}
+    h1{font-size:18px; margin:0 0 12px}
+    .controls{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+    button{background:var(--accent); color:white; border:0; padding:8px 12px; border-radius:8px; cursor:pointer}
+    button.secondary{background:transparent;color:var(--accent); border:1px solid rgba(37,99,235,0.15)}
+    .note{color:var(--muted); font-size:13px}
+    table{width:100%; border-collapse:collapse; margin-top:8px}
+    thead th{background:#f3f6fb; text-align:left; padding:10px; font-size:13px; color:#374151}
+    tbody td{padding:10px; border-top:1px solid #eef2f7; font-size:14px}
+    tbody tr:hover{background:#fbfdff}
+    .center{text-align:center}
+    .muted{color:var(--muted)}
+    .error{color:#b91c1c; margin-top:12px}
+    .loading{color:var(--muted); margin-top:8px}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Test API — <span class="muted">GET /api/pets</span></h1>
+    <div class="controls">
+      <button id="reloadBtn">Reload</button>
+      <button class="secondary" id="mockToggle">Use mock data</button>
+      <div style="flex:1"></div>
+      <div class="note">Make sure backend is running at <code>http://localhost:8080</code></div>
+    </div>
+
+    <div id="status" class="loading">Ready</div>
+
+    <table id="petsTable" aria-live="polite">
+      <thead>
+        <tr>
+          <th style="width:80px">Age</th>
+          <th style="width:120px">ID</th>
+          <th>Name</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- rows inserted here -->
+      </tbody>
+    </table>
+
+    <div id="error" class="error" role="alert" style="display:none"></div>
+  </div>
+
+  <script>
+    const tableBody = document.querySelector('#petsTable tbody');
+    const statusEl = document.getElementById('status');
+    const errorEl = document.getElementById('error');
+    const reloadBtn = document.getElementById('reloadBtn');
+    const mockToggle = document.getElementById('mockToggle');
+
+    let useMock = false;
+    mockToggle.addEventListener('click', () => {
+      useMock = !useMock;
+      mockToggle.textContent = useMock ? 'Using mock data' : 'Use mock data';
+      loadData();
+    });
+
+    reloadBtn.addEventListener('click', loadData);
+
+    async function loadData(){
+      errorEl.style.display = 'none';
+      tableBody.innerHTML = '';
+      statusEl.textContent = 'Loading...';
+
+      try{
+        let data;
+        if(useMock){
+          // mock data for offline testing
+          data = [
+            {id:1,name:'Buddy',type:'Dog',age:5},
+            {id:2,name:'Mittens',type:'Cat',age:3},
+            {id:3,name:'Goldie',type:'Fish',age:1}
+          ];
+        } else {
+          const res = await fetch('/api/pets', {headers:{'Accept':'application/json'}});
+          if(!res.ok) throw new Error('HTTP ' + res.status + ' — ' + res.statusText);
+          data = await res.json();
+        }
+
+        if(!Array.isArray(data)){
+          throw new Error('API did not return an array.');
+        }
+
+        if(data.length === 0){
+          tableBody.innerHTML = '<tr><td class="center" colspan="4" style="padding:18px">No data</td></tr>';
+        } else {
+          const rows = data.map(p => {
+            const age = p.age ?? '';
+            const id = p.id ?? '';
+            const name = escapeHtml(p.name ?? '');
+            const type = escapeHtml(p.type ?? '');
+            return `<tr><td>${age}</td><td>${id}</td><td>${name}</td><td>${type}</td></tr>`;
+          }).join('');
+          tableBody.innerHTML = rows;
+        }
+
+        statusEl.textContent = 'Loaded ' + data.length + ' item(s)';
+      } catch(err){
+        console.error(err);
+        errorEl.style.display = 'block';
+        errorEl.textContent = 'Error: ' + err.message + '\n(If you see CORS errors, make sure the backend allows requests from this page)';
+        statusEl.textContent = 'Error';
+      }
+    }
+
+    // small helper to avoid XSS in inserted text
+    function escapeHtml(str){
+      return String(str).replace(/[&<>\"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
+    }
+
+    // initial load
+    loadData();
+  </script>
+</body>
+</html>
