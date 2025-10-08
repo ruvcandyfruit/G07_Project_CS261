@@ -39,7 +39,7 @@
                         <li>รหัสประจำตัว : #8792</li>
                         <li>ชื่อ เมกาทรอน</li>
                         <li>ชนิด แมว</li>
-                        <li>เพศ ♀</li>
+                        <li>เพศ ผู้</li>
                         <li>อายุ 2 ปี</li>
                         <li>สายพันธุ์ ไม่ม่ให</li>
                         <li>น้ำหนัก 5 กิโลกรัม</li>
@@ -52,7 +52,7 @@
                         <li>การทำหมัน : ทำแล้ว</li>
                         <li>การฉีดวัคซีน : ครบถ้วนแล้ว</li>
                         <li>โรคประจำตัว : ไม่มี</li>
-                        <li>แพ้อาหาร : ปลาที่มีก้างในปลา</li>
+                        <li>แพ้อาหาร : ปืนใหญ่ของ ออพติมัสไพร์ม</li>
                     </ul>
 
                     <h3 style="margin-top: 20px;">ช่องทางการติดต่อ</h3>
@@ -92,89 +92,7 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
-
+    <script src="petdetail.js"></script>
     
-
-    <!-- Inline JavaScript (script.js) -->
-    <script>
-        // Pet data object
-        const petData = {
-            id: '#8792',
-            name: 'จันทรา',
-            type: 'แมว',
-            gender: '♀',
-            age: '2 ปี',
-            breed: 'ไม่ใหม่',
-            weight: '5 กิโลกรัม',
-            health: {
-                neutered: 'ทำแล้ว',
-                vaccinated: 'ครบถ้วนแล้ว',
-                diseases: 'ไม่มี',
-                allergies: 'ปลาที่มีก้างในปลา'
-            },
-            contact: {
-                phone: '0821569909',
-                facebook: 'เจ้าของสุขภาษา',
-                line: '0821569909'
-            }
-        };
-
-        // Initialize page
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Pet Adoption Page Loaded');
-            setupEventListeners();
-        });
-
-        // Setup event listeners
-        function setupEventListeners() {
-            // Back button
-            const backBtn = document.getElementById('backBtn');
-            backBtn.addEventListener('click', function() {
-                console.log('Going back...');
-                alert('กลับไปหน้ารายการสัตว์เลี้ยง');
-                // window.history.back();
-            });
-
-            // Adopt button
-            const adoptBtn = document.getElementById('adoptBtn');
-            adoptBtn.addEventListener('click', function() {
-                console.log('Adoption request for:', petData.name);
-                alert('ส่งคำขอรับเลี้ยง ' + petData.name + ' แล้ว!\nเจ้าหน้าที่จะติดต่อกลับเร็วๆ นี้');
-            });
-
-            // Language selector
-            const langSelector = document.getElementById('langSelector');
-            langSelector.addEventListener('click', function() {
-                const currentLang = this.textContent.trim().charAt(0);
-                if (currentLang === 'E') {
-                    this.textContent = 'ไทย ▼';
-                    console.log('Switched to Thai');
-                } else {
-                    this.textContent = 'E ▼';
-                    console.log('Switched to English');
-                }
-            });
-
-            // Pet image hover effect
-            const petImage = document.getElementById('petImage');
-            petImage.addEventListener('click', function() {
-                console.log('Pet image clicked');
-                alert('คลิกเพื่อดูรูปภาพเพิ่มเติม');
-            });
-        }
-
-        // Function to update pet data (for future use)
-        function updatePetData(newData) {
-            Object.assign(petData, newData);
-            console.log('Pet data updated:', petData);
-        }
-
-        // Function to load pet details dynamically (for future use)
-        function loadPetDetails(id) {
-            console.log('Loading pet details for ID:', id);
-            // This would typically fetch data from an API
-        }
-    </script>
 </body>
 </html>
