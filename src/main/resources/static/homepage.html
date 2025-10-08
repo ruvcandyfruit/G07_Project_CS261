@@ -1,67 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th-en">
+<head>
     <meta charset="UTF-8" />
-    <meta name="veiwport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="homepage.css">    
     <link rel="icon" href="homepageResources/icon.png" type="image/x-icon">
-    <title>Homepage | Pet Adoption System</title>
+    <title>Homepage | Pet Adoption System</title>    
+</head>
+<body>
+    <!-- navigation bar-->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="homepageResources/icon.png" alt="Logo">
+            </div>
 
-    <body>
-        <header>
-            <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="homepage.html" class="active">Homepage</a></li>
+                <li><a href="petlisting.html">Pet Listing</a></li>
+                <li><a href="contact.html">About/Contact Us</a></li>
+            </ul> 
+
+            <a href="login.html">
+                <button class="login-btn">Log in</button> 
+            </a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- introduction-->
+        <div class="introduction">
+            <h1>เว็บไซต์ของมูลนิธิบ้านสัตว์เลี้ยง<br>ช่วยเหลือสัตว์ให้ได้มีบ้านแสนอบอุ่น</h1>
+            <p>ร่วมเป็นส่วนหนึ่งในการต่อชีวิตเพื่อนตัวน้อย</p>
+        </div>
+        <!--animal cards-->
+        <div class="cards">
+            <h1>Pet Listing</h1>
+        </div>
+        
+        
+    </main>
+
+    <!-- footer -->
+    <footer>
+        <div class="footer">
+            <div class="about">
                 <div class="logo">
                     <img src="homepageResources/icon.png" alt="Logo">
                 </div>
+                <p>Pet Adoption System</p>
+                <p class="location">เลขที่ 11/1 ชั้น 1 ห้อง 111 อาคารสาทรธานี 1 ถนนสาทรเหนือ<br>แขวงสีลม เขตบางรัก กรุงเทพมหานคร 10100<br>Tel : 011-111-1111</p>
+            </div>
 
-                <ul class="nav-links">
-                    <li><a href="homepage.html" class="active">Homepage</a></li>
-                    <li><a href="petlisting.html">Pet Listing</a></li>
-                    <li><a href="contact.html">About/Contact Us</a></li>
-                </ul> 
-
-                <a href="login.html">
-                    <button class="login-btn">Log in</button> 
+            <div class="social-container">
+                <a href="#" class="social-btn">
+                    <img src="homepageResources/FacebookLogo.png" alt="Facebook icon">
+                    <span>Pet Adoption</span>
                 </a>
-            </nav>
-        </header>
 
-        <main>
-            <!-- introduction-->
-            <div class="introduction">
-                <h1>เว็บไซต์ของมูลนิธิบ้านสัตว์เลี้ยง<br>ช่วยเหลือสัตว์ให้ได้มีบ้านแสนอบอุ่น</h1>
-                <p>ร่วมเป็นส่วนหนึ่งในการต่อชีวิตเพื่อนตัวน้อย</p>
-            </div>
-            <!--animal cards-->
-            <div class="cards">
-                <h1>Pet Listing</h1>
-            </div>
-            
-            
-        </main>
-
-        <footer>
-            <div class="footer">
-                <div class="about">
-                    <div class="logo">
-                        <img src="homepageResources/icon.png" alt="Logo">
-                    </div>
-                    <p>Pet Adoption System</p>
-                    <p class="location">เลขที่ 11/1 ชั้น 1 ห้อง 111 อาคารสาทรธานี 1 ถนนสาทรเหนือ<br>แขวงสีลม เขตบางรัก กรุงเทพมหานคร 10100<br>Tel : 011-111-1111</p>
-                </div>
-
-                <div class="social-container">
-                    <a href="#" class="social-btn">
-                        <img src="homepageResources/FacebookLogo.png" alt="Facebook icon">
-                        <span>Pet Adoption</span>
-                    </a>
-
-                    <a href="#" class="social-btn">
-                        <img src="homepageResources/InstagramLogo.png" alt="Instagram icon">
-                        <span>pet_adoption</span>
-                    </a>
-                </div>                
-            </div>
-        </footer>
-        
-    </body>
+                <a href="#" class="social-btn">
+                    <img src="homepageResources/InstagramLogo.png" alt="Instagram icon">
+                    <span>pet_adoption</span>
+                </a>
+            </div>                
+        </div>
+    </footer>
+    
+</body>
 </html>
