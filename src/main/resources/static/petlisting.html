@@ -4,6 +4,7 @@
     <meta name="veiwport" content="width=device-width, initial-scale=1.0" />   
     <link rel="stylesheet" href="petlisting.css">
     <link rel="stylesheet" href="all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="icon" href="homepageResources/icon.png" type="image/x-icon">
     <title>Pet Listing</title>
 
@@ -36,7 +37,54 @@
             <p class="description">Short Description</p>
 
             <section class="filter">
-            <!-- ตัวกรอง Type, Gender, Health, Breed, Age -->
+                <div class="two-block">
+                    <div class="four-block">
+                        <div class="type">
+                            Type
+                            <div class="pick"><i class="fa-solid fa-dog"></i>
+                                Dog
+                            </div>
+                            <div class="pick"><i class="fa-solid fa-cat"></i>
+                                Cat
+                            </div>
+                        </div>
+                        <div class="type">
+                            Gender
+                            <div class="pick"><i class="fa-solid fa-mars"></i>
+                                Male
+                            </div>
+                            <div class="pick"><i class="fa-solid fa-venus"></i>
+                                Female
+                            </div>
+                        </div>
+                        <div class="type">
+                            Health/Vaccine
+                            <div class="pick">
+                                ทำหมันแล้ว
+                            </div>
+                            <div class="pick">
+                                ฉีดวัคซีนแล้ว
+                            </div>
+                        </div>
+                        <div class="type">
+                            Breed
+                            <div class="pick">
+                                Persian
+                            </div>
+                            <div class="pick">
+                                Labubu
+                            </div>
+                        </div>
+                    </div>
+                    <label for="age-filter">Age</label>
+                        <select id="age-filter">
+                            <option value="">ทั้งหมด</option>
+                            <option value="baby">0-1 ปี</option>
+                            <option value="young">1-5 ปี</option>
+                            <option value="adult">5-10 ปี</option>
+                            <option value="senior">10 ปีขึ้นไป</option>
+                        </select>
+                </div>
             </section>
 
             <div class="pet-list">
