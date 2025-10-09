@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pets Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .pet-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .pet-card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            width: 150px;
+            text-align: center;
+        }
+        .pet-card img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .pet-card h3 {
+            margin: 10px 0 5px;
+            font-size: 16px;
+        }
+        .pet-card p {
+            margin: 0;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Pets Gallery</h1>
+<div class="pet-container" id="petContainer">
+    <!-- Cards จะถูกสร้างด้วย JS -->
+</div>
+
+<script>
+    // เรียก API
+    fetch('/api/pets')
+        .then(response => response.json())
+        .then(pets => {
+            const container = document.getElementById('petContainer');
+            pets.forEach(pet => {
+                // สร้าง card
+                const card = document.createElement('div');
+                card.className = 'pet-card';
+
+                // รูป
+                const img = document.createElement('img');
+                img.src = pet.photoPath;
+                img.alt = pet.name;
+
+                // ชื่อ
+                const name = document.createElement('h3');
+                name.textContent = pet.name;
+
+                // อายุ
+                const age = document.createElement('p');
+                age.textContent = `Age: ${pet.age}`;
+
+                // ใส่เข้า card
+                card.appendChild(img);
+                card.appendChild(name);
+                card.appendChild(age);
+
+                // ใส่เข้า container
+                container.appendChild(card);
+            });
+        })
+        .catch(err => console.error('Error fetching pets:', err));
+</script>
+
+</body>
+</html>

@@ -14,13 +14,15 @@ public class Pet {
     private String name;
     private String type;
     private int age;
+    private String photoPath;
 
     // ✅ Constructors
     public Pet() {}
-    public Pet(String name, String type, int age) {
+    public Pet(String name, String type, int age, String path) {
         this.name = name;
         this.type = type;
         this.age = age;
+        this.photoPath = path;
     }
 
     // ✅ Getters & Setters
@@ -35,4 +37,7 @@ public class Pet {
 
     public int getAge() { return age; }
     public void setAge(int age) { this.age = age; }
+    
+    public String getPhotoPath() { return photoPath; }
+    public void setPhotoPath(String photoPath) { this.photoPath = photoPath; }
 }
