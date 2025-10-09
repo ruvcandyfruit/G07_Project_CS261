@@ -107,18 +107,22 @@ h1 {
     height: 250px;
     background: #d8d8d8;
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     margin: 0 auto 20px;
-    font-size: 60px;
-    color: #999;
+    overflow: hidden; 
     transition: transform 0.3s;
 }
 
 .pet-image:hover {
     transform: scale(1.05);
 }
+
+.pet-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    display: block;
+}
+
 
 .pet-name {
     font-size: 20px;
