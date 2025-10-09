@@ -28,6 +28,7 @@ header {
     margin: 0 auto;
     padding: 0;
     text-align: center;
+    gap: 1rem;
 }
 
 .nav-links a {
