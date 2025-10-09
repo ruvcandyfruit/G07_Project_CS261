@@ -25,6 +25,9 @@ body {
     --transition: all 0.3s ease;
 }
 
+main section {
+    margin-bottom: 3rem;
+}
 /*ส่วนหัวของเนื้อหา*/
 .pet-listing {
     text-align: center;
@@ -43,19 +46,47 @@ body {
 
 /*ส่วนของ filter*/
 .filter {
-    background: var(--gray-bg);
+    background: #E5EEFF;
     padding: 2rem;
     border-radius: var(--border-radius);
     max-width: 900px;
     margin: 0 auto 3rem;
+    align-items: center;
 }
 
-.filter-group {
+.two-block {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     gap: 2rem;
-    flex-wrap: wrap;
     margin-bottom: 1rem;
+}
+
+.four-block {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    align-items: center;
+}
+
+.type {
+    width: 80%;
+    margin: 0 auto;
+}
+.mini-select {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-content: center;
+    gap:0.5rem;
+    margin: 2rem;
+}
+
+.pick {
+    border-radius: 50px;
+    background-color: #f9f9f9;
+    width: fit-content;
+    padding: 0.5rem 1rem;
+    margin: 0 auto;
 }
 
 .filter button {
