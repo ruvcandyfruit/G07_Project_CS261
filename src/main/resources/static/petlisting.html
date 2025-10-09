@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th-en">
+<head>
     <meta charset="UTF-8" />
-    <meta name="veiwport" content="width=device-width, initial-scale=1.0" />   
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />   
     <link rel="stylesheet" href="petlisting.css">
     <link rel="stylesheet" href="all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="icon" href="homepageResources/icon.png" type="image/x-icon">
-    <title>Pet Listing</title>
+    <title>Pet Listing | Pet Adoption System</title>
 
     <body>
         <header>
@@ -30,11 +31,21 @@
             <div class="hamburger">
                 ☰
             </div>
-        </header>
+      </header>
 
-        <main class="pet-listing">
-            <h1>Pet Listing</h1>
-            <p class="description">Short Description</p>
+    <main class="pet-listing">
+        <h1>Pet Listing</h1>
+        <p class="description">Short Description</p>
+
+        <section class="filter">
+        <!-- ตัวกรอง Type, Gender, Health, Breed, Age -->
+        </section>
+
+        <div class="pet-list">
+            <div class="pet-card">
+                    <img src="https://i.pinimg.com/736x/0e/a3/6e/0ea36ee7bc893407525f1d30b72702cb.jpg" alt="image" width="100">
+                    <p class="name">น้องส้ม</p>
+            </div>
 
             <section class="filter">
                 <div class="filter-grid">
@@ -104,42 +115,54 @@
                         <p class="name">น้องส้ม</p>
                 </div>
 
-                <div class="pet-card">
-                        <img src="https://i.pinimg.com/736x/0e/a3/6e/0ea36ee7bc893407525f1d30b72702cb.jpg" alt="image" width="100">
-                        <p class="name">น้องส้ม</p>
+            <div class="pet-card">
+                    <img src="https://i.pinimg.com/736x/0e/a3/6e/0ea36ee7bc893407525f1d30b72702cb.jpg" alt="image" width="100">
+                    <p class="name">น้องส้ม</p>
+            </div>
+
+            <div class="pet-card">
+                    <img src="https://i.pinimg.com/736x/0e/a3/6e/0ea36ee7bc893407525f1d30b72702cb.jpg" alt="image" width="100">
+                    <p class="name">น้องส้ม</p>
+            </div>
+
+            <div class="pet-card">
+                    <img src="https://i.pinimg.com/736x/0e/a3/6e/0ea36ee7bc893407525f1d30b72702cb.jpg" alt="image" width="100">
+                    <p class="name">น้องส้ม</p>
+            </div>
+
+            <div class="pet-card">
+                    <img src="https://i.pinimg.com/736x/0e/a3/6e/0ea36ee7bc893407525f1d30b72702cb.jpg" alt="image" width="100">
+                    <p class="name">น้องส้ม</p>
+            </div>
+        </div>
+</section>
+    </main>
+
+    <!-- footer -->
+    <footer>
+        <div class="footer">
+            <div class="about">
+                <div class="logo">
+                    <img src="homepageResources/icon.png" alt="Logo">
                 </div>
+            
+                <p>Pet Adoption System</p>
+                <p class="location">เลขที่ 11/1 ชั้น 1 ห้อง 111 อาคารสาทรธานี 1 ถนนสาทรเหนือ<br>แขวงสีลม เขตบางรัก กรุงเทพมหานคร 10100<br>Tel : 011-111-1111</p>
+            </div>
 
-                <div class="pet-card">
-                        <img src="https://i.pinimg.com/736x/0e/a3/6e/0ea36ee7bc893407525f1d30b72702cb.jpg" alt="image" width="100">
-                        <p class="name">น้องส้ม</p>
-                </div>
+            <div class="social-container">
+                <a href="#" class="social-btn">
+                    <img src="homepageResources/FacebookLogo.png" alt="Facebook icon">
+                    <span>Pet Adoption</span>
+                </a>
 
-                <div class="pet-card">
-                        <img src="https://i.pinimg.com/736x/0e/a3/6e/0ea36ee7bc893407525f1d30b72702cb.jpg" alt="image" width="100">
-                        <p class="name">น้องส้ม</p>
-                </div>
-
-                <div class="pet-card">
-                        <img src="https://i.pinimg.com/736x/0e/a3/6e/0ea36ee7bc893407525f1d30b72702cb.jpg" alt="image" width="100">
-                        <p class="name">น้องส้ม</p>
-                </div>
-
-                <div class="pet-card">
-                        <img src="https://i.pinimg.com/736x/0e/a3/6e/0ea36ee7bc893407525f1d30b72702cb.jpg" alt="image" width="100">
-                        <p class="name">น้องส้ม</p>
-                </div>
-
-                <div class="pet-card">
-                        <img src="https://i.pinimg.com/736x/0e/a3/6e/0ea36ee7bc893407525f1d30b72702cb.jpg" alt="image" width="100">
-                        <p class="name">น้องส้ม</p>
-                </div>
-            </section>
-
-        </main>
-
-        <footer>
-        
-        </footer>
+                <a href="#" class="social-btn">
+                    <img src="homepageResources/InstagramLogo.png" alt="Instagram icon">
+                    <span>pet_adoption</span>
+                </a>
+            </div>                
+        </div>
+    </footer>
 
         <script src="petlisting.js"></script>
         <script src="all.js"></script>
