@@ -1,0 +1,88 @@
+/* Basic styling for the page */
+body {
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f2f5;
+}
+
+/* The main login card */
+.login-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    width: 350px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 1.5rem;
+}
+
+/* Input group styling to hold icon and input */
+.input-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+}
+
+/* Styling for the input fields */
+.username-input,
+.password-input {
+    width: 100%;
+    padding: 12px 12px 12px 40px; /* Add padding to the left for the icon */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Ensures padding doesn't affect final width */
+}
+
+/* Eye icon for password toggle */
+#togglePassword {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #aaa;
+}
+
+/* Links and text styling */
+.forgot-password, .register {
+    color: #007bff;
+    text-decoration: none;
+}
+
+/* Container for the divider with lines */
+.divider-container {
+    display: flex;
+    align-items: center; /* Vertically center the items */
+    text-align: center;
+    margin: 1.5rem 0; /* Add some space above and below */
+}
+
+/* The horizontal line style */
+.line {
+    flex-grow: 1;         /* Allows the line to take up available space */
+    height: 1px;          /* Thickness of the line */
+    background-color: #ccc; /* <<< เปลี่ยนสีเส้นตรงนี้ */
+}
+
+/* Text in the middle */
+.divider-text {
+    margin: 0 1rem; /* Adds space between the lines and the text */
+    color: #888;
+}
+
+.register-group p {
+    margin-top: 1rem;
+}
