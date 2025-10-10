@@ -18,8 +18,31 @@ body {
     text-align: center;
 }
 
+/* --- CSS --- */
+
+/* ทำให้ .branding เป็น Flex Container */
+.branding {
+    display: flex;             /* 1. สั่งให้ item ภายในเรียงเป็นแถว */
+    align-items: center;       /* 2. จัดให้ item อยู่กึ่งกลางในแนวตั้ง */
+    gap: 12px;                 /* 5. (ทางเลือก) เพิ่มช่องว่างระหว่างรูปกับข้อความ */
+}
+
+/* ปรับขนาดรูปภาพ (img) ที่อยู่ใน .branding */
+.branding img {
+    width: 50px;               /* 3. กำหนดความกว้างของรูปภาพ */
+    height: auto;              /* 4. ให้ความสูงปรับตามอัตโนมัติเพื่อรักษาสัดส่วน */
+}
+
+/* (ทางเลือก) ปรับแต่งข้อความ */
+.branding p {
+    font-size: 15px;           /* ปรับขนาดฟอนต์ */
+    margin: 0;                 /* ลบ margin ที่อาจติดมากับ <p> โดยอัตโนมัติ */
+}
+
 h1 {
     margin-bottom: 1.5rem;
+    font-size: 60px;
+    display: flex;
 }
 
 /* Input group styling to hold icon and input */
@@ -60,6 +83,8 @@ h1 {
 .forgot-password, .register {
     color: #007bff;
     text-decoration: none;
+    display: flex;
+    justify-content: flex-end;
 }
 
 /* Container for the divider with lines */
@@ -83,6 +108,12 @@ h1 {
     color: #888;
 }
 
-.register-group p {
-    margin-top: 1rem;
+.register-container {
+    display: flex;             
+    gap: 5px;                
+}
+
+/* ลบระยะห่างเริ่มต้นของ p ที่อาจทำให้ช่องว่างเยอะเกินไป */
+.register-container p {
+    margin: 0;
 }
