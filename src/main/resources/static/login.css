@@ -1,24 +1,84 @@
 /* Basic styling for the page */
 body {
     font-family: sans-serif;
-    display: flex;
-    justify-content: center;
+    display: grid;                  /* เปิดใช้งาน Grid Layout */
+    grid-template-columns: 1fr 1fr; /* แบ่งหน้าจอเป็น 2 คอลัมน์เท่าๆ กัน */
     align-items: center;
     height: 100vh;
-    background-color: #f0f2f5;
+    background-image: url('homepageResources/catAndDog.jpg');
+    background-size: cover;          /* ทำให้รูปภาพขยายเต็มจอโดยไม่เสียสัดส่วน */
+    background-position: center;     /* จัดให้รูปภาพอยู่ตรงกลาง */
+    background-repeat: no-repeat;    /* ไม่ให้รูปภาพแสดงผลซ้ำๆ */
+    background-attachment: fixed;
 }
 
-/* The main login card */
+/* The main login card with a "Liquid Glass" effect */
 .login-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    width: 350px;
-    text-align: center;
+    position: relative; /* Essential for pseudo-elements and shadows */
+    z-index: 1; /* Ensure it's above the background */
+
+    /* --- ✨ Liquid Glass Base --- */
+    background: rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(25px) saturate(100%); /* Strong blur for liquid depth, slight saturation for vibrancy */
+    -webkit-backdrop-filter: blur(25px) saturate(180%); /* For Safari */
+
+    border-radius: 20px; /* More rounded for a softer, liquid shape */
+    
+    
+    /* Subtle outer glow/shadow for depth */
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25), /* Outer shadow */
+                inset 0 0 0 1px rgba(255, 255, 255, 0.1); /* Inner subtle highlight */
+
+    /* --- Optional: Add a subtle inner "sheen" for reflection --- */
+    /* This uses a pseudo-element for a top-left light reflection */
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 20px; /* Match parent's border-radius */
+        background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.15) 0%, /* Top-left highlight */
+            transparent 50%,
+            rgba(0, 0, 0, 0.05) 100% /* Bottom-right subtle shadow */
+        );
+        pointer-events: none; /* Allows clicks to pass through */
+        z-index: 2; /* Keep it above the card's background */
+    }
+
+    /* --- Optional: Subtle hover effect for liquid feel --- */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation */
 }
 
-/* --- CSS --- */
+
+/* --- existing styles (ensure they don't override the glass effect) --- */
+.login-card {
+    width: 350px;
+    padding: 2rem;
+    text-align: center;
+    grid-column: 2;
+    place-self: center;
+}
+
+/* --- Media Query for smaller screens --- */
+@media (max-width: 1000px) {
+    body {
+        /* เมื่อจอเล็ก ให้เปลี่ยน layout จาก 2 คอลัมน์เหลือแค่ 1 คอลัมน์ */
+        grid-template-columns: 1fr;
+    }
+
+    .login-card {
+        /* ย้ายการ์ดให้มาอยู่ในคอลัมน์ที่ 1 (ซึ่งตอนนี้มีอยู่คอลัมน์เดียว) */
+        grid-column: 1;
+        
+        /* * place-self: center; ที่มีอยู่แล้วจะทำงานต่อ
+         * โดยจัดให้การ์ดอยู่กึ่งกลางของพื้นที่ใหม่ ซึ่งก็คือกลางจอพอดี
+        */
+    }
+}
 
 /* ทำให้ .branding เป็น Flex Container */
 .branding {
@@ -36,13 +96,26 @@ body {
 /* (ทางเลือก) ปรับแต่งข้อความ */
 .branding p {
     font-size: 15px;           /* ปรับขนาดฟอนต์ */
-    margin: 0;                 /* ลบ margin ที่อาจติดมากับ <p> โดยอัตโนมัติ */
+    margin: 0;
+    background: linear-gradient(45deg, #ff6fe5, #4deaff,#6bffb3);
+    
+    /* 2. ทำให้พื้นหลังแสดงผลเฉพาะในส่วนของตัวอักษร */
+    -webkit-background-clip: text; /* สำหรับ Safari/Chrome */
+    background-clip: text;
+
+    /* 3. ทำให้สีของตัวอักษรโปร่งใส เพื่อให้เห็นพื้นหลังที่ตัดไว้ */
+    color: transparent;
+
+    /* --- (ทางเลือก) เพิ่มความสวยงาม --- */
+    font-weight: bold;
 }
 
 h1 {
-    margin-bottom: 1.5rem;
     font-size: 60px;
-    display: flex;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    display: flex; /* ใช้ค่านี้เพื่อให้ background พอดีกับ text */
+    color: rgba(255, 255, 255, 0.8);
 }
 
 /* Input group styling to hold icon and input */
@@ -79,9 +152,29 @@ h1 {
     color: #aaa;
 }
 
+.login-btn {
+    /* --- Normal State --- */
+    background-color: #010002; /* 1. สีพื้นหลังปกติ */
+    color: white;              /* 2. สีตัวอักษร */
+    border: none;              /* 3. ลบเส้นขอบออก */
+    border-radius: 8px;        /* 4. ทำให้ขอบมน */
+    padding: 15px;
+    width: 100%;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 0.8rem;
+    transition: background-color 0.3s ease; /* 5. ทำให้อนิเมชันสีสมูท */
+}
+
+/* --- Hover State --- */
+.login-btn:hover {
+    /* 6. สีพื้นหลังตอนเอาเมาส์ชี้ (สว่างขึ้นเล็กน้อย) */
+    background-color: #1a1a1b; 
+}
 /* Links and text styling */
 .forgot-password, .register {
-    color: #007bff;
+    color: rgb(74, 105, 255);
     text-decoration: none;
     display: flex;
     justify-content: flex-end;
@@ -116,4 +209,5 @@ h1 {
 /* ลบระยะห่างเริ่มต้นของ p ที่อาจทำให้ช่องว่างเยอะเกินไป */
 .register-container p {
     margin: 0;
+    color: rgba(255, 255, 255, 0.7);
 }
