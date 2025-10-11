@@ -120,17 +120,25 @@ header {
 /*----- footer -----*/
 footer {
     width: 100%;
-    height: 300px;
     background-color: #E5EEFF;
     display: flex;
+    padding: 30px 100px;
 }
 
 .footer {
     width: 100%;
     display: flex;
     align-items: center;
-    margin: 30px 100px;  
     gap: 15px; 
+}
+
+/* responsive for footer*/
+@media (max-width: 768px) {
+    .footer {
+        display: flex;
+        flex-direction: column; /* ให้ div เรียงลง */
+        gap: 20px;
+    }
 }
 
 .about {

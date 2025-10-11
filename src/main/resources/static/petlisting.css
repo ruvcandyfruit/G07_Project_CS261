@@ -170,7 +170,7 @@ pre {
     padding: 0.5rem 1.5rem;
     border-radius: 8px;
     border: 1px solid #ddd;
-    width: 500px;
+    width: 80%;
     margin: auto;
 
 }
@@ -206,11 +206,12 @@ pre {
 }
 
 /* Responsive สำหรับหน้าจอมือถือยังคงเหมือนเดิม */
-@media (max-width: 768px) {
+@media (max-width: 719px) {
     #age-group {
         grid-template-columns: 1fr;
         grid-column: span 1;
         padding: 1rem;
+        width: 100%;
     }
     #age-group legend {
         margin-bottom: 0.75rem;
