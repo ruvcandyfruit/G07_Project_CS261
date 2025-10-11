@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="login-register.css">
+    <link rel="icon" href="homepageResources/icon.png" type="image/x-icon">
+</head>
+<body>
+    <section class="card">
+        <div class="container">
+            <div class="branding">
+                <img src="homepageResources/pet-house.png" alt="Logo">
+                <p>Pet Adoption</p>
+            </div>
+            <h1>Sign up</h1>
+            <div class="input-container">
+                <div class="input-group">
+                    <i class="fa-solid fa-user icon"></i>
+                    <input type="text" class="username-input" placeholder="Username or Email Address" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-key icon"></i>
+                    <input type="password" id="password-input" class="password-input" placeholder="Password" required>
+                    <i class="fa-solid fa-eye-slash" id="togglePassword"></i>
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-key icon"></i>
+                    <input type="password" id="password-input" class="password-input" placeholder="Repeat Password" required>
+                    <i class="fa-solid fa-eye-slash" id="togglePassword"></i>
+                </div>
+            </div>
+
+            <button type="submit" class="confirm-btn">Sign up</button>
+
+            <div class="divider-container">
+                <div class="line"></div>
+                <p class="divider-text">or</p>
+                <div class="line"></div>
+            </div>
+            <div class="change-container">
+                <p>Already have an account?</p>
+                <a href="login.html" class="change">Log in</a>
+            </div>
+        </div>
+    </section>
+
+    <script src="register.js"></script>
+</body>
+</html>

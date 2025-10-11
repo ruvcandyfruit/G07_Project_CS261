@@ -12,8 +12,8 @@ body {
     background-attachment: fixed;
 }
 
-/* The main login card with a "Liquid Glass" effect */
-.login-card {
+/* The main card with a "Liquid Glass" effect */
+.card {
     position: relative; /* Essential for pseudo-elements and shadows */
     z-index: 1; /* Ensure it's above the background */
 
@@ -55,7 +55,7 @@ body {
 
 
 /* --- existing styles (ensure they don't override the glass effect) --- */
-.login-card {
+.card {
     width: 350px;
     padding: 2rem;
     text-align: center;
@@ -70,7 +70,7 @@ body {
         grid-template-columns: 1fr;
     }
 
-    .login-card {
+    .card {
         /* ย้ายการ์ดให้มาอยู่ในคอลัมน์ที่ 1 (ซึ่งตอนนี้มีอยู่คอลัมน์เดียว) */
         grid-column: 1;
         
@@ -152,7 +152,7 @@ h1 {
     color: #aaa;
 }
 
-.login-btn {
+.confirm-btn {
     /* --- Normal State --- */
     background-image: linear-gradient(
         45deg, /* 1. กำหนดองศาการไล่สี (เฉียง) */ 
@@ -174,12 +174,12 @@ h1 {
 }
 
 /* --- Hover State --- */
-.login-btn:hover {
+.confirm-btn:hover:hover {
     background-position: right center; /* 4. เลื่อนพื้นหลังไปทางขวาเมื่อเมาส์ชี้ */
 }
 
 /* Links and text styling */
-.forgot-password, .register {
+.forgot-password, .change {
     color: rgb(255, 255, 255);
     text-decoration: none;
     display: flex;
@@ -207,13 +207,13 @@ h1 {
     color: rgb(255, 255, 255, 0.7);
 }
 
-.register-container {
+.change-container {
     display: flex;             
     gap: 5px;                
 }
 
 /* ลบระยะห่างเริ่มต้นของ p ที่อาจทำให้ช่องว่างเยอะเกินไป */
-.register-container p {
+.change-container p {
     margin: 0;
     color: rgba(255, 255, 255, 0.7);
 }
