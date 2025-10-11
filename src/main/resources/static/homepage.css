@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Mali&family=Itim&family=Kodchasan&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap');
+
+/*----- header -----*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/*----- main -----*/
+main {
+    width: 100%;
+    height: 1000px;
+}
+
+.introduction {
+    width: 100%;
+    height: 600px;
+    justify-items: center;
+    align-content: center;
+    background-image: url(homepageResources/cover.jpg);
+    background-size: cover;
+}
+
+.introduction h1,
+.introduction p {
+    width: max-content;
+    text-align: center;
+    font-family: 'Mali', sans-serif;
+    line-height: 1.5;
+    margin: 10px;
+    padding: 15px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 25px;
+    box-shadow: 0 0 40px rgba(0,0,0,0.1)
+}
+
+.cards {
+    border: 1px solid grey;
+    width: 100%;
+}
