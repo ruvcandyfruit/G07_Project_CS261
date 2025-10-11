@@ -11,7 +11,7 @@
 /*----- main -----*/
 main {
   width: 100%;
-  padding: 80px 40px;
+  padding: 50px 100px;
 }
 
 .main-about {
@@ -22,7 +22,9 @@ main {
 
 .main-about p {
   text-align: center;
+  line-height: 1.8;
   font-family: 'Mali', sans-serif;
+  padding: 100px 0;
 }
 
 .main-contact {
@@ -31,20 +33,29 @@ main {
   justify-content: center;
 }
 
+.contact {
+  padding: 50px 40px;
+}
+
 .title {
   display: flex;
-  justify-content: space-around;
+  align-items: center;
   gap: 10px;
 }
 
 .title p {
   text-align: center;
-  width: 100%;
-  font-family: 'Mali', sans-serif;
+  letter-spacing: 0.1em;
+  word-spacing: 3px;
+  width: fit-content;
+  padding: 0 50px;
+  font-family: 'Manrope', sans-serif;
 }
 
 hr {
-  width: 100%;
+  flex: 1;
   height: 5px;
-  background-color: yellow;
+  border: none;
+  border-radius: 5px;
+  background-color: #FFD102;
 }
