@@ -39,6 +39,15 @@ main {
     box-shadow: 0 0 40px rgba(0,0,0,0.1)
 }
 
+/*กำหนดขนาด + การยืดหดตามขนาดจอ(responsive)*/
+.introduction h1 {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+}
+
+.introduction p {
+    font-size: clamp(0.8rem, 2vw, 1rem);
+}
+
 .cards {
     border: 1px solid grey;
     width: 100%;
