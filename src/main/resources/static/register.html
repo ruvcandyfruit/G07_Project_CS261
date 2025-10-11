@@ -18,18 +18,31 @@
             <h1>Sign up</h1>
             <div class="input-container">
                 <div class="input-group">
-                    <i class="fa-solid fa-user icon"></i>
-                    <input type="text" class="username-input" placeholder="Username or Email Address" required>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-user icon"></i>
+                        <input type="text" id="username" class="username-input" placeholder="Username or Email Address">
+        
+                        <i class="fa-solid fa-circle-check status-icon" id="username-status-icon"></i>
+                    </div>
+                    <small class="message" id="username-message"></small>
                 </div>
+
                 <div class="input-group">
-                    <i class="fa-solid fa-key icon"></i>
-                    <input type="password" id="password-input" class="password-input" placeholder="Password" required>
-                    <i class="fa-solid fa-eye-slash" id="togglePassword"></i>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-key icon"></i>
+                        <input type="password" id="password" class="password-input" placeholder="Password">
+                        <i class="fa-solid fa-eye-slash" id="togglePassword"></i>
+                    </div>
+                     <small class="message" id="password-message"></small>
                 </div>
+
                 <div class="input-group">
-                    <i class="fa-solid fa-key icon"></i>
-                    <input type="password" id="password-input" class="password-input" placeholder="Repeat Password" required>
-                    <i class="fa-solid fa-eye-slash" id="togglePassword"></i>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-key icon"></i>
+                        <input type="password" id="confirm-password" class="password-input" placeholder="Confirm Password">
+                        <i class="fa-solid fa-eye-slash" id="toggleConfirmPassword"></i>
+                    </div>
+                    <small class="message" id="confirm-password-message"></small>
                 </div>
             </div>
 

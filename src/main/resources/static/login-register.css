@@ -120,8 +120,12 @@ h1 {
 
 /* Input group styling to hold icon and input */
 .input-group {
+    margin-bottom: 1.5rem; 
+    /* display: flex; flex-direction: column; ก็ใช้ได้ดีที่นี่ */
+}
+
+.input-wrapper {
     position: relative;
-    margin-bottom: 1.5rem;
 }
 
 .icon {
@@ -132,6 +136,27 @@ h1 {
     color: #aaa;
 }
 
+/* สำหรับไอคอนดวงตาที่อาจต้องปรับตำแหน่งใหม่ */
+#togglePassword {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #aaa;
+}
+
+#toggleConfirmPassword {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #aaa;
+}
+
+
+
 /* Styling for the input fields */
 .username-input,
 .password-input {
@@ -140,16 +165,6 @@ h1 {
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box; /* Ensures padding doesn't affect final width */
-}
-
-/* Eye icon for password toggle */
-#togglePassword {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #aaa;
 }
 
 .confirm-btn {
@@ -216,4 +231,93 @@ h1 {
 .change-container p {
     margin: 0;
     color: rgba(255, 255, 255, 0.7);
+}
+
+/* --- 🎨 Styling for Validation --- */
+
+/* ซ่อนข้อความแจ้งเตือนไว้ก่อน */
+.error-message {
+    display: none; 
+    color: #e74c3c; /* สีแดงสำหรับแจ้งเตือน */
+    text-align: left;
+    font-size: 0.8rem;
+    margin-top: 5px;
+}
+
+/* คลาสสำหรับ "แสดง" ข้อความ */
+.error-message.show {
+    display: block;
+}
+
+/* (ทางเลือก) เพิ่มเส้นขอบสีแดงให้ input ที่กรอกผิด */
+.input-group input.error {
+    border: 1px solid #e74c3c;
+}
+
+/* --- 🎨 Styling for Validation Messages --- */
+
+/* ซ่อนข้อความไว้ก่อน */
+.message {
+    display: none;
+    text-align: left;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+/* คลาสสำหรับ "แสดง" ข้อความ */
+.message.show {
+    display: block;
+}
+
+/* คลาสสำหรับสถานะ "ผิดพลาด" (กากบาท) */
+.message.error {
+    color: #e74c3c; /* สีแดง */
+}
+.message.error::before {
+    content: '✗ '; /* ไอคอนกากบาท */
+    margin-right: 5px;
+}
+
+/* คลาสสำหรับสถานะ "ถูกต้อง" (ติ๊กถูก) */
+.message.success {
+    color: #60e779; /* สีเขียว */
+    text-shadow: 0 0 1px #1b3a2a;
+}
+.message.success::before {
+    content: '✓ '; /* ไอคอนติ๊กถูก */
+    margin-right: 5px;
+}
+
+/* (ทางเลือก) เพิ่มเส้นขอบสีแดงให้ input ที่กรอกผิด */
+.input-wrapper input.error {
+    border: 1px solid #e74c3c;
+}
+
+/* --- 🎨 Styling for Status Icon (✓/✗) --- */
+
+.status-icon {
+    position: absolute;
+    right: 15px; /* จัดให้อยู่ทางขวา */
+    top: 50%;
+    transform: translateY(-50%);
+    
+    opacity: 0; /* ซ่อนไว้ก่อน */
+    transition: opacity 0.3s ease;
+    pointer-events: none; /* ทำให้คลิกทะลุได้ ไม่บังการพิมพ์ */
+}
+
+/* คลาสสำหรับ "แสดง" ไอคอน */
+.status-icon.show {
+    opacity: 1;
+}
+
+/* คลาสสำหรับสถานะ "ถูกต้อง" */
+.status-icon.success {
+    color: #2ecc71; /* สีเขียว */
+}
+
+/* คลาสสำหรับสถานะ "ผิดพลาด" (ถ้าต้องการใช้) */
+.status-icon.error {
+    color: #e74c3c; /* สีแดง */
 }
