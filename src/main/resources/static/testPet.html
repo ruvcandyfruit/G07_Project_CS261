@@ -55,7 +55,7 @@
 
                 // รูป
                 const img = document.createElement('img');
-                img.src = pet.photoPath;
+                img.src = pet.image;
                 img.alt = pet.name;
 
                 // ชื่อ
@@ -63,8 +63,31 @@
                 name.textContent = pet.name;
 
                 // อายุ
+                //const age = document.createElement('p');
+                //age.textContent = `Age: ${pet.age}`;
+
+                const ageValue = pet.age; // เช่น 1.2 หรือ 0.3
+                const years = Math.floor(ageValue);
+                const months = Math.round((ageValue - years) * 10);
+
+                let displayText = '';
+
+                if (ageValue == null) {
+                    displayText = "ไม่ทราบอายุ";
+                } else if (ageValue == 0) {
+                    displayText = "ยังไม่ถึง 1 เดือน";
+                } else if (years === 0 && months > 0) {
+                    displayText = `${months} เดือน`;
+                } else if (years > 0 && months === 0) {
+                    displayText = `${years} ปี`;
+                } else if (years > 0 && months > 0) {
+                    displayText = `${years} ปี ${months} เดือน`;
+                } else {
+                    displayText = "ไม่ทราบอายุ";
+                }
+
                 const age = document.createElement('p');
-                age.textContent = `Age: ${pet.age}`;
+                age.textContent = `อายุ: ${displayText}`;
 
                 // ใส่เข้า card
                 card.appendChild(img);

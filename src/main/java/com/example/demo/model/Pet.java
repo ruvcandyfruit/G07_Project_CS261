@@ -5,7 +5,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.time.LocalDate;
 import jakarta.persistence.Column;
 
 @Entity
@@ -27,7 +26,7 @@ public class Pet {
     @Column(length = 10)
     private String gender;
 
-    private LocalDate age; // เก็บวันที่เกิด
+    private Float age;
 
     @Column(length = 50)
     private String breed;
@@ -46,7 +45,7 @@ public class Pet {
     private String foodAllergy;
 
     @Column(name = "photo_path", length = 50)
-    private String photoPath;
+    private String image;
 
     // Constructors
     public Pet() {}
@@ -67,8 +66,8 @@ public class Pet {
     public String getGender() { return gender; }
     public void setGender(String gender) { this.gender = gender; }
 
-    public LocalDate getAge() { return age; }
-    public void setAge(LocalDate age) { this.age = age; }
+    public Float getAge() { return age; }
+    public void setAge(Float age) { this.age = age; }
 
     public String getBreed() { return breed; }
     public void setBreed(String breed) { this.breed = breed; }
@@ -88,7 +87,7 @@ public class Pet {
     public String getFoodAllergy() { return foodAllergy; }
     public void setFoodAllergy(String foodAllergy) { this.foodAllergy = foodAllergy; }
 
-    public String getPhotoPath() { return photoPath; }
-    public void setPhotoPath(String photoPath) { this.photoPath = photoPath; }
+    public String getImage() { return image; }
+    public void setImage(String image) { this.image = image; }
 }
 
