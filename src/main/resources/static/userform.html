@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>แบบฟอร์มขอรับเลี้ยงสัตว์ | Pet Adoption System</title>
+    <link rel="stylesheet" href="userform.css"> 
+</head>
+<body>
+
+<div class="container">
+    <h2>แบบฟอร์มขอรับเลี้ยงสัตว์</h2>
+
+    <div id="successMsg" class="success-msg">ส่งข้อมูลเรียบร้อย ขอบคุณที่สนใจรับเลี้ยงสัตว์!</div>
+
+    <form id="adoptionForm" method="post" action="/submitAdoption" enctype="multipart/form-data">
+        <label for="firstName">ชื่อ <span class="required">*</span></label>
+        <input type="text" id="firstName" name="firstName" required />
+        <div id="firstNameError" class="error"></div>
+
+        <label for="lastName">นามสกุล <span class="required">*</span></label>
+        <input type="text" id="lastName" name="lastName" required />
+        <div id="lastNameError" class="error"></div>
+
+        <label for="age">อายุ <span class="required">*</span></label>
+        <input type="number" id="age" name="age" min="1" max="120" required />
+        <div id="ageError" class="error"></div>
+
+        <label for="phone">เบอร์โทรศัพท์ <span class="required">*</span></label>
+        <input type="tel" id="phone" name="phone" pattern="[0-9]{9,10}" placeholder="เช่น 0812345678" required />
+        <div id="phoneError" class="error"></div>
+
+        
+        <label for="identityDoc">ไฟล์แนบ (เอกสาร เช่น สำเนาบัตรประชาชน) <span class="required">*</span></label>
+        <input type="file" id="identityDoc" name="identityDoc" accept=".pdf,.jpg,.jpeg,.png" required />
+        <div id="identityDocError" class="error"></div>
+
+
+        <label for="addressDoc">ไฟล์แนบรูปหลักฐานที่อยู่ <span class="required">*</span></label>
+        <input type="file" id="addressDoc" name="addressDoc" accept=".pdf,.jpg,.jpeg,.png" required />
+        <div id="addressDocError" class="error"></div>
+
+
+
+        <label for="reason">เหตุผลที่อยากรับเลี้ยงสัตว์ <span class="required">*</span></label>
+        <textarea id="reason" name="reason" required placeholder="กรุณาเขียนเหตุผลของคุณ"></textarea>
+        <div id="reasonError" class="error"></div>
+
+        <label for="address">ที่อยู่อาศัยตามทะเบียนบ้าน <span class="required">*</span></label>
+        <textarea id="address" name="address" required placeholder="ที่อยู่ตามทะเบียนบ้าน"></textarea>
+        <div id="addressError" class="error"></div>
+
+        <label for="occupation">อาชีพ <span class="required">*</span></label>
+        <input type="text" id="occupation" name="occupation" required />
+        <div id="occupationError" class="error"></div>
+
+        <button type="submit">ส่งแบบฟอร์ม</button>
+    </form>
+</div>
+
+<script src="userform.js"></script>
+
+</body>
+</html>

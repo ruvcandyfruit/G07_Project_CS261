@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="petdetail.css">
+    <link rel="stylesheet" href="all.css">
+    
     <link rel="icon" href="homepageResources/icon.png" type="image/x-icon">
     <title>Pet details | Pet Adoption System</title>
 </head>
 <body>
-    <!-- navigation bar -->
+
     <header>
         <nav class="navbar">
             <div class="logo">
@@ -24,22 +26,27 @@
             <a href="login.html">
                 <button class="login-btn">Log in</button> 
             </a>
-        </nav>        
+        </nav>
+      <div class="hamburger">
+        ☰
+    </div>        
     </header>
 
 
-    <!-- Main Container -->
+    <div class="fullwidth-section">
     <div class="container">
         <h1>ทำความรู้จักน้อง</h1>
         
         <div class="pet-profile">
-            <!-- Pet Image Section -->
+          
             <div class="pet-image-section">
-                <div class="pet-image" id="petImage">🖼️</div>
+                <div class="pet-image" id="petImage">
+                    <img src="homepageResources/hq720.jpg" alt="Pet Megatron" class="pet-photo">
+                </div>
                 <div class="pet-name" id="petName">เมกาทรอน</div>
             </div>
 
-            <!-- Pet Details -->
+           
             <div class="pet-details">
                 <div class="detail-section">
                     <h3>ข้อมูลน้อง</h3>
@@ -49,7 +56,7 @@
                         <li>ชนิด แมว</li>
                         <li>เพศ ผู้</li>
                         <li>อายุ 2 ปี</li>
-                        <li>สายพันธุ์ ไม่ม่ให</li>
+                        <li>สายพันธุ์ พันท้ายนรสิงห์</li>
                         <li>น้ำหนัก 5 กิโลกรัม</li>
                     </ul>
                 </div>
@@ -73,14 +80,16 @@
             </div>
         </div>
 
-        <!-- Buttons -->
+        
         <div class="buttons">
-            <button class="btn btn-secondary" id="backBtn">ย้อนกลับ</button>
-            <button class="btn btn-primary" id="adoptBtn">ขอรับเลี่้ยง</button>
+            <a href="petlisting.html" style="text-decoration: none; color: inherit;">
+            <button class="btn btn-secondary" id="backBtn">ย้อนกลับ</button></a>
+            <a href="userform.html" style="text-decoration: none; color: inherit;">
+            <button class="btn btn-primary" id="adoptBtn">ขอรับเลี่้ยง</button></a>
         </div>
     </div>
-
-    <!-- Footer -->
+    </div>
+    
     <footer>
         <div class="footer">
             <div class="about">
@@ -106,6 +115,7 @@
     </footer>
 
     <script src="petdetail.js"></script>
+    <script src="all.js"></script>
     
 </body>
 </html>

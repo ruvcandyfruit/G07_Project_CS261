@@ -7,121 +7,55 @@
   padding: 0;
   box-sizing: border-box;
 }
-header {
-    width: 100%;
-    height: 100px;
-    display: flex;
-    background-color: #E5EEFF;
+
+/*----- main -----*/
+main {
+  width: 100%;
+  padding: 50px 100px;
 }
 
-/*----- Navigation bar -----*/
-.navbar {
-    width: 100%;
-    margin: 0 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/*----- Logo -----*/
-.logo img {
-    width: 60px;
-    height: 60px;
-    /*margin: 10px 40px;*/
-}
-
-/*----- Menu -----*/
-.nav-links {
-    list-style: none;
-    display: flex;
-    /*margin: 10px 100px 0 0;*/
-    padding: 0;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: #222;
-    padding: 15px 20px;
-    border-radius: 50px;
-    transition: background 0.2s;
-    font-family: 'Manrope', sans-serif;
-    font-size: 16px;
-}
-
-.nav-links a:hover,
-.nav-links a.active {
-  background-color: #FFFFFF;
-}
-
-/*----- Login button -----*/
-.login-btn {
-  border: 1px solid #000;
-  background: transparent;
-  border-radius: 20px;
-  padding: 6px 20px;
-  /*margin: 10px 20px;*/
-  cursor: pointer;
-  transition: all 0.2s;
-  font-family: 'Manrope', sans-serif;
-}
-
-.login-btn:hover {
-  background-color: #000;
-  color: #fff;
-}
-
-/*----- footer -----*/
-footer {
-    width: 100%;
-    height: 300px;
-    background-color: #E5EEFF;
-    display: flex;
-}
-
-.footer {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    margin: 30px 100px;  
-    gap: 15px; 
-}
-
-.about {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    font-family: 'Mali', sans-serif;
-}
-
-.location {
-    margin-top: 15px;
-    line-height: 1.5;
-}
-
-/*contact button*/
-.social-container {
+.main-about {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  justify-content: center;
 }
 
-.social-btn {
+.main-about p {
+  text-align: center;
+  line-height: 1.8;
+  font-family: 'Mali', sans-serif;
+  padding: 100px 0;
+}
+
+.main-contact {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.contact {
+  padding: 50px 40px;
+}
+
+.title {
   display: flex;
   align-items: center;
-  text-decoration: none;
-  color: #222;
-  font-size: 1rem;
+  gap: 10px;
+}
+
+.title p {
+  text-align: center;
+  letter-spacing: 0.1em;
+  word-spacing: 3px;
+  width: fit-content;
+  padding: 0 50px;
   font-family: 'Manrope', sans-serif;
-  cursor: pointer;
 }
 
-.social-btn img {
-  width: 30px;
-  height: 30px;
-  margin-right: 12px;
-  object-fit: contain;
-}
-
-.social-btn:hover {
-    transform: scale(1.05);
+hr {
+  flex: 1;
+  height: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #FFD102;
 }
