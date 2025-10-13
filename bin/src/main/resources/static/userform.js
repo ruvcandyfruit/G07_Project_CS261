@@ -4,8 +4,8 @@ const successMsg = document.getElementById('successMsg');
 form.addEventListener('submit', function(event) {
     event.preventDefault();
 
-    // เคลียร์ข้อความ error
-    const fields = ['firstName', 'lastName', 'age', 'phone', 'profileImageUrl', 'reason', 'address', 'career'];
+    
+    const fields = ['firstName', 'lastName', 'age', 'phone', 'identityDoc', 'addressDoc', 'reason', 'address', 'occupation'];
     fields.forEach(field => {
         const errorEl = document.getElementById(field + 'Error');
         if (errorEl) errorEl.textContent = '';
@@ -14,23 +14,28 @@ form.addEventListener('submit', function(event) {
 
     let valid = true;
 
-    // ตรวจสอบค่าแต่ละช่อง
+    // === ตรวจสอบค่าแต่ละช่อง ===
+
+    // ชื่อ
     if (form.firstName.value.trim() === '') {
         document.getElementById('firstNameError').textContent = 'กรุณากรอกชื่อ';
         valid = false;
     }
 
+    // นามสกุล
     if (form.lastName.value.trim() === '') {
         document.getElementById('lastNameError').textContent = 'กรุณากรอกนามสกุล';
         valid = false;
     }
 
+    // อายุ
     const ageVal = parseInt(form.age.value);
     if (!ageVal || ageVal < 1 || ageVal > 120) {
         document.getElementById('ageError').textContent = 'กรุณากรอกอายุที่ถูกต้อง (1-120 ปี)';
         valid = false;
     }
 
+    // เบอร์โทรศัพท์
     const phoneVal = form.phone.value.trim();
     const phonePattern = /^[0-9]{9,10}$/;
     if (!phonePattern.test(phoneVal)) {
@@ -38,37 +43,53 @@ form.addEventListener('submit', function(event) {
         valid = false;
     }
 
-    // ตรวจสอบไฟล์แนบ profileImageUrl
-    const file = form.profileImageUrl.files[0];
-    if (!file) {
-        document.getElementById('profileImageUrlError').textContent = 'กรุณาแนบไฟล์เอกสาร';
+    // ตรวจสอบไฟล์แนบเอกสาร (identityDoc)
+    const identityFile = form.identityDoc.files[0];
+    if (!identityFile) {
+        document.getElementById('identityDocError').textContent = 'กรุณาแนบไฟล์เอกสาร';
         valid = false;
-    } else if (!['application/pdf', 'image/jpeg', 'image/png'].includes(file.type)) {
-        document.getElementById('profileImageUrlError').textContent = 'รองรับเฉพาะไฟล์ PDF, JPG, PNG';
+    } else if (!['application/pdf', 'image/jpeg', 'image/png'].includes(identityFile.type)) {
+        document.getElementById('identityDocError').textContent = 'รองรับเฉพาะไฟล์ PDF, JPG, PNG';
         valid = false;
-    } else if (file.size > 5 * 1024 * 1024) {
-        document.getElementById('profileImageUrlError').textContent = 'ไฟล์ต้องไม่เกิน 5MB';
+    } else if (identityFile.size > 5 * 1024 * 1024) {
+        document.getElementById('identityDocError').textContent = 'ไฟล์ต้องไม่เกิน 5MB';
         valid = false;
     }
 
+    // ตรวจสอบไฟล์แนบที่อยู่ (addressDoc)
+    const addressFile = form.addressDoc.files[0];
+    if (!addressFile) {
+        document.getElementById('addressDocError').textContent = 'กรุณาแนบไฟล์หลักฐานที่อยู่';
+        valid = false;
+    } else if (!['application/pdf', 'image/jpeg', 'image/png'].includes(addressFile.type)) {
+        document.getElementById('addressDocError').textContent = 'รองรับเฉพาะไฟล์ PDF, JPG, PNG';
+        valid = false;
+    } else if (addressFile.size > 5 * 1024 * 1024) {
+        document.getElementById('addressDocError').textContent = 'ไฟล์ต้องไม่เกิน 5MB';
+        valid = false;
+    }
+
+    // เหตุผล
     if (form.reason.value.trim() === '') {
         document.getElementById('reasonError').textContent = 'กรุณากรอกเหตุผล';
         valid = false;
     }
 
+    // ที่อยู่
     if (form.address.value.trim() === '') {
         document.getElementById('addressError').textContent = 'กรุณากรอกที่อยู่ตามทะเบียนบ้าน';
         valid = false;
     }
 
-    if (form.career.value.trim() === '') {
-        document.getElementById('careerError').textContent = 'กรุณากรอกอาชีพ';
+    // อาชีพ
+    if (form.occupation.value.trim() === '') {
+        document.getElementById('occupationError').textContent = 'กรุณากรอกอาชีพ';
         valid = false;
     }
 
     if (!valid) return;
 
-    // ส่งฟอร์ม
+    // === ส่งฟอร์ม ===
     const formData = new FormData(form);
     fetch(form.action, {
         method: 'POST',
