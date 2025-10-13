@@ -101,8 +101,8 @@ header {
     }
 }
 
-/*----- Login button -----*/
-.login-btn {
+/*----- Logout button -----*/
+.logout-btn {
   border: 1px solid #000;
   background: transparent;
   border-radius: 20px;
@@ -113,7 +113,7 @@ header {
   font-family: 'Manrope', sans-serif;
 }
 
-.login-btn:hover {
+.logout-btn:hover {
   background-color: #000;
   color: #fff;
 }
