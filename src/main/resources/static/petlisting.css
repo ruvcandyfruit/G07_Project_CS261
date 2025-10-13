@@ -1,6 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Mali&family=Itim&family=Kodchasan&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap');
+
+
 
 /* Reset พื้นฐาน */
 * {
@@ -11,7 +10,7 @@
 
 /* ตั้งค่า font และสีพื้นหลัง */
 body {
-    font-family: "Inter", sans-serif;
+    font-family: 'Manrope', 'Itim', sans-serif;
     background-color: #f9f9f9;
     color: #333;
     line-height: 1.5;
@@ -276,3 +275,26 @@ pre {
     }
 }
 
+/* --- Container for the "More Pets" button --- */
+.more-pets-container {
+    margin-top: 3rem; /* เพิ่มระยะห่างด้านบนจากการ์ด */
+    text-align: center; /* จัดให้ปุ่มอยู่กึ่งกลาง */
+}
+
+/* --- The "More Pets" button style --- */
+.more-pets-btn {
+    display: inline-block; /* 1. ทำให้ <a> เป็นบล็อกเพื่อกำหนดขนาดได้ */
+    background-color: var(--button-black, #010002); /* 2. สีพื้นหลัง (ดึงจาก :root) */
+    color: white; /* 3. สีตัวอักษร */
+    padding: 0.8rem 2.5rem; /* 4. เพิ่มพื้นที่ภายในปุ่ม (บน-ล่าง, ซ้าย-ขวา) */
+    border-radius: 50px; /* 5. ทำให้ขอบมนเป็นทรงแคปซูล */
+    text-decoration: none; /* 6. ลบเส้นใต้ของลิงก์ออก */
+    font-weight: bold;
+    transition: transform 0.2s ease, background-color 0.2s ease; /* 7. เพิ่มอนิเมชัน */
+}
+
+/* --- Hover Effect --- */
+.more-pets-btn:hover {
+    background-color: #333; /* เปลี่ยนสีพื้นหลังเล็กน้อย */
+    transform: scale(1.05); /* 8. ทำให้ปุ่มขยายขึ้นเล็กน้อยเมื่อเมาส์ชี้ */
+}

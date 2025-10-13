@@ -1,54 +1,174 @@
-@import url('https://fonts.googleapis.com/css2?family=Mali&family=Itim&family=Kodchasan&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap');
-
 /*----- header -----*/
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Manrope', sans-serif;
+
 }
 
 /*----- main -----*/
 main {
-    width: 100%;
-    height: 1000px;
+    width: 100%;  
+    text-align: center; /* << คำสั่งนี้จะจัด h1 และ p ที่อยู่ข้างในให้อยู่กลาง */
 }
 
+/* --- Main Container --- */
 .introduction {
+    position: relative; /* 1. สร้าง "บ้าน" ให้กับ content ที่จะลอยทับ */
     width: 100%;
-    height: 600px;
-    justify-items: center;
-    align-content: center;
-    background-image: url(homepageResources/cover.jpg);
-    background-size: cover;
+    line-height: 0; /* (ทางเลือก) แก้ปัญหาช่องว่างแปลกๆ ใต้รูป */
 }
 
-.introduction h1,
-.introduction p {
-    width: max-content;
+/* --- The Image itself (ทำหน้าที่เหมือน background) --- */
+.intro-background-image {
+    width: 100%;  /* 2. ทำให้รูปภาพกว้างเต็มจอ */
+    height: auto; /* 3. ✨ ความสูงจะปรับตามสัดส่วนของภาพโดยอัตโนมัติ ✨ */
+    display: block;
+}
+
+/* --- The Overlay Content Container (ฉบับปรับปรุง) --- */
+.intro-content {
+    position: absolute; /* ทำให้กล่องนี้ "ลอย" ทับรูปภาพได้ */
+    
+    /* --- ✨ 1. ตำแหน่งสำหรับจอใหญ่ (Desktop First) ✨ --- */
+    top: 20%; /* จัดให้อยู่กึ่งกลางแนวตั้ง */
+    right: 10%; /* อยู่ห่างจากขอบขวา 10% */
+    transform: translateY(-50%); /* เทคนิคดึงกลับมาให้อยู่กลางแนวตั้งเป๊ะๆ */
+
+    /* --- ✨ 2. ขนาดที่ยืดหยุ่น ✨ --- */
+    width: 90%; /* ให้ความกว้าง 90% ของพื้นที่ที่เหลือ */
+    max-width: 500px; /* แต่กว้างได้ไม่เกิน 500px */
+
+    /* --- จัดการของที่อยู่ข้างใน (h1 และปุ่ม) --- */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* จัดข้อความข้างในให้ชิดซ้าย */
+    gap: 1.5rem;
+    text-align: left; /* ทำให้ข้อความทั้งหมดเริ่มจากด้านซ้าย */
+}
+
+/* --- ✨ 3. สไตล์สำหรับจอมือถือ (Responsive Magic!) ✨ --- */
+@media (min-width:400px) and (max-width: 768px) {
+    .intro-content {
+        display: grid;
+        /* เมื่อจอเล็ก ให้เปลี่ยนตำแหน่งมาอยู่กึ่งกลางแทน */
+        top: 40%;
+        left: 50%;
+        right: auto; /* ล้างค่า right เดิมทิ้ง */
+        transform: translate(-50%, -50%); /* สูตรจัดกลางเป๊ะๆ */
+        
+        /* และจัดข้อความข้างในให้อยู่กลางทั้งหมด */
+        align-items: center;
+        text-align: center;
+    }
+    .intro-content p {
     text-align: center;
     font-family: 'Mali', sans-serif;
     line-height: 1.5;
-    margin: 10px;
-    padding: 15px;
+    padding: 0.8rem 2.5rem;
     color: #fff;
-    background: rgba(0, 0, 0, 0.15);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-radius: 25px;
-    box-shadow: 0 0 40px rgba(0,0,0,0.1)
+    box-shadow: 0 0 40px rgba(0,0,0,0.1);
+    font-size: 12px;
+    }
+    .intro-content .more-intro-btn {
+        font-size: 12px;
+    }
 }
 
-/*กำหนดขนาด + การยืดหดตามขนาดจอ(responsive)*/
-.introduction h1 {
-    font-size: clamp(1.5rem, 5vw, 2rem);
+@media (max-width: 400px) {
+    .intro-content {
+        width:100px
+    }
+    .intro-content p,.intro-content .more-intro-btn{
+        display: none;
+    }
+    .topic {
+        font-size: 1rem;
+    }
 }
 
-.introduction p {
-    font-size: clamp(0.8rem, 2vw, 1rem);
+
+/* --- สไตล์ของ h1, h2, และปุ่ม (ส่วนนี้ดีอยู่แล้วครับ) --- */
+.topic {
+    margin: 1rem 0 ;
+    color: var(--text-color);
+    font-size: 2.5rem;
+    font-family: 'Manrope', sans-serif;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
+
+.intro-content p {
+    padding: 1rem;
+}
+.intro-content .more-intro-btn {
+    text-align: center;
+    font-family: 'Mali', sans-serif;
+    line-height: 1.5;
+    padding: 0.8rem 2.5rem;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 25px;
+    box-shadow: 0 0 40px rgba(0,0,0,0.1);
+}
+
+.more-intro-container {
+    text-align: center;
+}
+
+.more-intro-btn {
+    display: inline-block; /* 1. ทำให้ <a> เป็นบล็อกเพื่อกำหนดขนาดได้ */
+    text-decoration: none; /* 6. ลบเส้นใต้ของลิงก์ออก */
+    font-weight: bold;
+    transition: transform 0.2s ease, background-color 0.2s ease; /* 7. เพิ่มอนิเมชัน */
+}
+
+/* --- Hover Effect --- */
+.more-intro-btn:hover {
+    background-color: var(--button-black); /* เปลี่ยนสีพื้นหลังเล็กน้อย */
+    transform: scale(1.05); /* 8. ทำให้ปุ่มขยายขึ้นเล็กน้อยเมื่อเมาส์ชี้ */
+}
+
 
 .cards {
     border: 1px solid grey;
     width: 100%;
+}
+
+.pet-preview-section {
+    margin: 50px 100px;
+}
+
+@media (max-width: 1024px) {
+    .pet-preview-section {
+        margin: 50px auto;
+    }
+}
+.divider-container {
+    display: flex;
+    align-items: center; /* Vertically center the items */
+    text-align: center;
+    margin: 1.5rem 0; /* Add some space above and below */
+}
+
+
+/* The horizontal line style */
+.line {
+    flex-grow: 1;         /* Allows the line to take up available space */
+    height: 5px;          /* Thickness of the line */
+    background-color: var(--button-yellow); /* <<< เปลี่ยนสีเส้นตรงนี้ */
+    border-radius: 50px;
+}
+
+/* Text in the middle */
+.divider-text {
+    margin: 0 1rem; /* Adds space between the lines and the text */
+    color: var(--text-color);
+    padding: 0 50px;
 }
