@@ -1,0 +1,183 @@
+:root {
+    --gray-bg: #f2f2f2;
+    --transition: all 0.3s ease;
+    --border-radius: 15px;
+    --primary-color: #4A69FF;
+    --text-color: #333;
+    --button-black:#010002;
+    --background-light: #f9f9f9;
+    --background-main: #E5EEFF;
+    --button-yellow: #ffd102;
+}
+
+/*----- header -----*/
+header {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    background-color: #E5EEFF;
+}
+/*----- Navigation bar -----*/
+.navbar {
+    width: 100%;
+    margin: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/*----- Logo -----*/
+.logo img {
+    width: 60px;
+    height: 60px;
+    /*margin: 10px 40px;*/
+}
+
+/*----- Menu -----*/
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+    gap: 1rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #222;
+    padding: 0.9rem;
+    border-radius: 50px;
+    transition: background 0.2s;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.9rem;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  background-color: #FFFFFF;
+}
+
+.hamburger {
+  display: none; /*ซ่อนไว้ก่อน */
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+
+/*เมื่อหน้าจอแคบกว่า 768px */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        background: white;
+        padding: 1rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+        background: none;
+    }
+
+    .nav-links li {
+        padding: 0.5rem;
+    }
+
+    .nav-links li.active {
+        background: #E5EEFF;
+    }
+
+
+    .nav-links.active {
+        display: flex; /*แสดงเมื่อถูกคลิก */
+    }
+    .hamburger {
+        display: block; /*โชว์ไอคอน 3 ขีด */
+        margin: auto;
+    }
+}
+
+/*----- Login button -----*/
+.login-btn {
+  border: 1px solid #000;
+  background: transparent;
+  border-radius: 20px;
+  padding: 6px 20px;
+  /*margin: 10px 20px;*/
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Manrope', sans-serif;
+}
+
+.login-btn:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+/*----- footer -----*/
+footer {
+    width: 100%;
+    background-color: #E5EEFF;
+    display: flex;
+    padding: 30px 100px;
+}
+
+.footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+}
+
+/* responsive for footer*/
+@media (max-width: 768px) {
+    .footer {
+        display: flex;
+        flex-direction: column; /* ให้ div เรียงลง */
+        gap: 20px;
+    }
+}
+
+.about {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Mali', sans-serif;
+}
+
+.location {
+    margin-top: 15px;
+    line-height: 1.5;
+}
+
+/*contact button*/
+.social-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #222;
+  font-size: 1rem;
+  font-family: 'Manrope', sans-serif;
+  cursor: pointer;
+}
+
+.social-btn img {
+  width: 30px;
+  height: 30px;
+  margin-right: 12px;
+  object-fit: contain;
+}
+
+.social-btn:hover {
+    transform: scale(1.05);
+}
