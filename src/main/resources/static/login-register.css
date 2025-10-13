@@ -111,7 +111,7 @@ body {
 }
 
 h1 {
-    font-size: 60px;
+    font-size: 48px;
     font-weight: bold;
     margin-bottom: 2rem;
     display: flex; /* ใช้ค่านี้เพื่อให้ background พอดีกับ text */
