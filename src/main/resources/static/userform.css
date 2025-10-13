@@ -1,7 +1,11 @@
 /* style.css */
 
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+main {
     background: #f9fafb;
     padding: 20px;
 }
@@ -55,8 +59,12 @@ textarea {
     height: 90px;
     resize: vertical;
 }
-button {
-    margin-top: 30px;
+.form-but {
+    padding-top: 30px;
+    display: flex;
+    gap: 15px;
+}
+.submit {
     width: 100%;
     padding: 14px;
     font-size: 1.15rem;
@@ -69,8 +77,24 @@ button {
     box-shadow: 0 6px 12px rgba(39,174,96,0.5);
     transition: background-color 0.3s ease;
 }
-button:hover {
+.submit:hover {
     background-color: #219150;
+}
+.cancel {
+    width: 100%;
+    padding: 14px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    background-color: grey;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+.cancel:hover {
+    background-color: rgba(0,0,0,0.1);
 }
 .error {
     color: #e74c3c;

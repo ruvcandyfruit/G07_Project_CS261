@@ -107,3 +107,5 @@ form.addEventListener('submit', function(event) {
         alert('เกิดข้อผิดพลาด: ' + error.message);
     });
 });
+
+const cancel = document.getElementById('cancel');
