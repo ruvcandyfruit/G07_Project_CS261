@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="homepage.css">    
     <link rel="stylesheet" href="all.css">
+    <link rel="stylesheet" href="petlisting.css">
     <link rel="icon" href="homepageResources/icon.png" type="image/x-icon">
     <title>Homepage | Pet Adoption System</title>    
 </head>
@@ -40,11 +41,20 @@
             <p>ร่วมเป็นส่วนหนึ่งในการต่อชีวิตเพื่อนตัวน้อย</p>
         </div>
         <!--animal cards-->
-        <div class="cards">
-            <h1>Pet Listing</h1>
-        </div>
-        
-        
+        <section class="pet-preview-section">
+            <div class="divider-container">
+                <div class="line"></div>
+                <h2 class="divider-text">Meet Our Lovely Pets</h2>
+                <div class="line"></div>
+            </div>
+            <p class="description">Here are some of our friends waiting for a new home.</p>
+
+            <div class="pet-list" id="homepage-pet-list"></div>
+
+            <div class="more-pets-container">
+                <a href="petlisting.html" class="more-pets-btn">View All Pets</a>
+            </div>
+        </section>
     </main>
 
     <!-- footer -->
@@ -72,5 +82,6 @@
         </div>
     </footer>
     <script src="all.js"></script>
+    <script src="homepage.js"></script>
 </body>
 </html>
