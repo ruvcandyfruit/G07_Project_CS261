@@ -48,6 +48,15 @@ main {
     text-align: left; /* ทำให้ข้อความทั้งหมดเริ่มจากด้านซ้าย */
 }
 
+/* --- สไตล์ของ h1, h2, และปุ่ม (ส่วนนี้ดีอยู่แล้วครับ) --- */
+.topic {
+    margin: 1rem 0 ;
+    color: var(--text-color);
+    font-size: 2.5rem;
+    font-family: 'Manrope', sans-serif;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
 /* --- ✨ 3. สไตล์สำหรับจอมือถือ (Responsive Magic!) ✨ --- */
 @media (min-width:400px) and (max-width: 768px) {
     .intro-content {
@@ -80,10 +89,7 @@ main {
     }
 }
 
-@media (max-width: 400px) {
-    .intro-content {
-        width:100px
-    }
+@media (min-width: 0px) and (max-width: 400px) {
     .intro-content p,.intro-content .more-intro-btn{
         display: none;
     }
@@ -92,15 +98,6 @@ main {
     }
 }
 
-
-/* --- สไตล์ของ h1, h2, และปุ่ม (ส่วนนี้ดีอยู่แล้วครับ) --- */
-.topic {
-    margin: 1rem 0 ;
-    color: var(--text-color);
-    font-size: 2.5rem;
-    font-family: 'Manrope', sans-serif;
-    text-shadow: 0 2px 5px rgba(0,0,0,0.3);
-}
 
 .intro-content p {
     padding: 1rem;
