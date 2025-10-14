@@ -1,13 +1,16 @@
-// --- Select elements once at the top ---
-const togglePassword = document.querySelector('#togglePassword');
-const passwordInput = document.querySelector('#password'); // << ประกาศแค่ตรงนี้ที่เดียว
-const loginButton = document.querySelector('.confirm-btn');
+// --- 1. เลือก Element เพิ่มเติม ---
+const registerButton = document.querySelector('.confirm-btn'); // เปลี่ยนชื่อเพื่อความชัดเจน
 const usernameInput = document.querySelector('#username');
+const emailInput = document.querySelector('#email'); // << เพิ่มเข้ามา
+const passwordInput = document.querySelector('#password');
+const togglePassword = document.querySelector('#togglePassword');
+
+// Error message elements
 const usernameError = document.querySelector('#username-error');
+const emailError = document.querySelector('#email-error'); // << เพิ่มเข้ามา
 const passwordError = document.querySelector('#password-error');
 
-
-// --- Toggle Password Functionality ---
+// --- Toggle Password Functionality (เหมือนเดิม) ---
 togglePassword.addEventListener('click', function () {
     const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
     passwordInput.setAttribute('type', type);
@@ -15,39 +18,59 @@ togglePassword.addEventListener('click', function () {
     this.classList.toggle('fa-eye-slash');
 });
 
-
-// --- Validation Functionality ---
-loginButton.addEventListener('click', function (event) {
+// --- Validation Functionality (อัปเดตใหม่) ---
+registerButton.addEventListener('click', function (event) {
     event.preventDefault();
 
-    // รีเซ็ตสถานะ
+    // --- 2. รีเซ็ตสถานะทั้งหมด (รวม email) ---
     usernameInput.classList.remove('error');
-    passwordInput.classList.remove('error'); // << สามารถใช้ตัวแปรเดิมได้เลย
+    emailInput.classList.remove('error'); // << เพิ่มเข้ามา
+    passwordInput.classList.remove('error');
+    
     usernameError.classList.remove('show');
+    emailError.classList.remove('show'); // << เพิ่มเข้ามา
     passwordError.classList.remove('show');
 
-    // ดึงค่าและตรวจสอบ
+    // --- 3. ดึงค่าและตรวจสอบ (รวม email) ---
     const username = usernameInput.value.trim();
-    const password = passwordInput.value.trim(); // << ใช้ตัวแปรเดิมได้เลย
+    const email = emailInput.value.trim(); // << เพิ่มเข้ามา
+    const password = passwordInput.value.trim();
     let isValid = true;
 
+    // Check Username
     if (username === '') {
-        usernameError.textContent = 'Please enter your username or email.';
+        usernameError.textContent = 'Please enter your username.';
         usernameError.classList.add('show');
         usernameInput.classList.add('error');
         isValid = false;
     }
 
-    if (password === '') {
-        passwordError.textContent = 'Please enter your password.';
-        passwordError.classList.add('show');
-        passwordInput.classList.add('error'); // << ใช้ตัวแปรเดิมได้เลย
+    // Check Email
+    if (email === '') {
+        emailError.textContent = 'Please enter your email address.';
+        emailError.classList.add('show');
+        emailInput.classList.add('error');
+        isValid = false;
+    } else if (!/^\S+@\S+\.\S+$/.test(email)) { // << ตรวจสอบรูปแบบอีเมล (Email Format Validation)
+        emailError.textContent = 'Please enter a valid email format.';
+        emailError.classList.add('show');
+        emailInput.classList.add('error');
         isValid = false;
     }
 
-    // ไปหน้าถัดไป
+    // Check Password
+    if (password === '') {
+        passwordError.textContent = 'Please enter your password.';
+        passwordError.classList.add('show');
+        passwordInput.classList.add('error');
+        isValid = false;
+    }
+
+    // --- 4. ถ้าทุกอย่างถูกต้อง ก็ไปหน้าถัดไป ---
     if (isValid) {
         console.log('Validation passed. Redirecting...');
+        // ในสถานการณ์จริง ตรงนี้จะส่งข้อมูลไปที่ Backend
         window.location.href = 'homepage.html';
+        alert('Registration form is valid!');
     }
 });
