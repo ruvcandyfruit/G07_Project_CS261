@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +19,8 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public UserDTO registerUser(UserRegisterDTO registerDTO) {
         // Check if username or email already exists
@@ -31,7 +34,7 @@ public class UserService {
         // Create new user
         User user = new User();
         BeanUtils.copyProperties(registerDTO, user);
-        user.setPassword("default"); // Set a default password since we're not using authentication
+        user.setPassword(passwordEncoder.encode(registerDTO.getPassword())); //Encode password
         user.setRole("USER");
         user.setActive(true);
 
@@ -72,5 +75,28 @@ public class UserService {
         UserDTO userDTO = new UserDTO();
         BeanUtils.copyProperties(user, userDTO);
         return userDTO;
+    }
+
+    public UserDTO loginUser(String email, String username, String password) throws Exception {
+    User user = null;
+
+    if (email != null && !email.isEmpty()) {
+        user = userRepository.findByEmail(email).orElse(null);
+    }
+
+    if (user == null && username != null && !username.isEmpty()) {
+        user = userRepository.findByUsername(username).orElse(null);
+    }
+
+    if (user == null) {
+        throw new Exception("User not found");
+    }
+
+    // Check password
+    if (!passwordEncoder.matches(password, user.getPassword())) {
+        throw new Exception("Invalid password");
+    }
+
+    return new UserDTO(user.getId(), user.getUsername(), user.getEmail());
     }
 }

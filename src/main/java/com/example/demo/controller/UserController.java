@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserRegisterDTO;
 import com.example.demo.service.UserService;
+import com.example.demo.model.User;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/users")
@@ -48,4 +50,15 @@ public class UserController {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody User loginRequest) {
+        try {
+            UserDTO userDTO = userService.loginUser(loginRequest.getEmail(), loginRequest.getUsername(), loginRequest.getPassword());
+            return ResponseEntity.ok(userDTO);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username/email or password");
+        }
+    }
+    
 }
