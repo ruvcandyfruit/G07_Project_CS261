@@ -23,7 +23,7 @@ import com.example.demo.repository.UserRepository;
 import lombok.Data;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/form")
 public class UserController {
     
     // --- (จำเป็นต้องมีเพื่อให้โค้ดนี้รันได้) ---
