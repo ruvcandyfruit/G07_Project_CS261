@@ -78,20 +78,13 @@ public class UserService {
     }
 
     public UserDTO loginUser(String email, String username, String password) throws Exception {
-    User user = null;
+    User user = userRepository.findByUsername(username)
+        .orElseThrow(() -> new Exception("User not found"));
 
-    if (email != null && !email.isEmpty()) {
-        user = userRepository.findByEmail(email).orElse(null);
+    if (!user.getEmail().equals(email)) {
+        throw new Exception("Email does not match username");
     }
-
-    if (user == null && username != null && !username.isEmpty()) {
-        user = userRepository.findByUsername(username).orElse(null);
-    }
-
-    if (user == null) {
-        throw new Exception("User not found");
-    }
-
+    
     // Check password
     if (!passwordEncoder.matches(password, user.getPassword())) {
         throw new Exception("Invalid password");
