@@ -17,8 +17,8 @@
         </div>
 
         <ul class="nav-links">
-            <li class="active"><a href="homepage.html" class="active">Homepage</a></li>
-            <li><a href="petlisting.html">Pet Listing</a></li>
+            <li class="active"><a href="homepage.html">Homepage</a></li>
+            <li><a href="petlisting.html" class="active">Pet Listing</a></li>
             <li><a href="contact.html">About/Contact Us</a></li>
         </ul> 
 
@@ -40,10 +40,9 @@
 </div>
     
 <div class="form">
-    <div id="successMsg" class="success-msg">ส่งข้อมูลเรียบร้อย ขอบคุณที่สนใจรับเลี้ยงสัตว์!</div>
 
     <!-- adoption form -->
-    <form id="adoptionForm" method="post" action="/submitAdoption" enctype="multipart/form-data">
+    <form id="adoptionForm" method="post" enctype="multipart/form-data">
 
         <!--- part 1 --->
         <div class="part">
@@ -60,6 +59,7 @@
 
             <label for="dob">Date of Birth <span class="required">*</span></label>
             <input type="date" id="dob" name="dob" min="1900-01-01" max="2025-12-31" required>
+            <div id="dobError" class="error"></div>
 
             <label for="phone">Phone Number <span class="required">*</span></label>
             <input type="tel" id="phone" name="phone" pattern="[0-9]{9,10}" placeholder="Enter your 10-digit phone number" required />
@@ -89,11 +89,12 @@
 
             <label>Type of Residence <span class="required">*</span></label>
             <div class="select">
-                <label><input type="radio" name="residenceType" value="house">House</label>
+                <label><input type="radio" name="residenceType" value="house" required>House</label>
                 <label><input type="radio" name="residenceType" value="townhouse">Townhouse</label>
                 <label><input type="radio" name="residenceType" value="condo">Condominium</label>
                 <label><input type="radio" name="residenceType" value="apartment">Apartment</label>
             </div>
+            <div id="residenceTypeError" class="error"></div>
 
             <label for="residenceDoc">Copy of House Registration <span class="required">*</span></label>
             <input type="file" id="residenceDoc" name="residenceDoc" accept=".pdf,.jpg,.jpeg,.png" required />
@@ -119,17 +120,20 @@
             <p>Agreement</p>
             <hr>
 
-            <label class="value"><input type="checkbox" id="trueInfor" required>
+            <label class="agreement"><input type="checkbox" id="trueInfor" required>
                 I certify that the information provided in this application is true and correct.
             </label>
+            <div id="trueInforError" class="error"></div>
 
-            <label class="value"><input type="checkbox" id="accecptRight" required>
+            <label class="agreement"><input type="checkbox" id="acceptRight" required>
                 I understand that the adoption organization has the right to refuse any application.
             </label>
+            <div id="acceptRightError" class="error"></div>
 
-            <label class="value"><input type="checkbox" id="homeVisits" required>
+            <label class="agreement"><input type="checkbox" id="homeVisits" required>
                 I agree to a potential home visit from an organization representative.
             </label>
+            <div id="homeVisitsError" class="error"></div>
         </div>  
 
         <!-- button part -->
@@ -166,7 +170,7 @@
 </footer>
 
 <script src="all.js"></script>
-<script src="userform.js"></script>
+<script src="testUserform.js"></script>
 
 </body>
 </html>

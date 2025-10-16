@@ -47,6 +47,7 @@ form {
     display: flex;
     flex-direction: column;
     gap: 50px;
+    margin: 0 20px;
 }
 
 .part p {
@@ -89,7 +90,6 @@ input[type="file"] {
     font-size: 1rem;
     font-weight: 500;
     font-family: 'Manrope', 'Mali', sans-serif;
-    color: #a8a8a8;
     border: 1.8px solid #a8a8a8;
     background-color: #FFFFFF;
     border-radius: 10px;
@@ -101,12 +101,11 @@ input::placeholder {
     opacity: 1;
 }
 
-input:valid,
-textarea:valid {
-    color: #010002;
+input[type="date"],
+input[type="file"] {
+    color: #a8a8a8;
 }
 
-/* input focus */
 input[type="text"]:focus,
 input[type="date"]:focus,
 input[type="number"]:focus,
@@ -116,13 +115,17 @@ textarea:focus,
 input[type="file"]:focus {
     outline: none;
     border-color: #4A69FF;
+    color: #010002;
+}
+
+input:valid {
+    color: black;
 }
 
 input[type="radio"],
 input[type="checkbox"] {
     accent-color: var(--primary-color);
 }
-
 
 textarea {
     height: 90px;
@@ -131,13 +134,19 @@ textarea {
 
 .select {
     display: flex;
-    justify-content: space-between;      
-    align-items: center;     
-    gap: 20px; 
+    flex-wrap: wrap;      
+    justify-content: space-between;  
+    gap: 10px 15px;     
+}
+
+@media (max-width: 768px) {
+    .select label {
+    flex: 0 0 48%;        /* แต่ละ label กว้างประมาณครึ่ง parent → 2 คอลัมน์ */
+    }
 }
 
 .select label,
-.value {
+.agreement {
     font-weight: 400;    
 }
 
@@ -197,15 +206,4 @@ input[type="checkbox"] {
     margin-top: 5px;
     line-height: 1.4;
     word-wrap: break-word;
-}
-
-.success-msg {
-    background: #d4edda;
-    color: #155724;
-    padding: 16px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    display: none;
-    font-weight: 600;
-    text-align: center;
 }
