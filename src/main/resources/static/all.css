@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Mali&family=Itim&family=Kodchasan&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap');
+
+* {
+    font-family: 'Manrope', 'Itim', sans-serif;
+}
 :root {
     --gray-bg: #f2f2f2;
     --transition: all 0.3s ease;
@@ -7,6 +13,7 @@
     --button-black:#010002;
     --background-light: #f9f9f9;
     --background-main: #E5EEFF;
+    --button-yellow: #ffd102;
 }
 
 /*----- header -----*/
@@ -100,8 +107,8 @@ header {
     }
 }
 
-/*----- Login button -----*/
-.login-btn {
+/*----- Logout button -----*/
+.logout-btn {
   border: 1px solid #000;
   background: transparent;
   border-radius: 20px;
@@ -112,7 +119,7 @@ header {
   font-family: 'Manrope', sans-serif;
 }
 
-.login-btn:hover {
+.logout-btn:hover {
   background-color: #000;
   color: #fff;
 }
