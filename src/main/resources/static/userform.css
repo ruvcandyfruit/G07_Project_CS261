@@ -1,124 +1,196 @@
-/* style.css */
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Manrope', 'Itim', sans-serif;
 }
+
 main {
-    background: #f9fafb;
-    padding: 20px;
+    background: #fbfbfb;
+    padding: 50px 0;
 }
+
+/*--- Title ---*/
+.title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 50px;
+}
+
+.title h1 {
+  text-align: center;
+  color: #010002;
+  letter-spacing: 0.1em;
+  word-spacing: 3px;
+  width: fit-content;
+  padding: 0 50px;
+}
+
+.title hr {
+  flex: 1;
+  height: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #FFD102;
+}
+
+/* --- main part ---*/
 .form {
-    max-width: 650px;
+    max-width: 800px;
     margin: 0 auto;
-    background: #fff;
-    padding: 30px 40px;
-    border-radius: 12px;
-    box-shadow: 0 12px 24px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
 }
-.form h1 {
-    text-align: center;
-    color: var(--text-color);
+
+/* --- form part ---*/
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
 }
-.form h2 {
-    text-indent: 25px;
-    font-weight: 500;
-    margin-top: 20px;
-    color: var(--text-color);
+
+.part p {
+    margin-bottom: 10px;
+    font-weight: 700;
+    color: rgba(1, 0, 2, 0.7);
 }
+
+.part hr {
+  flex: 1;
+  height: 2px;
+  border: none;
+  border-radius: 5px;
+  background-color: #FFD102;
+}
+
 label {
     display: block;
-    margin-top: 18px;
+    margin-top: 25px;
     font-size: 1em;
-    font-weight: 500;
-    color: var(--text-color);
+    font-weight: 700;
+    color: #010002;
 }
-.required { /* เพิ่มคลาสสำหรับเครื่องหมาย * สีแดง */
+
+.required { 
     color: red;
 }
+
+/* input style */
 input[type="text"],
+input[type="date"],
 input[type="number"],
 input[type="tel"],
 input[type="email"],
 textarea,
-select,
 input[type="file"] {
     width: 100%;
     padding: 12px 10px;
     margin-top: 6px;
     font-size: 1rem;
-    border: 1.8px solid transparent;
-    background-color: var(--background-main);
-    border-radius: 8px;
-    box-sizing: border-box;
+    font-weight: 500;
+    font-family: 'Manrope', 'Mali', sans-serif;
+    color: #a8a8a8;
+    border: 1.8px solid #a8a8a8;
+    background-color: #FFFFFF;
+    border-radius: 10px;
     transition: border-color 0.3s ease;
 }
+
+input::placeholder {
+    color: #a8a8a8;
+    opacity: 1;
+}
+
+input:valid,
+textarea:valid {
+    color: #010002;
+}
+
+/* input focus */
 input[type="text"]:focus,
+input[type="date"]:focus,
 input[type="number"]:focus,
 input[type="tel"]:focus,
+input[type="email"]:focus,
 textarea:focus,
-select:focus,
 input[type="file"]:focus {
     outline: none;
-    border-color: #3498db;
+    border-color: #4A69FF;
 }
+
+input[type="radio"],
+input[type="checkbox"] {
+    accent-color: var(--primary-color);
+}
+
+
 textarea {
     height: 90px;
     resize: vertical;
 }
+
 .select {
     display: flex;
     justify-content: space-between;      
     align-items: center;     
     gap: 20px; 
 }
-input[type="radio"] {
-    margin-right: 6px;
+
+.select label,
+.value {
+    font-weight: 400;    
 }
+
+input[type="radio"],
 input[type="checkbox"] {
     margin-right: 6px;
 }
-.form-but {
+
+/*--- button part ---*/
+.form-btn {
     padding-top: 30px;
     display: flex;
+    flex-direction: column;
     gap: 15px;
 }
-.submit {
+
+#submit {
     width: 100%;
     padding: 14px;
     font-size: 1.2rem;
-    background-color: #ffc107;
+    font-weight: 700;
+    background-color: grey;
     color: #333;
     border: none;
     border-radius: 10px;
-    cursor: pointer;
-    box-shadow: 0 6px 12px #c99c168d;
+    cursor: not-allowed;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     transition: background-color 0.3s ease;
 }
-.submit:hover {
+
+#submit.enabled:hover {
     background-color: #ffb300;
-    transform: translateY(-1px);
+    cursor: pointer;
 }
-.cancel {
+
+#cancel {
     width: 100%;
     padding: 14px;
     font-size: 1.2rem;
-    background-color: #e0e0e0;
+    font-weight: 700;
+    background-color: #FFFFFF;
     color: #333;
-    border: none;
+    border: 2px solid black;
     border-radius: 10px;
     cursor: pointer;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     transition: background-color 0.3s ease;
 }
-.cancel:hover {
-    background-color: #d0d0d0;
-    transform: translateY(-1px);
+
+#cancel:hover {
+    background-color: #e0dddd;
 }
+
 .error {
     color: #e74c3c;
     font-size: 0.9rem;

@@ -108,4 +108,35 @@ form.addEventListener('submit', function(event) {
     });
 });
 
-const cancel = document.getElementById('cancel');
+// ตรวจสอบว่าผู้ใช้กรอกข้อมูลครบทุกช่องก่อนจะสามารถกดปุ่ม submit ได้
+const submitBtn = document.getElementById('submit');
+
+function checkInputs() {
+  const inputs = form.querySelectorAll(
+  'input[required], textarea[required], input[type="checkbox"][required]'
+);
+
+    let allFilled = true;
+
+    inputs.forEach(input => {
+    if (input.type === 'checkbox') {
+        if (!input.checked) allFilled = false; // ถ้า checkbox ไม่ถูกติ้ก → false
+    } else {
+        if (input.value.trim() === '') allFilled = false; // สำหรับ input/textarea
+    }
+    });
+
+    if (allFilled) {
+        submitBtn.style.backgroundColor = '#ffc107'; // สีปกติเมื่อครบ
+        submitBtn.disabled = false;
+        submitBtn.classList.add('enabled'); // เพิ่ม class เพื่อใช้ hover
+    } else {
+        submitBtn.style.backgroundColor = 'gray';
+        submitBtn.disabled = true;
+        submitBtn.classList.remove('enabled');
+    }
+}
+
+// ตรวจสอบทุกครั้งที่ผู้ใช้พิมพ์
+form.addEventListener('input', checkInputs);
+form.addEventListener('change', checkInputs); // สำหรับ checkbox

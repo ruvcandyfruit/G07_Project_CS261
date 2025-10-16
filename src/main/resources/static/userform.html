@@ -31,94 +31,116 @@
         ☰
     </div>
 </header>
-
+    <!-- main part -->
 <main>
+<div class="title">
+    <hr>
+    <h1>Pet Adoption Online Form</h1>
+    <hr>
+</div>
+    
 <div class="form">
-    <h1>แบบฟอร์มขอรับเลี้ยงสัตว์</h1>
-
-    <h2>🔹ข้อมูลส่วนตัวของผู้ใช้</h2>
-
     <div id="successMsg" class="success-msg">ส่งข้อมูลเรียบร้อย ขอบคุณที่สนใจรับเลี้ยงสัตว์!</div>
 
+    <!-- adoption form -->
     <form id="adoptionForm" method="post" action="/submitAdoption" enctype="multipart/form-data">
-        <label for="firstName">ชื่อ <span class="required">*</span></label>
-        <input type="text" id="firstName" name="firstName" placeholder="ไม่ต้องใส่คำนำหน้า" required />
-        <div id="firstNameError" class="error"></div>
 
-        <label for="lastName">นามสกุล <span class="required">*</span></label>
-        <input type="text" id="lastName" name="lastName" required />
-        <div id="lastNameError" class="error"></div>
+        <!--- part 1 --->
+        <div class="part">
+            <p>Part 1: Applicant Information</p>
+            <hr>
 
-        <label for="age">อายุ <span class="required">*</span></label>
-        <input type="number" id="age" name="age" placeholder="เช่น 25" min="1" max="120" required />
-        <div id="ageError" class="error"></div>
+            <label for="firstName">First Name <span class="required">*</span></label>
+            <input type="text" id="firstName" name="firstName" placeholder="Enter your first name without the title." required />
+            <div id="firstNameError" class="error"></div>
 
-        <label for="phone">เบอร์โทรศัพท์ <span class="required">*</span></label>
-        <input type="tel" id="phone" name="phone" pattern="[0-9]{9,10}" placeholder="เช่น 0897654321" required />
-        <div id="phoneError" class="error"></div>
+            <label for="lastName">Last Name <span class="required">*</span></label>
+            <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" required />
+            <div id="lastNameError" class="error"></div>
 
-        <label for="email">อีเมล <span class="required">*</span></label>
-        <input type="email" id="email" name="email" placeholder="เช่น pet_adoption@email.com" required />
-        <div id="emailError" class="error"></div>
+            <label for="dob">Date of Birth <span class="required">*</span></label>
+            <input type="date" id="dob" name="dob" min="1900-01-01" max="2025-12-31" required>
 
-        <label for="address">ที่อยู่อาศัยปัจจุบัน <span class="required">*</span></label>
-        <textarea id="address" name="address" required></textarea>
-        <div id="addressError" class="error"></div>
+            <label for="phone">Phone Number <span class="required">*</span></label>
+            <input type="tel" id="phone" name="phone" pattern="[0-9]{9,10}" placeholder="Enter your 10-digit phone number" required />
+            <div id="phoneError" class="error"></div>
 
-        <label>ประเภทที่อยู่อาศัย <span class="required">*</span></label>
-        <div class="select">
-            <label><input type="radio" name="residenceType" value="singleHouse">บ้านเดี่ยว</label>
-            <label><input type="radio" name="residenceType" value="townHouse">ทาวน์เฮาส์</label>
-            <label><input type="radio" name="residenceType" value="condo">คอนโดมิเนียม</label>
-            <label><input type="radio" name="residenceType" value="apartment">อพาร์ทเมนท์</label>
-        </div>
-        
-        <label for="identityDoc">ไฟล์แนบสำเนาบัตรประชาชน (รูปภาพหรือไฟล์ .pdf) <span class="required">*</span></label>
-        <input type="file" id="identityDoc" name="identityDoc" accept=".pdf,.jpg,.jpeg,.png" required />
-        <div id="identityDocError" class="error"></div>
+            <label for="email">Email Address <span class="required">*</span></label>
+            <input type="email" id="email" name="email" placeholder="Enter your email address" required />
+            <div id="emailError" class="error"></div>
 
-        <label for="occupation">อาชีพ <span class="required">*</span></label>
-        <input type="text" id="occupation" name="occupation" required />
-        <div id="occupationError" class="error"></div>
+            <label for="occupation">Occupation <span class="required">*</span></label>
+            <input type="text" id="occupation" name="occupation" placeholder="e.g., Student, Graphic Designer" required />
+            <div id="occupationError" class="error"></div>
 
-        <label for="income">รายได้ต่อเดือน (บาท)<span class="required">*</span></label>
-        <input type="number" id="income" name="income" min="0" placeholder="เช่น 25000" required>
-        <div id="incomeError" class="error"></div>
-
-        <h2>🔹ข้อมูลสำหรับการเลี้ยงสัตว์</h2>
-
-        <label>เคยมีประสบการณ์ในการเลี้ยงสัตว์มาก่อนหรือไม่ <span class="required">*</span></label>
-        <div class="select">
-            <label><input type="radio" name="experience" value="not">ไม่เคยเลี้ยงสัตว์มาก่อน</label>
-            <label><input type="radio" name="experience" value="used">เคยเลี้ยงสัตว์</label>
-            <label><input type="radio" name="experience" value="current">เลี้ยงสัตว์อยู่ในปัจจุบัน</label>
+            <label for="identityDoc">Copy of National ID Card / Passport <span class="required">*</span></label>
+            <input type="file" id="identityDoc" name="identityDoc" accept=".pdf,.jpg,.jpeg,.png" required />
+            <div id="identityDocError" class="error"></div>
         </div>
 
-        <label>ถ้าเคยเลี้ยงสัตว์มาก่อนหรือเลี้ยงสัตว์อยู่ในปัจจุบัน กรุณาเลือกสัตว์ที่คุณเลี้ยง <span class="required">*</span></label>
-        <div class="select">
-            <label><input type="radio" name="pet" value="dog">สุนัข</label>
-            <label><input type="radio" name="pet" value="cat">แมว</label>
-            <label><input type="radio" name="pet" value="other">อื่นๆ</label>
+        <!--- part 2 --->
+        <div class="part">
+            <p>Part 2: Housing & Environment</p>
+            <hr>
+
+            <label for="address">Current Address <span class="required">*</span></label>
+            <textarea id="address" name="address" placeholder="Please provide your full current address, including house number, street, and postal code." required></textarea>
+            <div id="addressError" class="error"></div>
+
+            <label>Type of Residence <span class="required">*</span></label>
+            <div class="select">
+                <label><input type="radio" name="residenceType" value="house">House</label>
+                <label><input type="radio" name="residenceType" value="townhouse">Townhouse</label>
+                <label><input type="radio" name="residenceType" value="condo">Condominium</label>
+                <label><input type="radio" name="residenceType" value="apartment">Apartment</label>
+            </div>
+
+            <label for="residenceDoc">Copy of House Registration <span class="required">*</span></label>
+            <input type="file" id="residenceDoc" name="residenceDoc" accept=".pdf,.jpg,.jpeg,.png" required />
+            <div id="residenceDocError" class="error"></div>
         </div>
 
-        <label for="reason">เหตุผลที่อยากรับเลี้ยงสัตว์ <span class="required">*</span></label>
-        <textarea id="reason" name="reason" required placeholder="กรุณาเขียนเหตุผลของคุณ"></textarea>
-        <div id="reasonError" class="error"></div>
+        <!--- part 3 --->
+        <div class="part">
+            <p>Part 3: Lifestyle & Pet Experience</p>
+            <hr>
 
-        <label><input type="checkbox" id="pdpaConsent" required>
-            คุณยินยอมที่จะเปิดเผยข้อมูลส่วนบุคคลให้เจ้าหน้าที่ของมูลนิธิได้รับทราบ 
-            ข้อมูลส่วนตัวของคุณจะถูกเก็บเป็นความลับ ไม่มีการเผยแพร่ข้อมูลออกจากระบบแต่อย่างใด
-        </label>
+            <label for="experience">Have you owned pets before? If yes, please describe. <span class="required">*</span></label>
+            <textarea id="experience" name="experience" required placeholder="Describe the type of pets, how long you had them, and what happended to them."></textarea>
+            <div id="experienceError" class="error"></div>
 
-        <div class="form-but">
-           <button class="cancel">ยกเลิก</button>
-            <button class="submit" type="submit">ส่งแบบฟอร์ม</button> 
+            <label for="reason">Why do you want to adopt a pet?<span class="required">*</span></label>
+            <textarea id="reason" name="reason" required placeholder="Tell us about your readiness and what you can offer to pet."></textarea>
+            <div id="reasonError" class="error"></div>
         </div>
-        
+
+        <!--- part 4 --->
+        <div class="part">
+            <p>Agreement</p>
+            <hr>
+
+            <label class="value"><input type="checkbox" id="trueInfor" required>
+                I certify that the information provided in this application is true and correct.
+            </label>
+
+            <label class="value"><input type="checkbox" id="accecptRight" required>
+                I understand that the adoption organization has the right to refuse any application.
+            </label>
+
+            <label class="value"><input type="checkbox" id="homeVisits" required>
+                I agree to a potential home visit from an organization representative.
+            </label>
+        </div>  
+
+        <!-- button part -->
+        <div class="form-btn">
+            <button type="submit" id="submit" disabled>Apply to Adopt</button> 
+            <button type="button" id="cancel" onclick="history.back()">Cancel</button>
+        </div>
     </form>
 </div>
 </main>
-    <!-- footer -->
+    <!-- footer part -->
 <footer>
     <div class="footer">
         <div class="about">
