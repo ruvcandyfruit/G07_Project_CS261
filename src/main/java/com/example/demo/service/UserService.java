@@ -30,7 +30,10 @@ public class UserService {
         if (userRepository.existsByEmail(registerDTO.getEmail())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already exists");
         }
-
+        // Check if password is longer than 8 characters
+        if (registerDTO.getPassword().length() < 8) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password must be at least 8 characters long");
+        }
         // Create new user
         User user = new User();
         BeanUtils.copyProperties(registerDTO, user);
@@ -77,19 +80,27 @@ public class UserService {
         return userDTO;
     }
 
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+    
     public UserDTO loginUser(String email, String username, String password) throws Exception {
     User user = userRepository.findByUsername(username)
         .orElseThrow(() -> new Exception("User not found"));
 
-    if (!user.getEmail().equals(email)) {
+    if (!user.getEmail().equalsIgnoreCase(email)) {
         throw new Exception("Email does not match username");
     }
-    
+
     // Check password
     if (!passwordEncoder.matches(password, user.getPassword())) {
         throw new Exception("Invalid password");
     }
 
-    return new UserDTO(user.getId(), user.getUsername(), user.getEmail());
+    return convertToDTO(user);
     }
 }
