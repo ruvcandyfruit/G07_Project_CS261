@@ -1,6 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Mali&family=Itim&family=Kodchasan&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap');
+
+
 
 /* Reset พื้นฐาน */
 * {
@@ -11,7 +10,7 @@
 
 /* ตั้งค่า font และสีพื้นหลัง */
 body {
-    font-family: "Inter", sans-serif;
+    font-family: 'Manrope', 'Itim', sans-serif;
     background-color: #f9f9f9;
     color: #333;
     line-height: 1.5;
@@ -33,18 +32,76 @@ main section {
 }
 /*ส่วนหัวของเนื้อหา*/
 .pet-listing {
-    text-align: center;
+    text-align: center; /* << คำสั่งนี้จะจัด h1 และ p ที่อยู่ข้างในให้อยู่กลาง */
     padding: 2rem 1rem;
-}
-
-.pet-listing h1 {
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
-}
-
-.pet-listing .description {
-    color: #555;
     margin-bottom: 2rem;
+}
+
+.description {
+    padding: 1rem;
+    color: #5f5f5fd0;
+}
+.pet-card img {
+    height: 220px;
+    width: max-content;
+}
+
+.pet-card:hover {
+    transform: translateY(-5px);
+}
+
+.pet-card .image {
+    background: #ccc;
+    height: 180px;
+}
+
+.pet-list {
+    display: grid;
+    /* สร้าง grid ที่ปรับขนาดตามหน้าจออัตโนมัติ */
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
+    gap: 2rem; /* ระยะห่างระหว่างการ์ด */
+    max-width: 1200px;
+    margin: 3rem auto; /* จัดให้อยู่กลางจอและมีระยะห่างจาก filter */
+    padding: 0 1rem;
+}
+
+/* --- Individual Pet Card --- */
+.pet-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    flex-direction: column;
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+    text-align: center;
+    transition: var(--transition);
+}
+
+/* --- Hover Effect --- */
+.pet-card:hover {
+    transform: translateY(-8px); /* ทำให้การ์ดลอยขึ้นเล็กน้อย */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* เพิ่มเงาให้ชัดขึ้น */
+}
+
+/* --- Pet Image (สำคัญ) --- */
+.pet-card img {
+    width: 100%; /* ทำให้รูปภาพกว้างเต็มการ์ด */
+    height: 200px; /* กำหนดความสูงของรูปให้เท่ากันทุกการ์ด */
+    object-fit: cover; /* ✨ ทำให้รูปภาพเต็มพื้นที่โดยไม่เสียสัดส่วน (ดีที่สุด) ✨ */
+    display: block; /* ป้องกันช่องว่างแปลกๆ ใต้รูป */
+}
+
+/* --- Pet Name --- */
+.pet-card .name {
+    font-weight: bold;
+    text-align: center;
+    padding: 1rem;
+    margin: 0;
+    background: #fff
 }
 
 /*ส่วนของ filter*/
@@ -218,45 +275,26 @@ pre {
     }
 }
 
-/*ส่วนของ pet listing*/
-.pet-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 1rem; 
+/* --- Container for the "More Pets" button --- */
+.more-pets-container {
+    margin-top: 3rem; /* เพิ่มระยะห่างด้านบนจากการ์ด */
+    text-align: center; /* จัดให้ปุ่มอยู่กึ่งกลาง */
 }
 
-.pet-card {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 180px;
-    margin: 0 auto;
-    overflow: hidden;
-    text-align: center;
-    transition: var(--transition);
-    gap: 1rem;
+/* --- The "More Pets" button style --- */
+.more-pets-btn {
+    display: inline-block; /* 1. ทำให้ <a> เป็นบล็อกเพื่อกำหนดขนาดได้ */
+    background-color: var(--button-black, #010002); /* 2. สีพื้นหลัง (ดึงจาก :root) */
+    color: white; /* 3. สีตัวอักษร */
+    padding: 0.8rem 2.5rem; /* 4. เพิ่มพื้นที่ภายในปุ่ม (บน-ล่าง, ซ้าย-ขวา) */
+    border-radius: 50px; /* 5. ทำให้ขอบมนเป็นทรงแคปซูล */
+    text-decoration: none; /* 6. ลบเส้นใต้ของลิงก์ออก */
+    font-weight: bold;
+    transition: transform 0.2s ease, background-color 0.2s ease; /* 7. เพิ่มอนิเมชัน */
 }
 
-.pet-card img {
-    height: 220px;
-    width: max-content;
-}
-
-.pet-card:hover {
-    transform: translateY(-5px);
-}
-
-.pet-card .image {
-    background: #ccc;
-    height: 180px;
-}
-
-.pet-card .name {
-    border: 1px solid #aaa;
-    padding: 0.8rem;
-    background: #fff;
-    margin-top: auto;
+/* --- Hover Effect --- */
+.more-pets-btn:hover {
+    background-color: #333; /* เปลี่ยนสีพื้นหลังเล็กน้อย */
+    transform: scale(1.05); /* 8. ทำให้ปุ่มขยายขึ้นเล็กน้อยเมื่อเมาส์ชี้ */
 }
