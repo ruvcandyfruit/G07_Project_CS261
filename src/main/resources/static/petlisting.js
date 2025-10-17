@@ -1,21 +1,23 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
 
-    // --- 1. MOCK BACKEND DATA (ข้อมูลจำลองจากหลังบ้าน) ---
-    const mockPetData = [
-        { id: 1, name: "เมกาทรอน", image: "homepageResources/hq720.jpg", type: "dog", gender: "male", health: ["vaccinated"], breed: "Labubu", age: "young" },
-        { id: 2, name: "น้องส้ม", image: "https://i.pinimg.com/736x/0e/a3/6e/0ea36ee7bc893407525f1d30b72702cb.jpg", type: "cat", gender: "female", health: ["neutered", "vaccinated"], breed: "Persian", age: "baby" },
-        { id: 3, name: "บราวนี่", image: "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg", type: "dog", gender: "male", health: ["neutered"], breed: "Golden Retriever", age: "adult" },
-        { id: 4, name: "ลูน่า", image: "https://static.boredpanda.com/blog/wp-content/uploads/2016/02/big-sao-paulo-maine-coon-cat-lotus-2.jpg", type: "cat", gender: "female", health: ["vaccinated"], breed: "Maine Coon", age: "young" },
-        { id: 5, name: "ร็อคกี้", image: "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg", type: "dog", gender: "male", health: [], breed: "Beagle", age: "baby" },
-        { id: 6, name: "เจ้าสามสี", image: "https://static.onecms.io/wp-content/uploads/sites/47/2020/11/02/calico-cat-lying-on-side-1296548232-2000.jpg", type: "cat", gender: "female", health: ["neutered", "vaccinated"], breed: "Calico", age: "senior" }
-    ];
+    let mockPetData = []; 
+
+    try {
+        const response = await fetch("http://localhost:8081/api/pets"); //  ดึงข้อมูลจาก backend 
+        if (!response.ok) {
+            throw new Error("ไม่สามารถโหลดข้อมูลสัตว์เลี้ยงได้");
+        }
+        mockPetData = await response.json();
+    } catch (error) {
+        console.error("เกิดข้อผิดพลาดในการโหลดข้อมูลสัตว์เลี้ยง:", error);
+        alert("ไม่สามารถเชื่อมต่อกับฐานข้อมูลได้");
+    }
 
     // --- 2. เลือก ELEMENT ที่จำเป็น ---
     const petListContainer = document.getElementById('pet-list');
     const filterContainer = document.querySelector('.filter');
     const applyFiltersBtn = document.getElementById('apply-filters-btn');
 
-    
     // --- 3. ฟังก์ชันสำหรับ "แสดงผล" การ์ดสัตว์เลี้ยง ---
     const displayPets = (petsToDisplay) => {
         petListContainer.innerHTML = ""; // ล้างข้อมูลเก่าทิ้ง
@@ -29,10 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const petCard = document.createElement('div');
             petCard.className = 'pet-card';
             petCard.innerHTML = `
-                <img src="${pet.image}" alt="${pet.name}">
+               <img src="http://localhost:8081${pet.image || '/images/placeholder.jpg'}" alt="${pet.name}" />
                 <p class="name">${pet.name}</p>
             `;
-            // ✨ เพิ่ม Event Listener ให้คลิกแล้วไปหน้า Detail พร้อมส่ง ID ✨
+            // ✨ คลิกแล้วไปหน้า detail พร้อมส่ง id ✨
             petCard.addEventListener('click', () => {
                 window.location.href = `petdetail.html?id=${pet.id}`;
             });
@@ -40,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // --- 4. ฟังก์ชันสำหรับ "กรอง" ข้อมูล ---
+   
     const filterPets = () => {
         // รวบรวมค่า filter ที่เลือก (โค้ดส่วนนี้มาจากของคนสวยเลยครับ)
         const filters = collectFilterValues();
