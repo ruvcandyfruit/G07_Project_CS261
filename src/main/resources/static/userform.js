@@ -27,7 +27,7 @@ function checkInputs() {
         submitBtn.disabled = false;
         submitBtn.classList.add('enabled');     // เพิ่ม class เพื่อใช้ hover
     } else {
-        submitBtn.style.backgroundColor = 'grey';
+        submitBtn.style.backgroundColor = 'rgb(165, 159, 159)';
         submitBtn.disabled = true;
         submitBtn.classList.remove('enabled');
     }

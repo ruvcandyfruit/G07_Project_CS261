@@ -53,6 +53,7 @@ form {
 .part p {
     margin-bottom: 10px;
     font-weight: 700;
+    font-family: 'Mali', sans-serif;
     color: rgba(1, 0, 2, 0.7);
 }
 
@@ -69,6 +70,7 @@ label {
     margin-top: 25px;
     font-size: 1em;
     font-weight: 700;
+    font-family: 'Mali', sans-serif;
     color: #010002;
 }
 
@@ -166,9 +168,9 @@ input[type="checkbox"] {
 #submit {
     width: 100%;
     padding: 14px;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 700;
-    background-color: grey;
+    background-color: rgb(180, 179, 179);
     color: #333;
     border: none;
     border-radius: 10px;
@@ -185,7 +187,7 @@ input[type="checkbox"] {
 #cancel {
     width: 100%;
     padding: 14px;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 700;
     background-color: #FFFFFF;
     color: #333;
