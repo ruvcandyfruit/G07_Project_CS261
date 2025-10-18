@@ -111,7 +111,7 @@ body {
 }
 
 h1 {
-    font-size: 60px;
+    font-size: 48px;
     font-weight: bold;
     margin-bottom: 2rem;
     display: flex; /* ใช้ค่านี้เพื่อให้ background พอดีกับ text */
@@ -158,7 +158,7 @@ h1 {
 
 
 /* Styling for the input fields */
-.username-input,
+.username-input,.email-input,
 .password-input {
     width: 100%;
     padding: 12px 12px 12px 40px; /* Add padding to the left for the icon */

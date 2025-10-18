@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Mali&family=Itim&family=Kodchasan&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap');
+
+* {
+    font-family: 'Manrope', 'Itim', sans-serif;
+}
 :root {
     --gray-bg: #f2f2f2;
     --transition: all 0.3s ease;
@@ -30,7 +36,6 @@ header {
 .logo img {
     width: 60px;
     height: 60px;
-    /*margin: 10px 40px;*/
 }
 
 /*----- Menu -----*/
@@ -71,6 +76,7 @@ header {
         display: none;
         flex-direction: column;
         position: absolute;
+        z-index: 1;
         top: 60px;
         right: 20px;
         background: white;
@@ -101,8 +107,8 @@ header {
     }
 }
 
-/*----- Login button -----*/
-.login-btn {
+/*----- Logout button -----*/
+.logout-btn {
   border: 1px solid #000;
   background: transparent;
   border-radius: 20px;
@@ -113,7 +119,7 @@ header {
   font-family: 'Manrope', sans-serif;
 }
 
-.login-btn:hover {
+.logout-btn:hover {
   background-color: #000;
   color: #fff;
 }
@@ -146,6 +152,9 @@ footer {
     width: 100%;
     display: flex;
     flex-direction: column;
+}
+
+.about p {
     font-family: 'Mali', sans-serif;
 }
 

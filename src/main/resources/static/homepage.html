@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="homepage.css">    
     <link rel="stylesheet" href="all.css">
+    <link rel="stylesheet" href="petlisting.css">
     <link rel="icon" href="homepageResources/icon.png" type="image/x-icon">
     <title>Homepage | Pet Adoption System</title>    
 </head>
@@ -22,9 +23,8 @@
                     <li><a href="contact.html">About/Contact Us</a></li>
                 </ul> 
 
-                <a href="login.html">
-                    <button class="login-btn">Log in</button> 
-                </a>
+                <!-- Log out Button -->
+                <button class="logout-btn" id="logout-button">Log out</button>
             </nav>
 
             <div class="hamburger">
@@ -35,16 +35,32 @@
 
     <main>
         <!-- introduction-->
-        <div class="introduction">
-            <h1>เว็บไซต์ของมูลนิธิบ้านสัตว์เลี้ยง<br>ช่วยเหลือสัตว์ให้ได้มีบ้านแสนอบอุ่น</h1>
-            <p>ร่วมเป็นส่วนหนึ่งในการต่อชีวิตเพื่อนตัวน้อย</p>
-        </div>
+        <section class="introduction">
+            <img src="homepageResources/Introduction.png" alt="A welcoming scene with pets" class="intro-background-image">
+    
+            <div class="intro-content">
+                <h1 class="topic">Pet Adoption</h1>
+                <p>เว็บไซต์ของมูลนิธิบ้านสัตว์เลี้ยงช่วยเหลือสัตว์ให้ได้มีบ้านแสนอบอุ่น</p>
+                <div class="more-intro-container">
+                    <a href="petlisting.html" class="more-intro-btn">ร่วมเป็นส่วนหนึ่งในการต่อชีวิตเพื่อนตัวน้อย</a>
+                </div>
+            </div>
+        </section>
         <!--animal cards-->
-        <div class="cards">
-            <h1>Pet Listing</h1>
-        </div>
-        
-        
+        <section class="pet-preview-section">
+            <div class="divider-container">
+                <div class="line"></div>
+                <h2 class="divider-text">Meet Our Lovely Pets</h2>
+                <div class="line"></div>
+            </div>
+            <p class="description">นี่คือเพื่อนตัวน้อยของเราบางส่วนที่กำลังรอบ้านใหม่</p>
+
+            <div class="pet-list" id="homepage-pet-list"></div>
+
+            <div class="more-pets-container">
+                <a href="petlisting.html" class="more-pets-btn">View All Pets</a>
+            </div>
+        </section>
     </main>
 
     <!-- footer -->
@@ -72,5 +88,6 @@
         </div>
     </footer>
     <script src="all.js"></script>
+    <script src="homepage.js"></script>
 </body>
 </html>
