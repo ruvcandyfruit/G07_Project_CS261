@@ -30,6 +30,21 @@ public class Pet {
        
     }
 
+    public Pet(String petID, String type, String image, String name, int age, String gender, String breed, double weight, boolean sterilisation, boolean vaccine, String disease, String foodAllergy) {
+        this.petID = petID;
+        this.type = type;
+        this.name = name;
+        this.image = image;
+        this.age = age;
+        this.gender = gender;
+        this.breed = breed;
+        this.weight = weight;
+        this.sterilisation = sterilisation;
+        this.vaccine = vaccine;
+        this.disease = disease;
+        this.foodAllergy = foodAllergy;
+    }
+
     // --- Getters and Setters ---
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
