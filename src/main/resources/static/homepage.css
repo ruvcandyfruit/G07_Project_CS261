@@ -132,6 +132,9 @@ main {
     transform: scale(1.05); /* 8. ทำให้ปุ่มขยายขึ้นเล็กน้อยเมื่อเมาส์ชี้ */
 }
 
+.description {
+    font-size: 1.1rem
+}
 
 .cards {
     border: 1px solid grey;
