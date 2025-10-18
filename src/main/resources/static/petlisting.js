@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 1. MOCK BACKEND DATA (ข้อมูลจำลองจากหลังบ้าน) ---
+    // --- ฝากBE เปลี่ยนตรงนี้นะ 1. MOCK BACKEND DATA (ข้อมูลจำลองจากหลังบ้าน) --
     const mockPetData = [
         { id: 1, name: "เมกาทรอน", image: "homepageResources/hq720.jpg", type: "dog", gender: "male", health: ["vaccinated"], breed: "Labubu", age: "young" },
         { id: 2, name: "น้องส้ม", image: "https://i.pinimg.com/736x/0e/a3/6e/0ea36ee7bc893407525f1d30b72702cb.jpg", type: "cat", gender: "female", health: ["neutered", "vaccinated"], breed: "Persian", age: "baby" },
@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterContainer = document.querySelector('.filter');
     const applyFiltersBtn = document.getElementById('apply-filters-btn');
 
-    
     // --- 3. ฟังก์ชันสำหรับ "แสดงผล" การ์ดสัตว์เลี้ยง ---
     const displayPets = (petsToDisplay) => {
         petListContainer.innerHTML = ""; // ล้างข้อมูลเก่าทิ้ง
