@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 
@@ -58,7 +59,7 @@ public class UserController {
             UserDTO userDTO = userService.loginUser(loginRequest.getEmail(), loginRequest.getUsername(), loginRequest.getPassword());
             return ResponseEntity.ok(userDTO);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username/email or password");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Invalid username/email or password"));
         }
     }
     

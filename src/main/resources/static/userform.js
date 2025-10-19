@@ -98,15 +98,6 @@ form.addEventListener('submit', function(event) {
         method: 'POST',
         body: formData
     })
-    // .then(response => {
-    // console.log("Response status:", response.status);
-    // return response.json();
-    // })
-    // .then(data => {
-    //     console.log("Server response:", data);
-    //     // Pop up logic here
-    // })
-    // .catch(err => console.error("Fetch error:", err))
     .then(async response => {
         const text = await response.text();
         let data;
