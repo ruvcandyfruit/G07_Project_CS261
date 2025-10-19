@@ -67,10 +67,61 @@ registerButton.addEventListener('click', function (event) {
     }
 
     // --- 4. ถ้าทุกอย่างถูกต้อง ก็ไปหน้าถัดไป ---
-    if (isValid) {
-        console.log('Validation passed. Redirecting...');
-        // ในสถานการณ์จริง ตรงนี้จะส่งข้อมูลไปที่ Backend
-        window.location.href = 'homepage.html';
-        alert('Registration form is valid!');
-    }
+    // if (isValid) {
+    //     console.log('Validation passed. Redirecting...');
+    //     // ในสถานการณ์จริง ตรงนี้จะส่งข้อมูลไปที่ Backend
+    //     window.location.href = 'homepage.html';
+    //     alert('Registration form is valid!');
+    // }
+});
+document.addEventListener("DOMContentLoaded", function () {
+    const loginButton = document.querySelector(".confirm-btn");
+
+    loginButton.addEventListener("click", async (e) => {
+        e.preventDefault();
+
+        const username = document.getElementById("username").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        if (!username || !email || !password) {
+            alert("⚠️ Please fill in all fields before logging in.");
+            return;
+        }
+
+        // Build request payload
+        const loginData = {
+            username: username,
+            email: email,
+            password: password
+        };
+
+        try {
+            const response = await fetch("http://localhost:8080/api/users/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(loginData)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                alert("❌ Login failed: " + (errorData.message || "Invalid credentials"));
+                return;
+            }
+
+            const user = await response.json();
+
+            alert(`✅ Welcome back, ${user.username}!`);
+            localStorage.setItem("user", JSON.stringify(user));
+
+            // Redirect to homepage
+            window.location.href = "homepage.html";
+
+        } catch (error) {
+            console.error("Error:", error);
+            alert("🚨 Server error, please try again later.");
+        }
+    });
 });
