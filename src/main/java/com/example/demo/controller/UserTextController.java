@@ -23,12 +23,12 @@ import com.example.demo.repository.FormRepository;
 @RequestMapping("/api/userform")
 @CrossOrigin(origins = "*")
 public class UserTextController {
-    private final String uploadDir = "C:/Users/user/G07_Project_CS261/uploads/";
+    private final String uploadDir = System.getProperty("user.dir") + "/uploads/";
     @Autowired
     private FormRepository formRepository;
 
    @PostMapping("/submit")
-public ResponseEntity<?> submitForm(
+    public ResponseEntity<?> submitForm(
         @ModelAttribute UserFormDTO formDTO,
         @RequestParam("identityDoc") MultipartFile identityDoc,
         @RequestParam("residenceDoc") MultipartFile residenceDoc

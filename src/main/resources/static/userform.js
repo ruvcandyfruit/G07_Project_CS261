@@ -94,12 +94,33 @@ form.addEventListener('submit', function(event) {
 
     // ส่งฟอร์ม
     const formData = new FormData(form);
-    fetch('/api/userform/submit', {
+    fetch("http://localhost:8081/api/userform/submit", {
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
+    // .then(response => {
+    // console.log("Response status:", response.status);
+    // return response.json();
+    // })
+    // .then(data => {
+    //     console.log("Server response:", data);
+    //     // Pop up logic here
+    // })
+    // .catch(err => console.error("Fetch error:", err))
+    .then(async response => {
+        const text = await response.text();
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch {
+            data = {message: text};
+        }
+        if (!response.ok) throw new Error(data.meesage);
+        return data;
+    })
+    // .then(response => response.json())
     .then(data => {
+        console.log("Server response: ", data);
         // แสดงป๊อปอัพ
         const popup = document.createElement('div');
         popup.style.position = 'fixed';
