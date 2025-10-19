@@ -17,7 +17,7 @@ public class FileController {
 
     private final String UPLOAD_DIR = "C:/Users/user/G07_Project_CS261/uploads/";
 
-    @GetMapping("/api/users/uploads/{filename:.+}")
+    @GetMapping("/api/form/uploads/{filename:.+}")
     public ResponseEntity<Resource> getFile(@PathVariable String filename) throws MalformedURLException {
         Path filePath = Paths.get(UPLOAD_DIR + filename);
         Resource resource = new UrlResource(filePath.toUri());
