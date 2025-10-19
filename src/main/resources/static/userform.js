@@ -94,7 +94,7 @@ form.addEventListener('submit', function(event) {
 
     // ส่งฟอร์ม
     const formData = new FormData(form);
-    fetch('/api/submitAdoption', {
+    fetch('/api/userform/submit', {
         method: 'POST',
         body: formData
     })
