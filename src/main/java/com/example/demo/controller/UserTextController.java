@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.dto.UserFormDTO;
-import com.example.demo.model.User1;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.model.Form;
+import com.example.demo.repository.FormRepository;
 
 @RestController
 @RequestMapping("/api/userform")
@@ -25,7 +25,7 @@ import com.example.demo.repository.UserRepository;
 public class UserTextController {
     private final String uploadDir = "C:/Users/user/G07_Project_CS261/uploads/";
     @Autowired
-    private UserRepository user1Repository;
+    private FormRepository formRepository;
 
    @PostMapping("/submit")
 public ResponseEntity<?> submitForm(
@@ -47,7 +47,7 @@ public ResponseEntity<?> submitForm(
         residenceDoc.transferTo(new File(residencePath));
 
         // map DTO ไป entity
-        User1 user = new User1();
+        Form user = new Form();
         user.setFirstName(formDTO.getFirstName());
         user.setLastName(formDTO.getLastName());
         user.setDob(formDTO.getDob());
@@ -64,7 +64,7 @@ public ResponseEntity<?> submitForm(
         user.setIdentityDoc(identityPath);
         user.setResidenceDoc(residencePath);
 
-        user1Repository.save(user);
+        formRepository.save(user);
 
         return ResponseEntity.ok().body(java.util.Collections.singletonMap("message", "Form submitted successfully!"));
     } catch (IOException e) {
@@ -76,7 +76,7 @@ public ResponseEntity<?> submitForm(
 public ResponseEntity<?> getAllUsers() {
     try {
         // ดึง entity ทั้งหมด
-        java.util.List<User1> users = user1Repository.findAll();
+        java.util.List<Form> users = formRepository.findAll();
 
         // map entity -> DTO
         java.util.List<UserFormDTO> userDTOs = users.stream().map(user -> {
