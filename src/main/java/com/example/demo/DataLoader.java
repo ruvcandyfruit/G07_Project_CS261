@@ -22,8 +22,11 @@ public class DataLoader implements CommandLineRunner {
         // --- Seed Sample Pets ---
         if (petRepository.count() == 0) {
             petRepository.saveAll(List.of(
-                new Pet("1", "Dog", "/images/cat01.jpg", "Luna", 3, "Female", "Bulldog", 20.00, true, false, "None", "Nuh"),
-                new Pet("2", "Cat", "https://your-image-folder/luna.jpg", "Nunie", 50, "Male", "Pallas", 1.00, true, true, "None", "Yuh")
+                new Pet("D001", "Dog", "/images/dog02.jpg", "Shokun", 2, "Male", "Shiba Inu", 10.00, true, true, "None", "None"),
+                new Pet("C001", "Cat", "/images/cat01.jpg", "Hunnie", 2, "Female", "Siberian", 5.50, true, true, "None", "None"),
+                new Pet("C002", "Cat", "/images/sphinx.jpg", "Bruno", 1, "Male", "Sphynx", 3.80, true, true, "None", "Fish"),
+                new Pet("D002", "Dog", "/images/doggo.jpg", "Cindy", 1, "Female", "Golden Retriever", 28, false, true, "None", "None"),
+                new Pet("D003", "Dog", "/images/poodle.jpg", "Luna", 1, "Female", "Poodle Toy", 4.2, false, true, "None", "Chicken")
             ));
         }
     }
