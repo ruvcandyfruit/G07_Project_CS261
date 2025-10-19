@@ -9,7 +9,7 @@
     <title>Pet Adoption Form | Pet Adoption System</title>
 </head>
 <body>
-    <!-- navigation bar-->
+<!-- navigation bar-->
 <header>
     <nav class="navbar">
         <div class="logo">
@@ -42,7 +42,10 @@
 <div class="form">
 
     <!-- adoption form -->
-    <form id="adoptionForm" method="post" enctype="multipart/form-data">
+    <form id="adoptionForm" method="post" enctype="multipart/form-data"></form>
+    <!--<form id="adoptionForm" method="post" action="/api/users" enctype="multipart/form-data"></form>
+    <form id="adoptionForm" method="post" action="/submitAdoption" enctype="multipart/form-data">-->
+    <!--<div id="successMsg" class="success-msg">ส่งข้อมูลเรียบร้อย ขอบคุณที่สนใจรับเลี้ยงสัตว์!</div>-->
 
         <!--- part 1 --->
         <div class="part">
@@ -94,7 +97,6 @@
                 <label><input type="radio" name="residenceType" value="condo">คอนโดมิเนียม</label>
                 <label><input type="radio" name="residenceType" value="apartment">อพาร์ตเมนต์</label>
             </div>
-            <div id="residenceTypeError" class="error"></div>
 
             <label for="residenceDoc">สำเนาทะเบียนบ้าน <span class="required">*</span></label>
             <input type="file" id="residenceDoc" name="residenceDoc" accept=".pdf,.jpg,.jpeg,.png" required />
@@ -134,7 +136,7 @@
                 ฉันยินยอมให้ตัวแทนขององค์กรไปเยี่ยมบ้านเพื่อประเมินสภาพแวดล้อมก่อนการรับเลี้ยงสัตว์
             </label>
             <div id="homeVisitsError" class="error"></div>
-        </div>  
+        </div>
 
         <!-- button part -->
         <div class="form-btn">

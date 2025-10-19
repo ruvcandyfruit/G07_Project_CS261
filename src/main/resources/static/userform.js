@@ -42,10 +42,14 @@ form.addEventListener('submit', function(event) {
     event.preventDefault();
     let valid = true;
 
+    //successMsg.style.display = 'none';
+
+     // เคลียร์ข้อความ error
     const inputs = form.querySelectorAll('input[required], textarea[required]');
     inputs.forEach(input => {
         const errorEl = document.getElementById(input.id + 'Error');
         if (errorEl) errorEl.textContent = '';
+
 
         if (input.type === 'text' || input.type === 'textarea') {
             if (input.value.trim() === '') {
