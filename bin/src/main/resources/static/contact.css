@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Mali&family=Itim&family=Kodchasan&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap');
+
+/*----- header -----*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/*----- main -----*/
+main {
+  width: 100%;
+  padding: 50px 100px;
+}
+
+.main-about {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.main-about p {
+  text-align: center;
+  line-height: 1.8;
+  font-family: 'Mali', sans-serif;
+  padding: 100px 0;
+}
+
+.main-contact {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.contact {
+  padding: 50px 40px;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.title p {
+  text-align: center;
+  letter-spacing: 0.1em;
+  word-spacing: 3px;
+  width: fit-content;
+  padding: 0 50px;
+  font-family: 'Manrope', sans-serif;
+}
+
+hr {
+  flex: 1;
+  height: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #FFD102;
+}

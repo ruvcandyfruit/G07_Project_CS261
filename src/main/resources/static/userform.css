@@ -45,6 +45,7 @@ form {
     display: flex;
     flex-direction: column;
     gap: 50px;
+    margin: 0 20px;
 }
 
 .part p {
