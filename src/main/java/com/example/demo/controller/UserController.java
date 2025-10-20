@@ -1,131 +1,76 @@
 package com.example.demo.controller;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths; // ใช้ * เพื่อรวม import ที่จำเป็น
-import java.util.List;
-import java.util.UUID;
-
+import com.example.demo.dto.UserDTO;
+import com.example.demo.dto.UserRegisterDTO;
+import com.example.demo.service.UserService;
+import com.example.demo.model.User;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.dto.User1Dto;
-import com.example.demo.model.User1;
-import com.example.demo.repository.UserRepository;
+import java.util.List;
+import java.util.Map;
 
-import lombok.Data;
+
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = "*")
 public class UserController {
-    
-    // --- (จำเป็นต้องมีเพื่อให้โค้ดนี้รันได้) ---
-    // *ต้องสร้าง UserRegistrationDto.java ก่อน*
-    @Data
-    public static class UserRegistrationDto {
-        private String firstName;
-        private String lastName;
-        private String age;
-        private String phone;
-        private String address;
-        private String career;
 
-    }
-    // ------------------------------------------
-    
     @Autowired
-    private UserRepository userRepository;
-    
-    private static final String UPLOAD_DIR = "uploads/";
+    private UserService userService;
 
- 
+    @PostMapping("/register")
+    public ResponseEntity<UserDTO> registerUser(@Valid @RequestBody UserRegisterDTO registerDTO) {
+        UserDTO userDTO = userService.registerUser(registerDTO);
+        return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
+    }
 
-    // GET /api/users - ดึงข้อมูลผู้ใช้ทั้งหมด (เมธอดเดิม)
     @GetMapping
-    public List<User1> getAllUsers() {
-        return userRepository.findAll();
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<UserDTO> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
     }
-    
-    // **เมธอดที่ถูกแก้ไขให้รับ DTO และ File**
-    @PostMapping 
-    public User1Dto createUser(
-        @ModelAttribute UserRegistrationDto userDto, // ใช้ @ModelAttribute สำหรับ Text fields จาก form-data
-        @RequestParam("profileImageUrl") MultipartFile file) throws IOException { // ใช้ @RequestParam สำหรับไฟล์
-        
-        String imageUrl = null;
-        
-        // 1. จัดการไฟล์ (บันทึกไฟล์และรับ URL)
-        if (!file.isEmpty()) {
-            imageUrl = saveImageToFileSystem(file);
-        }
 
-        // 2. แปลง DTO เป็น Model
-        User1 userModel = convertToModel(userDto);
-        // 3. ตั้งค่า URL ภาพใน Model
-        userModel.setProfileImageUrl(imageUrl); 
-        
-        // 4. บันทึก Model ลงฐานข้อมูล
-        User1 savedUser = userRepository.save(userModel); 
-        
-        // 5. แปลง Model ที่มี ID แล้ว กลับไปเป็น DTO
-        return convertToDto(savedUser); 
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+        UserDTO userDTO = userService.getUserById(id);
+        return ResponseEntity.ok(userDTO);
     }
-    
-    // --- เมธอดช่วยในการบันทึกไฟล์ ---
-    private String saveImageToFileSystem(MultipartFile file) throws IOException {
-        Path uploadPath = Paths.get(UPLOAD_DIR);
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
-        }
-        String originalFilename = file.getOriginalFilename();
-        String extension = "";
-        if (originalFilename != null && originalFilename.contains(".")) {
-             extension = originalFilename.substring(originalFilename.lastIndexOf("."));
-        }
-        String uniqueFilename = UUID.randomUUID().toString() + extension;
-        
-        Path filePath = uploadPath.resolve(uniqueFilename);
-        Files.copy(file.getInputStream(), filePath, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
 
-        
-        return "/uploads/" + uniqueFilename;
- 
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserDTO userDTO) {
+        UserDTO updatedUser = userService.updateUser(id, userDTO);
+        return ResponseEntity.ok(updatedUser);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody User loginRequest) {
+        try {
+            UserDTO userDTO = userService.loginUser(loginRequest.getEmail(), loginRequest.getUsername(), loginRequest.getPassword());
+            return ResponseEntity.ok(userDTO);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Invalid username/email or password"));
+        }
     }
     
-    
-    // --- เมธอดช่วยในการแปลงข้อมูล ---
-    
-    private User1 convertToModel(UserRegistrationDto dto) { // เปลี่ยน DTO ที่รับเข้า
-        User1 model = new User1();
-        model.setFirstName(dto.getFirstName());
-        model.setLastName(dto.getLastName());
-        model.setAge(dto.getAge());
-        model.setPhone(dto.getPhone());
-        model.setAddress(dto.getAddress());
-        model.setCareer(dto.getCareer());
-        // ต้องให้ Model มี setProfileImageUrl ด้วย
-        return model;
+    @GetMapping("/check-username")
+    public ResponseEntity<Boolean> checkUsername(@RequestParam String username) {
+        boolean exists = userService.existsByUsername(username);
+        return ResponseEntity.ok(exists);
     }
-    
-    private User1Dto convertToDto(User1 model) {
-        User1Dto dto = new User1Dto();
-        dto.setId(model.getId());
-        dto.setFirstName(model.getFirstName());
-        dto.setLastName(model.getLastName());
-        dto.setAge(model.getAge());
-        dto.setPhone(model.getPhone());
-        dto.setAddress(model.getAddress());
-        dto.setCareer(model.getCareer());
-        // ต้องให้ DTO มี getProfileImageUrl ด้วย
-        dto.setProfileImageUrl(model.getProfileImageUrl()); 
-       
-        return dto;
+    @GetMapping("/check-email")
+    public ResponseEntity<Boolean> checkEmail(@RequestParam String email) {
+        boolean exists = userService.existsByEmail(email);
+        return ResponseEntity.ok(exists);
     }
 }

@@ -35,17 +35,15 @@
 <main>
 <div class="title">
     <hr>
-    <h1>Pet Adoption Online Form</h1>
+    <h1>แบบฟอร์มส่งคำขอรับเลี้ยงสัตว์</h1>
     <hr>
 </div>
     
 <div class="form">
 
     <!-- adoption form -->
-    <form id="adoptionForm" method="post" enctype="multipart/form-data"></form>
-    <!--<form id="adoptionForm" method="post" action="/api/users" enctype="multipart/form-data"></form>
-    <form id="adoptionForm" method="post" action="/submitAdoption" enctype="multipart/form-data">-->
-    <!--<div id="successMsg" class="success-msg">ส่งข้อมูลเรียบร้อย ขอบคุณที่สนใจรับเลี้ยงสัตว์!</div>-->
+    <form id="adoptionForm" method="post" action="/api/userform/submit" enctype="multipart/form-data">
+
 
         <!--- part 1 --->
         <div class="part">
@@ -122,17 +120,17 @@
             <p>Agreement</p>
             <hr>
 
-            <label class="agreement"><input type="checkbox" id="trueInfor" required>
+            <label class="agreement"><input type="checkbox" id="trueInfo" name="trueInfo" required>
                 ฉันขอรับรองว่าข้อมูลที่ให้ไว้ในใบสมัครนี้เป็นความจริงและถูกต้องทุกประการ
             </label>
             <div id="trueInforError" class="error"></div>
 
-            <label class="agreement"><input type="checkbox" id="acceptRight" required>
+            <label class="agreement"><input type="checkbox" id="acceptRight" name="acceptRight" required>
                 ฉันเข้าใจว่ามูลนิธิมีสิทธิ์ที่จะปฏิเสธการส่งคำขอรับเลี้ยงสัตว์ใดๆ โดยไม่ต้องแจ้งให้ทราบล่วงหน้า
             </label>
             <div id="acceptRightError" class="error"></div>
 
-            <label class="agreement"><input type="checkbox" id="homeVisits" required>
+            <label class="agreement"><input type="checkbox" id="homeVisits" name="homeVisits" required>
                 ฉันยินยอมให้ตัวแทนขององค์กรไปเยี่ยมบ้านเพื่อประเมินสภาพแวดล้อมก่อนการรับเลี้ยงสัตว์
             </label>
             <div id="homeVisitsError" class="error"></div>

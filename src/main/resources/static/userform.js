@@ -42,8 +42,6 @@ form.addEventListener('submit', function(event) {
     event.preventDefault();
     let valid = true;
 
-    //successMsg.style.display = 'none';
-
      // เคลียร์ข้อความ error
     const inputs = form.querySelectorAll('input[required], textarea[required]');
     inputs.forEach(input => {
@@ -98,12 +96,24 @@ form.addEventListener('submit', function(event) {
 
     // ส่งฟอร์ม
     const formData = new FormData(form);
-    fetch('/api/submitAdoption', {
+    fetch("http://localhost:8081/api/userform/submit", {
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
+    .then(async response => {
+        const text = await response.text();
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch {
+            data = {message: text};
+        }
+        if (!response.ok) throw new Error(data.meesage);
+        return data;
+    })
+    // .then(response => response.json())
     .then(data => {
+        console.log("Server response: ", data);
         // แสดงป๊อปอัพ
         const popup = document.createElement('div');
         popup.style.position = 'fixed';

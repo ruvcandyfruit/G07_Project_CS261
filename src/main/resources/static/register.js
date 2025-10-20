@@ -115,3 +115,58 @@ function showMessage(element, message, type) {
         element.classList.add(type, 'show');
     }
 }
+document.addEventListener("DOMContentLoaded", function () {
+    const registerButton = document.querySelector(".confirm-btn");
+
+    registerButton.addEventListener("click", async (e) => {
+        e.preventDefault();
+
+        const username = document.getElementById("username").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
+        const confirmPassword = document.getElementById("confirm-password").value.trim();
+
+        if (!username || !email || !password || !confirmPassword) {
+            alert("Please fill in all fields.");
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            alert("Passwords do not match!");
+            return;
+        }
+
+        // Create the object to send to backend
+        const userData = {
+            username: username,
+            email: email,
+            password: password
+        };
+
+        try {
+            const response = await fetch("http://localhost:8081/api/users/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(userData)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                alert("❌ Registration failed: " + (errorData.message || "Unknown error"));
+                return;
+            }
+
+            const data = await response.json();
+            alert("✅ Account created successfully! Welcome, " + data.username);
+
+            // Redirect to login page
+            window.location.href = "login.html";
+
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Server error. Please try again later.");
+        }
+    });
+});
