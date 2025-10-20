@@ -98,11 +98,11 @@ signupButton.addEventListener('click', function(event) {
         showMessage(confirmPasswordMessage, '', '');
     }
 
-    // --- 5. ถ้าทุกอย่างถูกต้อง ก็ส่งฟอร์ม ---
-    if (isValid) {
-        alert('Registration successful!');
-        window.location.href = 'login.html';
-    }
+    // // --- 5. ถ้าทุกอย่างถูกต้อง ก็ส่งฟอร์ม ---
+    // if (isValid) {
+    //     alert('Registration successful!');
+    //     window.location.href = 'login.html';
+    // }
 });
 
 
