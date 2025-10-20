@@ -1,0 +1,69 @@
+version: "3.9"
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      SA_PASSWORD: "YourStrong@Passw0rd"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    networks:
+      - petadopt-net
+    volumes:
+      - mssql-data:/var/opt/mssql
+      - ./init-db:/init-db:ro
+    # Start SQL Server, wait a bit, then run init.sql to create DB if missing
+    command: >
+      /bin/bash -c "
+        /opt/mssql/bin/sqlservr &
+        pid=$!;
+        echo '⏳ Waiting for SQL Server to start...';
+        # small buffer so sqlcmd can connect reliably
+        sleep 15;
+        echo '🚀 Running initialization script (create DB if missing)...';
+        /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'YourStrong@Passw0rd' -i /init-db/init.sql -C || true;
+        wait $pid
+      "
+    healthcheck:
+      # server-only healthcheck; the app script will check the DB existence
+      test: ["CMD", "/opt/mssql-tools18/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "YourStrong@Passw0rd", "-Q", "SELECT 1", "-C"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+
+  petadopt:
+    build: .
+    container_name: petadopt
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    ports:
+      - "8081:8081"
+    environment:
+      # DB connection
+      SPRING_DATASOURCE_URL: "jdbc:sqlserver://sqlserver:1433;databaseName=petadopt;encrypt=false;trustServerCertificate=true"
+      SPRING_DATASOURCE_USERNAME: "sa"
+      SPRING_DATASOURCE_PASSWORD: "YourStrong@Passw0rd"
+      # Hibernate
+      SPRING_JPA_HIBERNATE_DDL_AUTO: "update"
+      SPRING_JPA_SHOW_SQL: "true"
+      # Vars used by wait-for-db.sh
+      DB_HOST: "sqlserver"
+      DB_NAME: "Petadopt"
+      DB_USER: "sa"
+      DB_PASS: "YourStrong@Passw0rd"
+    networks:
+      - petadopt-net
+    volumes:
+      - ./uploads:/app/uploads
+      - ./docker/wait-for-db.sh:/wait-for-db.sh:ro
+    # 👇 this script blocks until *Bookstore* DB exists, then starts the app
+    command: ["/bin/sh", "/wait-for-db.sh"]
+
+networks:
+  petadopt-net:
+
+volumes:
+  mssql-data:
