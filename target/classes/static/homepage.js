@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         pets.forEach(pet => {
             const petCardLink = document.createElement('a');
-            petCardLink.href = `petdetail.html?id=${pet.id}`;
+            petCardLink.href = `/User/petdetail.html?id=${pet.id}`;
             petCardLink.className = 'pet-card';
             petCardLink.innerHTML = `
                 <img src="http://localhost:8081${pet.image || '/images/placeholder.jpg'}" 

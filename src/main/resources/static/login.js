@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
             localStorage.setItem("user", JSON.stringify(user));
 
             // Redirect to homepage
-            window.location.href = "homepage.html";
+            window.location.href = "index.html";
 
         } catch (error) {
             console.error("Error:", error);

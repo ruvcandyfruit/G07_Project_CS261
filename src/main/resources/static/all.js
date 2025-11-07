@@ -29,6 +29,6 @@ if (logoutButton) {
         
         // 5. "แทนที่" หน้าปัจจุบันด้วยหน้า login.html
         // คำสั่งนี้จะไม่ถูกบันทึกใน history ทำให้กดย้อนกลับไม่ได้
-        window.location.replace('login.html');
+        window.location.replace('/login.html');
     });
 }
