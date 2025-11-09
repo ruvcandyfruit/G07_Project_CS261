@@ -59,9 +59,9 @@ form.addEventListener('submit', function(event) {
                 valid = false;
             }
         } else if (input.type === 'tel') {
-            const phonePattern = /^[0-9]{9,10}$/;
+            const phonePattern = /^[0-9]{10}$/;
             if (!phonePattern.test(input.value.trim())) {
-                errorEl.textContent = 'Please enter a 9-10 digit phone number.';
+                errorEl.textContent = 'Please enter a 10 digit phone number.';
                 valid = false;
             }
         } else if (input.type === 'date') {
@@ -106,30 +106,64 @@ form.addEventListener('submit', function(event) {
         } catch {
             data = {message: text};
         }
-        if (!response.ok) throw new Error(data.meesage);
+        if (!response.ok) throw new Error(data.message);
         return data;
     })
     // .then(response => response.json())
     .then(data => {
         console.log("Server response: ", data);
-        // แสดงป๊อปอัพ
-        const popup = document.createElement('div');
-        popup.style.position = 'fixed';
-        popup.style.top = '50%';
-        popup.style.left = '50%';
-        popup.style.transform = 'translate(-50%, -50%)';
-        popup.style.background = 'white';
-        popup.style.padding = '20px';
-        popup.style.border = '2px solid black';
-        popup.innerHTML = `
-        <p>Form submitted successfully!</p>
-        <button id="goHome">Back to Homepage</button>
-        `;
-        document.body.appendChild(popup);
 
+        // แสดง overlay
+        const overlay = document.getElementById('overlay');
+        const popup = document.getElementById('popup');
+        
+        // แสดงข้อความใน popup
+        popup.querySelector('h1').textContent = 'ส่งคำขอรับเลี้ยงสัตว์สำเร็จ !';
+
+        // แสดง overlay และ popup
+        overlay.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // ปิด scroll ด้านหลัง
+
+        // ปุ่มกลับหน้า homepage
         document.getElementById('goHome').addEventListener('click', () => {
-        window.location.href = '/homepage.html'; // กลับ homepage
+            const overlay = document.getElementById('overlay');
+            overlay.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            window.location.href = '/index.html';
+        });
+
+        // ปุ่มไปดูสถานะคำขอ
+        document.getElementById('goStatus').addEventListener('click', () => {
+            const overlay = document.getElementById('overlay');
+            overlay.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            window.location.href = '/User/status.html';
         });
     })
-    .catch(err => console.error(err));
+    .catch(err => {
+        console.error("Error:", err);
+
+        const overlay = document.getElementById('overlay');
+        const popup = document.getElementById('popup');
+
+        overlay.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+
+        // แสดงข้อความ error ใน popup
+        popup.querySelector('h1').textContent = 'ส่งคำขอไม่สำเร็จ \n กรุณาลองอีกครั้ง !';
+        
+        // ปิดการแสดงแถบปุ่ม
+        const goButton = document.getElementById('goButton')
+        goButton.style.display = 'none';
+
+        // ปิด popup โดยไม่เปลี่ยนหน้า
+        const close = document.getElementById('close')
+        close.addEventListener('click', () => {
+            const overlay = document.getElementById('overlay');
+            // ทำให้เหมือนเดิม
+            overlay.style.display = 'none';
+            document.body.style.overflow = 'auto'; // กลับมา scroll ได้
+            goButton.style.display = 'flex';
+        });
+    });
 });
