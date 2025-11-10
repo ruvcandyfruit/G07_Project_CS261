@@ -116,8 +116,13 @@ document.addEventListener("DOMContentLoaded", function () {
             alert(`✅ Welcome back, ${user.username}!`);
             localStorage.setItem("user", JSON.stringify(user));
 
-            // Redirect to homepage
-            window.location.href = "index.html";
+
+            // Redirect ตาม role
+            if (user.role === 'ADMIN') {
+                window.location.href = 'Admin/dashboard.html';
+            } else {
+               window.location.href = 'index.html';
+            }
 
         } catch (error) {
             console.error("Error:", error);
