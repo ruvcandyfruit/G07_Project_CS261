@@ -47,15 +47,29 @@ document.addEventListener('DOMContentLoaded', async () => {
         // รวบรวมค่า filter ที่เลือก (โค้ดส่วนนี้มาจากของคนสวยเลยครับ)
         const filters = collectFilterValues();
 
+        const mapAgeGroup = (age) => {
+        if (age <= 1) return "baby";
+        if (age <= 5) return "young";
+        if (age <= 10) return "adult";
+        return "senior";
+        };
+
         // เริ่มกรองจากข้อมูลทั้งหมด
         let filteredPets = mockPetData.filter(pet => {
-            let isMatch = true;
-            if (filters.type && pet.type !== filters.type) isMatch = false;
-            if (filters.gender && pet.gender !== filters.gender) isMatch = false;
-            if (filters.age && pet.age !== filters.age) isMatch = false;
-            if (filters.health && !filters.health.every(h => pet.health.includes(h))) isMatch = false;
-            if (filters.breed && !filters.breed.includes(pet.breed)) isMatch = false;
-            return isMatch;
+            if (filters.type && pet.type.toLowerCase() !== filters.type.toLowerCase()) return false;
+            if (filters.gender && pet.gender.toLowerCase() !== filters.gender.toLowerCase()) return false;
+            if (filters.age && mapAgeGroup(pet.age) !== filters.age) return false;
+            if (filters.health) {
+                if (filters.health.includes("neutered") && !pet.sterilisation) return false;
+                if (filters.health.includes("vaccinated") && !pet.vaccine) return false;
+            }
+            // if (filters.breed && !filters.breed.some(b => {
+            //     const breedName = pet.breed?.toLowerCase().replace(/\s+/g, '');
+            //     const selected = b.toLowerCase().replace(/\s+/g, '');
+            //     return breedName.includes(selected);
+            // })) return false;
+            if (filters.breed && !filters.breed.some(b => pet.breed.toLowerCase().includes(b.toLowerCase()))) return false;
+            return true;
         });
 
         // แสดงผลลัพธ์ที่กรองแล้ว
