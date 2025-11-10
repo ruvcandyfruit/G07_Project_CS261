@@ -1,14 +1,21 @@
 package com.example.demo.controller;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,8 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.dto.UserFormDTO;
-import com.example.demo.model.User1;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.dto.UserFormOutputDTO;
+import com.example.demo.model.Form;
+import com.example.demo.repository.FormRepository;
 
 @RestController
 @RequestMapping("/api/userform")
@@ -25,7 +33,7 @@ import com.example.demo.repository.UserRepository;
 public class UserTextController {
     private final String uploadDir = "C:/Users/user/G07_Project_CS261/uploads/";
     @Autowired
-    private UserRepository user1Repository;
+    private FormRepository user1Repository;
 
    @PostMapping("/submit")
 public ResponseEntity<?> submitForm(
@@ -47,7 +55,7 @@ public ResponseEntity<?> submitForm(
         residenceDoc.transferTo(new File(residencePath));
 
         // map DTO ไป entity
-        User1 user = new User1();
+        Form user = new Form();
         user.setFirstName(formDTO.getFirstName());
         user.setLastName(formDTO.getLastName());
         user.setDob(formDTO.getDob());
@@ -76,11 +84,11 @@ public ResponseEntity<?> submitForm(
 public ResponseEntity<?> getAllUsers() {
     try {
         // ดึง entity ทั้งหมด
-        java.util.List<User1> users = user1Repository.findAll();
+        java.util.List<Form> users = user1Repository.findAll();
 
         // map entity -> DTO
-        java.util.List<UserFormDTO> userDTOs = users.stream().map(user -> {
-            UserFormDTO dto = new UserFormDTO();
+        java.util.List<UserFormOutputDTO> userDTOs = users.stream().map(user -> {
+            UserFormOutputDTO dto = new UserFormOutputDTO();
             dto.setFirstName(user.getFirstName());
             dto.setLastName(user.getLastName());
             dto.setDob(user.getDob());
@@ -94,6 +102,20 @@ public ResponseEntity<?> getAllUsers() {
             dto.setTrueInfo(user.getTrueInfo());
             dto.setAcceptRight(user.getAcceptRight());
             dto.setHomeVisits(user.getHomeVisits());
+            String identityDocPath = user.getIdentityDoc();
+            if (identityDocPath != null && !identityDocPath.isEmpty()) {
+                // ใช้ Paths.get().getFileName().toString() เพื่อดึงแค่ชื่อไฟล์
+                dto.setIdentityDoc(Paths.get(identityDocPath).getFileName().toString()); 
+            } else {
+                dto.setIdentityDoc("-");
+            }
+
+            String residenceDocPath = user.getResidenceDoc();
+            if (residenceDocPath != null && !residenceDocPath.isEmpty()) {
+                dto.setResidenceDoc(Paths.get(residenceDocPath).getFileName().toString());
+            } else {
+                dto.setResidenceDoc("-");
+            }
             return dto;
         }).toList();
 
@@ -102,4 +124,33 @@ public ResponseEntity<?> getAllUsers() {
         return ResponseEntity.status(500).body("Error fetching users: " + e.getMessage());
     }
 }
+@GetMapping("/download/{filename}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
+        try {
+            // 1. สร้าง Path ไปยังไฟล์จริง (รวมกับ uploadDir)
+            Path filePath = Paths.get(uploadDir).resolve(filename).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+
+            // 2. ตรวจสอบว่าไฟล์มีอยู่และสามารถอ่านได้
+            if (resource.exists() && resource.isReadable()) {
+                // ส่งไฟล์กลับไป
+                String contentType = "application/octet-stream"; // ประเภทไฟล์ทั่วไป (binary stream)
+                
+                return ResponseEntity.ok()
+                        .contentType(MediaType.parseMediaType(contentType))
+                        // กำหนด Header เพื่อบังคับให้ Browser ดาวน์โหลดไฟล์ (attachment)
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                        .body(resource);
+            } else {
+                // หากไม่พบไฟล์
+                return ResponseEntity.notFound().build();
+            }
+        } catch (MalformedURLException e) {
+            // กรณีที่ URL ของไฟล์ไม่ถูกต้อง
+            return ResponseEntity.badRequest().build();
+        } catch (Exception e) {
+            // ข้อผิดพลาดอื่นๆ
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }

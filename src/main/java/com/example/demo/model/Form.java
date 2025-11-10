@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "userforms")
-public class User1 {
+public class Form {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,7 +63,7 @@ public class User1 {
     private Boolean trueInfo;
 
     @Column(name = "accept_right", nullable = false)
-    private Boolean acceptRight;
+    private Boolean acceptRight;    
 
     @Column(name = "home_visits", nullable = false)
     private Boolean homeVisits;

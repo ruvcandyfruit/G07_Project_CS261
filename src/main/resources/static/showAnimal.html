@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Forms</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        a.download-link {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>User Forms</h1>
+    <table id="userTable">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>DOB</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Occupation</th>
+                <th>Address</th>
+                <th>Residence Type</th>
+                <th>Experience</th>
+                <th>Reason</th>
+                <th>True Info</th>
+                <th>Accept Right</th>
+                <th>Home Visits</th>
+                <th>Identity Doc</th>
+                <th>Residence Doc</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- ข้อมูลจาก API จะมาแสดงที่นี่ -->
+        </tbody>
+    </table>
+
+    <script>
+        // URL API ของคุณ
+        const apiUrl = "http://localhost:8081/api/userform/submit";
+
+        async function fetchUsers() {
+            try {
+                const response = await fetch(apiUrl);
+                const users = await response.json();
+
+                const tbody = document.getElementById("userTable").querySelector("tbody");
+                tbody.innerHTML = ""; // ล้างข้อมูลเก่า
+
+                users.forEach(user => {
+                    const tr = document.createElement("tr");
+
+                    // สร้าง cell สำหรับแต่ละ field
+                    tr.innerHTML = `
+                        <td>${user.firstName || ''}</td>
+                        <td>${user.lastName || ''}</td>
+                        <td>${user.dob || ''}</td>
+                        <td>${user.phone || ''}</td>
+                        <td>${user.email || ''}</td>
+                        <td>${user.occupation || ''}</td>
+                        <td>${user.address || ''}</td>
+                        <td>${user.residenceType || ''}</td>
+                        <td>${user.experience || ''}</td>
+                        <td>${user.reason || ''}</td>
+                        <td>${user.trueInfo || ''}</td>
+                        <td>${user.acceptRight || ''}</td>
+                        <td>${user.homeVisits || ''}</td>
+                        <td>${user.identityDoc !== "-" ? `<a class="download-link" href="http://localhost:8081/api/userform/download/${user.identityDoc}">${user.identityDoc}</a>` : '-'}</td>
+                        <td>${user.residenceDoc !== "-" ? `<a class="download-link" href="http://localhost:8081/api/userform/download/${user.residenceDoc}">${user.residenceDoc}</a>` : '-'}</td>
+                    `;
+
+                    tbody.appendChild(tr);
+                });
+            } catch (error) {
+                console.error("Error fetching users:", error);
+            }
+        }
+
+        // เรียกเมื่อโหลดหน้าเว็บ
+        window.onload = fetchUsers;
+    </script>
+</body>
+</html>
