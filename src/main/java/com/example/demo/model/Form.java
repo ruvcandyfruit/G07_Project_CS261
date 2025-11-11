@@ -71,4 +71,9 @@ public class Form {
     @Column(name = "status", nullable = false)
     private String status = "PENDING";
 
+   @Column(name = "user_id", nullable = false)
+    private Long userId; // สมมติว่าเป็น Long
+
+    @Column(name = "pet_id", nullable = false)
+    private Long petId; // สมมติว่าเป็น Long
 }

@@ -22,5 +22,7 @@ public class UserFormDTO {
     private Boolean trueInfo;
     private Boolean acceptRight;
     private Boolean homeVisits;
+    private Long userId;
+    private Long petId;
     
 }

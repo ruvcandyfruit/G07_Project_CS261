@@ -73,6 +73,10 @@ public ResponseEntity<?> submitForm(
         user.setResidenceDoc(residencePath);
         user.setStatus("PENDING");
 
+        user.setUserId(formDTO.getUserId()); 
+        user.setPetId(formDTO.getPetId());
+
+        
         user1Repository.save(user);
 
         return ResponseEntity.ok().body(java.util.Collections.singletonMap("message", "Form submitted successfully!"));
