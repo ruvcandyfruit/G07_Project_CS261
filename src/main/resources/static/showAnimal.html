@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <title>User Forms</title>
     <style>
+        /* CSS เดิม */
         table {
-            width: 100%;
+            /* ลบ width: 100% ออกเพื่อกำหนดความกว้างขั้นต่ำ */
             border-collapse: collapse;
         }
 
@@ -16,6 +17,8 @@
         th, td {
             padding: 8px;
             text-align: left;
+            /* ป้องกันข้อความยาวไม่ให้ขึ้นบรรทัดใหม่ เพื่อช่วยให้เกิด Scrollbar */
+            white-space: nowrap; 
         }
 
         th {
@@ -27,34 +30,49 @@
             text-decoration: underline;
             cursor: pointer;
         }
+
+        /* **** ส่วนที่เพิ่ม/แก้ไขสำหรับแถบเลื่อน **** */
+        /* Container ที่จะสร้างแถบเลื่อนแนวนอน */
+        .table-container {
+            overflow-x: auto; /* ทำให้เกิดแถบเลื่อนแนวนอนเมื่อเนื้อหาเกิน */
+        }
+        
+        /* กำหนดความกว้างขั้นต่ำให้ตารางกว้างเกินหน้าจอเพื่อบังคับให้เกิด Scroll */
+        #userTable {
+            min-width: 1500px; /* สามารถปรับความกว้างนี้ได้ตามจำนวนคอลัมน์ */
+            width: auto;
+        }
     </style>
 </head>
 <body>
     <h1>User Forms</h1>
-    <table id="userTable">
-        <thead>
-            <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>DOB</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th>Occupation</th>
-                <th>Address</th>
-                <th>Residence Type</th>
-                <th>Experience</th>
-                <th>Reason</th>
-                <th>True Info</th>
-                <th>Accept Right</th>
-                <th>Home Visits</th>
-                <th>Identity Doc</th>
-                <th>Residence Doc</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- ข้อมูลจาก API จะมาแสดงที่นี่ -->
-        </tbody>
-    </table>
+    
+    <div class="table-container">
+        <table id="userTable">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>DOB</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Occupation</th>
+                    <th>Address</th>
+                    <th>Residence Type</th>
+                    <th>Experience</th>
+                    <th>Reason</th>
+                    <th>True Info</th>
+                    <th>Accept Right</th>
+                    <th>Home Visits</th>
+                    <th>Status</th>
+                    <th>Identity Doc</th>
+                    <th>Residence Doc</th>
+                </tr>
+            </thead>
+            <tbody>
+                </tbody>
+        </table>
+    </div>
 
     <script>
         // URL API ของคุณ
@@ -72,6 +90,7 @@
                     const tr = document.createElement("tr");
 
                     // สร้าง cell สำหรับแต่ละ field
+                    // หมายเหตุ: ในโค้ดเดิม user.status อยู่ก่อน identityDoc/residenceDoc
                     tr.innerHTML = `
                         <td>${user.firstName || ''}</td>
                         <td>${user.lastName || ''}</td>
@@ -86,6 +105,7 @@
                         <td>${user.trueInfo || ''}</td>
                         <td>${user.acceptRight || ''}</td>
                         <td>${user.homeVisits || ''}</td>
+                        <td>${user.status || ''}</td>
                         <td>${user.identityDoc !== "-" ? `<a class="download-link" href="http://localhost:8081/api/userform/download/${user.identityDoc}">${user.identityDoc}</a>` : '-'}</td>
                         <td>${user.residenceDoc !== "-" ? `<a class="download-link" href="http://localhost:8081/api/userform/download/${user.residenceDoc}">${user.residenceDoc}</a>` : '-'}</td>
                     `;

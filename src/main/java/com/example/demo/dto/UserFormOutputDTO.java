@@ -21,6 +21,7 @@ public class UserFormOutputDTO {
     private Boolean trueInfo;
     private Boolean acceptRight;
     private Boolean homeVisits;
+    private String status;
     private String identityDoc; // ใช้สำหรับแสดงชื่อไฟล์ในตาราง
     private String residenceDoc; // ใช้สำหรับแสดงชื่อไฟล์ในตาราง
 }

@@ -68,4 +68,7 @@ public class Form {
     @Column(name = "home_visits", nullable = false)
     private Boolean homeVisits;
 
+    @Column(name = "status", nullable = false)
+    private String status = "PENDING";
+
 }

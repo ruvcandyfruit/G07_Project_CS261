@@ -71,6 +71,7 @@ public ResponseEntity<?> submitForm(
         user.setHomeVisits(formDTO.getHomeVisits());
         user.setIdentityDoc(identityPath);
         user.setResidenceDoc(residencePath);
+        user.setStatus("PENDING");
 
         user1Repository.save(user);
 
@@ -102,6 +103,7 @@ public ResponseEntity<?> getAllUsers() {
             dto.setTrueInfo(user.getTrueInfo());
             dto.setAcceptRight(user.getAcceptRight());
             dto.setHomeVisits(user.getHomeVisits());
+            dto.setStatus(user.getStatus());
             String identityDocPath = user.getIdentityDoc();
             if (identityDocPath != null && !identityDocPath.isEmpty()) {
                 // ใช้ Paths.get().getFileName().toString() เพื่อดึงแค่ชื่อไฟล์
