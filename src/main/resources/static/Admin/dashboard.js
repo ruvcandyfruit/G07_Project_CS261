@@ -1,7 +1,9 @@
 // Navigation
 document.querySelectorAll('.nav-item').forEach(item => {
     item.addEventListener('click', function() {
+        // 1. ลบ 'active' ออกจากทุกรายการ
         document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+        // 2. ถ้าไม่เป็นปุ่ม 'logout' ให้เพิ่ม 'active'
         if (!this.classList.contains('logout')) {
             this.classList.add('active');
         }
@@ -12,7 +14,7 @@ document.querySelectorAll('.nav-item').forEach(item => {
 function generateCalendar() {
     const calendarDays = document.getElementById('calendar-days');
     const daysInMonth = 30;
-    const startDay = 2; // April 2025 starts on Tuesday (0=Sun, 1=Mon, 2=Tue)
+    const startDay = 6; // April 2025 starts on Tuesday (0=Sun, 1=Mon, 2=Tue)
     const highlightDays = [1, 9, 20];
 
     calendarDays.innerHTML = '';
@@ -43,7 +45,7 @@ function generateCalendar() {
     }
 }
 
-// Draw Line Chart
+/* Draw Line Chart เก็บไว้ดู design
 function drawLineChart() {
     const canvas = document.getElementById('lineChart');
     const ctx = canvas.getContext('2d');
@@ -112,9 +114,9 @@ function drawLineChart() {
         });
     }
 
-    drawLine(data.addPet, '#ffd700');
-    drawLine(data.request, '#5cd6d6');
-    drawLine(data.adopted, '#2196F3');
+    drawLine(data.addPet, '#ffd102');
+    drawLine(data.request, '#64bdc6');
+    drawLine(data.adopted, '#2b72fb');
 
     // Draw X-axis labels
     ctx.fillStyle = '#666';
@@ -124,7 +126,7 @@ function drawLineChart() {
         const x = padding + (chartWidth / 11) * index;
         ctx.fillText(month, x, canvas.height - 10);
     });
-}
+}*/
 
 // Update time
 function updateTime() {
@@ -140,20 +142,9 @@ function updateTime() {
 // Initialize
 window.addEventListener('load', function() {
     generateCalendar();
-    drawLineChart();
+    //drawLineChart();
     updateTime();
     setInterval(updateTime, 60000); // Update time every minute
-});
-
-// Calendar navigation
-document.getElementById('calendar-prev').addEventListener('click', function() {
-    console.log('Previous month clicked');
-    // Implement month navigation
-});
-
-document.getElementById('calendar-next').addEventListener('click', function() {
-    console.log('Next month clicked');
-    // Implement month navigation
 });
 
 // Notification clicks
