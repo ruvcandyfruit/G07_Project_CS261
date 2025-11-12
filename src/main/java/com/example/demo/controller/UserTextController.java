@@ -9,12 +9,22 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+import java.util.List;
 
+import com.example.demo.model.User;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.service.FormService;
 import com.example.demo.dto.UserFormDTO;
 import com.example.demo.model.Form;
 import com.example.demo.repository.FormRepository;
@@ -26,6 +36,12 @@ public class UserTextController {
     private final String uploadDir = System.getProperty("user.dir") + "/uploads/";
     @Autowired
     private FormRepository formRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private FormService formService;
 
    @PostMapping("/submit")
     public ResponseEntity<?> submitForm(
@@ -102,4 +118,31 @@ public ResponseEntity<?> getAllUsers() {
         return ResponseEntity.status(500).body("Error fetching users: " + e.getMessage());
     }
 }
+
+    @GetMapping("/pending")
+    public ResponseEntity<Form> getPending(@RequestHeader("X-USER-ID") Long userId,@PathVariable Long id, @RequestBody StatusPayload payload) {
+        // ensureAdmin(userId);
+        Form updated = formService.changeStatus(id, payload.getStatus(), userId);
+        return ResponseEntity.ok(updated);
+    }
+    // Admin approve/reject
+    @PutMapping("/{id}/status")
+    public ResponseEntity<Form> changeStatus(@RequestHeader("X-USER-ID") Long userId, @PathVariable Long id, @RequestBody StatusPayload payload) {
+        // ensureAdmin(userId);
+        Form updated = formService.changeStatus(id, payload.getStatus(), userId);
+        return ResponseEntity.ok(updated);
+    }
+
+    private void ensureAdmin(Long userId) {
+        User u = userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED,"User not found"));
+        if (!"ADMIN".equalsIgnoreCase(u.getRole())) throw new ResponseStatusException(HttpStatus.FORBIDDEN,"Requires ADMIN role");
+    }
+
+    // simple payload class
+    public static class StatusPayload {
+        private String status;
+        public String getStatus(){ return status; }
+        public void setStatus(String status){ this.status = status; }
+    }
+
 }

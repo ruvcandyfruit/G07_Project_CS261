@@ -24,7 +24,8 @@ public class Pet {
     private String disease;
     @Column(name = "food_allergy")
     private String foodAllergy;
-
+    @Column(name = "status")
+    private String status = "AVAILABLE";
     // --- Constructor ---
     public Pet() {
        
@@ -84,4 +85,12 @@ public class Pet {
 
     public String getFoodAllergy() { return foodAllergy; }
     public void setFoodAllergy(String foodAllergy) { this.foodAllergy = foodAllergy; }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
