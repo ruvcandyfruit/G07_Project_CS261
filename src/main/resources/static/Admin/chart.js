@@ -1,28 +1,56 @@
-// ================ Doughnut chart ======================
+//  ตอนนี้แสดงกราฟแบบสร้างเอง ถ้าเสร็จค่อยเอาไปรวมกับ dashboard.js แยกออกมมาเพื่อดูแค่กราฟง่ายๆ
+/*
+ส่วนที่ต้อง fetch API
+- pet stat card
+- calendar card
+- notification card
+NOTE line chart ไม่ใช้ API ไม่มีข้อมูลมาทำ
 
-// 1. สร้าง Plugin สำหรับแสดงข้อความตรงกลาง
+===== Pet stat card ====
+- id="DoughnutChart" เจนมานิดหน่อย อยู่ในคอมเม้นท์ที่ chart.js
+ตัวอย่าง JSON สำหรับทำกราฟโดนัท
+{
+    "labels": ["สุนัข", "แมว"],
+    "data": [9, 7]
+}
+จำนวนต่างๆของ
+- id="stat-pending
+- id="stat-waiting"
+- id="stat-delivered"
+- id="stat-open"
+- id="stat-closed"
+- id="stat-user-id"
+
+===== calendar card ====
+เปลี่ยน highlightDays ตามที่ fetch api มา
+
+===== notification card ====
+ดึงมาทุก form แต่ต้องมีข้อมูลของ pet ติดมาด้วย 
+แจ้งเตือนมี 4 แบบ ถ้า form สถานะไหน -> ให้แสดงแจ้งเตือนแบบนั้นๆ พร้อมใส่ข้อมูลที่กำหนด(ชื่อจริงผู้ขอ,ชื่อสัตว์,ชนิดสัตว์,วันนัดหมาย)
+- status=pending -> show id="new-request"
+- status=cancel -> show id="cancel-request"
+- status=approve && date!=TODAY -> show id="appointment-noti"
+- status=approve && date==TODAY -> show id="appointment-ended"
+*/
+
+//  ------ แบบที่ 1 สร้างกราฟเอง -------
 const centerTextPlugin = {
     id: 'centerText', 
     beforeDraw(chart, args, options) {
         const { ctx, chartArea: { top, bottom, left, right } } = chart;
         ctx.save();
         
-        // คำนวณค่าทั้งหมด
         const total = chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
-
-        // กำหนดตำแหน่งให้อยู่กึ่งกลาง
         const centerX = (left + right) / 2;
         const centerY = (top + bottom) / 2;
 
-        // วาดข้อความ "Total"
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.font = '20px sans-serif'; 
         ctx.fillStyle = '#666'; 
         ctx.fillText('Total', centerX, centerY - 15); 
 
-        // วาดตัวเลขรวม
-        ctx.font = '40px sans-serif'; 
+        ctx.font = '20px sans-serif'; 
         ctx.fillStyle = '#333'; 
         ctx.fillText(total.toString(), centerX, centerY + 20); 
 
@@ -30,180 +58,212 @@ const centerTextPlugin = {
     }
 };
 
-// 2. Function หลักสำหรับสร้างกราฟ (เปลี่ยนให้รองรับ Fetch API)
-async function createDoughnutChart() { // <--- เพิ่ม async
-    const canvasElement = document.getElementById('DoughnutChart');
-    if (!canvasElement) {
-        console.error("Canvas element with ID 'DoughnutChart' not found.");
-        return;
-    }
-
-    // 1. กำหนด URL ของ API
-    const apiUrl = 'https://api.example.com/adoption/stats'; // <<< แก้ URL ตรงนี้!
-
-    try {
-        // 2. Fetch ข้อมูลจาก API
-        const response = await fetch(apiUrl);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const apiData = await response.json(); // แปลง response เป็น JSON
-
-        // 3. เตรียม Data โดยใช้ข้อมูลจาก API
-        const data = {
-            // สมมติว่า API ส่ง { labels: ['สุนัข', 'แมว', ...], data: [300, 50, ...] }
-            labels: apiData.labels, // <--- ใช้ Labels จาก API
-            datasets: [{
-                label: 'จำนวนการรับเลี้ยง',
-                data: apiData.data, // <--- ใช้ Data จาก API
-                backgroundColor: [
-                    // คุณอาจต้องให้ API ส่ง Array ของสีมาด้วย หรือกำหนดสีเองตามจำนวนข้อมูล
-                    'rgb(255, 99, 132)',
-                    'rgb(54, 162, 235)',
-                    'rgb(255, 205, 86)',
-                    'rgb(75, 192, 192)', 
-                    'rgb(153, 102, 255)' 
-                ],
-                borderColor: 'white', 
-                borderWidth: 2, 
-                hoverOffset: 4
-            }]
-        };
-
-        const config = {
-            type: 'doughnut', 
-            data: data, // <--- ใช้ Data ที่สร้างจาก API
-            options: {
-                responsive: true,
-                cutout: '75%', 
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                    },
-                    title: {
-                        display: true,
-                        text: 'สัดส่วนการรับเลี้ยงตามประเภทสัตว์ (จาก API)'
-                    }
-                }
-            },
-            plugins: [centerTextPlugin] 
-        };
-
-        // 4. สร้าง Chart
-        const ctx = canvasElement.getContext('2d');
-        new Chart(ctx, config);
-
-        // เก็บ Instance ไว้ในตัวแปร global
-        DoughnutChartInstance = new Chart(ctx, config);
-
-    } catch (error) {
-        console.error('Failed to fetch data or render chart:', error);
-        // สามารถเพิ่มโค้ดแสดงข้อความ Error บนหน้าเว็บได้ที่นี่
-    }
-}
-
-// 3. เพิ่ม Logic สำหรับบังคับ Resize เมื่อขนาดหน้าจอเปลี่ยน
-function handleResize() {
-    // ตรวจสอบว่า Chart Instance ถูกสร้างแล้ว
-    if (DoughnutChartInstance) {
-        // **เรียกใช้ .resize() เพื่อบังคับให้ Chart.js ปรับขนาดตาม Container ใหม่**
-        DoughnutChartInstance.resize();
-    }
-}
-
-// **เรียกใช้งานเมื่อหน้าเว็บโหลดเสร็จ**
-document.addEventListener('DOMContentLoaded', createDoughnutChart);
-
-// **เพิ่ม Event Listener เพื่อตรวจจับการเปลี่ยนขนาดหน้าต่าง**
-// เมื่อผู้ใช้ลากขยายหน้าต่างเบราว์เซอร์ จะเรียก handleResize
-window.addEventListener('resize', handleResize);
-
-// **ทางเลือกเสริม:** หาก Chart ยังไม่ responsive แม้จะใช้ window.addEventListener
-// คุณสามารถใช้ ResizeObserver เพื่อดูการเปลี่ยนแปลงขนาดของ Canvas Container โดยตรง
-
-const canvasElement = document.getElementById('DoughnutChart');
-if (canvasElement && 'ResizeObserver' in window) {
-    const observer = new ResizeObserver(entries => {
-        handleResize(); // เรียก resize ทุกครั้งที่ขนาด container เปลี่ยน
-    });
-    // สั่งให้ Observer เฝ้าดูการเปลี่ยนแปลงของ container
-    observer.observe(canvasElement.parentElement); 
-}
-
-
-// ================ Line chart ======================
-const API_URL = 'https://api.example.com/daily-sales'; 
-
-async function createLineChart() {
-    let salesData = [];
-    
-    // ขั้นตอนที่ 1: Fetch ข้อมูลจาก API
-    try {
-        const response = await fetch(API_URL);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        salesData = await response.json();
-        console.log("Data fetched:", salesData);
-
-    } catch (error) {
-        console.error("Could not fetch data:", error);
-        // แสดงข้อความ error ในกรณีที่ดึงข้อมูลไม่สำเร็จ
-        document.getElementById('chartContainer').innerHTML = "<p>ไม่สามารถดึงข้อมูลยอดขายได้</p>";
-        return;
-    }
-
-    // ขั้นตอนที่ 2: จัดเตรียมข้อมูลสำหรับ Chart.js
-    const labels = salesData.map(item => item.date); // แกน X: วันที่
-    const dataPoints = salesData.map(item => item.sales); // แกน Y: ยอดขาย
-
-    const data = {
-        labels: labels,
+// 2. Function สำหรับสร้าง Doughnut Chart
+function createDoughnutChart() {
+    const doughnutData = { 
+        labels: ['สุนัข', 'แมว'],
         datasets: [{
-            label: 'ยอดขายรายวัน (บาท)',
-            data: dataPoints,
-            borderColor: 'rgb(75, 192, 192)', // สีเส้นกราฟ
-            backgroundColor: 'rgba(75, 192, 192, 0.5)', // สีพื้นหลังใต้เส้น
-            tension: 0.2, // ทำให้เส้นโค้งเล็กน้อย
-            borderWidth: 2
+            label: 'จำนวนสัตว์ตามชนิด',
+            data: [9, 7], 
+            backgroundColor: ['#010002', '#ffd102'],
+            borderColor: 'white', 
+            borderWidth: 2, 
+            hoverOffset: 4
         }]
     };
 
-    // ขั้นตอนที่ 3: วาดกราฟด้วย Chart.js
-    const config = {
-        type: 'line', // กำหนดให้เป็นกราฟเส้น
-        data: data,
+    const doughnutConfig = { 
+        type: 'doughnut', 
+        data: doughnutData,
         options: {
             responsive: true,
+            cutout: '80%', 
+            rotation: 0, // เริ่มจากขวาบน
+            circumference: 360,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    display: false
+                },
+                title: {
+                    display: false,
+                    text: 'สัดส่วนสัตว์เลี้ยงทั้งหมดตามชนิด'
+                }
+            }
+        },
+        plugins: [centerTextPlugin] 
+    };
+
+    const canvasElement = document.getElementById('DoughnutChart');
+    if (canvasElement) {
+        const ctx = canvasElement.getContext('2d');
+        new Chart(ctx, doughnutConfig);
+    } else {
+        console.error("Canvas element with ID 'DoughnutChart' not found.");
+    }
+}
+
+// 3. Function สำหรับสร้าง Line Chart
+function createLineChart() {
+    const lineData = { 
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        datasets: [
+            {
+                label: 'จำนวนสัตว์ที่เพิ่มขึ้นต่อปี',
+                data: [19, 17, 17, 15, 18, 17, 9, 8, 8, 4, 3, 1], 
+                borderColor: '#ffd102',
+                tension: 0
+            },
+            {
+                label: 'จำนวนคำขอการรับเลี้ยงสัตว์ต่อปี',
+                data: [0, 2, 6, 6, 7, 10, 14, 14, 14, 19, 18, 7], 
+                borderColor: '#64bdc6', 
+                tension: 0
+            },
+            {
+                label: 'จำนวนคำขอรับเลี้ยงสัตว์ที่เสร็จสิ้นต่อปี', 
+                data: [0, 2, 4, 4, 6, 6, 6, 9, 14, 17, 5, 10], 
+                borderColor: '#2b72fb', 
+                tension: 0   
+            }
+        ]
+    };
+
+    const lineConfig = { 
+        type: 'line',
+        data: lineData,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    display: false,
+                },
+                title: {
+                    display: false,
+                    text: 'สถิติจำนวนสัตว์และจำนวนคำขอรับเลี้ยงสัตว์'
+                }
+            },
             scales: {
                 y: {
                     beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'ยอดขาย'
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: 'วันที่'
-                    }
-                }
-            },
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'กราฟแสดงยอดขายประจำวัน'
+                    ticks: {
+                        stepSize: 5,
+                    },
+                    max: 20
                 }
             }
         }
     };
 
-    const myChart = new Chart(
-        document.getElementById('LineChart'),
-        config
-    );
+    const ctx = document.getElementById('LineChart');
+    if (ctx) {
+        new Chart(ctx.getContext('2d'), lineConfig);
+    } else {
+        console.error("Canvas element with ID 'LineChart' not found.");
+    }
 }
 
-// เรียกใช้ฟังก์ชันหลัก
-createLineChart();
+// **เรียกใช้ทั้ง 2 กราฟพร้อมกัน**
+document.addEventListener('DOMContentLoaded', function() {
+    createDoughnutChart();
+    createLineChart();
+});
+
+
+//  ------ แบบที่ 2 สร้างกราฟโดนัทจากการดึง API (ทำได้แค่โดนัท ไม่มีข้อมูลเพียงพอในการทำกราฟเส้น) -------
+/*
+const centerTextPlugin = {
+    id: 'centerText', 
+    beforeDraw(chart, args, options) {
+        const { ctx, chartArea: { top, bottom, left, right } } = chart;
+        ctx.save();
+        
+        const total = chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+        const centerX = (left + right) / 2;
+        const centerY = (top + bottom) / 2;
+
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.font = '20px sans-serif'; 
+        ctx.fillStyle = '#666'; 
+        ctx.fillText('Total', centerX, centerY - 15); 
+
+        ctx.font = '20px sans-serif'; 
+        ctx.fillStyle = '#333'; 
+        ctx.fillText(total.toString(), centerX, centerY + 20); 
+
+        ctx.restore();
+    }
+};
+
+// ประกาศตัวแปรเก็บ Chart Instance
+let myDoughnutChartInstance = null;
+
+// Function สำหรับดึงข้อมูล Doughnut Chart จาก API
+async function fetchDoughnutData() {
+    try {
+        const response = await fetch('YOUR_API_URL'); // เปลี่ยนเป็น URL ของคุณ
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching doughnut data:', error);
+        // ถ้า API ไม่ทำงาน ใช้ข้อมูล default
+        return {
+            labels: ['สุนัข', 'แมว'],
+            data: [9, 7]
+        };
+    }
+}
+
+// Function สำหรับสร้าง Doughnut Chart
+async function createDoughnutChart() {
+    // ดึงข้อมูลจาก API
+    const apiData = await fetchDoughnutData();
+    
+    const doughnutData = {
+        labels: apiData.labels,
+        datasets: [{
+            label: 'จำนวนสัตว์ตามชนิด',
+            data: apiData.data,
+            backgroundColor: ['#010002', '#ffd102'],
+            borderColor: 'white', 
+            borderWidth: 2, 
+            hoverOffset: 4
+        }]
+    };
+
+    const doughnutConfig = {
+        type: 'doughnut', 
+        data: doughnutData,
+        options: {
+            responsive: true,
+            cutout: '75%', 
+            rotation: -90, // เริ่มจากซ้ายบน
+            circumference: 360, // วาดเต็มวง
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    display: false
+                },
+                title: {
+                    display: false,
+                    text: 'สัดส่วนสัตว์เลี้ยงทั้งหมดตามชนิด'
+                }
+            }
+        },
+        plugins: [centerTextPlugin] 
+    };
+
+    const canvasElement = document.getElementById('DoughnutChart');
+    if (canvasElement) {
+        const ctx = canvasElement.getContext('2d');
+        myDoughnutChartInstance = new Chart(ctx, doughnutConfig);
+    } else {
+        console.error("Canvas element with ID 'DoughnutChart' not found.");
+    }
+}
+
+// เรียกใช้งานเมื่อหน้าเว็บโหลดเสร็จ
+document.addEventListener('DOMContentLoaded', createDoughnutChart);
+*/

@@ -166,12 +166,14 @@ body {
 .pet-stats-card {
     grid-column: span 2 / span 2;
     grid-row: span 8 / span 8;
+    overflow: hidden;
 }
 
 .chart-card {
     grid-column: span 6 / span 6;
     grid-row: span 5 / span 5;
     grid-column-start: 3;
+    overflow: hidden;
 }
 
 .calendar-card {
@@ -209,25 +211,8 @@ body {
 .donut-chart {
     position: relative;
     width: 200px;
-    height: 200px;
+    height: auto;
     margin: 0 auto 20px;
-}
-
-.donut-chart svg {
-    transform: rotate(-90deg);
-}
-
-.donut-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-}
-
-.donut-center .number {
-    font-size: 32px;
-    font-weight: 600;
 }
 
 .legend {
@@ -301,13 +286,13 @@ body {
 
 .line-chart-container {
     width: 100%;
-    height: 300px;
+    height: 100%;
     position: relative;
 }
 
 #lineChart {
     width: 100%;
-    height: 100%;
+    height: max-content;
 }
 
 /* Calendar Card */
@@ -430,10 +415,10 @@ body {
 }
 
 .notification-item {
-    padding: 20px;
+    padding: 20px 28px;
     display: flex;
-    gap: 12px;
-    align-items: start;
+    gap: 18px;
+    align-items: center;
     transition: all 0.2s;
 }
 

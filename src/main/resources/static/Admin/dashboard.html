@@ -56,15 +56,8 @@
                     
                     <!-- Donut Chart -->
                     <div class="donut-chart">
-                       <!--<svg width="200" height="200" id="donut-svg">
-                            <circle cx="100" cy="100" r="80" fill="none" stroke="#000" stroke-width="30" stroke-dasharray="377 503" id="donut-dog"/>
-                            <circle cx="100" cy="100" r="80" fill="none" stroke="#ffd700" stroke-width="30" stroke-dasharray="126 503" stroke-dashoffset="-377" id="donut-cat"/>
-                        </svg>-->
-                        <div class="donut-chart-container" style="width: 80%; margin: auto; padding: 20px;">
+                        <div class="donut-chart-container" >
                             <canvas id="DoughnutChart"></canvas> 
-                        </div>
-                        <div class="donut-center">
-                            <div class="number" id="total-pets">16</div>
                         </div>
                     </div>
 
@@ -125,9 +118,6 @@
                             <span>Adopted</span>
                         </div>
                     </div>
-                    <!--<div class="chart-container">
-                        <canvas id="lineChart"></canvas>
-                    </div>-->
                     <div class="line-chart-container" style="width: 80%; margin: auto; padding: 20px;">
                         <canvas id="LineChart"></canvas>
                     </div>
@@ -162,41 +152,41 @@
                 <!-- Notifications Card -->
                 <div class="notification-card card">
                     <div class="notification-header">
-                        <img src="image-resources/notification-icon-gradient.svg" alt="Log out">   
+                        <img src="image-resources/notification-icon-gradient.svg" alt="Notification">   
                         <span class="notification-title">Notification</span>
                         <span class="notification-badge" id="notification-count">2</span>
                     </div>
 
                     <div class="notification-list" id="notification-list">
-                        <div class="notification-item warning" data-notification-id="1">
-                            <img src="image-resources/allpet-icon.svg" alt="Log out">   
+                        <div class="notification-item warning" data-notification-id="new-request" id="new-request">
+                            <img src="image-resources/allpet-icon.svg" alt="New request">   
                             <div class="notification-item-content">
                                 <h4>คำขอรับเลี้ยงใหม่</h4>
                                 <p>มีคำขอรับเลี้ยงใหม่มาจาก [ชื่อผู้ขอ] สำหรับน้อง[สุนัข/แมว] [ชื่อสัตว์]</p>
                             </div>
                         </div>
 
-                        <div class="notification-item read" data-notification-id="2">
-                            <img src="image-resources/cancel-icon.svg" alt="Log out">   
+                        <div class="notification-item read" data-notification-id="cancel-request" id="cancel-request">
+                            <img src="image-resources/cancel-icon.svg" alt="Request canceled">   
                             <div class="notification-item-content">
                                 <h4>ผู้ใช้ยกเลิกคำขอ</h4>
                                 <p>[ชื่อผู้ขอ] ได้ยกเลิกคำขอของ[สุนัข/แมว] [ชื่อสัตว์] แล้ว</p>
                             </div>
                         </div>
 
-                        <div class="notification-item read" data-notification-id="3">
-                            <img src="image-resources/time-icon.svg" alt="Log out">   
+                        <div class="notification-item read" data-notification-id="appointment-noti" id="appointment-noti">
+                            <img src="image-resources/time-icon.svg" alt="Appointment notification">   
                             <div class="notification-item-content">
                                 <h4>แจ้งเตือนวันนัดหมายใกล้มาถึง</h4>
                                 <p>นัดหมายส่งมอบน้อง[สุนัข/แมว] [ชื่อสัตว์] ให้ [ชื่อผู้ขอ] พรุ่งนี้ [เวลา]</p>
                             </div>
                         </div>
 
-                        <div class="notification-item warning" data-notification-id="4">
-                            <img src="image-resources/appointmentEnded-icon.svg" alt="Log out">   
+                        <div class="notification-item warning" data-notification-id="appointment-ended" id="appointment-ended">
+                            <img src="image-resources/appointmentEnded-icon.svg" alt="Appointment ended">   
                             <div class="notification-item-content">
                                 <h4>นัดหมายสิ้นสุดแล้ว</h4>
-                                <p>การนัดหมายขัน [ชื่อผู้ขอ] สำหรับน้อง[สุนัข/แมว] [ชื่อสัตว์] ได้สิ้นสุดแล้ว โปรดยืนยันสถานะการส่งมอบ</p>
+                                <p>การนัดหมายกับ [ชื่อผู้ขอ] สำหรับน้อง[สุนัข/แมว] [ชื่อสัตว์] ได้สิ้นสุดแล้ว โปรดยืนยันสถานะการส่งมอบ</p>
                             </div>
                         </div>
 
@@ -209,28 +199,7 @@
 
     <script src="dashboard.js"></script>     
     <script src="chart.js"></script>
+    <!-- Import JS library to create chart-->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>               
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
-
-<!--
-ส่วนที่ต้อง fetch API
-
-===== Pet stat card ====
-จำนวนต่างๆใน
-- id="DoughnutChart" ทำไว้นิดหน่อยที่ chart.js
-- id="total-pets"
-
-- id="stat-pending
-- id="stat-waiting"
-- id="stat-delivered"
-- id="stat-open"
-- id="stat-closed"
-- id="stat-user-id"
-
-===== line chart card ====
-- id="LineChart" ทำไว้นิดหน่อยที่ chart.js
-- id="notification-list"
-
--->
