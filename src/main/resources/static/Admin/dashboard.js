@@ -1,4 +1,38 @@
-// Navigation
+/*
+ส่วนที่ต้อง fetch API
+- pet stat card
+- calendar card
+- notification card
+NOTE line chart ไม่ใช้ API ไม่มีข้อมูลมาทำ
+
+===== Pet stat card ====
+- id="DoughnutChart" เจนมานิดหน่อย อยู่ในคอมเม้นท์ที่ chart.js
+ตัวอย่าง JSON สำหรับทำกราฟโดนัท
+{
+    "labels": ["สุนัข", "แมว"],
+    "data": [9, 7]
+}
+จำนวนต่างๆของ
+- id="stat-pending
+- id="stat-waiting"
+- id="stat-delivered"
+- id="stat-open"
+- id="stat-closed"
+- id="stat-user-id"
+
+===== calendar card ====
+เปลี่ยน highlightDays ตามที่ fetch api มา
+
+===== notification card ====
+ดึงมาทุก form แต่ต้องมีข้อมูลของ pet ติดมาด้วย 
+แจ้งเตือนมี 4 แบบ ถ้า form สถานะไหน -> ให้แสดงแจ้งเตือนแบบนั้นๆ พร้อมใส่ข้อมูลที่กำหนด
+- status=pending -> show id="new-request"
+- status=cancel -> show id="cancel-request"
+- status=approve && date!=TODAY -> show id="appointment-noti"
+- status=approve && date==TODAY -> show id="appointment-ended"
+*/
+
+// Side menu bar
 document.querySelectorAll('.nav-item').forEach(item => {
     item.addEventListener('click', function() {
         // 1. ลบ 'active' ออกจากทุกรายการ
@@ -45,88 +79,121 @@ function generateCalendar() {
     }
 }
 
-/* Draw Line Chart เก็บไว้ดู design
-function drawLineChart() {
-    const canvas = document.getElementById('lineChart');
-    const ctx = canvas.getContext('2d');
+// Update time
+function updateTime() {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const displayHours = hours % 12 || 12;
+    const timeString = `${displayHours}:${minutes.toString().padStart(2, '0')} ${ampm}`;
+    document.getElementById('calendar-current-time').textContent = timeString;
+}
+
+// Initialize
+window.addEventListener('load', function() {
+    generateCalendar();
+    updateTime();
+    setInterval(updateTime, 60000); // Update time every minute
+});
+
+// ---------- Function สำหรับดึงข้อมูลนัดหมายจาก API ใส่ใน calendar card ----------
+/*
+async function fetchAppointments() {
+    try {
+        const response = await fetch('YOUR_API_URL'); // เปลี่ยนเป็น URL ของคุณ
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching appointments:', error);
+        // ข้อมูลทดสอบกรณี API ไม่ทำงาน
+        return {
+            year: 2025,
+            month: 11, // November (0-11, โดย 0=Jan, 11=Dec)
+            appointments: [
+                { day: 5, title: 'ตรวจสุขภาพสุนัข' },
+                { day: 12, title: 'ฉีดวัคซีนแมว' },
+                { day: 18, title: 'นัดพบสัตวแพทย์' },
+                { day: 25, title: 'ตัดขนสุนัข' }
+            ]
+        };
+    }
+}
+
+// Generate Calendar with API data
+async function generateCalendar() {
+    const calendarDays = document.getElementById('calendar-days');
+    const calendarMonthElement = document.getElementById('calendar-month');
     
-    // Set canvas size
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
+    // ดึงข้อมูลจาก API
+    const appointmentData = await fetchAppointments();
+    
+    const year = appointmentData.year;
+    const month = appointmentData.month; // 0-11
+    const appointmentDays = appointmentData.appointments.map(apt => apt.day);
+    
+    // คำนวณจำนวนวันในเดือนและวันแรกของเดือน
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startDay = firstDay.getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
+    
+    // อัพเดทชื่อเดือนและปี
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                        'July', 'August', 'September', 'October', 'November', 'December'];
+    calendarMonthElement.textContent = `${monthNames[month]} ${year}`;
+    
+    // ล้างปฏิทินเก่า
+    calendarDays.innerHTML = '';
 
-    const data = {
-        months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        addPet: [18, 17, 16, 15, 14, 12, 10, 8, 7, 5, 3, 2],
-        request: [2, 3, 5, 5, 7, 8, 10, 12, 15, 19, 17, 10],
-        adopted: [0, 0, 0, 0, 0, 5, 7, 9, 11, 14, 18, 15]
-    };
-
-    const padding = 40;
-    const chartWidth = canvas.width - padding * 2;
-    const chartHeight = canvas.height - padding * 2;
-    const maxValue = 20;
-
-    // Draw grid lines
-    ctx.strokeStyle = '#e0e0e0';
-    ctx.lineWidth = 1;
-    for (let i = 0; i <= 4; i++) {
-        const y = padding + (chartHeight / 4) * i;
-        ctx.beginPath();
-        ctx.moveTo(padding, y);
-        ctx.lineTo(canvas.width - padding, y);
-        ctx.stroke();
-
-        // Y-axis labels
-        ctx.fillStyle = '#666';
-        ctx.font = '12px sans-serif';
-        ctx.textAlign = 'right';
-        ctx.fillText((maxValue - (maxValue / 4) * i).toString(), padding - 10, y + 4);
+    // เพิ่มช่องว่างสำหรับวันก่อนเดือนเริ่ม
+    for (let i = 0; i < startDay; i++) {
+        const emptyDay = document.createElement('div');
+        emptyDay.className = 'calendar-day';
+        calendarDays.appendChild(emptyDay);
     }
 
-    // Draw lines
-    function drawLine(data, color) {
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 2;
-        ctx.beginPath();
+    // เพิ่มวันในเดือน
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dayElement = document.createElement('div');
+        dayElement.className = 'calendar-day';
+        dayElement.textContent = day;
+        dayElement.id = `calendar-day-${day}`;
         
-        data.forEach((value, index) => {
-            const x = padding + (chartWidth / 11) * index;
-            const y = padding + chartHeight - (value / maxValue) * chartHeight;
-            
-            if (index === 0) {
-                ctx.moveTo(x, y);
+        // ตรวจสอบว่าวันนี้มีนัดหมายหรือไม่
+        if (appointmentDays.includes(day)) {
+            dayElement.classList.add('highlight');
+            dayElement.title = getAppointmentTitle(appointmentData.appointments, day);
+        }
+        
+        // ตรวจสอบว่าเป็นวันปัจจุบันหรือไม่
+        const today = new Date();
+        if (year === today.getFullYear() && 
+            month === today.getMonth() && 
+            day === today.getDate()) {
+            dayElement.classList.add('today');
+        }
+
+        // Event เมื่อคลิกที่วัน
+        dayElement.addEventListener('click', function() {
+            const appointment = appointmentData.appointments.find(apt => apt.day === day);
+            if (appointment) {
+                console.log(`วันที่ ${day}: ${appointment.title}`);
+                alert(`นัดหมายวันที่ ${day}\n${appointment.title}`);
             } else {
-                ctx.lineTo(x, y);
+                console.log(`คลิกวันที่: ${day} (ไม่มีนัดหมาย)`);
             }
         });
-        
-        ctx.stroke();
 
-        // Draw points
-        data.forEach((value, index) => {
-            const x = padding + (chartWidth / 11) * index;
-            const y = padding + chartHeight - (value / maxValue) * chartHeight;
-            
-            ctx.fillStyle = color;
-            ctx.beginPath();
-            ctx.arc(x, y, 4, 0, Math.PI * 2);
-            ctx.fill();
-        });
+        calendarDays.appendChild(dayElement);
     }
+}
 
-    drawLine(data.addPet, '#ffd102');
-    drawLine(data.request, '#64bdc6');
-    drawLine(data.adopted, '#2b72fb');
-
-    // Draw X-axis labels
-    ctx.fillStyle = '#666';
-    ctx.font = '12px sans-serif';
-    ctx.textAlign = 'center';
-    data.months.forEach((month, index) => {
-        const x = padding + (chartWidth / 11) * index;
-        ctx.fillText(month, x, canvas.height - 10);
-    });
-}*/
+// Function ช่วยในการหาชื่อนัดหมายของวันที่
+function getAppointmentTitle(appointments, day) {
+    const appointment = appointments.find(apt => apt.day === day);
+    return appointment ? appointment.title : '';
+}
 
 // Update time
 function updateTime() {
@@ -142,10 +209,10 @@ function updateTime() {
 // Initialize
 window.addEventListener('load', function() {
     generateCalendar();
-    //drawLineChart();
     updateTime();
     setInterval(updateTime, 60000); // Update time every minute
 });
+*/
 
 // Notification clicks
 document.querySelectorAll('.notification-item').forEach(item => {
