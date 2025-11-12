@@ -8,12 +8,216 @@ document.querySelectorAll('.nav-item').forEach(item => {
     item.addEventListener('click', function() {
         // 1. ลบ 'active' ออกจากทุกรายการ
         document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+        
         // 2. ถ้าไม่เป็นปุ่ม 'logout' ให้เพิ่ม 'active'
         if (!this.classList.contains('logout')) {
             this.classList.add('active');
         }
+        
+        // 3. เด้งไปหน้าตาม id
+        const itemId = this.id;
+        
+        if (itemId === 'nav-dashboard') {
+            window.location.href = 'dashboard.html';
+        } else if (itemId === 'nav-all-pet') {
+            window.location.href = 'allpet.html';
+        } else if (itemId === 'nav-schedule') {
+            window.location.href = 'schedule.html';
+        } else if (itemId === 'nav-logout') {
+            window.location.href = '../login.html'
+        }
+        // ถ้าเป็น logout ก็ไม่ไปไหน (หรือจะเพิ่มการ logout ได้)
     });
 });
+
+// ---------- Function สำหรับแสดงสถิติต่างๆจาก API ใส่ใน Stat list card ----------
+// สามารถเปลี่ยนไปใช้ API จริงได้ที่ด้านล่าง
+const MOCK_FORM_DATA = {
+    forms: [
+        { id: "1", status: "pending" },
+        { id: "2", status: "pending" },
+        { id: "3", status: "pending" },
+        { id: "4", status: "approve" },
+        { id: "5", status: "approve" },
+        { id: "6", status: "delivered" },
+        { id: "7", status: "delivered" }
+    ]
+};
+
+const MOCK_PET_DATA = {
+    pets: [
+        { id: "1", status: "open" },
+        { id: "2", status: "open" },
+        { id: "3", status: "open" },
+        { id: "4", status: "open" },
+        { id: "5", status: "open" },
+        { id: "6", status: "open" },
+        { id: "7", status: "open" },
+        { id: "8", status: "open" },
+        { id: "9", status: "open" },
+        { id: "10", status: "open" },
+        { id: "11", status: "open" },
+        { id: "12", status: "closed" },
+        { id: "13", status: "closed" },
+        { id: "14", status: "closed" },
+        { id: "15", status: "closed" },
+        { id: "16", status: "closed" }
+    ]
+};
+
+const MOCK_USER_DATA = {
+    userId: "12",
+    username: "admin",
+    email: "admin@example.com"
+};
+
+// ฟังก์ชันสำหรับ fetch Form API
+async function fetchFormStats(useMockData = true) {
+    try {
+        let data;
+        
+        if (useMockData) {
+            console.log('Using mock form data...');
+            data = MOCK_FORM_DATA;
+        } else {
+            try {
+                const response = await fetch('/api/forms');
+                if (!response.ok) throw new Error('API request failed');
+                data = await response.json();
+            } catch (apiError) {
+                console.warn('Form API fetch failed, falling back to mock data:', apiError);
+                data = MOCK_FORM_DATA;
+            }
+        }
+        
+        // นับจำนวนแต่ละสถานะ
+        const pendingCount = data.forms.filter(form => form.status === 'pending').length;
+        const waitingCount = data.forms.filter(form => form.status === 'approve').length;
+        const deliveredCount = data.forms.filter(form => form.status === 'delivered').length;
+        
+        return {
+            pending: pendingCount,
+            waiting: waitingCount,
+            delivered: deliveredCount
+        };
+        
+    } catch (error) {
+        console.error('Error fetching form stats:', error);
+        return { pending: 0, waiting: 0, delivered: 0 };
+    }
+}
+
+// ฟังก์ชันสำหรับ fetch Pet API
+async function fetchPetStats(useMockData = true) {
+    try {
+        let data;
+        
+        if (useMockData) {
+            console.log('Using mock pet data...');
+            data = MOCK_PET_DATA;
+        } else {
+            try {
+                const response = await fetch('/api/pets');
+                if (!response.ok) throw new Error('API request failed');
+                data = await response.json();
+            } catch (apiError) {
+                console.warn('Pet API fetch failed, falling back to mock data:', apiError);
+                data = MOCK_PET_DATA;
+            }
+        }
+        
+        // นับจำนวนแต่ละสถานะ
+        const openCount = data.pets.filter(pet => pet.status === 'open').length;
+        const closedCount = data.pets.filter(pet => pet.status === 'closed').length;
+        
+        return {
+            open: openCount,
+            closed: closedCount
+        };
+        
+    } catch (error) {
+        console.error('Error fetching pet stats:', error);
+        return { open: 0, closed: 0 };
+    }
+}
+
+// ฟังก์ชันสำหรับ fetch User API
+async function fetchUserStats(useMockData = true) {
+    try {
+        let data;
+        
+        if (useMockData) {
+            console.log('Using mock user data...');
+            data = MOCK_USER_DATA;
+        } else {
+            try {
+                const response = await fetch('/api/user');
+                if (!response.ok) throw new Error('API request failed');
+                data = await response.json();
+            } catch (apiError) {
+                console.warn('User API fetch failed, falling back to mock data:', apiError);
+                data = MOCK_USER_DATA;
+            }
+        }
+        
+        return {
+            userId: data.userId
+        };
+        
+    } catch (error) {
+        console.error('Error fetching user stats:', error);
+        return { userId: '0' };
+    }
+}
+
+// ฟังก์ชันสำหรับอัพเดทตัวเลขใน HTML
+function updateStatsDisplay(formStats, petStats, userStats) {
+    // อัพเดท Form Stats
+    document.getElementById('stat-pending').textContent = formStats.pending;
+    document.getElementById('stat-waiting').textContent = formStats.waiting;
+    document.getElementById('stat-delivered').textContent = formStats.delivered;
+    
+    // อัพเดท Pet Stats
+    document.getElementById('stat-open').textContent = petStats.open;
+    document.getElementById('stat-closed').textContent = petStats.closed;
+    
+    // อัพเดท User Stats
+    document.getElementById('stat-user-id').textContent = userStats.userId;
+}
+
+// ฟังก์ชันหลักสำหรับโหลดสถิติทั้งหมด
+async function loadDashboardStats(useMockData = true) {
+    try {
+        // แสดง loading state (ถ้าต้องการ)
+        console.log('Loading dashboard stats...');
+        
+        // Fetch ข้อมูลจากทุก API พร้อมกัน
+        const [formStats, petStats, userStats] = await Promise.all([
+            fetchFormStats(useMockData),
+            fetchPetStats(useMockData),
+            fetchUserStats(useMockData)
+        ]);
+        
+        // อัพเดทการแสดงผล
+        updateStatsDisplay(formStats, petStats, userStats);
+        
+        console.log('Dashboard stats loaded successfully!');
+        
+    } catch (error) {
+        console.error('Error loading dashboard stats:', error);
+    }
+}
+
+// เรียกใช้งานเมื่อโหลดหน้าเว็บ
+document.addEventListener('DOMContentLoaded', () => {
+    // เปลี่ยนเป็น true เพื่อใช้ mock data
+    // เปลี่ยนเป็น false เพื่อใช้ API จริง
+    loadDashboardStats(true); // ใช้ mock data
+    // loadDashboardStats(false); // ใช้ API จริง
+});
+
+// ถ้าต้องการ refresh stats ทุกๆ 30 วินาที (optional)
+// setInterval(() => loadDashboardStats(true), 30000);
 
 // Generate Calendar
 function generateCalendar() {
