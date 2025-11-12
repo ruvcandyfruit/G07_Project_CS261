@@ -1,36 +1,22 @@
 //  ตอนนี้แสดงกราฟแบบสร้างเอง ถ้าเสร็จค่อยเอาไปรวมกับ dashboard.js แยกออกมมาเพื่อดูแค่กราฟง่ายๆ
 /*
-ส่วนที่ต้อง fetch API
-- pet stat card
-- calendar card
-- notification card
-NOTE line chart ไม่ใช้ API ไม่มีข้อมูลมาทำ
+ส่วนที่ต้อง fetch API คือ Pet stat card(Doughnut chart & stat)
+NOTE line chart ไม่มีข้อมูลมาทำชาร์ต
 
 ===== Pet stat card ====
-- id="DoughnutChart" เจนมานิดหน่อย อยู่ในคอมเม้นท์ที่ chart.js
+- id="DoughnutChart" เจนมานิดหน่อย อยู่ในคอมเม้นท์ แบบที่ 2
 ตัวอย่าง JSON สำหรับทำกราฟโดนัท
 {
     "labels": ["สุนัข", "แมว"],
     "data": [9, 7]
 }
 จำนวนต่างๆของ
-- id="stat-pending
+- id="stat-pending"
 - id="stat-waiting"
 - id="stat-delivered"
 - id="stat-open"
 - id="stat-closed"
 - id="stat-user-id"
-
-===== calendar card ====
-เปลี่ยน highlightDays ตามที่ fetch api มา
-
-===== notification card ====
-ดึงมาทุก form แต่ต้องมีข้อมูลของ pet ติดมาด้วย 
-แจ้งเตือนมี 4 แบบ ถ้า form สถานะไหน -> ให้แสดงแจ้งเตือนแบบนั้นๆ พร้อมใส่ข้อมูลที่กำหนด(ชื่อจริงผู้ขอ,ชื่อสัตว์,ชนิดสัตว์,วันนัดหมาย)
-- status=pending -> show id="new-request"
-- status=cancel -> show id="cancel-request"
-- status=approve && date!=TODAY -> show id="appointment-noti"
-- status=approve && date==TODAY -> show id="appointment-ended"
 */
 
 //  ------ แบบที่ 1 สร้างกราฟเอง -------

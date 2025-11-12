@@ -402,7 +402,7 @@ body {
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     font-size: 16px;
@@ -420,6 +420,7 @@ body {
     gap: 18px;
     align-items: center;
     transition: all 0.2s;
+    pointer-events: auto;
 }
 
 .notification-item.warning {
@@ -443,17 +444,24 @@ body {
     justify-content: center;
     font-size: 20px;
     flex-shrink: 0;
+    pointer-events: none;
+}
+
+.notification-item-content {
+    pointer-events: none;
 }
 
 .notification-item-content h4 {
     font-size: 14px;
     margin-bottom: 5px;
+    pointer-events: none;
 }
 
 .notification-item-content p {
-    font-size: 12px;
-    color: #666;
+    font-size: 14px;
+    color: var(--text-color);
     line-height: 1.4;
+    pointer-events: none;
 }
 
 /*---- Responsive ---*/
