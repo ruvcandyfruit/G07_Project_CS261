@@ -70,23 +70,17 @@ public class Form {
     @Column(name = "home_visits", nullable = false)
     private Boolean homeVisits;
 
-    // @ManyToOne
-    // @JoinColumn(name = "user_id", nullable = false)
-    // private User user; // reference to the user who submitted
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user; // reference to the user who submitted
 
-    // @ManyToOne
-    // @JoinColumn(name = "pet_id", nullable = false)
-    // private Pet pet; // reference to the adopted pet
-
-    @Column(name = "user_id")
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "pet_id", nullable = false)
+    private Pet pet; // reference to the adopted pet
 
     @Column(name = "status")
     private String status = "PENDING";  // e.g. PENDING, APPROVED, REJECTED
 
     @Column(name = "approved_by")
     private Long approvedBy;  // admin ID
-
-    @Column(name = "pet_id")
-    private Long petId;  // the adopted pet’s ID
 }

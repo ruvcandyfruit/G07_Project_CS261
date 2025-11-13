@@ -35,4 +35,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Error:", error);
     alert("เกิดข้อผิดพลาดในการโหลดข้อมูล");
   }
+
+document.getElementById("adoptBtn").addEventListener("click", () => {
+  const params = new URLSearchParams(window.location.search);
+  const petId = params.get("id");
+
+  if (!petId) {
+    alert("ไม่พบรหัสสัตว์เลี้ยง กรุณาลองใหม่อีกครั้ง");
+    return;
+  }
+
+  // ส่งต่อ petId ไปยัง userform.html ผ่าน URL
+  window.location.href = `userform.html?petId=${petId}`;
+
+      document.getElementById("petId").value = petId;
+});
 });

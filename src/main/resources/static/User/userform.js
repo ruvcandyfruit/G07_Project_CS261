@@ -2,6 +2,34 @@ const form = document.getElementById('adoptionForm');
 const submitBtn = document.getElementById('submit');
 const successMsg = document.getElementById('successMsg');
 
+document.addEventListener("DOMContentLoaded", () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const params = new URLSearchParams(window.location.search);
+    const petId = params.get("petId");
+
+    if (!user || !user.id) {
+        alert("กรุณาเข้าสู่ระบบก่อนกรอกฟอร์ม");
+        window.location.href = "login.html";
+        return;
+    }
+
+    const userIdField = document.getElementById("userId");
+    if (userIdField) userIdField.value = user.id;
+    console.log("Auto-filled userId:", user.id);
+
+    if (petId) {
+        // Set hidden field value
+        const petIdField = document.getElementById("petId");
+        if (petIdField) petIdField.value = petId;
+        console.log("Auto-filled petId:", petId);
+    } else {
+        alert("ไม่พบข้อมูลของสัตว์ กรุณากลับไปเลือกใหม่อีกครั้ง");
+        window.location.href = "petlisting.html";
+    }
+
+    checkInputs();
+});
+
 // ตรวจสอบทุก input/textarea เพื่อเปลี่ยนสีปุ่ม submit
 function checkInputs() {
     let allFilled = true;

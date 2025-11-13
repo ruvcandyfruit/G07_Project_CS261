@@ -30,7 +30,10 @@ public class FormService {
 
         // if approved, mark pet as ADOPTED
         if ("APPROVED".equalsIgnoreCase(newStatus)) {
-            Pet pet = petRepository.findById(req.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Pet not found"));
+            Pet pet = req.getPet(); // get the Pet object directly
+            if (pet == null) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pet not found");
+            }
             pet.setStatus("ADOPTED");
             petRepository.save(pet);
         }

@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
-import java.util.List;
 
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
@@ -121,14 +120,14 @@ public ResponseEntity<?> getAllUsers() {
 
     @GetMapping("/pending")
     public ResponseEntity<Form> getPending(@RequestHeader("X-USER-ID") Long userId,@PathVariable Long id, @RequestBody StatusPayload payload) {
-        // ensureAdmin(userId);
+        ensureAdmin(userId);
         Form updated = formService.changeStatus(id, payload.getStatus(), userId);
         return ResponseEntity.ok(updated);
     }
     // Admin approve/reject
     @PutMapping("/{id}/status")
     public ResponseEntity<Form> changeStatus(@RequestHeader("X-USER-ID") Long userId, @PathVariable Long id, @RequestBody StatusPayload payload) {
-        // ensureAdmin(userId);
+        ensureAdmin(userId);
         Form updated = formService.changeStatus(id, payload.getStatus(), userId);
         return ResponseEntity.ok(updated);
     }
