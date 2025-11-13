@@ -110,15 +110,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert("❌ Login failed: " + (errorData.message || "Invalid credentials"));
                 return;
             }
-
-            const user = await response.json();
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("userId", data.userId);
+            localStorage.setItem("role", data.role);
+            localStorage.setItem("email", data.email);
+            // const user = await response.json();
 
             alert(`✅ Welcome back, ${user.username}!`);
-            localStorage.setItem("user", JSON.stringify(user));
+            // localStorage.setItem("user", JSON.stringify(user));
 
 
             // Redirect ตาม role
-            if (user.role === 'ADMIN') {
+            if (data.role === 'ADMIN') {
                 window.location.href = 'Admin/dashboard.html';
             } else {
                window.location.href = 'index.html';

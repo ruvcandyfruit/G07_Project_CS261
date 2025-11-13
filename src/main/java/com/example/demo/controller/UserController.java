@@ -4,6 +4,7 @@ import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserRegisterDTO;
 import com.example.demo.service.UserService;
 import com.example.demo.model.User;
+import com.example.demo.security.JwtService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private JwtService jwtService;
 
     @PostMapping("/register")
     public ResponseEntity<UserDTO> registerUser(@Valid @RequestBody UserRegisterDTO registerDTO) {
@@ -57,7 +61,14 @@ public class UserController {
     public ResponseEntity<?> loginUser(@RequestBody User loginRequest) {
         try {
             UserDTO userDTO = userService.loginUser(loginRequest.getEmail(), loginRequest.getUsername(), loginRequest.getPassword());
-            return ResponseEntity.ok(userDTO);
+            String token = jwtService.generateToken(userDTO.getId());
+            return ResponseEntity.ok(Map.of(
+                "message", "Login successful",
+                "token", token,
+                "userId", userDTO.getId(),
+                "email", userDTO.getEmail(),
+                "role", userDTO.getRole()
+            ));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Invalid username/email or password"));
         }
