@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="homepageResources/icon.png" type="image/x-icon">
+    <title>Pet Detail - พยัคฆ์เขี้ยวดาบ</title>
+    <link rel="stylesheet" href="petdetail.css">
+    
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img class="logo-icon" src="homepageResources/pet-house.png" alt="icon" onerror="this.style.display='none'">
+                <div class="logo-text">
+                    <h2>Pet</h2>
+                    <h2>Adoption</h2>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <div class="nav-item" id="nav-dashboard">
+                    <img src="image-resources/dashboard-icon.svg" alt="Dashboard" onerror="this.innerHTML='📊'">
+                    <img class="icon-active" src="image-resources/dashboard-icon-gradient.svg" alt="Dashboard">
+                    <span>Dashboard</span>
+                </div>
+                <div class="nav-item active" id="nav-all-pet">
+                    <img src="image-resources/allpet-icon.svg" alt="All pet" onerror="this.innerHTML='🐾'">
+                    <img class="icon-active" src="image-resources/allpet-icon-gradient.svg" alt="All pet">
+                    <span>All Pet</span>
+                </div>
+                <div class="nav-item" id="nav-schedule">
+                    <img src="image-resources/schedule-icon.svg" alt="Schedule" onerror="this.innerHTML='📅'">
+                    <img class="icon-active" src="image-resources/schedule-icon-gradient.svg" alt="Schedule">
+                    <span>Schedule</span>
+                </div>
+            </nav>
+
+            <div class="nav-item logout" id="nav-logout">
+                <img src="image-resources/logout-icon.svg" alt="Log out" onerror="this.innerHTML='🚪'">
+                <span>Log out</span>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="header">
+                <h1 class="page-title">ALL PETS</h1>
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" placeholder="SEARCH...">
+                        <span>🔍</span>
+                    </div>
+                    <div class="menu-icon">☰</div>
+                </div>
+            </div>
+
+            <div class="pet-container">
+                <!-- Left Column: Image + Name + Details -->
+                <div class="left-column">
+                    <div class="pet-image-section">
+                        <img src="https://images.unsplash.com/photo-1574158622682-e40e69881006?w=400&h=400&fit=crop" 
+                             alt="พยัคฆ์เขี้ยวดาบ" 
+                             class="pet-image">
+                        <div class="pet-name-box">
+                            <h2 class="pet-name-title">พยัคฆ์เขี้ยวดาบ</h2>
+                        </div>
+                    </div>
+
+                    <div class="pet-details">
+                        <div class="detail-item">ชื่อ : พยัคฆ์เขี้ยวดาบ</div>
+                        <div class="detail-item">อายุ : 10 ปี</div>
+                        <div class="detail-item">เพศ : ผู้ชาย</div>
+                        <div class="detail-item">สี : ดำ</div>
+                        <div class="detail-item">น้ำหนัก : 8 กิโล</div>
+                        <div class="detail-item">ลักษณะพิเศษ : ดื้อแต่น่ารัก</div>
+                        <div class="detail-item">ชนิด : แมว</div>
+                        <div class="detail-item">สายพันธุ์ : เปอร์เซีย</div>
+                        <div class="detail-item">เวลาที่อยู่มูลนิธิ : 10 วัน</div>
+                        <div class="detail-item">สถานะ : ฉุกเฉินต้องหาเจ้าของ</div>
+                        <div class="detail-item">ประวัติการรักษาพยาบาล : ได้รับวัคซีนครบ</div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Status + Owner + Icon + Buttons -->
+                <div class="right-column">
+                    <div class="status-section">
+                        <div class="status-label">สถานะ : ADOPTED</div>
+                    </div>
+
+                    <div class="owner-section">
+                        <div class="owner-title">ประวัติผู้รับเลี้ยง</div>
+                        <div class="owner-details">
+                            <div class="owner-detail">
+                                <span class="owner-label">ชื่อ :</span> ASKJDHNAKJNSDLJA
+                            </div>
+                            <div class="owner-detail">
+                                <span class="owner-label">นามสกุล :</span> NDLSKDJALKSKNDLK;A
+                            </div>
+                            <div class="owner-detail">
+                                <span class="owner-label">เบอร์โทร :</span> NWLDKSA
+                            </div>
+                        </div>
+
+                        <div class="pet-icon-container">
+                            <svg class="pet-icon" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M100 180C144.183 180 180 144.183 180 100C180 55.8172 144.183 20 100 20C55.8172 20 20 55.8172 20 100C20 144.183 55.8172 180 100 180Z" stroke="#64BDC6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M100 140C122.091 140 140 122.091 140 100C140 77.9086 122.091 60 100 60C77.9086 60 60 77.9086 60 100C60 122.091 77.9086 140 100 140Z" stroke="#64BDC6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M70 80C70 75 65 70 60 70C55 70 50 75 50 80C50 85 55 90 60 90C65 90 70 85 70 80Z" fill="#64BDC6"/>
+                                <path d="M150 80C150 75 145 70 140 70C135 70 130 75 130 80C130 85 135 90 140 90C145 90 150 85 150 80Z" fill="#64BDC6"/>
+                                <path d="M85 95C85 98.866 88.134 102 92 102C95.866 102 99 98.866 99 95C99 91.134 95.866 88 92 88C88.134 88 85 91.134 85 95Z" fill="#64BDC6"/>
+                                <path d="M101 95C101 98.866 104.134 102 108 102C111.866 102 115 98.866 115 95C115 91.134 111.866 88 108 88C104.134 88 101 91.134 101 95Z" fill="#64BDC6"/>
+                                <path d="M90 110C90 110 95 115 100 115C105 115 110 110 110 110" stroke="#64BDC6" stroke-width="3" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <a href="edit-pet.html" class="btn btn-edit">แก้ไข</a>
+                        <a href="delete-pet.html" class="btn btn-delete">ลบ</a>
+                    </div>
+                    <a href="allpet.html" class="btn btn-back">ย้อนกลับ</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Side menu navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                if (!this.classList.contains('logout')) {
+                    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
