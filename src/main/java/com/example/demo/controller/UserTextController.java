@@ -74,7 +74,7 @@ public ResponseEntity<?> submitForm(
         user.setStatus("PENDING");
 
         user.setUserId(formDTO.getUserId()); 
-        user.setPetId(formDTO.getPetId());
+        user.setPetID(formDTO.getPetID());
 
         
         user1Repository.save(user);
@@ -108,6 +108,8 @@ public ResponseEntity<?> getAllUsers() {
             dto.setAcceptRight(user.getAcceptRight());
             dto.setHomeVisits(user.getHomeVisits());
             dto.setStatus(user.getStatus());
+           /*  dto.setUserId(user.getUserId());
+            dto.setPetID(user.getPetID());*/
             String identityDocPath = user.getIdentityDoc();
             if (identityDocPath != null && !identityDocPath.isEmpty()) {
                 // ใช้ Paths.get().getFileName().toString() เพื่อดึงแค่ชื่อไฟล์

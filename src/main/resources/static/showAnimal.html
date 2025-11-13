@@ -106,6 +106,7 @@
                         <td>${user.acceptRight || ''}</td>
                         <td>${user.homeVisits || ''}</td>
                         <td>${user.status || ''}</td>
+                        <td>${user.petID || ''}</td>
                         <td>${user.identityDoc !== "-" ? `<a class="download-link" href="http://localhost:8081/api/userform/download/${user.identityDoc}">${user.identityDoc}</a>` : '-'}</td>
                         <td>${user.residenceDoc !== "-" ? `<a class="download-link" href="http://localhost:8081/api/userform/download/${user.residenceDoc}">${user.residenceDoc}</a>` : '-'}</td>
                     `;

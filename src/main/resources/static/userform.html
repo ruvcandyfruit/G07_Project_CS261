@@ -83,7 +83,7 @@
         <div class="part">
             <p>Part 2: ข้อมูลที่อยู่อาศัยและสภาพแวดล้อม</p>
             <hr>
-
+            
             <label for="address">ที่อยู่ปัจจุบัน <span class="required">*</span></label>
             <textarea id="address" name="address" placeholder="กรุณาระบุที่อยู่ปัจจุบันของคุณให้ครบถ้วน" required></textarea>
             <div id="addressError" class="error"></div>
@@ -169,6 +169,18 @@
         </div>                
     </div>
 </footer>
+
+<div class="part">
+<input type="hidden" id="userId" name="userId" value="[[${userIdValue}]]">
+
+<input type="hidden" id="petID" name="petID" value="[[${petIDValue}]]">
+</div>
+
+
+
+
+
+
 
 <script src="all.js"></script>
 <script src="userform.js"></script>
