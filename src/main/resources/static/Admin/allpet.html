@@ -22,27 +22,32 @@
             </div>
 
             <nav class="nav-menu">
-                <div class="nav-item" id="nav-dashboard">
+                <a href="dashboard.html" class="nav-item" id="nav-dashboard">
                     <img src="image-resources/dashboard-icon.svg" alt="Dashboard">
                     <img class="icon-active" src="image-resources/dashboard-icon-gradient.svg" alt="Dashboard">
                     <span>Dashboard</span>
-                </div>
-                <div class="nav-item active" id="nav-all-pet">
+                </a>
+
+                <a href="allpet.html" class="nav-item active" id="nav-all-pet">
                     <img src="image-resources/allpet-icon.svg" alt="All pet">
                     <img class="icon-active" src="image-resources/allpet-icon-gradient.svg" alt="All pet">
                     <span>All Pet</span>
-                </div>
-                <div class="nav-item" id="nav-schedule">
+                </a>
+
+                <a href="schedule.html" class="nav-item" id="nav-schedule">
                     <img src="image-resources/schedule-icon.svg" alt="Schedule">
                     <img class="icon-active" src="image-resources/schedule-icon-gradient.svg" alt="Schedule">
                     <span>Schedule</span>
-                </div>
+                </a>
+
+                
             </nav>
 
-            <div class="nav-item logout" id="nav-logout">
+            <!-- logout -->
+            <a href="#" class="nav-item logout" id="nav-logout">
                 <img src="image-resources/logout-icon.svg" alt="Log out">
                 <span>Log out</span>
-            </div>
+            </a>
         </aside>
 
         <!-- Main Content -->
@@ -50,24 +55,24 @@
             <div class="header-controls">
                 <h1 class="dashboard-header">ALL PET</h1>
                 <a href="addpet.html" class="add-new-pet-button">
-                   + Add New Pet
+                    + Add New Pet
                 </a>
             </div>
 
-            
+
 
             <div class="pet-table-container">
                 <div class="data-controls-panel">
                     <div class="summary-and-toggle">
                         <span class="pet-summary">There are 62 pets in total</span>
-            
+
                         <label class="toggle-switch-container">
                             <input type="checkbox" id="pending-request-toggle" class="toggle-input">
                             <span class="slider round"></span>
                             <span class="toggle-label">See pets that are pending request</span>
                         </label>
                     </div>
-            
+
                     <div class="search-and-filter">
                         <div class="search-box">
                             <input type="text" placeholder="Search" class="search-input">
@@ -101,13 +106,19 @@
                             <td>Persian</td>
                             <td><span class="status-tag no-request">No Request</span></td>
                             <td class="actions-cell">
-                                <button class="action-button view-request-btn no-request-btn">View Request</button>
+                                <!-- ปุ่ม link ไปหน้า requests.html -->
+                                <a href="requests.html" class="link-button-container">
+                                    <button class="action-button view-request-btn pending-btn">View Request</button>
+                                </a>
+                                <!-- ปุ่ม link ไปหน้า animal_form.html -->
+                                <a href="animal_form.html" class="link-button-container"></a>
                                 <button class="action-button edit-btn">Edit</button>
+                                </a>
                                 <button class="action-button delete-btn">Delete</button>
                             </td>
                         </tr>
 
-                        
+
                         <tr>
                             <td>0002</td>
                             <td class="pet-name-cell">
@@ -125,7 +136,7 @@
                                 </a>
                                 <!-- ปุ่ม link ไปหน้า animal_form.html -->
                                 <a href="animal_form.html" class="link-button-container"></a>
-                                    <button class="action-button edit-btn">Edit</button>
+                                <button class="action-button edit-btn">Edit</button>
                                 </a>
                                 <button class="action-button delete-btn">Delete</button>
                             </td>

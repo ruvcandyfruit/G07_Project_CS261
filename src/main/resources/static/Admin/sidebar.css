@@ -2,20 +2,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap');
 
 :root {
-    --bg-gray: #f2f2f2;     /*gray95*/
-    --bg-light: #f9f9f9;    /*almost white*/
-    --bg-main: #E5EEFF;     /*pale cyan*/
-    --bg-fade-yellow: rgba(255,209,2,0.5);
-    --button-black:#010002;
+    --bg-gray: #f2f2f2;
+    /*gray95*/
+    --bg-light: #f9f9f9;
+    /*almost white*/
+    --bg-main: #E5EEFF;
+    /*pale cyan*/
+    --bg-fade-yellow: rgba(255, 209, 2, 0.5);
+    --button-black: #010002;
     --button-yellow: #ffd102;
-    --red: #f34e4e; 
+    --red: #f34e4e;
     --linear-gradient: linear-gradient(74.49deg, #F840D0 -67.13%, #53DDFF 46.94%, #53FA9C 184.38%);
     --text-color: #333;
-    --primary-color: #4A69FF;    
+    --primary-color: #4A69FF;
     --border-radius: 15px;
     --transition: all 0.3s ease;
-    --box-shadow: 0px 10px 60px 0px rgba(0,0,0,0.1); 
+    --box-shadow: 0px 10px 60px 0px rgba(0, 0, 0, 0.1);
 }
+
 * {
     margin: 0;
     padding: 0;
@@ -41,8 +45,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100vh;
-    position: fixed;
 }
 
 /* logo */
@@ -74,6 +76,11 @@ body {
     width: 100%;
 }
 
+.nav-menu a {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
 .nav-item {
     display: flex;
     align-items: center;
@@ -93,7 +100,6 @@ body {
 
 .nav-item:hover {
     border-left-color: #5cd6d6;
-    font-weight: 600;
 }
 
 .nav-item.active {
@@ -103,37 +109,84 @@ body {
 .nav-item.active span {
     font-weight: 600;
     background: var(--linear-gradient);
-    -webkit-background-clip: text;  /* 2. ตัด Background ให้แสดงเฉพาะส่วนที่เป็นข้อความ */
+    -webkit-background-clip: text;
+    /* 2. ตัด Background ให้แสดงเฉพาะส่วนที่เป็นข้อความ */
     background-clip: text;
-    -webkit-text-fill-color: transparent;   /* 3. ทำให้สีของข้อความเป็นแบบโปร่งใส (Transparent) */
-    color: transparent;     /* สำหรับเบราว์เซอร์เก่าบางตัว */
+    -webkit-text-fill-color: transparent;
+    /* 3. ทำให้สีของข้อความเป็นแบบโปร่งใส (Transparent) */
+    color: transparent;
+    /* สำหรับเบราว์เซอร์เก่าบางตัว */
 }
 
 /* -------------------- สถานะเริ่มต้น: ไม่ Active (สีดำ) -------------------- */
 
 .nav-item img {
     /* ซ่อนรูป Gradient โดยค่าเริ่มต้น */
-    display: none; 
+    display: none;
 }
 
-.nav-item img:first-child { 
+.nav-item img:first-child {
     /* แสดงรูปภาพปกติ (สีดำ) */
-    display: block; 
+    display: block;
 }
 
 /* -------------------- สถานะ Active (Gradient) -------------------- */
 
 .nav-item.active img {
     /* เมื่อ Active ให้ซ่อนรูปภาพปกติ (สีดำ) */
-    display: none; 
+    display: none;
 }
 
 .nav-item.active img.icon-active {
     /* เมื่อ Active ให้แสดงรูปภาพ Gradient */
-    display: block; 
+    display: block;
 }
 
 .logout {
     margin-top: auto;
     width: 100%;
+    text-decoration: none;
+    color: var(--text-color);
 }
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    background: #e8eeff;
+    padding: 40px;
+    overflow-y: auto;
+}
+
+.dashboard-header {
+    font-size: 24px;
+    font-weight: 600;
+    width: 50%;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    color: var(--text-color);
+    border-bottom: 2px solid var(--text-color);
+}
+
+/* ถ้าใช้ Grid content */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-auto-rows: auto;
+    /* ✅ ให้ row ปรับความสูงเอง */
+    gap: 20px;
+}
+        /* ?
+        /
+    เลือกว่าจะใช้หรือไม่ใช้ Grid Layout สำหรับหน้านี้
+        /
+        * */
+
+/* ล้าง Grid Layout เดิมที่ไม่ใช้แล้วสำหรับหน้านี้ */
+.grid {
+    display: block;
+    /* เปลี่ยนจาก grid เป็น block เพื่อใช้ตารางแทน */
+    gap: 0;
+    padding-top: 20px;
+}
+

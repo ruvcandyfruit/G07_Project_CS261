@@ -40,7 +40,7 @@ body {
 /*--- Sidebar --- */
 .sidebar {
     width: 200px;
-    background: var(--bg-gray);
+    background: var(--bg-light);
     padding: 30px 0;
     display: flex;
     flex-direction: column;
@@ -74,6 +74,11 @@ body {
 .nav-menu {
     flex: 1;
     width: 100%;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: var(--text-color);
 }
 
 .nav-item {
@@ -140,7 +145,10 @@ body {
 .logout {
     margin-top: auto;
     width: 100%;
+    text-decoration: none;
+    color: var(--text-color);
 }
+
 
 /* Main Content */
 .main-content {
