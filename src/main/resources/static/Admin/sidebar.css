@@ -16,6 +16,7 @@
     --transition: all 0.3s ease;
     --box-shadow: 0px 10px 60px 0px rgba(0,0,0,0.1); 
     --sidebar-width: 320px;
+    --sidebar-width: 320px;
 }
 * {
     margin: 0;
@@ -32,6 +33,7 @@ body {
 .container {
     display: flex;
     height: 100vh;
+    width: 100%;
 }
 
 /*--- Sidebar --- */
@@ -67,6 +69,7 @@ body {
 .logo-text h2 {
     font-size: 16px;
     color: #333;
+    display: block;
 }
 
 /* menu */
@@ -138,6 +141,12 @@ body {
     display: flex;
     gap: 10px;
 }
+
+.nav-item span{
+    display: block;
+}
+
+
 .logout {
     margin-top: auto;
     width: 100%;
@@ -146,6 +155,33 @@ body {
 /*ส่วนของ main สำหรับทำงานคู่กับ sidebar*/
 main {
     width:100%;
-    padding: 10%;
+    padding: 1%;
     margin-left: var(--sidebar-width);
+}
+
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: fit-content; /* หรือ max-content */
+  }
+
+  .sidebar {
+    width: var(--sidebar-width);
+    /* เพื่อให้ความกว้าง hug content */
+    white-space: nowrap; 
+  }
+
+  main {
+    margin-left: var(--sidebar-width);
+  }
+}
+@media (max-width: 768px) {
+    .nav-item {
+            padding: 15px;
+    }
+    .nav-item span{
+        display: none;
+    }
+    .logo-text h2 {
+        display: none;
+    }
 }
