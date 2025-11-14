@@ -8,9 +8,6 @@
         <title>Pet Adoption All Pet</title>
     </head>
     <body>
-        <!-- CDN: iconify web component -->
-        <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js"></script>
-
         <!-- Side bar -->
         <div id="sidebar"></div>
 
@@ -19,8 +16,8 @@
             <!-- Main Content -->
             <main>
             <div class="header">
-            <h1>ALL PET <iconify-icon icon="material-symbols:chevron-right-rounded"></iconify-icon>Add Pet</h1>
-        </div>
+            <h1>ALL PET</h1><span class="material-symbols-light--chevron-right-rounded"></span><h2>Add Pet</h2>
+            </div>
 
         <div class="card">
             <div class="card-header">
@@ -28,7 +25,7 @@
             </div>
             <div class="upload-area">
                 <div class="upload-icon">
-                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <span class="humbleicons--upload"></span>
                 </div>
                 <p class="upload-text"><span class="upload-highlight">Click to upload</span> or drag and drop file PNG,JPG</p>
             </div>
@@ -49,8 +46,8 @@
                 <div class="form-group">
                     <label class="form-label">Type<span class="required">*</span></label>
                     <div class="btn-group">
-                        <button class="selection-btn active"><i class="fa-solid fa-cat"></i> Cat</button>
-                        <button class="selection-btn"><i class="fa-solid fa-dog"></i> Dog</button>
+                        <button class="selection-btn active"><span class="solar--cat-bold"></span> Cat</button>
+                        <button class="selection-btn"><span class="mdi--dog"></span> Dog</button>
                     </div>
                 </div>
 
@@ -61,8 +58,11 @@
                             <option>Mixed</option>
                             <option>Persian</option>
                             <option>Siam</option>
-                        </select>
-                         <i class="fa-solid fa-chevron-down calendar-icon"></i>
+                        </select> 
+                        <div class="up-or-down">
+                            <span class="mdi--chevron-up-down"></span>
+                            <span class="mdi--chevron-down-up"></span>
+                        </div>
                     </div>
                 </div>
 
@@ -70,7 +70,7 @@
                     <label class="form-label">Date of Birth<span class="required">*</span></label>
                     <div class="date-input-wrapper">
                         <input type="text" class="form-control" placeholder="mm/dd/yyyy">
-                        <i class="fa-regular fa-calendar calendar-icon"></i>
+                        <span class="fa6-regular--calendar"></span>
                     </div>
                 </div>
             </div>
@@ -78,8 +78,8 @@
             <div class="form-group" style="max-width: 25%;">
                 <label class="form-label">Gender<span class="required">*</span></label>
                 <div class="btn-group">
-                    <button class="selection-btn"><i class="fa-solid fa-mars"></i> Male</button>
-                    <button class="selection-btn"><i class="fa-solid fa-venus"></i> Female</button>
+                    <button class="selection-btn"><span class="tabler--gender-male"></span> Male</button>
+                    <button class="selection-btn"><span class="tabler--gender-female"></span> Female</button>
                 </div>
             </div>
         </div>
@@ -91,26 +91,26 @@
             </div>
 
             <div class="health-grid form-grid"> <div class="form-group">
-                    <label class="form-label">Food Allergy</label>
-                    <input type="text" class="form-control" placeholder="Fish, Egg, etc">
-                </div>
+                <label class="form-label">Food Allergy</label>
+                <input type="text" class="form-control" placeholder="Fish, Egg, etc">
+            </div>
 
-                <div class="form-group">
-                    <label class="form-label">Disease</label>
-                    <input type="text" class="form-control" placeholder="Rabies, Ringworm, etc">
-                </div>
+            <div class="form-group">
+                <label class="form-label">Disease</label>
+                <input type="text" class="form-control" placeholder="Rabies, Ringworm, etc">
+            </div>
 
-                <div class="form-group">
-                    <label class="form-label">Sterilization & Vaccination</label>
-                    <div class="checkbox-group">
-                        <label class="custom-checkbox">
-                            <input type="checkbox"> Sterilized
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox"> Vaccinated
-                        </label>
-                    </div>
+            <div class="form-group">
+                <label class="form-label">Sterilization & Vaccination</label>
+                <div class="checkbox-group">
+                    <label class="custom-checkbox">
+                        <input type="checkbox"> Sterilized
+                    </label>
+                    <label class="custom-checkbox">
+                        <input type="checkbox"> Vaccinated
+                    </label>
                 </div>
+            </div>
 
                 <div class="form-group">
                     <label class="form-label">Weight</label>
@@ -130,5 +130,6 @@
         </div>
 
         <script src="sidebar.js"></script>
+        <script src="add-edit-pet.js"></script>
     </body>
 </html>
