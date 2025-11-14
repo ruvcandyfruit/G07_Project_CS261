@@ -1,4 +1,4 @@
- @import url('https://fonts.googleapis.com/css2?family=Mali&family=Itim&family=Kodchasan&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mali&family=Itim&family=Kodchasan&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap');
 
         :root {
@@ -49,15 +49,18 @@
             align-items: center;
             gap: 12px;
             margin-bottom: 40px;
-            width: max-content;
+            padding: 0 20px;
         }
 
         .logo-icon {
             width: 40px;
             height: 40px;
+            background: #53DDFF;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 24px;
         }
 
         .logo-text h2 {
@@ -75,20 +78,11 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 12px 16px;
+            padding: 12px 20px;
             cursor: pointer;
             transition: var(--transition);
             background: var(--bg-light);
             border-left: 4px solid transparent;
-        }
-
-        .nav-item img {
-            width: 20px;
-            height: 20px;
-        }
-
-        .nav-item img.icon-active {
-            display: none;
         }
 
         .nav-item:hover {
@@ -97,6 +91,7 @@
 
         .nav-item.active {
             border-left-color: #53DDFF;
+            background: white;
         }
 
         .nav-item.active span {
@@ -105,15 +100,6 @@
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            color: transparent;
-        }
-
-        .nav-item.active img:first-child {
-            display: none;
-        }
-
-        .nav-item.active img.icon-active {
-            display: block;
         }
 
         .logout {
@@ -129,264 +115,292 @@
             overflow-y: auto;
         }
 
-        .header {
+        /* Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .breadcrumb a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .breadcrumb span {
+            color: #666;
+        }
+
+        .info-icon {
+            width: 30px;
+            height: 30px;
+            background: #53DDFF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Main Layout - 3 sections */
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 30px;
+        }
+
+        /* Left Section - Pet Image */
+        .pet-image-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            box-shadow: var(--box-shadow);
+            height: fit-content;
+        }
+
+        .pet-image-placeholder {
+            width: 250px;
+            height: 250px;
+            background: #d9d9d9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            color: #999;
+        }
+
+        .pet-name-display {
+            background: var(--bg-light);
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Right Section */
+        .right-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Status and Actions */
+        .status-actions {
+            background: white;
+            border-radius: 20px;
+            padding: 25px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .page-title {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--text-color);
-            padding-bottom: 10px;
-            border-bottom: 3px solid var(--text-color);
-            width: fit-content;
-        }
-
-        .search-container {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .search-box {
-            display: flex;
-            align-items: center;
-            background: white;
-            padding: 8px 20px;
-            border-radius: 25px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            gap: 10px;
-        }
-
-        .search-box input {
-            border: none;
-            outline: none;
-            padding: 5px;
-            width: 200px;
-            font-size: 14px;
-        }
-
-        .menu-icon {
-            cursor: pointer;
-            font-size: 24px;
-        }
-
-        /* Pet Container - 2 Column Layout */
-        .pet-container {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
             box-shadow: var(--box-shadow);
-            display: grid;
-            grid-template-columns: 400px 1fr;
-            gap: 50px;
-            align-items: start;
         }
 
-        /* Left Column */
-        .left-column {
+        .status-badge {
             display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-
-        .pet-image-section {
-            display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 20px;
-        }
-
-        .pet-image {
-            width: 100%;
-            max-width: 350px;
-            height: 350px;
-            border-radius: 20px;
-            object-fit: cover;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-        }
-
-        .pet-name-box {
-            background: var(--bg-light);
-            padding: 20px 30px;
-            border-radius: 15px;
-            width: 100%;
-            text-align: center;
-        }
-
-        .pet-name-title {
-            font-size: 26px;
-            font-weight: 700;
-            color: #333;
-        }
-
-        .pet-details {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .detail-item {
-            font-size: 15px;
-            color: #333;
-            line-height: 1.8;
-        }
-
-        /* Right Column */
-        .right-column {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            padding-top: 20px;
-        }
-
-        .status-section {
-            background: #C8F4D7;
-            padding: 25px 35px;
-            border-radius: 15px;
-            text-align: center;
+            gap: 10px;
+            font-size: 16px;
+            font-weight: 600;
         }
 
         .status-label {
-            font-size: 18px;
-            font-weight: 700;
-            color: #2D7A4A;
+            color: #333;
         }
 
-        .owner-section {
-            background: var(--bg-light);
+        .status-value {
+            background: #E8F5FF;
+            color: #4A9EFF;
+            padding: 8px 20px;
+            border-radius: 8px;
+            border: 1px solid #4A9EFF;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-icon {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .btn-delete {
+            background: white;
+            color: #f34e4e;
+            border: 1px solid #f34e4e;
+        }
+
+        .btn-delete:hover {
+            background: #f34e4e;
+            color: white;
+        }
+
+        .btn-edit {
+            background: white;
+            color: #4A9EFF;
+            border: 1px solid #4A9EFF;
+        }
+
+        .btn-edit:hover {
+            background: #4A9EFF;
+            color: white;
+        }
+
+        /* Info Cards */
+        .info-cards {
+            background: white;
+            border-radius: 20px;
             padding: 30px;
-            border-radius: 15px;
+            box-shadow: var(--box-shadow);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .info-card {
+            display: flex;
+            flex-direction: column;
+            align-items: normal;
+            gap: 15px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .info-item {
+            display: flex;
+            gap: 10px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .info-item::before {
+            content: "•";
+            color: #333;
+            font-weight: bold;
+        }
+
+        /* Owner Info */
+        .owner-info {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--box-shadow);
         }
 
         .owner-title {
             font-size: 18px;
             font-weight: 700;
-            color: #333;
             margin-bottom: 20px;
         }
 
-        .owner-details {
+        .owner-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px 40px;
+            margin-bottom: 30px;
+        }
+
+        .owner-field {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .field-label {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .field-value {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .owner-questions {
             display: flex;
             flex-direction: column;
             gap: 15px;
+            margin-top: 20px;
         }
 
-        .owner-detail {
-            font-size: 15px;
+        .question-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .question-text {
+            font-size: 14px;
             color: #333;
-            line-height: 1.8;
+            font-weight: 500;
         }
 
-        .owner-label {
-            font-weight: 700;
+        .answer-text {
+            font-size: 14px;
+            color: #666;
+            padding-left: 0;
         }
 
-        .pet-icon-container {
+        /* Back Button */
+        .back-button-container {
             display: flex;
             justify-content: center;
-            align-items: center;
-            margin: 20px 0;
+            margin-top: 30px;
         }
 
-        .pet-icon {
-            width: 140px;
-            height: 140px;
-            opacity: 0.25;
-        }
-
-        /* Action Buttons */
-        .action-buttons {
-            display: flex;
-            gap: 15px;
-        }
-
-        .btn {
-            padding: 14px 40px;
-            border: none;
-            border-radius: 25px;
+        .btn-back {
+            padding: 14px 60px;
+            background: white;
+            color: #333;
+            border: 1px solid #ddd;
+            border-radius: 10px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-            flex: 1;
-        }
-
-        .btn-edit {
-            background: var(--button-yellow);
-            color: #333;
-        }
-
-        .btn-edit:hover {
-            background: #FFC700;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 209, 2, 0.4);
-        }
-
-        .btn-delete {
-            background: var(--red);
-            color: white;
-        }
-
-        .btn-delete:hover {
-            background: #e63d3d;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(243, 78, 78, 0.4);
-        }
-
-        .btn-back {
-            background: #B8D4F1;
-            color: #333;
-            margin-top: 10px;
         }
 
         .btn-back:hover {
-            background: #A0C4E8;
+            background: #f5f5f5;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(184, 212, 241, 0.4);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
+
 
         /* Responsive */
         @media (max-width: 1200px) {
-            .pet-container {
+            .content-wrapper {
                 grid-template-columns: 1fr;
-                gap: 30px;
             }
 
-            .pet-image-section {
-                margin: 0 auto;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 80px;
-                padding: 30px 10px;
-            }
-
-            .logo-text {
-                display: none;
-            }
-
-            .nav-item span {
-                display: none;
-            }
-
-            .main-content {
-                padding: 20px;
-            }
-
-            .pet-container {
-                padding: 25px;
-            }
-
-            .action-buttons {
-                flex-direction: column;
+            .info-cards {
+                grid-template-columns: 1fr;
             }
         }
