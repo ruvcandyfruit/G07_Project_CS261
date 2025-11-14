@@ -142,3 +142,10 @@ body {
     margin-top: auto;
     width: 100%;
 }
+
+/*ส่วนของ main สำหรับทำงานคู่กับ sidebar*/
+main {
+    width:100%;
+    padding: 10%;
+    margin-left: var(--sidebar-width);
+}
