@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="th-en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="homepageResources/icon.png" type="image/x-icon">
-    <link rel="stylesheet" href="add-edit-pet.css">
-    <title>Pet Adoption All Pet</title>
-</head>
-<body>
-    <div class="container">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="homepageResources/icon.png" type="image/x-icon">
+        <link rel="stylesheet" href="add-edit-pet.css">
+        <title>Pet Adoption All Pet</title>
+    </head>
+    <body>
+        <!-- CDN: iconify web component -->
+        <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js"></script>
+
         <!-- Side bar -->
         <div id="sidebar"></div>
-        
-        <!-- Main Content -->
-        <main>
+
+        <!-- Container -->
+        <div class="container"></div>
+            <!-- Main Content -->
+            <main>
             <div class="header">
-            <h1>ALL PET <i class="fa-solid fa-chevron-right" style="font-size: 16px; margin: 0 10px; color: #333;"></i> <span style="font-weight: 400;">Add Pet</span></h1>
+            <h1>ALL PET <iconify-icon icon="material-symbols:chevron-right-rounded"></iconify-icon>Add Pet</h1>
         </div>
 
         <div class="card">
@@ -122,9 +126,9 @@
             <button class="btn btn-cancel">Cancel</button>
             <button class="btn btn-save">Save</button>
         </div>
-        </main>
-    </div>
+            </main>
+        </div>
 
-    <script src="sidebar.js"></script>
-</body>
+        <script src="sidebar.js"></script>
+    </body>
 </html>
