@@ -109,6 +109,11 @@ iconify-icon {
     font-weight: 500;
 }
 
+.upload-icon {
+    display: flex;
+    justify-content: center;
+}
+
 /* Form Elements */
 .form-grid {
     display: grid;
@@ -338,7 +343,7 @@ iconify-icon {
   background-size: 100% 100%;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23010002' d='M18 4c-1.71 0-2.75.33-3.35.61C13.88 4.23 13 4 12 4s-1.88.23-2.65.61C8.75 4.33 7.71 4 6 4c-3 0-5 8-5 10c0 .83 1.32 1.59 3.14 1.9c.64 2.24 3.66 3.95 7.36 4.1v-4.28c-.59-.37-1.5-1.04-1.5-1.72c0-1 2-1 2-1s2 0 2 1c0 .68-.91 1.35-1.5 1.72V20c3.7-.15 6.72-1.86 7.36-4.1C21.68 15.59 23 14.83 23 14c0-2-2-10-5-10M4.15 13.87c-.5-.12-.89-.26-1.15-.37c.25-2.77 2.2-7.1 3.05-7.5c.54 0 .95.06 1.32.11c-2.1 2.31-2.93 5.93-3.22 7.76M9 12a1 1 0 0 1-1-1c0-.54.45-1 1-1a1 1 0 0 1 1 1c0 .56-.45 1-1 1m6 0a1 1 0 0 1-1-1c0-.54.45-1 1-1a1 1 0 0 1 1 1c0 .56-.45 1-1 1m4.85 1.87c-.29-1.83-1.12-5.45-3.22-7.76c.37-.05.78-.11 1.32-.11c.85.4 2.8 4.73 3.05 7.5c-.25.11-.64.25-1.15.37'/%3E%3C/svg%3E");
 }
-/*calendar*/
+/*calendar
 .fa6-regular--calendar {
   display: inline-block;
   width: 30px;
@@ -346,7 +351,8 @@ iconify-icon {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='%234d4d4e' d='M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24v40H64C28.7 64 0 92.7 0 128v320c0 35.3 28.7 64 64 64h320c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64h-40V24c0-13.3-10.7-24-24-24s-24 10.7-24 24v40H152zM48 192h352v256c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16z'/%3E%3C/svg%3E");
-}
+}*/
+
 /*gender*/
 /*male*/
 .tabler--gender-male {
@@ -365,4 +371,46 @@ iconify-icon {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%234d4d4e' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 9a5 5 0 1 0 10 0A5 5 0 1 0 7 9m5 5v7m-3-3h6'/%3E%3C/svg%3E");
+}
+
+/* --- Validation Error Styles --- */
+
+/* ซ่อนข้อความ error ไว้ก่อน */
+.error-message {
+    font-size: 12px;
+    color: var(--danger-text);
+    margin-top: 5px;
+    display: none; /* ซ่อนไว้เป็นค่าเริ่มต้น */
+}
+
+/* แสดงข้อความ error เมื่อมี class 'invalid' */
+.form-group.invalid .error-message {
+    display: block;
+}
+
+/* ทำให้ขอบเป็นสีแดงเมื่อมี class 'invalid' */
+.form-group.invalid .form-control,
+.form-group.invalid .btn-group,
+.form-group.invalid .date-input-wrapper {
+    border-color: var(--danger-text);
+}
+
+/* สำหรับปุ่มที่อยู่ใน group */
+.form-group.invalid .btn-group {
+    border: 1px solid var(--danger-text);
+    border-radius: 8px;
+    padding: 2px; /* เพิ่ม padding เล็กน้อยให้เห็นขอบชัด */
+}
+
+/* --- Image Preview Style --- */
+.upload-area {
+    position: relative;
+    /* ทำให้ label มีขนาดเท่าเดิม */
+}
+
+.upload-area #imagePreview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 12px;
 }

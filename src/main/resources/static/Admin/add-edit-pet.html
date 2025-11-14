@@ -7,129 +7,138 @@
         <link rel="stylesheet" href="add-edit-pet.css">
         <title>Pet Adoption All Pet</title>
     </head>
-    <body>
-        <!-- Side bar -->
-        <div id="sidebar"></div>
+<body>
+    <div id="sidebar"></div> 
 
-        <!-- Container -->
-        <div class="container"></div>
-            <!-- Main Content -->
-            <main>
+    <div class="container">
+        <main>
             <div class="header">
-            <h1>ALL PET</h1><span class="material-symbols-light--chevron-right-rounded"></span><h2>Add Pet</h2>
+                <h1>ALL PET</h1><span class="material-symbols-light--chevron-right-rounded"></span><h2>Add Pet</h2>
             </div>
 
-        <div class="card">
-            <div class="card-header">
-                <h2 class="card-title">Photos</h2>
-            </div>
-            <div class="upload-area">
-                <div class="upload-icon">
-                    <span class="humbleicons--upload"></span>
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Photos</h2>
                 </div>
-                <p class="upload-text"><span class="upload-highlight">Click to upload</span> or drag and drop file PNG,JPG</p>
-            </div>
-        </div>
+                <label class="upload-area" for="fileUpload">
+                    <input type="file" id="fileUpload" accept="image/png, image/jpeg" style="display: none;">
+                    
+                    <div id="upload-prompt">
+                        <div class="upload-icon">
+                            <span class="humbleicons--upload"></span>
+                        </div>
+                        <p class="upload-text"><span class="upload-highlight">Click to upload</span> or drag and drop file PNG,JPG</p>
+                    </div>
+                    
+                    <img id="imagePreview" src="" alt="Pet Preview" style="display: none; width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+                </label>
+                <div class="error-message"></div> </div>
 
-        <div class="card">
-            <div class="card-header">
-                <h2 class="card-title">Basic Information</h2>
-                <button class="reset-btn">Reset</button>
-            </div>
-            
-            <div class="form-grid">
-                <div class="form-group">
-                    <label class="form-label">Pet Name<span class="required">*</span></label>
-                    <input type="text" class="form-control" placeholder="Enter Pet Name">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Basic Information</h2>
+                    <button class="reset-btn" id="resetBasicInfo">Reset</button>
                 </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Pet Name<span class="required">*</span></label>
+                        <input type="text" class="form-control" id="petName" placeholder="Enter Pet Name">
+                        <div class="error-message"></div>
+                    </div>
 
-                <div class="form-group">
-                    <label class="form-label">Type<span class="required">*</span></label>
-                    <div class="btn-group">
-                        <button class="selection-btn active"><span class="solar--cat-bold"></span> Cat</button>
-                        <button class="selection-btn"><span class="mdi--dog"></span> Dog</button>
+                    <div class="form-group">
+                        <label class="form-label">Type<span class="required">*</span></label>
+                        <div class="btn-group" id="typeGroup">
+                            <button class="selection-btn active" data-value="Cat"><span class="solar--cat-bold"></span> Cat</button>
+                            <button class="selection-btn" data-value="Dog"><span class="mdi--dog"></span> Dog</button>
+                        </div>
+                        <div class="error-message"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Breed<span class="required">*</span></label>
+                        <div class="date-input-wrapper">
+                            <select class="form-control" id="petBreed" style="appearance: none; cursor: pointer;">
+                                <option value="">Select Breed</option>
+                                <option value="Mixed">Mixed</option>
+                                <option value="Persian">Persian</option>
+                                <option value="Siam">Siam</option>
+                            </select> 
+                            <div class="up-or-down">
+                                <span class="mdi--chevron-up-down"></span>
+                                <span class="mdi--chevron-down-up"></span>
+                            </div>
+                        </div>
+                        <div class="error-message"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Date of Birth<span class="required">*</span></label>
+                        <div class="date-input-wrapper">
+                            <input type="date" class="form-control" id="petDob" placeholder="mm/dd/yyyy">
+                            <!--<span class="fa6-regular--calendar" id="calendarIcon"></span>-->
+                        </div>
+                        <div class="error-message"></div>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label">Breed<span class="required">*</span></label>
-                    <div class="date-input-wrapper">
-                        <select class="form-control" style="appearance: none; cursor: pointer;">
-                            <option>Mixed</option>
-                            <option>Persian</option>
-                            <option>Siam</option>
-                        </select> 
-                        <div class="up-or-down">
-                            <span class="mdi--chevron-up-down"></span>
-                            <span class="mdi--chevron-down-up"></span>
+                <div class="form-group" style="max-width: 250px;"> <label class="form-label">Gender<span class="required">*</span></label>
+                    <div class="btn-group" id="genderGroup">
+                        <button class="selection-btn" data-value="Male"><span class="tabler--gender-male"></span> Male</button>
+                        <button class="selection-btn" data-value="Female"><span class="tabler--gender-female"></span> Female</button>
+                    </div>
+                    <div class="error-message"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Health Information</h2>
+                    <button class="reset-btn" id="resetHealthInfo">Reset</button>
+                </div>
+
+                <div class="health-grid form-grid"> 
+                    <div class="form-group">
+                        <label class="form-label">Food Allergy</label>
+                        <input type="text" class="form-control" id="foodAllergy" placeholder="Fish, Egg, etc">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Disease</label>
+                        <input type="text" class="form-control" id="disease" placeholder="Rabies, Ringworm, etc">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Sterilization & Vaccination</label>
+                        <div class="checkbox-group">
+                            <label class="custom-checkbox">
+                                <input type="checkbox" id="sterilized"> Sterilized
+                            </label>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" id="vaccinated"> Vaccinated
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Weight</label>
+                        <div class="weight-input-wrapper">
+                            <input type="number" class="form-control" id="petWeight" style="width: 70px;">
+                            <span>kg</span>
                         </div>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label class="form-label">Date of Birth<span class="required">*</span></label>
-                    <div class="date-input-wrapper">
-                        <input type="text" class="form-control" placeholder="mm/dd/yyyy">
-                        <span class="fa6-regular--calendar"></span>
-                    </div>
-                </div>
             </div>
 
-            <div class="form-group" style="max-width: 25%;">
-                <label class="form-label">Gender<span class="required">*</span></label>
-                <div class="btn-group">
-                    <button class="selection-btn"><span class="tabler--gender-male"></span> Male</button>
-                    <button class="selection-btn"><span class="tabler--gender-female"></span> Female</button>
-                </div>
+            <div class="action-buttons">
+                <button class="btn btn-cancel">Cancel</button>
+                <button class="btn btn-save" id="saveButton">Save</button>
             </div>
-        </div>
+        </main>
+    </div>
 
-        <div class="card">
-            <div class="card-header">
-                <h2 class="card-title">Health Information</h2>
-                <button class="reset-btn">Reset</button>
-            </div>
-
-            <div class="health-grid form-grid"> <div class="form-group">
-                <label class="form-label">Food Allergy</label>
-                <input type="text" class="form-control" placeholder="Fish, Egg, etc">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Disease</label>
-                <input type="text" class="form-control" placeholder="Rabies, Ringworm, etc">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Sterilization & Vaccination</label>
-                <div class="checkbox-group">
-                    <label class="custom-checkbox">
-                        <input type="checkbox"> Sterilized
-                    </label>
-                    <label class="custom-checkbox">
-                        <input type="checkbox"> Vaccinated
-                    </label>
-                </div>
-            </div>
-
-                <div class="form-group">
-                    <label class="form-label">Weight</label>
-                    <div class="weight-input-wrapper">
-                        <input type="number" class="form-control" style="width: 70px;">
-                        <span>kg</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="action-buttons">
-            <button class="btn btn-cancel">Cancel</button>
-            <button class="btn btn-save">Save</button>
-        </div>
-            </main>
-        </div>
-
-        <script src="sidebar.js"></script>
-        <script src="add-edit-pet.js"></script>
-    </body>
+    <script src="add-edit-pet.js"></script>
+    <script src="sidebar.js"></script>
+</body>
 </html>
