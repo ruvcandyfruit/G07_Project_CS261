@@ -116,10 +116,11 @@ iconify-icon {
 
 /* Form Elements */
 .form-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-wrap: wrap;
     gap: 20px;
     margin-bottom: 20px;
+
 }
 
 /* Responsive adjustments */
@@ -132,8 +133,13 @@ iconify-icon {
 .form-group {
     display: flex;
     flex-direction: column;
+    width: 250px;
 }
-
+.form-group-mini {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+}
 .form-label {
     font-size: 14px;
     font-weight: 500;
@@ -150,11 +156,11 @@ iconify-icon {
     border: 1px solid var(--border-color);
     border-radius: 8px;
     font-size: 14px;
-    color: #333;
+    color: var(--text-secondary);
     outline: none;
     transition: 0.2s;
-    width: 100%;
     background: #fff;
+    width: 100%;
 }
 
 .form-control:focus {
@@ -220,8 +226,8 @@ iconify-icon {
 
 /* Health Info Section Specifics */
 .health-grid {
-    display: grid;
-    grid-template-columns: 2fr 2fr 2fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
     gap: 20px;
 }
 
@@ -253,6 +259,7 @@ iconify-icon {
     display: flex;
     align-items: center;
     gap: 10px;
+    width: fit-content;
 }
 
 /* Footer Actions */
