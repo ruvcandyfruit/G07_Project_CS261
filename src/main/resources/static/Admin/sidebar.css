@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Mali&family=Itim&family=Kodchasan&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap');
+
+:root {
+    --bg-gray: #f2f2f2;     /*gray95*/
+    --bg-light: #f9f9f9;    /*almost white*/
+    --bg-main: #E5EEFF;     /*pale cyan*/
+    --bg-fade-yellow: rgba(255,209,2,0.5);
+    --button-black:#010002;
+    --button-yellow: #ffd102;
+    --red: #f34e4e; 
+    --linear-gradient: linear-gradient(74.49deg, #F840D0 -67.13%, #53DDFF 46.94%, #53FA9C 184.38%);
+    --text-color: #333;
+    --primary-color: #4A69FF;    
+    --border-radius: 15px;
+    --transition: all 0.3s ease;
+    --box-shadow: 0px 10px 60px 0px rgba(0,0,0,0.1); 
+    --sidebar-width: 320px;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /*border: 1px solid grey;  ไว้ดูขนาดของทุกอย่าง */
+}
+
+body {
+    font-family: 'Manrope', 'Mali', 'Itim', sans-serif;
+    color: #333;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/*--- Sidebar --- */
+.sidebar {
+    width: var(--sidebar-width);
+    background: var(--bg-light);
+    padding: 30px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    position: fixed;
+}
+
+/* logo */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 40px;
+    width: max-content;
+}
+
+.logo-icon {
+    width: 50px;
+    height: 50px;
+    background: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-text h2 {
+    font-size: 16px;
+    color: #333;
+}
+
+/* menu */
+.nav-menu {
+    flex: 1;
+    width: 100%;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 60px;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: var(--bg-light);
+    border-left: 4px solid transparent;
+}
+
+/* menu icon */
+.nav-item img {
+    width: 20px;
+    height: 20px;
+}
+
+.nav-item:hover {
+    border-left-color: #5cd6d6;
+    font-weight: 600;
+}
+
+.nav-item.active {
+    border-left-color: #53DDFF;
+}
+
+.nav-item.active span {
+    font-weight: 600;
+    background: var(--linear-gradient);
+    -webkit-background-clip: text;  /* 2. ตัด Background ให้แสดงเฉพาะส่วนที่เป็นข้อความ */
+    background-clip: text;
+    -webkit-text-fill-color: transparent;   /* 3. ทำให้สีของข้อความเป็นแบบโปร่งใส (Transparent) */
+    color: transparent;     /* สำหรับเบราว์เซอร์เก่าบางตัว */
+}
+
+/* -------------------- สถานะเริ่มต้น: ไม่ Active (สีดำ) -------------------- */
+
+.nav-item img {
+    /* ซ่อนรูป Gradient โดยค่าเริ่มต้น */
+    display: none; 
+}
+
+.nav-item img:first-child { 
+    /* แสดงรูปภาพปกติ (สีดำ) */
+    display: block; 
+}
+
+/* -------------------- สถานะ Active (Gradient) -------------------- */
+
+.nav-item.active img {
+    /* เมื่อ Active ให้ซ่อนรูปภาพปกติ (สีดำ) */
+    display: none; 
+}
+
+.nav-item.active img.icon-active {
+    /* เมื่อ Active ให้แสดงรูปภาพ Gradient */
+    display: block; 
+}
+
+.mini-nav-item {
+    display: flex;
+    gap: 10px;
+}
+.logout {
+    margin-top: auto;
+    width: 100%;
+}
