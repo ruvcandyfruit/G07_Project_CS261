@@ -15,6 +15,7 @@
     --border-radius: 15px;
     --transition: all 0.3s ease;
     --box-shadow: 0px 10px 60px 0px rgba(0,0,0,0.1); 
+    --sidebar-width: 320px;
 }
 * {
     margin: 0;
@@ -35,7 +36,7 @@ body {
 
 /*--- Sidebar --- */
 .sidebar {
-    width: 200px;
+    width: var(--sidebar-width);
     background: var(--bg-light);
     padding: 30px 0;
     display: flex;
