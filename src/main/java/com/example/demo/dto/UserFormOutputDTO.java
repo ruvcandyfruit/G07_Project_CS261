@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -24,8 +25,8 @@ public class UserFormOutputDTO {
     private Boolean acceptRight;
     private Boolean homeVisits;
     private String status;
-    private LocalDate resultEstimate;
-    private LocalDate meetDate;
+    private LocalDateTime resultEstimate;
+    private LocalDateTime meetDate;
     
     private String identityDoc; // ใช้สำหรับแสดงชื่อไฟล์ในตาราง
     private String residenceDoc; // ใช้สำหรับแสดงชื่อไฟล์ในตาราง
