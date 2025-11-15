@@ -1,424 +1,326 @@
 @import url('https://fonts.googleapis.com/css2?family=Mali&family=Itim&family=Kodchasan&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap');
 
-        :root {
-            --bg-gray: #f2f2f2;
-            --bg-light: #f9f9f9;
-            --bg-main: #E5EEFF;
-            --bg-fade-yellow: rgba(255,209,2,0.5);
-            --button-black:#010002;
-            --button-yellow: #ffd102;
-            --red: #f34e4e;
-            --linear-gradient: linear-gradient(74.49deg, #F840D0 -67.13%, #53DDFF 46.94%, #53FA9C 184.38%);
-            --text-color: #333;
-            --primary-color: #4A69FF;
-            --border-radius: 15px;
-            --transition: all 0.3s ease;
-            --box-shadow: 0px 10px 60px 0px rgba(0,0,0,0.1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Manrope', 'Mali', 'Itim', sans-serif;
-            color: #333;
-            background: var(--bg-main);
-        }
-
-        .container {
-            display: flex;
-            height: 100vh;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 200px;
-            background: var(--bg-gray);
-            padding: 30px 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 40px;
-            padding: 0 20px;
-        }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: #53DDFF;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-        }
-
-        .logo-text h2 {
-            font-size: 16px;
-            color: #333;
-            line-height: 1.2;
-        }
-
-        .nav-menu {
-            flex: 1;
-            width: 100%;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 20px;
-            cursor: pointer;
-            transition: var(--transition);
-            background: var(--bg-light);
-            border-left: 4px solid transparent;
-        }
-
-        .nav-item:hover {
-            border-left-color: #5cd6d6;
-        }
-
-        .nav-item.active {
-            border-left-color: #53DDFF;
-            background: white;
-        }
-
-        .nav-item.active span {
-            font-weight: 600;
-            background: var(--linear-gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .logout {
-            margin-top: auto;
-            width: 100%;
-        }
-
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            background: var(--bg-main);
-            padding: 40px;
-            overflow-y: auto;
-        }
-
-        /* Breadcrumb */
-        .breadcrumb {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 30px;
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .breadcrumb a {
-            color: #333;
-            text-decoration: none;
-        }
-
-        .breadcrumb span {
-            color: #666;
-        }
-
-        .info-icon {
-            width: 30px;
-            height: 30px;
-            background: #53DDFF;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        /* Main Layout - 3 sections */
-        .content-wrapper {
-            display: grid;
-            grid-template-columns: 350px 1fr;
-            gap: 30px;
-        }
-
-        /* Left Section - Pet Image */
-        .pet-image-section {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            box-shadow: var(--box-shadow);
-            height: fit-content;
-        }
-
-        .pet-name{
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            box-shadow: var(--box-shadow);
-            height: fit-content;
-        }
-
-        .pet-image-placeholder {
-            width: 250px;
-            height: 250px;
-            background: #d9d9d9;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 80px;
-            color: #999;
-        }
-
-        .pet-name-display {
-            background: var(--bg-light);
-            padding: 15px 30px;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: 600;
-            text-align: center;
-            width: 100%;
-        }
-
-        /* Right Section */
-        .right-section {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        /* Status and Actions */
-        .status-actions {
-            order: 2;
-            background: white;
-            border-radius: 20px;
-            padding: 25px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--box-shadow);
-        }
-
-        .status-badge {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 16px;
-            font-weight: 600;
-        }
-
-        .status-label {
-            color: #333;
-        }
-
-        .status-value {
-            background: #E8F5FF;
-            color: #4A9EFF;
-            padding: 8px 20px;
-            border-radius: 8px;
-            border: 1px solid #4A9EFF;
-        }
-
-        .action-btns {
-            display: flex;
-            gap: 15px;
-        }
-
-        .btn-icon {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: var(--transition);
-        }
-
-        .btn-delete {
-            background: white;
-            color: #f34e4e;
-            border: 1px solid #f34e4e;
-        }
-
-        .btn-delete:hover {
-            background: #f34e4e;
-            color: white;
-        }
-
-        .btn-edit {
-            background: white;
-            color: #4A9EFF;
-            border: 1px solid #4A9EFF;
-        }
-
-        .btn-edit:hover {
-            background: #4A9EFF;
-            color: white;
-        }
-
-        /* Info Cards */
-        .info-cards{
-            order: 1;
-            background: white;
-        border-radius: 20px;
-        padding: 30px;
-        box-shadow: var(--box-shadow);
-        display: grid;
-        grid-template-columns: 1fr 1fr; 
-        gap: 40px;
-        }
-
-        .card-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .info-item {
-            display: flex;
-            gap: 10px;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .info-item::before {
-            content: "•";
-            color: #333;
-            font-weight: bold;
-        }
-
-        /* Owner Info */
-        .owner-info {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: var(--box-shadow);
-            order: 3;
-        }
-
-        .owner-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-
-        .owner-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px 40px;
-            margin-bottom: 30px;
-        }
-
-        .owner-field {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .field-label {
-            font-size: 14px;
-            color: #666;
-            font-weight: 500;
-        }
-
-        .field-value {
-            font-size: 14px;
-            color: #333;
-        }
-
-        .owner-questions {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .question-item {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .question-text {
-            font-size: 14px;
-            color: #333;
-            font-weight: 500;
-        }
-
-        .answer-text {
-            font-size: 14px;
-            color: #666;
-            padding-left: 0;
-        }
-
-        /* Back Button */
-        .back-button-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 30px;
-            order: 4;
-        }
-
-        .btn-back {
-            padding: 14px 60px;
-            background: white;
-            color: #333;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            
-        }
-
-        .btn-back a {
-    text-decoration: none; /* 👈 ลบขีดเส้นใต้ */
-    color: inherit; /* 👈 ทำให้สีข้อความเป็นสีเดียวกับปุ่มแม่ (.btn-back) ซึ่งคือ #333 */
-    display: block; /* 👈 ทำให้ลิงก์ขยายเต็มพื้นที่ปุ่ม (ถ้าจำเป็น) */
-    width: 100%;
-    height: 100%;
+:root {
+    --bg-gray: #f2f2f2;
+    --bg-light: #f9f9f9;
+    --bg-main: #E5EEFF;
+    --bg-fade-yellow: rgba(255,209,2,0.5);
+    --button-black:#010002;
+    --button-yellow: #ffd102;
+    --red: #f34e4e;
+    --linear-gradient: linear-gradient(74.49deg, #F840D0 -67.13%, #53DDFF 46.94%, #53FA9C 184.38%);
+    --text-color: #333;
+    --primary-color: #4A69FF;
+    --border-radius: 15px;
+    --transition: all 0.3s ease;
+    --box-shadow: 0px 10px 60px 0px rgba(0,0,0,0.1);
 }
 
-        .btn-back:hover {
-            background: #f5f5f5;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
+/* Breadcrumb */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.breadcrumb a {
+    color: #333;
+    text-decoration: none;
+}
+
+.breadcrumb span {
+    color: #666;
+}
+
+.info-icon {
+    width: 30px;
+    height: 30px;
+    background: #53DDFF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Main Layout - 3 sections */
+.content-wrapper {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 30px;
+}
+
+/* Left Section - Pet Image */
+.pet-image-section {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    box-shadow: var(--box-shadow);
+    height: fit-content;
+}
+
+.pet-name{
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    box-shadow: var(--box-shadow);
+    height: fit-content;
+}
+
+.pet-image-placeholder {
+    width: 250px;
+    height: 250px;
+    background: #d9d9d9;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+    color: #999;
+}
+
+.pet-name-display {
+    background: var(--bg-light);
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    width: 100%;
+}
+
+/* Right Section */
+.right-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Status and Actions */
+.status-actions {
+    order: 2;
+    background: white;
+    border-radius: 20px;
+    padding: 25px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--box-shadow);
+}
+
+.status-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.status-label {
+    color: #333;
+}
+
+.status-value {
+    background: #E8F5FF;
+    color: #4A9EFF;
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: 1px solid #4A9EFF;
+}
+
+.action-btns {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-icon {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+}
+
+.btn-delete {
+    background: white;
+    color: #f34e4e;
+    border: 1px solid #f34e4e;
+}
+
+.btn-delete:hover {
+    background: #f34e4e;
+    color: white;
+}
+
+.btn-edit {
+    background: white;
+    color: #4A9EFF;
+    border: 1px solid #4A9EFF;
+}
+
+.btn-edit:hover {
+    background: #4A9EFF;
+    color: white;
+}
+
+/* Info Cards */
+.info-cards{
+    order: 1;
+    background: white;
+border-radius: 20px;
+padding: 30px;
+box-shadow: var(--box-shadow);
+display: grid;
+grid-template-columns: 1fr 1fr; 
+gap: 40px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.info-item {
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.info-item::before {
+    content: "•";
+    color: #333;
+    font-weight: bold;
+}
+
+/* Owner Info */
+.owner-info {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: var(--box-shadow);
+    order: 3;
+}
+
+.owner-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.owner-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 40px;
+    margin-bottom: 30px;
+}
+
+.owner-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.field-label {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+.field-value {
+    font-size: 14px;
+    color: #333;
+}
+
+.owner-questions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.question-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.question-text {
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+}
+
+.answer-text {
+    font-size: 14px;
+    color: #666;
+    padding-left: 0;
+}
+
+/* Back Button */
+.back-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    order: 4;
+}
+
+.btn-back {
+    padding: 14px 60px;
+    background: white;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    
+}
+
+.btn-back a {
+text-decoration: none; /* 👈 ลบขีดเส้นใต้ */
+color: inherit; /* 👈 ทำให้สีข้อความเป็นสีเดียวกับปุ่มแม่ (.btn-back) ซึ่งคือ #333 */
+display: block; /* 👈 ทำให้ลิงก์ขยายเต็มพื้นที่ปุ่ม (ถ้าจำเป็น) */
+width: 100%;
+height: 100%;
+}
+
+.btn-back:hover {
+    background: #f5f5f5;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
 
 
-        /* Responsive */
-        @media (max-width: 1200px) {
-            .content-wrapper {
-                grid-template-columns: 1fr;
-            }
+/* Responsive */
+@media (max-width: 1200px) {
+    .content-wrapper {
+        grid-template-columns: 1fr;
+    }
 
-            .info-cards {
-                grid-template-columns: 1fr;
-            }
-        }
+    .info-cards {
+        grid-template-columns: 1fr;
+    }
+}
