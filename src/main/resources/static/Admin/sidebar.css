@@ -16,6 +16,7 @@
     --transition: all 0.3s ease;
     --box-shadow: 0px 10px 60px 0px rgba(0,0,0,0.1); 
     --sidebar-width: 320px;
+    --sidebar-width: 320px;
 }
 * {
     margin: 0;
@@ -32,18 +33,30 @@ body {
 .container {
     display: flex;
     height: 100vh;
+    width: 100%;
+}
+
+.layout {
+    display: flex;
+    width: 100%;
+    height: 100vh;
 }
 
 /*--- Sidebar --- */
 .sidebar {
+    position: fixed;   /* ตรึงกับ viewport */
+    top: 0;
+    left: 0;
     width: var(--sidebar-width);
-    background: var(--bg-light);
-    padding: 30px 0;
+    height: 100vh;
+    padding: 50px 0;
+    white-space: nowrap;  /* hug content */
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    height: 100vh;
-    position: fixed;
+    background: var(--bg-light);
+    z-index: 1000;  /* อยู่เหนือ main */
 }
 
 /* logo */
@@ -51,7 +64,6 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 40px;
     width: max-content;
 }
 
@@ -67,12 +79,14 @@ body {
 .logo-text h2 {
     font-size: 16px;
     color: #333;
+    display: block;
 }
 
 /* menu */
 .nav-menu {
-    flex: 1;
     width: 100%;
+    height: 700px;
+    padding: 50px 0;
 }
 
 .nav-item {
@@ -138,7 +152,50 @@ body {
     display: flex;
     gap: 10px;
 }
+
+.nav-item span{
+    display: block;
+}
+
+
 .logout {
     margin-top: auto;
     width: 100%;
+}
+
+/*ส่วนของ main สำหรับทำงานคู่กับ sidebar*/
+/* Main จะถูกดันไปทางขวาโดยอัตโนมัติ */
+/* main ดันขวาให้เหลือพื้นที่ sidebar */
+main {
+    margin-left: var(--sidebar-width);
+    flex: 1;
+    padding: 2%;
+}
+
+@media (max-width: 1024px) {
+    :root {
+        --sidebar-width: 240px; /* hug content */
+    }
+
+    .sidebar {
+        width: var(--sidebar-width);
+    }
+
+    main {
+        margin-left: var(--sidebar-width);
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --sidebar-width: 64px; /* hug content */
+    }
+    .nav-item span,
+    .logo-text {
+        display: none;
+    }
+
+    .nav-item {
+        padding: 15px 20px;
+    }
 }
