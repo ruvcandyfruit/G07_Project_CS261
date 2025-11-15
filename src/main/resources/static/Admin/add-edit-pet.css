@@ -1,12 +1,13 @@
 :root {
     --sidebar-width: 320px;
     --card-bg: #ffffff;
-    --text-main: #333333;
+    --text-main: #4d4d4e;
     --text-secondary: #888888;
     --border-color: #e0e0e0;
     --primary-btn: #52d3f7; /* Cyan color from image */
     --primary-btn-hover: #40c0e0;
     --danger-text: #ff4d4d;
+    --text-black: #010002;
 }
 
 body {
@@ -114,6 +115,10 @@ iconify-icon {
     justify-content: center;
 }
 
+.upload-text {
+    text-align: center;
+}
+
 /* Form Elements */
 .form-grid {
     display: flex;
@@ -142,9 +147,9 @@ iconify-icon {
 }
 .form-label {
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 8px;
-    color: #333;
+    color: var(--text-main);
 }
 
 .required {
@@ -198,10 +203,10 @@ iconify-icon {
 }
 
 .selection-btn.active {
-    border-color: #333;
-    color: #000;
+    border-color: var(--text-main);
+    color: #ffffff;
     font-weight: 500;
-    background-color: #fff; /* Keep white but darker border */
+    background-color: var(--text-black);
 }
 
 .selection-btn i {
@@ -212,7 +217,6 @@ iconify-icon {
 .date-input-wrapper {
     position: relative;
     display: flex;
-    gap: 10px;
     align-items: center;
 }
 .calendar-icon {
@@ -244,7 +248,7 @@ iconify-icon {
     gap: 8px;
     cursor: pointer;
     font-size: 14px;
-    color: #333;
+    color: var(--text-main);
 }
 
 .custom-checkbox input {
