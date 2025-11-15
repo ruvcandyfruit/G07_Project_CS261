@@ -90,6 +90,7 @@ public class UserTextController {
         user.setHomeVisits(formDTO.getHomeVisits());
         user.setIdentityDoc(identityPath);
         user.setResidenceDoc(residencePath);
+        user.setRecieveType(formDTO.getRecieveType());
 
         User userEntity = userRepository.findById(formDTO.getUserId())
         .orElseThrow(() -> new RuntimeException("User not found"));
@@ -132,7 +133,7 @@ public ResponseEntity<?> getAllUsers() {
             dto.setStatus(user.getStatus());
             dto.setPetId(user.getPet().getPetID()); 
             dto.setUserId(user.getUser().getId());
-            dto.setResultEstimate(user.getResultEstimate());
+            dto.setApprovedAt(user.getApprovedAt());
             dto.setMeetDate(user.getMeetDate());
             
             String identityDocPath = user.getIdentityDoc();

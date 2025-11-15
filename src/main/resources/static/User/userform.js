@@ -137,6 +137,18 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!valid) return;
 
         const formData = new FormData(form);
+        // RecieveType set logic
+        // Radio buttons (if you used radio)
+        // const selectedReceiveType = form.querySelector('input[name="receiveType"]:checked');
+        // if (selectedReceiveType) {
+        //     formData.set("receiveType", selectedReceiveType.value);
+        // }
+
+        // // OR Select (if you used select)
+        // const receiveSelect = document.getElementById("receiveType");
+        // if (receiveSelect) {
+        //     formData.set("receiveType", receiveSelect.value);
+        // }
         fetch("http://localhost:8081/api/userform/submit", {
             method: 'POST',
             body: formData
