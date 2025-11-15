@@ -191,6 +191,7 @@ body {
 .pet-data-table td {
     font-weight: 500;
     color: var(--text-main);
+    width: fit-content;
 }
 
 .pet-name-cell {
@@ -245,10 +246,29 @@ body {
 .actions-header {
     text-align: right !important;
 }
-.actions-cell {
-    display: flex;
-    justify-content: space-between;
-    gap: 1%;
+/* --- [!! โค้ดใหม่ !!] --- */
+
+/* 1. จัดการหัวคอลัมน์ "Actions" ให้อยู่กลาง */
+.actions-header {
+    text-align: center !important;
+}
+
+/* 2. จัดการ <td> ของปุ่มแต่ละอัน */
+.action-col {
+    text-align: center; /* สั่งให้ปุ่มอยู่ตรงกลาง */
+    vertical-align: middle; /* จัดปุ่มให้อยู่กลางแถว (แก้เป๋) */
+    
+    /* (ตั้งความกว้างให้พอดีๆ) */
+    width: 1%;
+    white-space: nowrap; 
+}
+
+/* 3. จัดขนาดปุ่ม (เพื่อให้ดูดี) */
+.action-col .action-button,
+.action-col a .action-button {
+    /* (เราอาจจะไม่ต้องกำหนด width ที่นี่ ให้มันขยายตามเนื้อหา) */
+    /*display: inline-flex; /* ทำให้ปุ่มมีขนาดพอดีกับไอคอน+ข้อความ */
+    width: auto;
 }
 
 .action-button {
@@ -367,3 +387,67 @@ a { text-decoration: none; }
 /* Modal สำหรับ Delete */
 .delete-modal { max-width: 400px; }
 .delete-modal .modal-body { text-align: center; }
+
+/* --- CSS สำหรับปุ่ม View Request ตามสถานะใหม่ --- */
+
+/* (ของเดิม) สีแดง (Pending) - เอาไว้เทียบเฉยๆ */
+.action-button.view-request-btn.pending {
+    background-color: var(--status-red-bg);
+    color: var(--status-red-text);
+}
+
+/* [!! เพิ่มใหม่ !!] สีเขียว (Approved) - เหมือน status tag */
+.action-button.view-request-btn.approved {
+    background-color: var(--status-green-bg); /* (ใช้ตัวแปร CSS ถ้ามี) */
+    color: var(--status-green-text);
+}
+
+/* [!! เพิ่มใหม่ !!] สีฟ้า (Completed) - เหมือน status tag */
+.action-button.view-request-btn.completed {
+    background-color: var(--status-blue-bg); /* (ใช้ตัวแปร CSS ถ้ามี) */
+    color: var(--status-blue-text);
+}
+
+
+/* --- [!! เพิ่มใหม่ !!] Hover Effect เฉพาะปุ่มที่กดได้ --- */
+
+/* 1. สำหรับปุ่มที่อยู่ใน <a> (Edit, View Request ที่ Active) */
+.actions-cell a .action-button:hover {
+    opacity: 0.7;
+    transform: translateY(-1px); /* (ทำให้ปุ่มดูลอยๆ ตอนชี้) */
+}
+
+/* 2. สำหรับปุ่มที่อยู่นอก <a> (Delete) และ "ไม่" disabled */
+/* (เราใช้ > .delete-btn เพื่อความเจาะจง) */
+.actions-cell > .delete-btn:not([disabled]):hover {
+    opacity: 0.7;
+    transform: translateY(-1px);
+}
+
+/* 3. ทำให้ปุ่มที่ disabled มันจางและเมาส์เป็น "ห้าม" */
+.action-button[disabled] {
+    opacity: 0.5; /* (ปรับความจางได้ตามชอบ) */
+    cursor: not-allowed;
+}
+/* --- [!! ใหม่ !!] ทำให้ Status Tag ที่เป็น Link (<a>) ใช้งานได้ --- */
+
+/* 1. ทำให้ <a> มีหน้าตาเหมือน <span> ทุกประการ */
+a.status-tag {
+    text-decoration: none; /* เอาขีดเส้นใต้ลิงก์ออก */
+    display: inline-block; /* ทำให้ padding ทำงานถูกต้อง */
+    transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* 2. เพิ่ม Hover Effect "เฉพาะ" <a> ที่เป็น .status-tag */
+a.status-tag:hover {
+    opacity: 0.7;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* เพิ่มเงานิดๆ */
+    cursor: pointer;
+}
+
+/* 3. ทำให้ <span> ที่กดไม่ได้ มีเมาส์เป็น "ห้าม" (เหมือนปุ่ม disabled) */
+span.status-tag {
+    cursor: not-allowed;
+    opacity: 0.6; /* (ทำให้จางลงนิดนึงก็ได้) */
+}

@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('searchInput');
     const pendingToggle = document.getElementById('pendingToggle');
     
-    // Filter Modal
+    // (โค้ดส่วน Modal เหมือนเดิม)
     const filterButton = document.getElementById('filterButton');
     const filterModal = document.getElementById('filterModal');
     const closeFilterModal = document.getElementById('closeFilterModal');
@@ -29,16 +29,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const statusFilter = document.getElementById('statusFilter');
     const typeFilter = document.getElementById('typeFilter');
     const breedFilter = document.getElementById('breedFilter');
-
-    // Delete Modal
     const deleteModal = document.getElementById('deleteModal');
     const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
     const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
     let petIdToDelete = null;
 
-    // --- 4. ฟังก์ชันหลักในการแสดงผลตาราง ---
+    // --- 4. ฟังก์ชันหลักในการแสดงผลตาราง (อัปเดตแล้ว!) ---
     function renderTable(pets) {
-        tableBody.innerHTML = ''; // ล้างตารางเก่า
+        tableBody.innerHTML = ''; 
 
         if (pets.length === 0) {
             tableBody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px;">No pets found.</td></tr>';
@@ -48,105 +46,106 @@ document.addEventListener('DOMContentLoaded', () => {
         pets.forEach(pet => {
             const tr = document.createElement('tr');
             
-            // สร้าง CSS class สำหรับ status
-            const statusClass = pet.status.toLowerCase().replace(' ', '-'); // 'No Request' -> 'no-request'
+            // สร้าง CSS class สำหรับ status (ยังต้องใช้)
+            const statusClass = pet.status.toLowerCase().replace(' ', '-'); 
             
-            // [!! นี่คือส่วนที่แก้ไข !!]
-            // สร้าง HTML ของปุ่ม "View Request" ตามสถานะ
-            let viewRequestButtonHTML = '';
-            if (pet.status === 'Pending') {
-                // ถ้า Pending: สร้างเป็น Link ที่กดได้ และมี class 'pending' (สีแดง)
-                viewRequestButtonHTML = `
-                    <a href="requests.html?id=${pet.id}">
-                        <button class="action-button view-request-btn pending">View Request</button>
-                    </a>
-                `;
-            } else {
-                // ถ้าสถานะอื่น: สร้างเป็นปุ่มที่ "กดไม่ได้" (disabled)
-                viewRequestButtonHTML = `
-                    <button class="action-button view-request-btn" disabled>View Request</button>
-                `;
+            
+
+            // [!! Logic 2 !!] (ใหม่) สร้าง "ป้าย Status"
+            let statusTagHTML = '';
+            switch (pet.status) {
+                case 'Pending':
+                    // ถ้า Pending: ไปหน้า requests.html
+                    statusTagHTML = `<a href="requests.html?id=${pet.id}" class="status-tag status-pending">${pet.status}</a>`;
+                    break;
+                case 'Approved':
+                    // ถ้า Approved: ไปหน้า request-status.html
+                    statusTagHTML = `<a href="request-status.html?id=${pet.id}&status=Approved" class="status-tag status-approved">${pet.status}</a>`;
+                    break;
+                case 'Completed':
+                    // ถ้า Completed: ไปหน้า request-status.html
+                    statusTagHTML = `<a href="request-status.html?id=${pet.id}&status=Completed" class="status-tag status-completed">${pet.status}</a>`;
+                    break;
+                default:
+                    // ถ้า Closed หรือ No Request: เป็น <span> ธรรมดา
+                    statusTagHTML = `<span class="status-tag status-${statusClass}">${pet.status}</span>`;
             }
             // [!! จบส่วนที่แก้ไข !!]
 
 
+           // ... (โค้ดสร้าง viewRequestButtonHTML และ statusTagHTML อยู่ข้างบน) ...
+
+            // [!! นี่คือ tr.innerHTML ที่ถูกต้อง (มีครบทุกคอลัมน์) !!]
             tr.innerHTML = `
                 <td>${pet.id}</td>
+                
                 <td>
                     <a href="petdetail.html?id=${pet.id}" class="pet-name-cell">
                         <img src="${pet.imageUrl}" alt="${pet.name}" class="pet-profile-img">
                         <span>${pet.name}</span>
                     </a>
                 </td>
+                
                 <td>${pet.type}</td>
+                
                 <td>${pet.breed}</td>
-                <td><span class="status-tag status-${statusClass}">${pet.status}</span></td>
-                <td class="actions-cell">
-                    ${viewRequestButtonHTML}
+                
+                <td>${statusTagHTML}</td> 
+
+                <td class="action-col action-col-edit">
                     <a href="add-edit-pet.html?mode=edit&id=${pet.id}">
                         <button class="action-button edit-btn">
                             <i class="fa-solid fa-pencil"></i> Edit
                         </button>
                     </a>
+                </td>
+
+                <td class="action-col action-col-delete">
                     <button class="action-button delete-btn" data-id="${pet.id}">
                         <i class="fa-solid fa-trash-can"></i> Delete
                     </button>
                 </td>
             `;
+
             tableBody.appendChild(tr);
-        });
+        });// <-- สิ้นสุด renderTable
     }
 
-    // --- 5. ฟังก์ชันอัปเดตจำนวนสัตว์ ---
+    // --- 5. ฟังก์ชันอัปเดตจำนวนสัตว์ (เหมือนเดิม) ---
     function updatePetCount(count) {
         petCount.textContent = `There are ${count} pets in total`;
     }
 
-    // --- 6. ฟังก์ชัน Filter และ Search (หัวใจหลัก) ---
+    // --- 6. ฟังก์ชัน Filter และ Search (เหมือนเดิม) ---
     function applyFilters() {
-        // 6.1. ดึงค่าจาก Filter ทั้งหมด
         const searchText = searchInput.value.toLowerCase();
         const pendingOnly = pendingToggle.checked;
         const status = statusFilter.value;
         const type = typeFilter.value;
         const breed = breedFilter.value;
-
-        // 6.2. เริ่มต้นด้วยข้อมูลทั้งหมด
         let filteredPets = allPets;
-
-        // 6.3. กรองด้วย Toggle ก่อน (ถ้าเปิด)
         if (pendingOnly) {
             filteredPets = filteredPets.filter(pet => pet.status === 'Pending');
         }
-
-        // 6.4. กรองด้วย Search (ค้นหาจากชื่อ)
         if (searchText) {
             filteredPets = filteredPets.filter(pet => 
                 pet.name.toLowerCase().includes(searchText)
             );
         }
-
-        // 6.5. กรองด้วย Modal (Status)
         if (status) {
             filteredPets = filteredPets.filter(pet => pet.status === status);
         }
-
-        // 6.6. กรองด้วย Modal (Type)
         if (type) {
             filteredPets = filteredPets.filter(pet => pet.type === type);
         }
-
-        // 6.7. กรองด้วย Modal (Breed)
         if (breed) {
             filteredPets = filteredPets.filter(pet => pet.breed === breed);
         }
-        
-        // 6.8. แสดงผลลัพธ์
         renderTable(filteredPets);
         updatePetCount(filteredPets.length);
     }
 
-    // --- 7. ฟังก์ชันจัดการ Modal ---
+    // --- 7. ฟังก์ชันจัดการ Modal (เหมือนเดิม) ---
     function showModal(modal) {
         modal.classList.remove('modal-hidden');
     }
@@ -154,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.classList.add('modal-hidden');
     }
 
-    // --- 8. ฟังก์ชันจัดการการลบ ---
+    // --- 8. ฟังก์ชันจัดการการลบ (เหมือนเดิม) ---
     function handleDeleteClick(e) {
         const target = e.target.closest('.delete-btn');
         if (target) {
@@ -165,26 +164,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function confirmDelete() {
         if (petIdToDelete) {
-            // (ในโลกจริง: await fetch(`/api/pets/${petIdToDelete}`, { method: 'DELETE' }))
-            
-            // อัปเดตข้อมูล Master
             allPets = allPets.filter(pet => pet.id !== petIdToDelete);
-            
-            // อัปเดตหน้าจอ
             applyFilters();
-            
             hideModal(deleteModal);
             petIdToDelete = null;
         }
     }
 
-    // --- 9. Event Listeners (การผูกปุ่ม) ---
-    
-    // Search และ Toggle
+    // --- 9. Event Listeners (เหมือนเดิม) ---
     searchInput.addEventListener('input', applyFilters);
     pendingToggle.addEventListener('change', applyFilters);
-    
-    // Filter Modal
     filterButton.addEventListener('click', () => showModal(filterModal));
     closeFilterModal.addEventListener('click', () => hideModal(filterModal));
     applyFilterBtn.addEventListener('click', () => {
@@ -198,23 +187,16 @@ document.addEventListener('DOMContentLoaded', () => {
         applyFilters();
         hideModal(filterModal);
     });
-    
-    // Delete Modal
-    // (ใช้ Event Delegation เพราะปุ่มลบถูกสร้างแบบ Dynamic)
     tableBody.addEventListener('click', handleDeleteClick);
     cancelDeleteBtn.addEventListener('click', () => hideModal(deleteModal));
     confirmDeleteBtn.addEventListener('click', confirmDelete);
 
-    // --- 10. ฟังก์ชันเริ่มต้น (Init) ---
+    // --- 10. ฟังก์ชันเริ่มต้น (Init) (เหมือนเดิม) ---
     function initializeApp() {
-        // (ในโลกจริง: allPets = await fetch('/api/pets').then(res => res.json()))
         allPets = mockPetData;
-        
         renderTable(allPets);
         updatePetCount(allPets.length);
     }
 
-    // เริ่มการทำงาน!
     initializeApp();
-
 });
