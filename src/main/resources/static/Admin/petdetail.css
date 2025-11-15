@@ -113,13 +113,13 @@
 /* Status and Actions */
 .status-actions {
     order: 2;
-    background: white;
+
     border-radius: 20px;
     padding: 25px 30px;
     display: table-column;
     justify-content: space-between;
     align-items: center;
-    box-shadow: var(--box-shadow);
+
 }
 
 .status-badge {
