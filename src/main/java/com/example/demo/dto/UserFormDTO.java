@@ -24,5 +24,9 @@ public class UserFormDTO {
     private Boolean trueInfo;
     private Boolean acceptRight;
     private Boolean homeVisits;
+    private LocalDate resultEstimate;
+    private LocalDate meetDate;
+
+
     
 }

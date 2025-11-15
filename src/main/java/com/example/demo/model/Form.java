@@ -77,5 +77,11 @@ public class Form {
 
     @Column(name = "user_id", nullable = false)
     private Long userId;
+    
+    @Column(name = "result_estimate" , nullable = true)
+    private LocalDate resultEstimate = null;
+
+    @Column(name = "meet_date", nullable = true)  
+    private LocalDate meetDate = null;       
 
 }

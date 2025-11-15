@@ -71,10 +71,12 @@ public class UserTextController {
         user.setHomeVisits(formDTO.getHomeVisits());
         user.setIdentityDoc(identityPath);
         user.setResidenceDoc(residencePath);
-
+        user.setResultEstimate(null);
+        user.setMeetDate(null);
         user.setPetId(formDTO.getPetId());
         user.setUserId(formDTO.getUserId());
         user.setStatus("PENDING");
+
 
         user1Repository.save(user);
 
@@ -109,6 +111,8 @@ public ResponseEntity<?> getAllUsers() {
             dto.setStatus(user.getStatus());
             dto.setPetId(user.getPetId()); 
             dto.setUserId(user.getUserId());
+            dto.setResultEstimate(user.getResultEstimate());
+            dto.setMeetDate(user.getMeetDate());
             
             String identityDocPath = user.getIdentityDoc();
             if (identityDocPath != null && !identityDocPath.isEmpty()) {
