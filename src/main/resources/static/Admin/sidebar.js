@@ -13,8 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
             // [!! LOGIC ใหม่ !!]
             // เพิ่ม Event Listener ให้ปุ่มต่างๆ เพื่อให้คลิกแล้วไปหน้าอื่น
             addNavigation();
+            document.body.classList.add('loaded');
         })
-        .catch(error => console.error('Error loading sidebar:', error));
+        .catch(error => {
+            console.error('Error loading sidebar:', error)
+            // แม้จะ Error เราก็ต้องสั่งให้มันโผล่ ไม่งั้นหน้าจะขาวตลอดกาล
+            document.body.classList.add('loaded');
+        });
 });
 
 
