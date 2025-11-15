@@ -71,4 +71,8 @@ public class Form {
     @Column(name = "status", nullable = false)
     private String status = "PENDING";
 
+
+    @Column(name = "pet_id", nullable = false)
+    private String petId;
+
 }

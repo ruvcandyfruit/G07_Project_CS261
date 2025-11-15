@@ -8,6 +8,8 @@ import lombok.Data;
 
 @Data
 public class UserFormDTO {
+    
+    private String petId;
     private String firstName;
     private String lastName;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

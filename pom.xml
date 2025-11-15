@@ -11,7 +11,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>Project</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>Project</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
@@ -50,6 +50,7 @@
 		<dependency>
 			<groupId>com.microsoft.sqlserver</groupId>
 			<artifactId>mssql-jdbc</artifactId>
+			<version>12.4.1.jre11</version>
 			<scope>runtime</scope>
 		</dependency>
 

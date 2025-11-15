@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="th-en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="userform.css"> 
+    <link rel="stylesheet" href="../all.css">
+    <link rel="icon" href="../homepageResources/icon.png" type="image/x-icon">
+    <title>Pet Adoption Form | Pet Adoption System</title>
+</head>
+<body>
+    <!-- navigation bar-->
+<header>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="../homepageResources/icon.png" alt="Logo">
+        </div>
+
+        <ul class="nav-links">
+            <li class="active"><a href="../index.html">Homepage</a></li>
+            <li><a href="petlisting.html" class="active">Pet Listing</a></li>
+            <li><a href="contact.html">About/Contact Us</a></li>
+        </ul> 
+
+        <a href="/login.html">
+            <button class="logout-btn">Log out</button> 
+        </a>
+    </nav>
+
+    <div class="hamburger">
+        ☰
+    </div>
+</header>
+    <!-- main part -->
+<main>
+<div class="title">
+    <hr>
+    <h1>แบบฟอร์มส่งคำขอรับเลี้ยงสัตว์</h1>
+    <hr>
+</div>
+    
+<div class="form">
+
+    <!-- adoption form -->
+    <form id="adoptionForm" method="post" action="/api/userform/submit" enctype="multipart/form-data">
+        
+        <input type="hidden" id="petID" name="petId">
+
+
+        <!--- part 1 --->
+        <div class="part">
+            <p>Part 1: ข้อมูลของผู้รับเลี้ยง</p>
+            <hr>
+
+            <label for="firstName">ชื่อจริง <span class="required">*</span></label>
+            <input type="text" id="firstName" name="firstName" placeholder="ไม่ต้องใส่คำนำหน้า" required />
+            <div id="firstNameError" class="error"></div>
+
+            <label for="lastName">นามสกุล <span class="required">*</span></label>
+            <input type="text" id="lastName" name="lastName" placeholder="ใส่นามสกุล" required />
+            <div id="lastNameError" class="error"></div>
+
+            <label for="dob">วัน/เดือน/ปีที่เกิด <span class="required">*</span></label>
+            <input type="date" id="dob" name="dob" min="1900-01-01" max="2025-12-31" required>
+            <div id="dobError" class="error"></div>
+
+            <label for="phone">เบอร์โทรศัพท์ <span class="required">*</span></label>
+            <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder="ใส่หมายเลข 10 หลัก" required />
+            <div id="phoneError" class="error"></div>
+
+            <label for="email">อีเมล <span class="required">*</span></label>
+            <input type="email" id="email" name="email" placeholder="เช่น pet_adoption@gmail.com" required />
+            <div id="emailError" class="error"></div>
+
+            <label for="occupation">อาชีพ <span class="required">*</span></label>
+            <input type="text" id="occupation" name="occupation" placeholder="เช่น นักเรียน, กราฟิกดีไซเนอร์" required />
+            <div id="occupationError" class="error"></div>
+
+            <label for="identityDoc">สำเนาบัตรประชาชนหรือพาสสปอร์ต <span class="required">*</span></label>
+            <input type="file" id="identityDoc" name="identityDoc" accept=".pdf,.jpg,.jpeg,.png" required />
+            <div id="identityDocError" class="error"></div>
+        </div>
+
+        <!--- part 2 --->
+        <div class="part">
+            <p>Part 2: ข้อมูลที่อยู่อาศัยและสภาพแวดล้อม</p>
+            <hr>
+
+            <label for="address">ที่อยู่ปัจจุบัน <span class="required">*</span></label>
+            <textarea id="address" name="address" placeholder="กรุณาระบุที่อยู่ปัจจุบันของคุณให้ครบถ้วน" required></textarea>
+            <div id="addressError" class="error"></div>
+
+            <label>ประเภทของที่อยู่อาศัย <span class="required">*</span></label>
+            <div class="select">
+                <label><input type="radio" name="residenceType" value="house" required>บ้านเดี่ยว</label>
+                <label><input type="radio" name="residenceType" value="townhouse">ทาวน์เฮ้าส์</label>
+                <label><input type="radio" name="residenceType" value="condo">คอนโดมิเนียม</label>
+                <label><input type="radio" name="residenceType" value="apartment">อพาร์ตเมนต์</label>
+            </div>
+            <div id="residenceTypeError" class="error"></div>
+
+            <label for="residenceDoc">สำเนาทะเบียนบ้าน <span class="required">*</span></label>
+            <input type="file" id="residenceDoc" name="residenceDoc" accept=".pdf,.jpg,.jpeg,.png" required />
+            <div id="residenceDocError" class="error"></div>
+        </div>
+
+        <!--- part 3 --->
+        <div class="part">
+            <p>Part 3: ประสบการณ์การเลี้ยงสัตว์</p>
+            <hr>
+
+            <label for="experience">คุณเคยเลี้ยงสัตว์เลี้ยงมาก่อนหรือไม่? ถ้าเคย โปรดเล่าประสบการณ์ของคุณ <span class="required">*</span></label>
+            <textarea id="experience" name="experience" required placeholder="เล่าเกี่ยวกับสัตว์เลี้ยงของคุณหน่อย — คุณเคยเลี้ยงสัตว์ชนิดใด เลี้ยงมานานแค่ไหน แล้วตอนนี้พวกมันเป็นอย่างไรบ้าง"></textarea>
+            <div id="experienceError" class="error"></div>
+
+            <label for="reason">ทำไมคุณถึงอยากรับเลี้ยงสัตว์เลี้ยง? <span class="required">*</span></label>
+            <textarea id="reason" name="reason" required placeholder="บอกเราเกี่ยวกับความพร้อมของคุณและสิ่งที่คุณสามารถมอบให้สัตว์เลี้ยงได้"></textarea>
+            <div id="reasonError" class="error"></div>
+        </div>
+
+        <!--- part 4 --->
+        <div class="part">
+            <p>Agreement</p>
+            <hr>
+
+            <label class="agreement"><input type="checkbox" id="trueInfo" name="trueInfo" required>
+                ฉันขอรับรองว่าข้อมูลที่ให้ไว้ในใบสมัครนี้เป็นความจริงและถูกต้องทุกประการ
+            </label>
+            <div id="trueInforError" class="error"></div>
+
+            <label class="agreement"><input type="checkbox" id="acceptRight" name="acceptRight" required>
+                ฉันเข้าใจว่ามูลนิธิมีสิทธิ์ที่จะปฏิเสธการส่งคำขอรับเลี้ยงสัตว์ใดๆ โดยไม่ต้องแจ้งให้ทราบล่วงหน้า
+            </label>
+            <div id="acceptRightError" class="error"></div>
+
+            <label class="agreement"><input type="checkbox" id="homeVisits" name="homeVisits" required>
+                ฉันยินยอมให้ตัวแทนขององค์กรไปเยี่ยมบ้านเพื่อประเมินสภาพแวดล้อมก่อนการรับเลี้ยงสัตว์
+            </label>
+            <div id="homeVisitsError" class="error"></div>
+        </div>  
+
+        <!-- button part -->
+        <div class="form-btn">
+            <button type="submit" id="submit" disabled>ส่งฟอร์มคำขอรับเลี้ยงสัตว์</button> 
+            <button type="button" id="cancel" onclick="history.back()">ยกเลิก</button>
+        </div>
+    </form>
+</div>
+
+  <!-- pop up + overlay -->
+   <div class="overlay" id="overlay">
+        <div class="popup" id="popup">
+                <img id="close" src="../homepageResources/close.svg" alt="Icon">
+                <h1></h1>
+                <div class="goButton" id="goButton">
+                    <button id="goHome">กลับหน้า Homepage</button>
+                    <button id="goStatus">ดูสถานะของคำขอ</button>
+                </div>
+        </div>
+   </div>
+
+</main>
+    <!-- footer part -->
+<footer>
+    <div class="footer">
+        <div class="about">
+            <div class="logo">
+                <img src="../homepageResources/icon.png" alt="Logo">
+            </div>
+            <p>Pet Adoption System</p>
+            <p class="location">เลขที่ 11/1 ชั้น 1 ห้อง 111 อาคารสาทรธานี 1 ถนนสาทรเหนือ<br>แขวงสีลม เขตบางรัก กรุงเทพมหานคร 10100<br>Tel : 011-111-1111</p>
+        </div>
+
+        <div class="social-container">
+            <a href="#" class="social-btn">
+                <img src="../homepageResources/FacebookLogo.png" alt="Facebook icon">
+                <span>Pet Adoption</span>
+            </a>
+
+            <a href="#" class="social-btn">
+                <img src="../homepageResources/InstagramLogo.png" alt="Instagram icon">
+                <span>pet_adoption</span>
+            </a>
+        </div>                
+    </div>
+</footer>
+
+<script src="../all.js"></script>
+<script src="userform.js"></script>
+
+</body>
+</html>

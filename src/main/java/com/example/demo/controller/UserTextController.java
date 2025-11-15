@@ -31,12 +31,12 @@ import com.example.demo.repository.FormRepository;
 @RequestMapping("/api/userform")
 @CrossOrigin(origins = "*")
 public class UserTextController {
-    private final String uploadDir = "C:/Users/user/G07_Project_CS261/uploads/";
+    private final String uploadDir = System.getProperty("user.dir") + "/uploads/";
     @Autowired
     private FormRepository user1Repository;
 
    @PostMapping("/submit")
-public ResponseEntity<?> submitForm(
+    public ResponseEntity<?> submitForm(
         @ModelAttribute UserFormDTO formDTO,
         @RequestParam("identityDoc") MultipartFile identityDoc,
         @RequestParam("residenceDoc") MultipartFile residenceDoc
@@ -71,6 +71,8 @@ public ResponseEntity<?> submitForm(
         user.setHomeVisits(formDTO.getHomeVisits());
         user.setIdentityDoc(identityPath);
         user.setResidenceDoc(residencePath);
+
+        user.setPetId(formDTO.getPetId());
         user.setStatus("PENDING");
 
         user1Repository.save(user);
@@ -104,6 +106,7 @@ public ResponseEntity<?> getAllUsers() {
             dto.setAcceptRight(user.getAcceptRight());
             dto.setHomeVisits(user.getHomeVisits());
             dto.setStatus(user.getStatus());
+            dto.setPetId(user.getPetId()); // กำหนดค่า petId เป็น null ชั่วคราว
             String identityDocPath = user.getIdentityDoc();
             if (identityDocPath != null && !identityDocPath.isEmpty()) {
                 // ใช้ Paths.get().getFileName().toString() เพื่อดึงแค่ชื่อไฟล์
