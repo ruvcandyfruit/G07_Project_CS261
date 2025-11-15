@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -15,7 +17,8 @@ public class Pet {
     private String type;          
     private String image;
     private String name;
-    private int age;
+    @Column(name = "birth_date") 
+    private LocalDate birthDate;
     private String gender;
     private String breed;
     private double weight;
@@ -46,8 +49,10 @@ public class Pet {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    public int getAge() { return age; }
-    public void setAge(int age) { this.age = age; }
+   public LocalDate getBirthDate() 
+    { return birthDate; }
+    public void setBirthDate(LocalDate birthDate) 
+    { this.birthDate = birthDate; }
 
     public String getGender() { return gender; }
     public void setGender(String gender) { this.gender = gender; }

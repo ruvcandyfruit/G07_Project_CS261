@@ -1,0 +1,78 @@
+body {
+  font-family: "Prompt", sans-serif;
+  background: #f8fafc;
+  padding: 20px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+h1 {
+  color: #333;
+}
+
+button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+.pet-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.pet-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  width: 180px;
+  padding: 10px;
+  text-align: center;
+}
+
+.pet-card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.pet-card .name {
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.pet-card .actions button {
+  margin: 4px 2px;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.pet-card .actions .edit {
+  background: #facc15;
+}
+
+.pet-card .actions .edit:hover {
+  background: #eab308;
+}
+
+.pet-card .actions .delete {
+  background: #ef4444;
+}
+
+.pet-card .actions .delete:hover {
+  background: #dc2626;
+}

@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.model.Pet;
@@ -32,7 +33,39 @@ public class PetController {
     public Pet addPet(@RequestBody Pet pet) {
         return petRepository.save(pet);
     }
-    
+
+  @DeleteMapping("/{id}")
+public ResponseEntity<String> deletePet(@PathVariable Long id) {
+    if (!petRepository.existsById(id)) {
+        return ResponseEntity.status(404).body("Pet not found");
+    }
+    petRepository.deleteById(id);
+    return ResponseEntity.ok("Deleted");
+}
+
+ @PutMapping("/{id}")
+    public ResponseEntity<Pet> updatePet(@PathVariable Long id, @RequestBody Pet petDetails) {
+        return petRepository.findById(id).map(pet -> {
+          
+            pet.setName(petDetails.getName());
+            pet.setType(petDetails.getType());
+            pet.setGender(petDetails.getGender());
+            pet.setBreed(petDetails.getBreed());
+            pet.setWeight(petDetails.getWeight());
+            pet.setImage(petDetails.getImage());
+            pet.setSterilisation(petDetails.isSterilisation());
+            pet.setVaccine(petDetails.isVaccine());
+            pet.setDisease(petDetails.getDisease());
+            pet.setFoodAllergy(petDetails.getFoodAllergy());
+
+            Pet updatedPet = petRepository.save(pet);
+            return ResponseEntity.ok(updatedPet);
+        }).orElse(ResponseEntity.notFound().build());
+    }
 
 
 }
+    
+
+
+
