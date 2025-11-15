@@ -1,0 +1,367 @@
+/* --- Variables & Global Styles --- */
+:root {
+    --bg-color: #f8f9fe;
+    --card-bg: #ffffff;
+    --text-main: #212529;
+    --text-secondary: #6c757d;
+    --border-color: #dee2e6;
+    --primary-black: #343a40;
+    --primary-red: #dc3545;
+    --primary-yellow: #ffc107;
+    --primary-green: #28a745;
+    --primary-blue: #007bff;
+    --primary-grey: #adb5bd;
+    --status-red-bg: #fff5f5;
+    --status-red-text: #e53e3e;
+    --status-yellow-bg: #fffbeb;
+    --status-yellow-text: #d69e2e;
+    --status-green-bg: #f0fff4;
+    --status-green-text: #38a169;
+    --status-blue-bg: #ebf8ff;
+    --status-blue-text: #3182ce;
+    --status-grey-bg: #f7fafc;
+    --status-grey-text: #718096;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-main);
+    margin: 0;
+}
+
+/* --- Header Controls --- */
+.header-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 15px;
+}
+
+.dashboard-header {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.add-new-pet-button {
+    background-color: var(--primary-black);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+.add-new-pet-button:hover {
+    background-color: #555;
+}
+
+/* --- Table Container & Controls --- */
+.pet-table-container {
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.data-controls-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.summary-and-toggle {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.pet-summary {
+    font-weight: 500;
+    color: var(--text-main);
+}
+
+.toggle-label {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* --- Toggle Switch --- */
+.toggle-switch-container {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 10px;
+}
+.toggle-input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.slider {
+    width: 50px;
+    height: 26px;
+    background-color: #ccc;
+    border-radius: 34px;
+    transition: 0.4s;
+    position: relative;
+}
+.slider::before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+}
+.toggle-input:checked + .slider {
+    background-color: var(--primary-green);
+}
+.toggle-input:checked + .slider::before {
+    transform: translateX(24px);
+}
+
+/* --- Search & Filter --- */
+.search-and-filter {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.search-box {
+    position: relative;
+}
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+}
+.search-input {
+    padding: 10px 15px 10px 40px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    font-size: 14px;
+    width: 250px;
+    outline: none;
+}
+.search-input:focus {
+    border-color: var(--primary-black);
+}
+
+.filter-button {
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-secondary);
+}
+
+/* --- Pet Data Table --- */
+.pet-data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.pet-data-table th, .pet-data-table td {
+    padding: 15px 10px;
+    text-align: left;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.pet-data-table th {
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.pet-data-table td {
+    font-weight: 500;
+    color: var(--text-main);
+}
+
+.pet-name-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* ทำให้คลิกได้ */
+    text-decoration: none;
+    color: var(--text-main);
+    transition: color 0.2s;
+}
+.pet-name-cell:hover {
+    color: var(--primary-blue);
+}
+
+.pet-profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* --- Status Tags --- */
+.status-tag {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 12px;
+}
+.status-no-request {
+    background-color: var(--status-grey-bg);
+    color: var(--status-grey-text);
+}
+.status-pending {
+    background-color: var(--status-yellow-bg);
+    color: var(--status-yellow-text);
+}
+.status-approved {
+    background-color: var(--status-green-bg);
+    color: var(--status-green-text);
+}
+.status-completed {
+    background-color: var(--status-blue-bg);
+    color: var(--status-blue-text);
+}
+.status-closed {
+    background-color: var(--status-grey-bg);
+    color: var(--status-grey-text);
+}
+
+/* --- Action Buttons --- */
+.actions-header {
+    text-align: right !important;
+}
+.actions-cell {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.action-button {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    transition: opacity 0.2s;
+}
+.action-button:hover {
+    opacity: 0.8;
+}
+
+.view-request-btn {
+    background-color: #e2e8f0;
+    color: #4a5568;
+}
+/* Style พิเศษสำหรับ 'Pending' */
+.view-request-btn.pending {
+    background-color: var(--status-red-bg);
+    color: var(--status-red-text);
+}
+
+/* ปุ่มที่อยู่ใน Link (Edit) */
+a .action-button {
+    width: 100%; /* ทำให้ปุ่มเต็มขนาด Link */
+}
+a { text-decoration: none; }
+
+.edit-btn {
+    background-color: #f1f1f1;
+    color: var(--text-main);
+}
+.delete-btn {
+    background-color: var(--status-red-bg);
+    color: var(--status-red-text);
+}
+
+/* --- Modal Styles --- */
+.modal-hidden {
+    display: none !important;
+}
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.modal-content {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+.close-modal-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+.modal-body {
+    padding: 20px 0;
+}
+.modal-content .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+.modal-content label {
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+.modal-content select {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 14px;
+}
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 10px;
+}
+/* ปุ่มใน Modal */
+.btn-primary, .btn-secondary, .btn-danger {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+}
+.btn-primary { background: var(--primary-black); color: white; }
+.btn-secondary { background: #e2e8f0; color: var(--text-main); }
+.btn-danger { background: var(--primary-red); color: white; }
+
+/* Modal สำหรับ Delete */
+.delete-modal { max-width: 400px; }
+.delete-modal .modal-body { text-align: center; }
