@@ -275,7 +275,7 @@ body.status-page {
 
 .btn-danger-lg {
     background: #ff4e4e;
-    color: #333;
+    color: #ffffff;
     font-weight: bold;
     padding: 11px 40px;
     font-size: 1rem;
@@ -390,6 +390,48 @@ body.status-page {
         padding: 10px 24px 0;
     }
 }
+/* --- override รูป avatar ให้เป็นสี่เหลี่ยมจตุรัส + วงกลม --- */
+.user-pet-row .card-avatar img,
+.user-pet-row .user-avatar-img {
+    width: 70px !important;   /* ปรับเลขตามที่ชอบ */
+    height: 70px !important;  /* ให้เท่ากับ width */
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+}
+/* ปุ่มแก้ไข: จัด icon + text ให้เรียงกัน */
+#edit-form-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;              /* ระยะห่างระหว่างไอคอนกับคำว่า แก้ไข */
+}
+
+/* ขนาดไอคอนดินสอ */
+#edit-form-btn .edit-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+/* ให้สไตล์ปุ่มใกล้เคียงรูปแรก (ปุ่มขอบเทา พื้นหลังขาว) */
+.btn-outline-sm {
+    background: #ffffff;
+    border: 1px solid #bfbfbf;
+    color: #777;
+    padding: 8px 22px;
+    border-radius: 8px;
+}
+
+.btn-outline-sm:hover {
+    background: #f2f2f2;
+    border-color: #999;
+    transform: translateY(-1px);
+}
+/* ไม่ต้องมีเส้นเขียวเชื่อมระหว่าง step แล้ว */
+.status-step.completed::after {
+    display: none;
+}
+
 
 
 
