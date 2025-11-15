@@ -10,196 +10,118 @@
 </head>
 
 <body>
-    <div class="container">
         <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="logo">
-                <img class="logo-icon" src="../homepageResources/pet-house.png" alt="icon">
-                <div class="logo-text">
-                    <h2>Pet</h2>
-                    <h2>Adoption</h2>
-                </div>
-            </div>
+        <div id="sidebar"></div>
 
-            <nav class="nav-menu">
-                <a href="dashboard.html" class="nav-item" id="nav-dashboard">
-                    <img src="image-resources/dashboard-icon.svg" alt="Dashboard">
-                    <img class="icon-active" src="image-resources/dashboard-icon-gradient.svg" alt="Dashboard">
-                    <span>Dashboard</span>
-                </a>
-
-                <a href="allpet.html" class="nav-item active" id="nav-all-pet">
-                    <img src="image-resources/allpet-icon.svg" alt="All pet">
-                    <img class="icon-active" src="image-resources/allpet-icon-gradient.svg" alt="All pet">
-                    <span>All Pet</span>
-                </a>
-
-                <a href="schedule.html" class="nav-item" id="nav-schedule">
-                    <img src="image-resources/schedule-icon.svg" alt="Schedule">
-                    <img class="icon-active" src="image-resources/schedule-icon-gradient.svg" alt="Schedule">
-                    <span>Schedule</span>
-                </a>
-
-                
-            </nav>
-
-            <!-- logout -->
-            <a href="#" class="nav-item logout" id="nav-logout">
-                <img src="image-resources/logout-icon.svg" alt="Log out">
-                <span>Log out</span>
-            </a>
-        </aside>
-
+        <div class="container">
         <!-- Main Content -->
-        <main class="main-content">
-            <div class="header-controls">
-                <h1 class="dashboard-header">ALL PET</h1>
-                <a href="addpet.html" class="add-new-pet-button">
-                    + Add New Pet
-                </a>
-            </div>
+            <main>
+                <div class="header-controls">
+                    <h1 class="dashboard-header">ALL PET</h1>
+                    <a href="add-edit-pet.html?mode=add" class="add-new-pet-button">
+                        + Add New Pet
+                    </a>
+                </div>
 
+                <div class="pet-table-container">
+                    <div class="data-controls-panel">
+                        <div class="summary-and-toggle">
+                            <span class="pet-summary" id="petCount">There are 0 pets in total</span>
+                            <label class="toggle-switch-container">
+                                <input type="checkbox" id="pendingToggle" class="toggle-input">
+                                <span class="slider"></span>
+                                <span class="toggle-label">See pets that are pending request</span>
+                            </label>
+                        </div>
 
-
-            <div class="pet-table-container">
-                <div class="data-controls-panel">
-                    <div class="summary-and-toggle">
-                        <span class="pet-summary">There are 62 pets in total</span>
-
-                        <label class="toggle-switch-container">
-                            <input type="checkbox" id="pending-request-toggle" class="toggle-input">
-                            <span class="slider round"></span>
-                            <span class="toggle-label">See pets that are pending request</span>
-                        </label>
+                        <div class="search-and-filter">
+                            <div class="search-box">
+                                <i class="fas fa-search search-icon"></i>
+                                <input type="text" placeholder="Search" class="search-input" id="searchInput">
+                            </div>
+                            <button class="filter-button" id="filterButton">
+                                <i class="fas fa-filter"></i>
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="search-and-filter">
-                        <div class="search-box">
-                            <input type="text" placeholder="Search" class="search-input">
-                            <img src="image-resources/search-icon.svg" alt="Search Icon" class="search-icon">
+                    <table class="pet-data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Pet</th>
+                                <th>Type</th>
+                                <th>Breed</th>
+                                <th>Status</th>
+                                <th class="actions-header">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="petTableBody">
+                            </tbody>
+                    </table>
+                </div>
+            </main>
+            <div id="filterModal" class="modal-backdrop modal-hidden">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Filter Pets</h2>
+                        <button id="closeFilterModal" class="close-modal-btn">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="statusFilter">Status</label>
+                            <select id="statusFilter">
+                                <option value="">All</option>
+                                <option value="No Request">No Request</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Approved">Approved</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Closed">Closed</option>
+                            </select>
                         </div>
-                        <button class="filter-button">
-                            <img src="image-resources/filter-icon.svg" alt="Filter Icon">
-                        </button>
+                        <div class="form-group">
+                            <label for="typeFilter">Type</label>
+                            <select id="typeFilter">
+                                <option value="">All</option>
+                                <option value="Cat">Cat</option>
+                                <option value="Dog">Dog</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="breedFilter">Breed</label>
+                            <select id="breedFilter">
+                                <option value="">All</option>
+                                <option value="Persian">Persian</option>
+                                <option value="Siam">Siam</option>
+                                <option value="Mixed">Mixed</option>
+                                <option value="Golden Retriever">Golden Retriever</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="resetFilterBtn" class="btn-secondary">Reset</button>
+                        <button id="applyFilterBtn" class="btn-primary">Apply</button>
                     </div>
                 </div>
-                <table class="pet-data-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Pet</th>
-                            <th>Type</th>
-                            <th>Breed</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>0001</td>
-                            <td class="pet-name-cell">
-                                <img src="image-resources/pet-profile-placeholder.png" alt="Pet Profile"
-                                    class="pet-profile-img">
-                                <span>พยัคฆ์เสี้ยววาน</span>
-                            </td>
-                            <td>Cat</td>
-                            <td>Persian</td>
-                            <td><span class="status-tag no-request">No Request</span></td>
-                            <td class="actions-cell">
-                                <!-- ปุ่ม link ไปหน้า requests.html -->
-                                <a href="requests.html" class="link-button-container">
-                                    <button class="action-button view-request-btn pending-btn">View Request</button>
-                                </a>
-                                <!-- ปุ่ม link ไปหน้า animal_form.html -->
-                                <a href="animal_form.html" class="link-button-container"></a>
-                                <button class="action-button edit-btn">Edit</button>
-                                </a>
-                                <button class="action-button delete-btn">Delete</button>
-                            </td>
-                        </tr>
-
-
-                        <tr>
-                            <td>0002</td>
-                            <td class="pet-name-cell">
-                                <img src="image-resources/pet-profile-placeholder.png" alt="Pet Profile"
-                                    class="pet-profile-img">
-                                <span>พยัคฆ์เสี้ยววาน</span>
-                            </td>
-                            <td>Cat</td>
-                            <td>Persian</td>
-                            <td><span class="status-tag pending">Pending</span></td>
-                            <td class="actions-cell">
-                                <!-- ปุ่ม link ไปหน้า requests.html -->
-                                <a href="requests.html" class="link-button-container">
-                                    <button class="action-button view-request-btn pending-btn">View Request</button>
-                                </a>
-                                <!-- ปุ่ม link ไปหน้า animal_form.html -->
-                                <a href="animal_form.html" class="link-button-container"></a>
-                                <button class="action-button edit-btn">Edit</button>
-                                </a>
-                                <button class="action-button delete-btn">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>0003</td>
-                            <td class="pet-name-cell">
-                                <img src="image-resources/pet-profile-placeholder.png" alt="Pet Profile"
-                                    class="pet-profile-img">
-                                <span>พยัคฆ์เสี้ยววาน</span>
-                            </td>
-                            <td>Cat</td>
-                            <td>Persian</td>
-                            <td><span class="status-tag approved">Approved</span></td>
-                            <td class="actions-cell">
-                                <button class="action-button view-request-btn pending-btn">View Request</button>
-                                <button class="action-button edit-btn">Edit</button>
-                                <button class="action-button delete-btn">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>0004</td>
-                            <td class="pet-name-cell">
-                                <img src="image-resources/pet-profile-placeholder.png" alt="Pet Profile"
-                                    class="pet-profile-img">
-                                <span>พยัคฆ์เสี้ยววาน</span>
-                            </td>
-                            <td>Cat</td>
-                            <td>Persian</td>
-                            <td><span class="status-tag completed">Completed</span></td>
-                            <td class="actions-cell">
-                                <button class="action-button view-request-btn pending-btn">View Request</button>
-                                <button class="action-button edit-btn">Edit</button>
-                                <button class="action-button delete-btn">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>0005</td>
-                            <td class="pet-name-cell">
-                                <img src="image-resources/pet-profile-placeholder.png" alt="Pet Profile"
-                                    class="pet-profile-img">
-                                <span>พยัคฆ์เสี้ยววาน</span>
-                            </td>
-                            <td>Cat</td>
-                            <td>Persian</td>
-                            <td><span class="status-tag closed">Closed</span></td>
-                            <td class="actions-cell">
-                                <button class="action-button view-request-btn no-request-btn">View Request</button>
-                                <button class="action-button edit-btn">Edit</button>
-                                <button class="action-button delete-btn">Delete</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
 
-        </main>
-    </div>
+            <div id="deleteModal" class="modal-backdrop modal-hidden">
+                <div class="modal-content delete-modal">
+                    <div class="modal-header">
+                        <h2>Confirm Deletion</h2>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete this pet? This action cannot be undone.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="cancelDeleteBtn" class="btn-secondary">Cancel</button>
+                        <button id="confirmDeleteBtn" class="btn-danger">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <script src="dashboard.js"></script>
-    <script src="chart.js"></script>
-    <!-- Import JS library to create chart-->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</body>
-
+        <script src="allpet.js"></script>
+        <script src="sidebar.js"></script>
+    </body>
 </html>

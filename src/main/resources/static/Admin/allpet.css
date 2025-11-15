@@ -1,780 +1,367 @@
-@import url('https://fonts.googleapis.com/css2?family=Mali&family=Itim&family=Kodchasan&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap');
-
+/* --- Variables & Global Styles --- */
 :root {
-    --bg-gray: #f2f2f2;
-    /*gray95*/
-    --bg-light: #f9f9f9;
-    /*almost white*/
-    --bg-main: #E5EEFF;
-    /*pale cyan*/
-    --bg-fade-yellow: rgba(255, 209, 2, 0.5);
-    --button-black: #010002;
-    --button-yellow: #ffd102;
-    --red: #f34e4e;
-    --linear-gradient: linear-gradient(74.49deg, #F840D0 -67.13%, #53DDFF 46.94%, #53FA9C 184.38%);
-    --text-color: #333;
-    --primary-color: #4A69FF;
-    --border-radius: 15px;
-    --transition: all 0.3s ease;
-    --box-shadow: 0px 10px 60px 0px rgba(0, 0, 0, 0.1);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    /*border: 1px solid grey;  ไว้ดูขนาดของทุกอย่าง */
+    --bg-color: #f8f9fe;
+    --card-bg: #ffffff;
+    --text-main: #212529;
+    --text-secondary: #6c757d;
+    --border-color: #dee2e6;
+    --primary-black: #343a40;
+    --primary-red: #dc3545;
+    --primary-yellow: #ffc107;
+    --primary-green: #28a745;
+    --primary-blue: #007bff;
+    --primary-grey: #adb5bd;
+    --status-red-bg: #fff5f5;
+    --status-red-text: #e53e3e;
+    --status-yellow-bg: #fffbeb;
+    --status-yellow-text: #d69e2e;
+    --status-green-bg: #f0fff4;
+    --status-green-text: #38a169;
+    --status-blue-bg: #ebf8ff;
+    --status-blue-text: #3182ce;
+    --status-grey-bg: #f7fafc;
+    --status-grey-text: #718096;
 }
 
 body {
-    font-family: 'Manrope', 'Mali', 'Itim', sans-serif;
-    color: #333;
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-main);
+    margin: 0;
 }
 
-.container {
-    display: flex;
-    height: 100vh;
-}
-
-/*--- Sidebar --- */
-.sidebar {
-    width: 200px;
-    background: var(--bg-light);
-    padding: 30px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* logo */
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 40px;
-    width: max-content;
-}
-
-.logo-icon {
-    width: 40px;
-    height: 40px;
-    background: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.logo-text h2 {
-    font-size: 16px;
-    color: #333;
-}
-
-/* menu */
-.nav-menu {
-    flex: 1;
-    width: 100%;
-}
-
-.nav-menu a {
-    text-decoration: none;
-    color: var(--text-color);
-}
-
-.nav-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    cursor: pointer;
-    transition: all 0.3s;
-    background: var(--bg-light);
-    border-left: 4px solid transparent;
-}
-
-/* menu icon */
-.nav-item img {
-    width: 20px;
-    height: 20px;
-}
-
-.nav-item:hover {
-    border-left-color: #5cd6d6;
-}
-
-.nav-item.active {
-    border-left-color: #53DDFF;
-}
-
-.nav-item.active span {
-    font-weight: 600;
-    background: var(--linear-gradient);
-    -webkit-background-clip: text;
-    /* 2. ตัด Background ให้แสดงเฉพาะส่วนที่เป็นข้อความ */
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    /* 3. ทำให้สีของข้อความเป็นแบบโปร่งใส (Transparent) */
-    color: transparent;
-    /* สำหรับเบราว์เซอร์เก่าบางตัว */
-}
-
-/* -------------------- สถานะเริ่มต้น: ไม่ Active (สีดำ) -------------------- */
-
-.nav-item img {
-    /* ซ่อนรูป Gradient โดยค่าเริ่มต้น */
-    display: none;
-}
-
-.nav-item img:first-child {
-    /* แสดงรูปภาพปกติ (สีดำ) */
-    display: block;
-}
-
-/* -------------------- สถานะ Active (Gradient) -------------------- */
-
-.nav-item.active img {
-    /* เมื่อ Active ให้ซ่อนรูปภาพปกติ (สีดำ) */
-    display: none;
-}
-
-.nav-item.active img.icon-active {
-    /* เมื่อ Active ให้แสดงรูปภาพ Gradient */
-    display: block;
-}
-
-.logout {
-    margin-top: auto;
-    width: 100%;
-    text-decoration: none;
-    color: var(--text-color);
-}
-
-
-/* Main Content */
-.main-content {
-    flex: 1;
-    background: #e8eeff;
-    padding: 40px;
-    overflow-y: auto;
-}
-
-.dashboard-header {
-    font-size: 24px;
-    font-weight: 600;
-    width: 50%;
-    margin-bottom: 30px;
-    padding-bottom: 15px;
-    color: var(--text-color);
-    border-bottom: 2px solid var(--text-color);
-}
-
-/* Grid content */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    grid-auto-rows: auto;
-    /* ✅ ให้ row ปรับความสูงเอง */
-    gap: 20px;
-}
-
-/* allpet.css (ส่วนเพิ่มเติม) */
-
-/* ล้าง Grid Layout เดิมที่ไม่ใช้แล้วสำหรับหน้านี้ */
-.grid {
-    display: block;
-    /* เปลี่ยนจาก grid เป็น block เพื่อใช้ตารางแทน */
-    gap: 0;
-    padding-top: 20px;
-}
-
-
-/* Header และปุ่ม Add New Pet */
+/* --- Header Controls --- */
 .header-controls {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
-    padding-bottom: 0;
-    /* ล้าง padding-bottom เดิม */
-    border-bottom: none;
-    /* ล้าง border-bottom เดิม */
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 15px;
 }
 
 .dashboard-header {
-    margin-bottom: 0;
-    /* คง style ของ dashboard-header เดิมไว้ */
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0;
 }
 
 .add-new-pet-button {
-    background: var(--button-black);
+    background-color: var(--primary-black);
     color: white;
-    padding: 10px 20px;
-    border: none;
+    padding: 12px 20px;
     border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
-    
-    /* *** เพิ่ม/แก้ไขสำหรับแท็ก <a> *** */
-    text-decoration: none; /* ลบขีดเส้นใต้ของลิงก์ */
-    display: flex;
-    justify-content: center; /* จัดให้อยู่ตรงกลางแนวนอน */
-    /* ********************************* */
-    
-    align-items: center;
-    gap: 5px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    transition: background-color 0.2s;
 }
-/* ... Style :hover คงเดิม ... */
-
 .add-new-pet-button:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
+    background-color: #555;
 }
 
-/* --- Data Controls Panel (แถบ Search, Toggle, Summary) --- */
-/* --- Data Controls Panel (แถบ Search, Toggle, Summary) --- */
+/* --- Table Container & Controls --- */
+.pet-table-container {
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
 .data-controls-panel {
     display: flex;
-    /* จัดให้ Summary/Toggle อยู่ซ้าย และ Search/Filter อยู่ขวา */
-    justify-content: space-between; 
-    align-items: center; /* จัดให้เนื้อหาอยู่กึ่งกลางแนวตั้ง */
-    
-    padding-bottom: 15px; /* ช่องว่างด้านล่างก่อนถึงเส้นแบ่ง */
-    margin-bottom: 15px; /* ช่องว่างก่อนถึงตาราง */
-    border-bottom: 1px solid #f0f0f0; /* เส้นแบ่งบางๆ */
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
-/* ปรับ layout ของ Summary และ Toggle ให้อยู่ในแถวเดียวกัน */
-/* ปรับ layout ของ Summary และ Toggle ให้เรียงจากบนลงล่าง */
 .summary-and-toggle {
     display: flex;
-    flex-direction: column; /* *** แก้ไข: ทำให้สมาชิกเรียงจากบนลงล่าง *** */
-    align-items: flex-start; /* จัดให้องค์ประกอบทั้งหมดชิดซ้าย */
-    gap: 20px; /* ช่องว่างระหว่าง Summary และ Toggle */
+    align-items: center;
+    gap: 20px;
 }
-
 
 .pet-summary {
-    font-size: 28px;
-    font-weight: 1000;
-    color: var(--text-color);
-
-    white-space: nowrap;
+    font-weight: 500;
+    color: var(--text-main);
 }
 
-/* --- Search and Filter --- */
-.search-and-filter {
-    display: flex;
-    justify-content: flex-end;
-    /* ชิดขวา */
-    align-items: center;
-    gap: 15px;
-    width: 100%;
+.toggle-label {
+    color: var(--text-secondary);
+    font-weight: 500;
 }
 
-.search-box {
-    display: flex;
-    align-items: center;
-    background: white;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    padding: 8px 12px;
-    width: 300px;
-}
-
-.search-input {
-    border: none;
-    outline: none;
-    flex-grow: 1;
-    font-size: 14px;
-    padding-right: 10px;
-}
-
-.search-icon {
-    width: 18px;
-    height: 18px;
-    opacity: 0.5;
-}
-
-.filter-button {
-    background: white;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 8px 10px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-}
-
-.filter-button img {
-    width: 18px;
-    height: 18px;
-    opacity: 0.6;
-}
-
-.filter-button:hover {
-    border-color: var(--primary-color);
-}
-
-
-/* --- Toggle Switch Styling --- */
-/* (อิงจากภาพต้นแบบที่เป็นสวิตช์แบบ iOS-like) */
-
+/* --- Toggle Switch --- */
 .toggle-switch-container {
-    display: flex;
+    position: relative;
+    display: inline-flex;
     align-items: center;
     cursor: pointer;
     gap: 10px;
 }
-
-.toggle-label {
-    font-size: 14px;
-    color: #666;
-}
-
 .toggle-input {
     opacity: 0;
     width: 0;
     height: 0;
 }
-
-/* The slider */
 .slider {
-    position: relative;
-    display: inline-block;
-    width: 40px;
-    height: 20px;
+    width: 50px;
+    height: 26px;
     background-color: #ccc;
-    transition: .4s;
+    border-radius: 34px;
+    transition: 0.4s;
+    position: relative;
 }
-
-.slider.round {
-    border-radius: 20px;
-}
-
-.slider:before {
+.slider::before {
     position: absolute;
     content: "";
-    height: 16px;
-    width: 16px;
-    left: 2px;
-    bottom: 2px;
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 4px;
     background-color: white;
-    transition: .4s;
     border-radius: 50%;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    transition: 0.4s;
+}
+.toggle-input:checked + .slider {
+    background-color: var(--primary-green);
+}
+.toggle-input:checked + .slider::before {
+    transform: translateX(24px);
 }
 
-.toggle-input:checked+.slider {
-    background-color: var(--button-yellow);
-    /* สีฟ้าเมื่อเปิด */
+/* --- Search & Filter --- */
+.search-and-filter {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
-.toggle-input:checked+.slider:before {
-    transform: translateX(20px);
+.search-box {
+    position: relative;
+}
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+}
+.search-input {
+    padding: 10px 15px 10px 40px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    font-size: 14px;
+    width: 250px;
+    outline: none;
+}
+.search-input:focus {
+    border-color: var(--primary-black);
+}
+
+.filter-button {
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-secondary);
 }
 
 /* --- Pet Data Table --- */
-
-.pet-table-container {
-    background: white;
-    border-radius: var(--border-radius);
-    padding: 15px;
-    box-shadow: var(--box-shadow);
-    overflow-x: auto;
-    /* เพื่อรองรับตารางใน mobile */
-}
-
 .pet-data-table {
     width: 100%;
     border-collapse: collapse;
-    table-layout: fixed;
-    /* เพื่อควบคุมความกว้างของคอลัมน์ได้ดีขึ้น */
 }
 
-
-
-/* สร้างขึ้นเองระวัง*/
-.pet-data-table span {
-    white-space: nowrap;
-}
-
-
-
-
-.pet-data-table th,
-.pet-data-table td {
+.pet-data-table th, .pet-data-table td {
     padding: 15px 10px;
     text-align: left;
-    font-size: 14px;
+    border-bottom: 1px solid #f1f1f1;
 }
 
 .pet-data-table th {
-    font-weight: 700;
-    color: #888;
-    text-transform: uppercase;
-    border-bottom: 1px solid #eee;
-}
-
-.pet-data-table tbody tr {
-    border-bottom: 1px solid #f9f9f9;
-}
-
-.pet-data-table tbody tr:last-child {
-    border-bottom: none;
-}
-
-/* Pet Cell (รูป + ชื่อ) */
-.pet-name-cell {
-    /* *** การจัดแนวตั้งของเนื้อหาเซลล์ตาราง (สำหรับ td) *** */
-    vertical-align: middle; 
-    /* *************************************** */
-    
-    display: flex; /* กำหนดให้เนื้อหาภายในเป็น Flex */
-    align-items: center; /* *** สำคัญ: จัดเนื้อหาภายใน (รูปและชื่อ) ให้อยู่กึ่งกลางแนวตั้งซึ่งกันและกัน *** */
-    gap: 10px;
     font-weight: 600;
-    color: var(--text-color);
+    color: var(--text-secondary);
+    font-size: 14px;
+    text-transform: uppercase;
 }
 
+.pet-data-table td {
+    font-weight: 500;
+    color: var(--text-main);
+}
 
+.pet-name-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* ทำให้คลิกได้ */
+    text-decoration: none;
+    color: var(--text-main);
+    transition: color 0.2s;
+}
+.pet-name-cell:hover {
+    color: var(--primary-blue);
+}
 
 .pet-profile-img {
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     object-fit: cover;
-    border: 1px solid #eee;
 }
 
-
-
-/* Status Tags - ใช้ Style พื้นฐานให้เหมือน Action Button */
+/* --- Status Tags --- */
 .status-tag {
-    /* copy base styles from .action-button */
-    display: inline-block;
-    padding: 6px 10px;
-    /* ใช้ padding เดียวกับ action-button */
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    /* ใช้ border-radius เดียวกับ action-button */
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
     font-size: 12px;
-    font-weight: 500;
-    /* ใช้ font-weight เดียวกับ action-button */
-    text-align: center;
-    min-width: 90px;
-    background: white;
-    /* สีพื้นหลังขาวเหมือนปุ่ม */
-    /* End of copy base styles */
-
-    transition: all 0.2s;
-    cursor: default;
-    /* ไม่ใช่ปุ่ม ไม่ต้องมี cursor: pointer */
+}
+.status-no-request {
+    background-color: var(--status-grey-bg);
+    color: var(--status-grey-text);
+}
+.status-pending {
+    background-color: var(--status-yellow-bg);
+    color: var(--status-yellow-text);
+}
+.status-approved {
+    background-color: var(--status-green-bg);
+    color: var(--status-green-text);
+}
+.status-completed {
+    background-color: var(--status-blue-bg);
+    color: var(--status-blue-text);
+}
+.status-closed {
+    background-color: var(--status-grey-bg);
+    color: var(--status-grey-text);
 }
 
-/* Status Tag - No Request (สีเทาอ่อน/ปิด) */
-.status-tag.no-request {
-    color: #999;
-    /* สีตัวอักษรเทาอ่อน */
-    border-color: #ccc;
-    /* ขอบสีเทากลาง */
-    /* background: #f7f7f7; */
-    /* พื้นหลังเทาอ่อน */
+/* --- Action Buttons --- */
+.actions-header {
+    text-align: right !important;
 }
-
-/* Status Tag - Pending (สีส้ม/เตือน) */
-.status-tag.pending {
-    color: #ff9800;
-    /* สีตัวอักษรสีส้ม */
-    border-color: #ff9800;
-    /* ขอบสีส้ม */
-    /* background: #ffeccf; */
-    /* พื้นหลังสีส้มอ่อนมาก */
-}
-
-/* Status Tag - Approved (สีเขียว/สำเร็จ) */
-.status-tag.approved {
-    color: #4CAF50;
-    /* สีตัวอักษรสีเขียว */
-    border-color: #4CAF50;
-    /* ขอบสีเขียว */
-    /* background: #e0f7e9; */
-    /* พื้นหลังสีเขียวอ่อนมาก */
-}
-
-/* Status Tag - Completed (สีฟ้า/ข้อมูล) */
-.status-tag.completed {
-    color: #2196F3;
-    /* สีตัวอักษรสีฟ้า */
-    border-color: #2196F3;
-    /* ขอบสีฟ้า */
-    /* background: #e3f2fd; */
-    /* พื้นหลังสีฟ้าอ่อนมาก */
-}
-
-/* Status Tag - Closed (สีแดง/อันตราย) */
-.status-tag.closed {
-    color: var(--red);
-    /* สีตัวอักษรสีแดง */
-    border-color: var(--red);
-    /* ขอบสีแดง */
-    /* background: #fbe6e6; */
-    /* พื้นหลังสีแดงอ่อนมาก */
-}
-
-
-
-/* Action Buttons */
 .actions-cell {
     display: flex;
-    gap: 10px;
-    /* ใช้ flex-wrap เพื่อป้องกันปุ่มล้นขอบในคอลัมน์แคบ ๆ */
-    /* flex-wrap: wrap; */
+    justify-content: flex-end;
+    gap: 8px;
 }
 
 .action-button {
-    text-align: center;
-    padding: 6px 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 12px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: none;
     cursor: pointer;
-    transition: all 0.2s;
     font-weight: 500;
-    background: white;
-    text-decoration: none;
+    font-size: 14px;
+    transition: opacity 0.2s;
+}
+.action-button:hover {
+    opacity: 0.8;
 }
 
-/* View Request Button (Default) */
 .view-request-btn {
-    color: var(--primary-color);
-    border-color: var(--primary-color);
+    background-color: #e2e8f0;
+    color: #4a5568;
+}
+/* Style พิเศษสำหรับ 'Pending' */
+.view-request-btn.pending {
+    background-color: var(--status-red-bg);
+    color: var(--status-red-text);
 }
 
-.view-request-btn:hover {
-    background: var(--primary-color);
-    color: white;
+/* ปุ่มที่อยู่ใน Link (Edit) */
+a .action-button {
+    width: 100%; /* ทำให้ปุ่มเต็มขนาด Link */
 }
+a { text-decoration: none; }
 
-/* View Request Button - Pending State (สีแดง) */
-.view-request-btn.pending-btn {
-    background: var(--red);
-    color: white;
-    border-color: var(--red);
-}
-
-.view-request-btn.pending-btn:hover {
-    opacity: 0.9;
-    box-shadow: 0 2px 5px rgba(243, 78, 78, 0.5);
-}
-
-/* View Request Button - No Request State (สีเทาอ่อน/ปิด) */
-.view-request-btn.no-request-btn {
-    color: #999;
-    border-color: #ccc;
-    cursor: default;
-    background: #f7f7f7;
-}
-
-.view-request-btn.no-request-btn:hover {
-    color: #999;
-    border-color: #ccc;
-    background: #f7f7f7;
-}
-
-/* Edit Button */
 .edit-btn {
-    color: #666;
-    border-color: #ccc;
+    background-color: #f1f1f1;
+    color: var(--text-main);
 }
-
-.edit-btn:hover {
-    background: #f0f0f0;
-    border-color: #a0a0a0;
-}
-
-/* Delete Button */
 .delete-btn {
-    color: var(--red);
-    border-color: var(--red);
+    background-color: var(--status-red-bg);
+    color: var(--status-red-text);
 }
 
-.delete-btn:hover {
-    background: var(--red);
-    color: white;
+/* --- Modal Styles --- */
+.modal-hidden {
+    display: none !important;
 }
-
-/* Table Column Widths Adjustment */
-/* เพื่อให้ตารางดูดีขึ้น (ปรับตามความเหมาะสม) */
-@media (min-width: 900px) {
-    .pet-data-table {
-        table-layout: auto;
-        /* ปรับกลับเป็นอัตโนมัติเมื่อจอใหญ่ */
-    }
-
-    .pet-data-table th:nth-child(1),
-    .pet-data-table td:nth-child(1) {
-        width: 8%;
-    }
-
-    /* ID */
-    .pet-data-table th:nth-child(2),
-    .pet-data-table td:nth-child(2) {
-        width: 25%;
-    }
-
-    /* Pet Name */
-    .pet-data-table th:nth-child(3),
-    .pet-data-table td:nth-child(3) {
-        width: 10%;
-    }
-
-    /* Type */
-    .pet-data-table th:nth-child(4),
-    .pet-data-table td:nth-child(4) {
-        width: 15%;
-    }
-
-    /* Breed */
-    .pet-data-table th:nth-child(5),
-    .pet-data-table td:nth-child(5) {
-        width: 12%;
-    }
-
-    /* Status */
-    .pet-data-table th:nth-child(6),
-    .pet-data-table td:nth-child(6) {
-        width: 30%;
-    }
-
-    /* Actions */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
 }
-
-/* --- Responsive for Mobile (Media Query เดิม) --- */
-@media (max-width: 768px) {
-    .dashboard-header {
-        font-size: 20px;
-    }
-
-    .header-controls {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-    }
-
-    .data-controls-panel {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    /* ปรับ layout ของ Summary และ Search ให้สอดคล้องกัน */
-    .summary-and-toggle {
-        display: flex;
-        flex-direction: column;
-        /* เรียงจากบนลงล่าง */
-        align-items: flex-start;
-        gap: 10px;
-        /* ช่องว่างระหว่างองค์ประกอบ */
-    }
-
-    .search-and-filter {
-        justify-content: space-between;
-        width: 100%;
-        gap: 10px;
-    }
-
-    .search-box {
-        width: 100%;
-    }
-
-    /* ทำให้ตารางสามารถเลื่อนดูในแนวนอนได้ */
-    .pet-table-container {
-        padding: 10px 0;
-        border-radius: 10px;
-        overflow-x: scroll;
-    }
-
-    .pet-data-table {
-        min-width: 700px;
-        /* กำหนดความกว้างขั้นต่ำ */
-        table-layout: auto;
-    }
-
-    .pet-data-table th,
-    .pet-data-table td {
-        padding: 10px 8px;
-        white-space: nowrap;
-        /* ป้องกันการขึ้นบรรทัดใหม่ */
-    }
-
-    .actions-cell {
-        flex-wrap: wrap;
-        gap: 3px;
-    }
-
-    .action-button {
-        padding: 5px 8px;
-        font-size: 11px;
-    }
+.modal-content {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
-
-
-
-
-
-
-
-
-
-/*---- Responsive ---*/
-@media (max-width: 768px) {
-
-    /* Side bar */
-    .sidebar {
-        width: 80px;
-        padding: 30px 10px;
-    }
-
-    .logo-text {
-        display: none;
-    }
-
-    .logo {
-        justify-content: center;
-    }
-
-    .nav-item {
-        justify-content: center;
-        padding: 12px 8px;
-    }
-
-    .nav-item span:not(.icon) {
-        display: none;
-    }
-
-    /* Grid Layout */
-    .grid {
-        /* เปลี่ยนจาก 8 คอลัมน์ เป็น 1 คอลัมน์ */
-        grid-template-columns: 1fr;
-        /* อนุญาตให้แถวถูกกำหนดตามเนื้อหา (เรียงลงมา) */
-        grid-template-rows: auto;
-        /* ล้างความสูงที่กำหนดไว้เดิม */
-        height: auto;
-    }
-
-    /* ล้างการกำหนดตำแหน่งและขนาดของ div แต่ละตัว ให้ครอบคลุม 1 คอลัมน์เต็ม และเรียงต่อกันเป็นแถว */
-    .grid .card {
-        grid-column: 1 / -1;
-        /* ครอบคลุมคอลัมน์ทั้งหมด */
-        grid-row: auto;
-        /* เรียงต่อกันเป็นแถวตามปกติ */
-        grid-column-start: auto;
-        /* ล้างการกำหนดจุดเริ่มต้นคอลัมน์เดิม */
-        grid-row-start: auto;
-        /* ล้างการกำหนดจุดเริ่มต้นแถวเดิม */
-    }
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
 }
+.close-modal-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+.modal-body {
+    padding: 20px 0;
+}
+.modal-content .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+.modal-content label {
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+.modal-content select {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 14px;
+}
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 10px;
+}
+/* ปุ่มใน Modal */
+.btn-primary, .btn-secondary, .btn-danger {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+}
+.btn-primary { background: var(--primary-black); color: white; }
+.btn-secondary { background: #e2e8f0; color: var(--text-main); }
+.btn-danger { background: var(--primary-red); color: white; }
+
+/* Modal สำหรับ Delete */
+.delete-modal { max-width: 400px; }
+.delete-modal .modal-body { text-align: center; }
