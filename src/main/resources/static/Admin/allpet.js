@@ -3,13 +3,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 1. จำลองฐานข้อมูล ---
     // (ในโลกจริง ข้อมูลนี้จะมาจาก fetch('/api/pets'))
     const mockPetData = [
-        { id: '0001', name: 'พยัคฆ์เสี้ยววาน', imageUrl: 'https://i.pravatar.cc/150?img=1', type: 'Cat', breed: 'Persian', status: 'No Request' },
-        { id: '0002', name: 'น้องเหมียว', imageUrl: 'https://i.pravatar.cc/150?img=2', type: 'Cat', breed: 'Persian', status: 'Pending' },
-        { id: '0003', name: 'เจ้าสี่ขา', imageUrl: 'https://i.pravatar.cc/150?img=3', type: 'Dog', breed: 'Golden Retriever', status: 'Approved' },
-        { id: '0004', name: 'ส้มซ่า', imageUrl: 'https://i.pravatar.cc/150?img=4', type: 'Cat', breed: 'Siam', status: 'Completed' },
-        { id: '0005', name: 'ด่างทับทิม', imageUrl: 'https://i.pravatar.cc/150?img=5', type: 'Dog', breed: 'Mixed', status: 'Closed' },
-        { id: '0006', name: 'มณี', imageUrl: 'https://i.pravatar.cc/150?img=6', type: 'Cat', breed: 'Persian', status: 'No Request' },
-        { id: '0007', name: 'โกลดี้', imageUrl: 'https://i.pravatar.cc/150?img=7', type: 'Dog', breed: 'Golden Retriever', status: 'Pending' },
+        { id: '0001', name: 'พยัคฆ์เสี้ยววาน', imageUrl: 'https://tse4.mm.bing.net/th/id/OIP.HnHSF9J0wkbZWn1unKAOxwHaEJ?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3', type: 'Cat', breed: 'Persian', status: 'No Request' },
+        { id: '0002', name: 'น้องเหมียว', imageUrl: 'https://tse4.mm.bing.net/th/id/OIP.HnHSF9J0wkbZWn1unKAOxwHaEJ?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3', type: 'Cat', breed: 'Persian', status: 'Pending' },
+        { id: '0003', name: 'เจ้าสี่ขา', imageUrl: 'https://tse4.mm.bing.net/th/id/OIP.HnHSF9J0wkbZWn1unKAOxwHaEJ?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3', type: 'Dog', breed: 'Golden Retriever', status: 'Approved' },
+        { id: '0004', name: 'ส้มซ่า', imageUrl: 'https://tse4.mm.bing.net/th/id/OIP.HnHSF9J0wkbZWn1unKAOxwHaEJ?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3', type: 'Cat', breed: 'Siam', status: 'Completed' },
+        { id: '0005', name: 'ด่างทับทิม', imageUrl: 'https://tse4.mm.bing.net/th/id/OIP.HnHSF9J0wkbZWn1unKAOxwHaEJ?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3', type: 'Dog', breed: 'Mixed', status: 'Closed' },
+        { id: '0006', name: 'มณี', imageUrl: 'https://tse4.mm.bing.net/th/id/OIP.HnHSF9J0wkbZWn1unKAOxwHaEJ?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3', type: 'Cat', breed: 'Persian', status: 'No Request' },
+        { id: '0007', name: 'โกลดี้', imageUrl: 'https://tse4.mm.bing.net/th/id/OIP.HnHSF9J0wkbZWn1unKAOxwHaEJ?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3', type: 'Dog', breed: 'Golden Retriever', status: 'Pending' },
     ];
     
     // --- 2. ตัวแปรเก็บข้อมูลหลัก (Master Data) ---
