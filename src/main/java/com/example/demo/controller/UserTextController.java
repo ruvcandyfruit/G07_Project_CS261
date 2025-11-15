@@ -26,7 +26,9 @@ import com.example.demo.repository.UserRepository;
 import com.example.demo.service.FormService;
 import com.example.demo.dto.UserFormDTO;
 import com.example.demo.model.Form;
+import com.example.demo.model.Pet;
 import com.example.demo.repository.FormRepository;
+import com.example.demo.repository.PetRepository;
 
 @RestController
 @RequestMapping("/api/userform")
@@ -41,6 +43,9 @@ public class UserTextController {
 
     @Autowired
     private FormService formService;
+
+    @Autowired
+    private PetRepository petRepository;
 
    @PostMapping("/submit")
     public ResponseEntity<?> submitForm(
@@ -79,6 +84,14 @@ public class UserTextController {
         user.setIdentityDoc(identityPath);
         user.setResidenceDoc(residencePath);
 
+        User userEntity = userRepository.findById(formDTO.getUserId())
+        .orElseThrow(() -> new RuntimeException("User not found"));
+        user.setUser(userEntity);
+
+        Pet petEntity = petRepository.findById(formDTO.getPetId())
+                .orElseThrow(() -> new RuntimeException("Pet not found"));
+        user.setPet(petEntity);
+        user.setStatus("PENDING");
         formRepository.save(user);
 
         return ResponseEntity.ok().body(java.util.Collections.singletonMap("message", "Form submitted successfully!"));
