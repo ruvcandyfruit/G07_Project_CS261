@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const pet = await response.json();
 
     // แสดงข้อมูลในหน้า HTML
-     document.getElementById("petNames").textContent = pet.name || "-";
+    document.getElementById("petNames").textContent = pet.name || "-";
     document.getElementById("petImages").src = pet.image ? `http://localhost:8081${pet.image}` : "images/placeholder.jpg";
     document.getElementById("petIds").textContent = pet.petID || "-";
     document.getElementById("petType").textContent = pet.type || "-";
@@ -31,6 +31,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("petVaccine").textContent = pet.vaccine ? "ครบ" : "ยังไม่ครบ";
     document.getElementById("petDisease").textContent = pet.disease || "ไม่มี";
     document.getElementById("petFoodAllergy").textContent = pet.foodAllergy || "ไม่มี";
+
+    // -----------------------------
+    // เพิ่มการตั้งค่าปุ่ม adopt
+    // -----------------------------
+    const adoptBtn = document.getElementById("adoptBtn");
+    adoptBtn.addEventListener("click", (e) => {
+      e.preventDefault(); // ป้องกัน default link
+      // ส่ง petId เป็น query parameter ไป userform.html
+      // จากเดิม: window.location.href = `userform.html?petId=${pet.petID}`;
+      
+      // แก้ไขเป็น: ใช้ตัวแปร petId ที่รับมาจาก URL (ซึ่งคือ ID ที่ถูกต้อง)
+      window.location.href = `userform.html?petId=${petId}`; 
+    });
+
   } catch (error) {
     console.error("Error:", error);
     alert("เกิดข้อผิดพลาดในการโหลดข้อมูล");

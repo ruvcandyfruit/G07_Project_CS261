@@ -44,7 +44,6 @@
     <!-- adoption form -->
     <form id="adoptionForm" method="post" action="/api/userform/submit" enctype="multipart/form-data">
 
-
         <!--- part 1 --->
         <div class="part">
             <p>Part 1: ข้อมูลของผู้รับเลี้ยง</p>
@@ -64,7 +63,7 @@
             <div id="dobError" class="error"></div>
 
             <label for="phone">เบอร์โทรศัพท์ <span class="required">*</span></label>
-            <input type="tel" id="phone" name="phone" pattern="[0-9]{9,10}" placeholder="ใส่หมายเลข 10 หลัก" required />
+            <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder="ใส่หมายเลข 10 หลัก" required />
             <div id="phoneError" class="error"></div>
 
             <label for="email">อีเมล <span class="required">*</span></label>
@@ -145,6 +144,19 @@
         </div>
     </form>
 </div>
+
+  <!-- pop up + overlay -->
+   <div class="overlay" id="overlay">
+        <div class="popup" id="popup">
+                <img id="close" src="../homepageResources/close.svg" alt="Icon">
+                <h1></h1>
+                <div class="goButton" id="goButton">
+                    <button id="goHome">กลับหน้า Homepage</button>
+                    <button id="goStatus">ดูสถานะของคำขอ</button>
+                </div>
+        </div>
+   </div>
+
 </main>
     <!-- footer part -->
 <footer>

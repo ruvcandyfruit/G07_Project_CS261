@@ -131,6 +131,12 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
+        // เพิ่มการตรวจสอบรูปแบบอีเมล
+        if (!/^\S+@\S+\.\S+$/.test(email)) {
+            alert("⚠️ Please enter a valid email format.");
+            return;
+        }
+
         if (password !== confirmPassword) {
             alert("Passwords do not match!");
             return;

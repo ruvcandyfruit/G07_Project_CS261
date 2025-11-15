@@ -26,6 +26,8 @@ public class FormService {
         if(req.getStatus().equals(newStatus)) return req;
         req.setStatus(newStatus);
         req.setApprovedBy(adminId);
+        req.setResultEstimate(LocalDateTime.now());
+        req.setMeetDate(req.getResultEstimate().plusWeeks(2));
         formRepository.save(req);
 
         // if approved, mark pet as ADOPTED

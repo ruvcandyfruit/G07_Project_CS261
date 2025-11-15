@@ -1,9 +1,15 @@
 package com.example.demo.controller;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,6 +31,7 @@ import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.FormService;
 import com.example.demo.dto.UserFormDTO;
+import com.example.demo.dto.UserFormOutputDTO;
 import com.example.demo.model.Form;
 import com.example.demo.model.Pet;
 import com.example.demo.repository.FormRepository;
@@ -107,8 +114,8 @@ public ResponseEntity<?> getAllUsers() {
         java.util.List<Form> users = formRepository.findAll();
 
         // map entity -> DTO
-        java.util.List<UserFormDTO> userDTOs = users.stream().map(user -> {
-            UserFormDTO dto = new UserFormDTO();
+        java.util.List<UserFormOutputDTO> userDTOs = users.stream().map(user -> {
+            UserFormOutputDTO dto = new UserFormOutputDTO();
             dto.setFirstName(user.getFirstName());
             dto.setLastName(user.getLastName());
             dto.setDob(user.getDob());
@@ -122,6 +129,26 @@ public ResponseEntity<?> getAllUsers() {
             dto.setTrueInfo(user.getTrueInfo());
             dto.setAcceptRight(user.getAcceptRight());
             dto.setHomeVisits(user.getHomeVisits());
+            dto.setStatus(user.getStatus());
+            dto.setPetId(user.getPet().getPetID()); 
+            dto.setUserId(user.getUser().getId());
+            dto.setResultEstimate(user.getResultEstimate());
+            dto.setMeetDate(user.getMeetDate());
+            
+            String identityDocPath = user.getIdentityDoc();
+            if (identityDocPath != null && !identityDocPath.isEmpty()) {
+                // ใช้ Paths.get().getFileName().toString() เพื่อดึงแค่ชื่อไฟล์
+                dto.setIdentityDoc(Paths.get(identityDocPath).getFileName().toString()); 
+            } else {
+                dto.setIdentityDoc("-");
+            }
+
+            String residenceDocPath = user.getResidenceDoc();
+            if (residenceDocPath != null && !residenceDocPath.isEmpty()) {
+                dto.setResidenceDoc(Paths.get(residenceDocPath).getFileName().toString());
+            } else {
+                dto.setResidenceDoc("-");
+            }
             return dto;
         }).toList();
 
@@ -130,6 +157,35 @@ public ResponseEntity<?> getAllUsers() {
         return ResponseEntity.status(500).body("Error fetching users: " + e.getMessage());
     }
 }
+@GetMapping("/download/{filename}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
+        try {
+            // 1. สร้าง Path ไปยังไฟล์จริง (รวมกับ uploadDir)
+            Path filePath = Paths.get(uploadDir).resolve(filename).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+
+            // 2. ตรวจสอบว่าไฟล์มีอยู่และสามารถอ่านได้
+            if (resource.exists() && resource.isReadable()) {
+                // ส่งไฟล์กลับไป
+                String contentType = "application/octet-stream"; // ประเภทไฟล์ทั่วไป (binary stream)
+                
+                return ResponseEntity.ok()
+                        .contentType(MediaType.parseMediaType(contentType))
+                        // กำหนด Header เพื่อบังคับให้ Browser ดาวน์โหลดไฟล์ (attachment)
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                        .body(resource);
+            } else {
+                // หากไม่พบไฟล์
+                return ResponseEntity.notFound().build();
+            }
+        } catch (MalformedURLException e) {
+            // กรณีที่ URL ของไฟล์ไม่ถูกต้อง
+            return ResponseEntity.badRequest().build();
+        } catch (Exception e) {
+            // ข้อผิดพลาดอื่นๆ
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 
     @GetMapping("/pending")
     public ResponseEntity<Form> getPending(@RequestHeader("X-USER-ID") Long userId,@PathVariable Long id, @RequestBody StatusPayload payload) {

@@ -14,6 +14,8 @@
     --background-light: #f9f9f9;
     --background-main: #E5EEFF;
     --button-yellow: #ffd102;
+    --box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.1); 
+    --linear-gradient: linear-gradient(74.49deg, #F840D0 -67.13%, #53DDFF 46.94%, #53FA9C 184.38%);
 }
 
 /*----- header -----*/
@@ -21,8 +23,10 @@ header {
     width: 100%;
     height: 100px;
     display: flex;
+    padding: 30px 50px 30px 50px;
     background-color: #E5EEFF;
 }
+
 /*----- Navigation bar -----*/
 .navbar {
     width: 100%;
@@ -39,71 +43,211 @@ header {
 }
 
 /*----- Menu -----*/
-.nav-links {
-    list-style: none;
+.nav-button {
     display: flex;
-    margin: 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    width: 100%;
+    list-style: none;
+}
+
+.nav-links {
+    justify-content: end;
+    width: 100%;
+    gap: 20px;
+}
+
+.nav-account {
+    gap: 20px;
+    justify-content: end;
+    width: max-content;
+}
+
+.nav-links,
+.nav-account {
+    display: flex;
+    gap: 12px;
+    list-style: none;
+    margin: 0;
     padding: 0;
     text-align: center;
     gap: 1rem;
 }
 
-.nav-links a {
+.nav-button a {
     text-decoration: none;
-    color: #222;
-    padding: 0.9rem;
+    color: var(--button-black);
+    padding: 10px 30px 10px 30px;
+    gap: 10px;
     border-radius: 50px;
     transition: background 0.2s;
     font-family: 'Manrope', sans-serif;
     font-size: 0.9rem;
+    white-space: nowrap;
 }
 
 .nav-links a:hover,
 .nav-links a.active {
-  background-color: #FFFFFF;
+    background-color: #FFFFFF;
+    box-shadow: var(--box-shadow);
+}
+
+.nav-links a.active {
+    font-weight: 600;
+}
+
+#login-butt a {
+    background: var(--linear-gradient);
+    color: white;
+    box-shadow: var(--box-shadow);
+}
+
+#register-butt a {
+    background-color: #FFFFFF;
+    box-shadow: var(--box-shadow);
+}
+
+#login-butt a:hover, 
+#register-butt a:hover {
+    box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.25);
 }
 
 .hamburger {
-  display: none; /*ซ่อนไว้ก่อน */
-  font-size: 1.8rem;
-  cursor: pointer;
+    display: none;
+    font-size: 1.8rem;
+    cursor: pointer;
 }
 
+/* สำหรับหน้าจอ 600px - 768px */
+@media (max-width: 900px) {
+    header {
+        padding: 0 20px; /* ลด padding */
+    }
+    
+    .navbar {
+        margin: 0 10px; /* ลด margin */
+    }
+    
+    .nav-button a {
+        padding: 8px 20px; /* ลดขนาด padding ของปุ่ม */
+        font-size: 0.85rem; /* ลดขนาดตัวอักษร */
+    }
+    
+    .nav-links,
+    .nav-account {
+        gap: 0.5rem; /* ลดช่องว่างระหว่างปุ่ม */
+    }
+    
+    .logo img {
+        width: 50px; /* ลดขนาด logo */
+        height: 50px;
+    }
+}
 
-/*เมื่อหน้าจอแคบกว่า 768px */
+/* Responsive Design for 768px and below */
 @media (max-width: 768px) {
+    /* Header แบบ 2 ชั้น */
+    header.header-restructured {
+        height: auto;
+        padding: 0;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    /* ชั้นบน: Top Bar */
+    .top-bar {
+        width: 100%;
+        padding: 0.75rem 1.5rem;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .top-bar .nav-account {
+        gap: 0.75rem;
+        width: auto;
+        padding-top: 10px;
+    }
+
+    .top-bar #login-butt a,
+    .top-bar #register-butt a {
+        text-decoration: none;
+        padding: 10px 30px 10px 30px;
+        font-size: 0.85rem;
+        border-radius: 50px;
+        color: var(--button-black);
+    }
+
+    .top-bar #login-butt a {
+        color: white;
+    }
+
+    /* ชั้นล่าง: Navbar */
+    .header-restructured .navbar {
+        position: relative;
+        padding: 10px 30px;
+        margin: 0;
+        height: auto;
+    }
+
+    /* ซ่อน nav-account ในตำแหน่งเดิม */
+    .header-restructured .nav-button .nav-account {
+        display: none;
+    }
+
+    /* สไตล์เมนู dropdown */
     .nav-links {
         display: none;
         flex-direction: column;
         position: absolute;
-        z-index: 1;
+        z-index: 1000;
         top: 60px;
-        right: 20px;
+        right: 40px;
         background: white;
         padding: 1rem;
         border-radius: 10px;
         box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        width: max-content;
+        gap: 0;
     }
 
-    .nav-links a:hover, .nav-links a.active {
+    .nav-links a:hover, 
+    .nav-links a.active {
         background: none;
+        box-shadow: none;
     }
 
     .nav-links li {
         padding: 0.5rem;
+        border-radius: 8px;
     }
 
     .nav-links li.active {
         background: #E5EEFF;
     }
 
-
-    .nav-links.active {
-        display: flex; /*แสดงเมื่อถูกคลิก */
+    .nav-links li:hover {
+        background: #E5EEFF;
     }
+
+    .nav-links a {
+        padding: 0.5rem 1rem;
+    }
+
+    /* เมื่อเปิดเมนู */
+    .nav-links.active {
+        display: flex;
+    }
+
+    /* แสดง Hamburger */
     .hamburger {
-        display: block; /*โชว์ไอคอน 3 ขีด */
-        margin: auto;
+        display: flex;
+        justify-content: end;
+    }
+
+    .logo img {
+        width: 50px;
+        height: 50px;
     }
 }
 

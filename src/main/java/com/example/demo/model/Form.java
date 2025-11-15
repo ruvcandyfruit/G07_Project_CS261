@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -65,7 +66,7 @@ public class Form {
     private Boolean trueInfo;
 
     @Column(name = "accept_right", nullable = false)
-    private Boolean acceptRight;
+    private Boolean acceptRight;    
 
     @Column(name = "home_visits", nullable = false)
     private Boolean homeVisits;
@@ -83,4 +84,10 @@ public class Form {
 
     @Column(name = "approved_by")
     private Long approvedBy;  // admin ID
+
+    @Column(name = "result_estimate" , nullable = true)
+    private LocalDateTime resultEstimate = null;
+
+    @Column(name = "meet_date", nullable = true)  
+    private LocalDateTime meetDate = null;      
 }
