@@ -1,5 +1,36 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    // [!! วาง 2 บรรทัดนี้เพื่อ Test !!]
+    console.log('สคริปต์ add-edit-pet.js เริ่มทำงาน');
+    console.log('กำลังหา breadcrumbHeader...', document.getElementById('breadcrumbHeader'));
+    // [!! สิ้นสุดส่วน Test !!]
+
+    // [!! เพิ่มฟังก์ชันนี้เข้าไป !!]
+    function createBreadcrumb() {
+        const header = document.getElementById('breadcrumbHeader');
+        if (!header) return; // ออกถ้าหา header ไม่เจอ
+
+        // 1. อ่าน mode จาก URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const mode = urlParams.get('mode'); 
+
+        // 2. กำหนดข้อความ
+        let currentPageTitle = 'Add Pet'; // ค่าเริ่มต้น
+        if (mode === 'edit') {
+            currentPageTitle = 'Edit Pet';
+        }
+
+        // 3. สร้าง HTML ที่มี Link กลับไปหน้า All Pet
+        header.innerHTML = `
+            <a href="allpet.html" class="breadcrumb-link">ALL PET</a>
+            <span class="breadcrumb-separator">&gt;</span>
+            <h2 class="breadcrumb-current">${currentPageTitle}</h2>
+        `;
+    }
+
+    // [!! 1. เรียกใช้ฟังก์ชัน breadcrumb ที่เราสร้างไว้ !!]
+    createBreadcrumb(); 
+
     // --- 0. อ่านค่าจาก URL ---
     const urlParams = new URLSearchParams(window.location.search);
     const mode = urlParams.get('mode') || 'add'; // ถ้าไม่บอก mode ให้ถือว่าเป็น 'add'
@@ -247,11 +278,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- 9. [ใหม่] Logic ตอนเริ่มโหลดหน้า ---
+
+    // [!! 2. ถ้าเป็นโหมด edit ให้โหลดข้อมูลเหมือนเดิม !!]
     if (mode === 'edit') {
-        formModeTitle.textContent = 'Edit Pet'; // เปลี่ยนหัวข้อ
         loadPetDataForEdit(petIdToEdit); // โหลดข้อมูลมาเติมฟอร์ม
-    } else {
-        formModeTitle.textContent = 'Add Pet'; // ตั้งค่าหัวข้อ (default)
-        // ไม่ต้องทำอะไร ฟอร์มจะว่างเปล่ารอรับข้อมูลใหม่
     }
+    
+    // (เราลบ formModeTitle.textContent ทิ้งไปได้เลย)
 });

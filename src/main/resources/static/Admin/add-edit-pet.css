@@ -23,30 +23,42 @@ iconify-icon {
 }
 
 /* Header */
+/* CSS สำหรับ Breadcrumb (ใน add-edit-pet.css) */
 .header {
-    margin-bottom: 20px;
-    border-bottom: 1px solid #000;
-    padding-bottom: 10px;
     display: flex;
-    width: 100%;
-    max-width: 400px;
     align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
 }
 
-.header h1,h2 {
+/* ทำให้ ALL PET เป็น Link กดได้ */
+a.breadcrumb-link {
     font-size: 24px;
     font-weight: 600;
-    align-items: center;
-    align-content: center;
-    margin: 0 10px;
+    color: #333; /* สีเดียวกับ H1 */
+    text-decoration: none;
+    transition: color 0.2s;
 }
 
-.header h2 {
-    font-weight: 500;
+a.breadcrumb-link:hover {
+    color: #007bff; /* สีฟ้าตอน hover */
 }
 
-.header span {
-    font-weight: 400;
+/* ตัวคั่น > */
+.breadcrumb-separator {
+    font-size: 18px;
+    color: #6c757d;
+    font-weight: 600;
+}
+
+/* หัวข้อปัจจุบัน (Add Pet / Edit Pet) */
+h2.breadcrumb-current {
+    font-size: 24px;
+    font-weight: 400; /* ตัวจางกว่า */
+    color: #333;
+    margin: 0;
 }
 
 /* Card Common Styles */
