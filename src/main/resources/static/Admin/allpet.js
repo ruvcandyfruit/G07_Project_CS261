@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- 1. จำลองฐานข้อมูล ---
-    // (ในโลกจริง ข้อมูลนี้จะมาจาก fetch('/api/pets'))
     const mockPetData = [
         { id: '0001', name: 'พยัคฆ์เสี้ยววาน', imageUrl: 'https://tse4.mm.bing.net/th/id/OIP.HnHSF9J0wkbZWn1unKAOxwHaEJ?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3', type: 'Cat', breed: 'Persian', status: 'No Request' },
         { id: '0002', name: 'น้องเหมียว', imageUrl: 'https://tse4.mm.bing.net/th/id/OIP.HnHSF9J0wkbZWn1unKAOxwHaEJ?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3', type: 'Cat', breed: 'Persian', status: 'Pending' },
@@ -52,11 +51,24 @@ document.addEventListener('DOMContentLoaded', () => {
             // สร้าง CSS class สำหรับ status
             const statusClass = pet.status.toLowerCase().replace(' ', '-'); // 'No Request' -> 'no-request'
             
-            // สร้างปุ่ม View Request ให้เปลี่ยนสีตาม Status
-            let viewRequestClass = '';
+            // [!! นี่คือส่วนที่แก้ไข !!]
+            // สร้าง HTML ของปุ่ม "View Request" ตามสถานะ
+            let viewRequestButtonHTML = '';
             if (pet.status === 'Pending') {
-                viewRequestClass = 'pending';
+                // ถ้า Pending: สร้างเป็น Link ที่กดได้ และมี class 'pending' (สีแดง)
+                viewRequestButtonHTML = `
+                    <a href="requests.html?id=${pet.id}">
+                        <button class="action-button view-request-btn pending">View Request</button>
+                    </a>
+                `;
+            } else {
+                // ถ้าสถานะอื่น: สร้างเป็นปุ่มที่ "กดไม่ได้" (disabled)
+                viewRequestButtonHTML = `
+                    <button class="action-button view-request-btn" disabled>View Request</button>
+                `;
             }
+            // [!! จบส่วนที่แก้ไข !!]
+
 
             tr.innerHTML = `
                 <td>${pet.id}</td>
@@ -70,11 +82,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${pet.breed}</td>
                 <td><span class="status-tag status-${statusClass}">${pet.status}</span></td>
                 <td class="actions-cell">
-                    <button class="action-button view-request-btn ${viewRequestClass}">View Request</button>
+                    ${viewRequestButtonHTML}
                     <a href="add-edit-pet.html?mode=edit&id=${pet.id}">
-                        <button class="action-button edit-btn">Edit</button>
+                        <button class="action-button edit-btn">
+                            <i class="fa-solid fa-pencil"></i> Edit
+                        </button>
                     </a>
-                    <button class="action-button delete-btn" data-id="${pet.id}">Delete</button>
+                    <button class="action-button delete-btn" data-id="${pet.id}">
+                        <i class="fa-solid fa-trash-can"></i> Delete
+                    </button>
                 </td>
             `;
             tableBody.appendChild(tr);

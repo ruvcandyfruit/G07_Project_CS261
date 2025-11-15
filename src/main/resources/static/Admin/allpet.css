@@ -1,3 +1,4 @@
+
 /* --- Variables & Global Styles --- */
 :root {
     --bg-color: #f8f9fe;
@@ -246,8 +247,8 @@ body {
 }
 .actions-cell {
     display: flex;
-    justify-content: flex-end;
-    gap: 8px;
+    justify-content: space-between;
+    gap: 1%;
 }
 
 .action-button {
@@ -264,13 +265,13 @@ body {
 }
 
 .view-request-btn {
-    background-color: #e2e8f0;
-    color: #4a5568;
+    background-color: var(--status-grey-bg);
+    color: var(--status-grey-text);
 }
 /* Style พิเศษสำหรับ 'Pending' */
 .view-request-btn.pending {
-    background-color: var(--status-red-bg);
-    color: var(--status-red-text);
+    background-color: var(--status-yellow-bg);
+    color: var(--status-yellow-text);
 }
 
 /* ปุ่มที่อยู่ใน Link (Edit) */
@@ -282,6 +283,7 @@ a { text-decoration: none; }
 .edit-btn {
     background-color: #f1f1f1;
     color: var(--text-main);
+    height: 100%;
 }
 .delete-btn {
     background-color: var(--status-red-bg);
