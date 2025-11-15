@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="th-en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS เฉพาะหน้านี้ -->
+    <link rel="stylesheet" href="status.css">
+    <!-- CSS รวมโปรเจกต์ (เหมือน petdetail.html) -->
+    <link rel="stylesheet" href="../all.css">
+    
+    <link rel="icon" href="../homepageResources/icon.png" type="image/x-icon">
+    <title>Adoption Status | Pet Adoption System</title>
+</head>
+<body class="status-page">
+
+    <!-- navigation bar (copy มาจาก petdetail แล้วปรับ active) -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="../homepageResources/icon.png" alt="Logo">
+            </div>
+
+            <nav class="nav-button">
+    <ul class="nav-links">
+        <li><a href="../index.html">Homepage</a></li>
+        <li><a href="petlisting.html">Pet Listing</a></li>
+        <li class="active"><a href="status.html" class="active">Adoption Status</a></li>
+        <li><a href="contact.html">About/Contact Us</a></li>
+    </ul>
+
+    <ul class="nav-account">
+        <!-- ตรงนี้เคยมีปุ่ม login/register เราลบออก -->
+        <!-- ใส่ icon profile แทน -->
+        <li>
+            <img src="../homepageResources/profile.png" class="user-icon" alt="user">
+        </li>
+    </ul>
+</nav>
+
+        </nav>
+
+        <div class="hamburger">
+            ☰
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT (ใช้ fullwidth-section + container เหมือน petdetail) -->
+    <div class="fullwidth-section">
+      <div class="container status-page">
+
+        <!-- ชื่อ section เล็ก ๆ -->
+        <div class="status-title">
+            <hr>
+            <h1>Adoption Status</h1>
+            <hr>
+        </div>
+
+        <!-- แถว Pet + User -->
+        <section class="user-pet-row">
+            <!-- Pet card -->
+            <div class="card card-pet">
+                <div class="card-avatar">
+                    <!-- รูปน้อง (จะเปลี่ยนจาก JS ก็ได้) -->
+                    <img id="petImage" src="../images/sample-pet.jpg" alt="Pet avatar">
+                </div>
+                <div class="card-body">
+                    <p class="card-label">PetName</p>
+                    <p class="card-value" id="pet-name">Lucky</p>
+                </div>
+            </div>
+
+            <!-- User card -->
+            <div class="card card-user">
+              <div class="card-avatar">
+              <img id="userAvatar" class="user-avatar-img" src="../images/default-user.png" alt="User avatar">
+              </div>
+
+              <div class="card-body">
+              <p class="card-label">UserName</p>
+              <p class="card-value" id="user-username">User</p>
+
+              <p class="card-label">Email</p>
+              <p class="card-value" id="user-email">example@gmail.com</p>
+            </div>
+
+            <div class="card-actions">
+               <button id="edit-form-btn" class="btn btn-outline-sm">แก้ไข</button>
+            </div>
+      </div>
+
+        </section>
+
+        <!-- STATUS TIMELINE -->
+        <section class="status-section">
+            <div class="status-line"></div>
+
+            <div id="status-steps" class="status-steps">
+                <div class="status-step" data-key="request">
+                    <div class="status-circle">
+                        <div class="circle-inner"></div>
+                        <span class="circle-icon">✓</span>
+                    </div>
+                    <p class="status-label">ส่งคำขอ</p>
+                </div>
+
+                <div class="status-step" data-key="approval">
+                    <div class="status-circle">
+                        <div class="circle-inner"></div>
+                        <span class="circle-icon">✓</span>
+                    </div>
+                    <p class="status-label">อนุมัติคำขอ</p>
+                </div>
+
+                <div class="status-step" data-key="handover">
+                    <div class="status-circle">
+                        <div class="circle-inner"></div>
+                        <span class="circle-icon">✓</span>
+                    </div>
+                    <p class="status-label">ส่งมอบ</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PICKUP BOX -->
+        <section class="pickup-section">
+            <div class="pickup-box">
+                <h3 class="pickup-title">
+                    <span class="pickup-icon">🐾</span>
+                    <span id="pickup-title-text">Pickup</span>
+                </h3>
+                <p id="pickup-message">
+                    คำขอของคุณถูกส่งแล้ว กำลังรอการอนุมัติจากเจ้าหน้าที่
+                </p>
+            </div>
+
+            <div class="pickup-actions">
+                <button id="primary-action-btn" class="btn btn-danger-lg">
+                    ยกเลิกการรับเลี้ยง
+                </button>
+                <button id="back-btn" class="btn btn-outline-lg" style="display:none;">
+                    ย้อนกลับ
+                </button>
+            </div>
+        </section>
+
+
+
+        <!-- DEMO: เลือกสถานะไว้เทสต์ UI (อยากลบภายหลังก็ได้) -->
+        <section class="demo-section">
+            <label for="status-select">Preview สถานะ:</label>
+            <select id="status-select">
+                <option value="pending">1. ส่งคำขอ (pending)</option>
+                <option value="approved">2. อนุมัติคำขอ (รอรับ)</option>
+                <option value="approvalRejected">2. ปฏิเสธคำขอ</option>
+                <option value="completed">3. ส่งมอบสำเร็จ</option>
+                <option value="handoverFailed">3. ส่งมอบไม่สำเร็จ</option>
+            </select>
+        </section>
+
+      </div>
+    </div>
+
+    <!-- footer (copy จาก petdetail) -->
+    <footer>
+        <div class="footer">
+            <div class="about">
+                <div class="logo">
+                    <img src="../homepageResources/icon.png" alt="Logo">
+                </div>
+                <p>Pet Adoption System</p>
+                <p class="location">
+                    เลขที่ 11/1 ชั้น 1 ห้อง 111 อาคารสาทรธานี 1 ถนนสาทรเหนือ<br>
+                    แขวงสีลม เขตบางรัก กรุงเทพมหานคร 10100<br>
+                    Tel : 011-111-1111
+                </p>
+            </div>
+
+            <div class="social-container">
+                <a href="#" class="social-btn">
+                    <img src="../homepageResources/FacebookLogo.png" alt="Facebook icon">
+                    <span>Pet Adoption</span>
+                </a>
+
+                <a href="#" class="social-btn">
+                    <img src="../homepageResources/InstagramLogo.png" alt="Instagram icon">
+                    <span>pet_adoption</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+    <!-- ===== Cancel Modal ===== -->
+    <div id="cancel-modal" class="modal-overlay">
+    <div class="modal-box">
+        <h3 class="modal-title">ยืนยันการยกเลิกคำขอรับเลี้ยง</h3>
+        <p class="modal-text">
+         คุณแน่ใจหรือไม่ว่าต้องการยกเลิกคำขอรับเลี้ยงสัตว์?
+        </p>
+
+    <div class="modal-actions">
+      <button id="cancel-modal-close" class="btn btn-outline-lg">
+        CANCEL
+      </button>
+      <button id="cancel-modal-confirm" class="btn btn-danger-lg">
+        YES
+      </button>
+    </div>
+  </div>
+</div>
+
+    <!-- JS เฉพาะหน้านี้ -->
+    <script src="status.js"></script>
+    <!-- JS รวมของเว็บ (hamburger / เปลี่ยนปุ่ม login ฯลฯ) -->
+    <script src="../all.js"></script>
+</body>
+</html>
