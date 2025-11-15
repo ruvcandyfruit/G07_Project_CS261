@@ -1,87 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Mali&family=Itim&family=Kodchasan&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap');
 
-/* พื้นหลังรวมหน้า status */
+/* Reset พื้นฐาน แค่หน้านี้ (เหมือนหน้า petlist) */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ========== เฉพาะหน้า status ========== */
+
+/* แค่พื้นหลัง+font ของหน้า ไม่ยุ่ง header/footer */
 body.status-page {
     background-color: #f5f5f5;
+    font-family: 'Manrope', 'Itim', sans-serif;
+    color: #333;
 }
 
-/* ---------------- HEADER เฉพาะหน้า status ---------------- */
-
-.status-page header {
-    height: auto !important;             /* ไม่บังคับสูง 100px */
-    padding: 14px 40px !important;       /* บางลง */
-    background-color: #E5EEFF;
-    display: flex;
-    align-items: center;
-}
-
-/* กล่อง navbar ด้านใน */
-.status-page header .navbar {
-    margin: 0 !important;
-    width: 100%;
-    display: flex;
-    align-items: center;
-}
-
-/* logo ซ้าย */
-.status-page header .logo img {
-    width: 52px !important;
-    height: 52px !important;
-}
-
-/* กล่องเมนู + profile */
-.status-page header .nav-button {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;   /* เมนูอยู่กลาง */
-    gap: 40px;
-}
-
-/* เมนู 4 ปุ่มอยู่กลางเป็นก้อนเดียว */
-.status-page header .nav-links {
-    display: flex;
-    gap: 20px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    justify-content: center;
-    width: auto;
-}
-
-/* account / icon ขวาสุด */
-.status-page header .nav-account {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    width: auto;
-}
-
-/* ถ้าอิ้งใช้ user-icon รูปภาพหรือวงกลมเทา ให้สไตล์ประมาณนี้ */
-.status-page header .user-icon-placeholder,
-.status-page header .user-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: #d9dde5;
-    display: inline-block;
-}
-
-/* ไม่ให้ hamburger กินพื้นที่บน desktop */
-.status-page .hamburger {
-    display: none;
-}
-
-/* ---------------- พื้นที่เนื้อหาหลัก ---------------- */
+/* ========== MAIN CONTENT เหมือน style petdetail ========== */
 
 .fullwidth-section {
     width: 100%;
     background-color: #ffffff;
-    padding: 32px 0 40px; /* ลด padding จาก 50px ให้ header+content ไม่สูงเกิน */
+    padding: 50px 0;
 }
 
 .container {
@@ -91,6 +32,7 @@ body.status-page {
 }
 
 /* title ด้านบน "Adoption Status" */
+
 .status-title {
     width: 100%;
     display: flex;
@@ -146,11 +88,12 @@ body.status-page {
     object-fit: cover;
 }
 
-.avatar-circle.big {
-    width: 48px;
-    height: 48px;
+.user-avatar-img {
+    width: 65px;
+    height: 65px;
     border-radius: 50%;
-    background: #d9dde5;
+    object-fit: cover;
+    background: #e0e0e0;
 }
 
 .card-label {
@@ -241,7 +184,7 @@ body.status-page {
     position: absolute;
     font-size: 34px;
     color: #fff;
-    opacity: 0;
+    opacity: 0;  /* JS เป็นคนใส่ ✓ / ✗ */
 }
 
 .status-label {
@@ -264,15 +207,17 @@ body.status-page {
 
 /* rejected = แดง */
 .status-step.rejected .status-circle {
-    background: #ffd7d7;
+    background: #ffe6e6;
+    border-color: #ff6b6b;
 }
 
 .status-step.rejected .circle-inner {
-    background: #ff6b6b;
+    background: #ff8b8b;
 }
 
 .status-step.rejected .circle-icon {
     opacity: 1;
+    color: white;
 }
 
 /* เส้นเขียวเชื่อม step ที่ completed */
@@ -311,9 +256,8 @@ body.status-page {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px; /* ระยะ icon กับข้อความ */
+    gap: 8px;
 }
-
 
 .pickup-icon {
     font-size: 20px;
@@ -322,6 +266,7 @@ body.status-page {
 #pickup-message {
     font-size: 14px;
     color: #555;
+    margin-top: 6px;
 }
 
 .pickup-actions {
@@ -363,7 +308,7 @@ body.status-page {
     transform: translateY(-2px);
 }
 
-/* ---------- แถว demo dropdown ---------- */
+/* ---------- DEMO DROPDOWN ---------- */
 
 .demo-section {
     margin-top: 24px;
@@ -381,68 +326,7 @@ body.status-page {
     font-size: 13px;
 }
 
-/* ---------------- FOOTER เฉพาะหน้า status ---------------- */
-
-.status-page footer {
-    padding: 18px 60px !important;   /* เตี้ยลงจากเดิม */
-    background-color: #E5EEFF;
-}
-
-.status-page footer .footer {
-    gap: 10px !important;
-}
-
-.status-page footer .about p,
-.status-page footer .social-btn span {
-    font-size: 0.9rem !important;
-}
-
-.status-page footer .social-btn img {
-    width: 26px !important;
-    height: 26px !important;
-}
-
-/* ---------- responsive ---------- */
-
-@media (max-width: 768px) {
-    .user-pet-row {
-        flex-direction: column;
-    }
-
-    .status-line {
-        left: 55px;
-        right: 55px;
-    }
-
-    .status-steps {
-        padding: 10px 24px 0;
-    }
-}
-/* ============== */
-/*  REJECTED STEP */
-/* ============== */
-
-.status-step.rejected .status-circle {
-    background: #ffe6e6;
-    border-color: #ff6b6b;
-}
-
-.status-step.rejected .circle-inner {
-    background: #ff8b8b;
-}
-
-.status-step.rejected .circle-icon {
-    color: white;
-    content: "✗";
-}
-.user-avatar-img {
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    object-fit: cover;
-    background: #e0e0e0;
-}
-/* ===== Cancel Modal ===== */
+/* ========== CANCEL MODAL ========== */
 
 .modal-overlay {
   position: fixed;
@@ -489,3 +373,23 @@ body.status-page {
 .modal-actions .btn {
   min-width: 120px;
 }
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 768px) {
+    .user-pet-row {
+        flex-direction: column;
+    }
+
+    .status-line {
+        left: 55px;
+        right: 55px;
+    }
+
+    .status-steps {
+        padding: 10px 24px 0;
+    }
+}
+
+
+

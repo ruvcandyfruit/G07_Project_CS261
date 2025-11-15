@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="status.css">
+<link rel="stylesheet" href="../all.css">
 
-    <!-- CSS เฉพาะหน้านี้ -->
-    <link rel="stylesheet" href="status.css">
-    <!-- CSS รวมโปรเจกต์ (เหมือน petdetail.html) -->
-    <link rel="stylesheet" href="../all.css">
+
     
     <link rel="icon" href="../homepageResources/icon.png" type="image/x-icon">
     <title>Adoption Status | Pet Adoption System</title>
@@ -16,34 +15,28 @@
 
     <!-- navigation bar (copy มาจาก petdetail แล้วปรับ active) -->
     <header>
-        <nav class="navbar">
-            <div class="logo">
-                <img src="../homepageResources/icon.png" alt="Logo">
-            </div>
-
-            <nav class="nav-button">
-    <ul class="nav-links">
-        <li><a href="../index.html">Homepage</a></li>
-        <li><a href="petlisting.html">Pet Listing</a></li>
-        <li class="active"><a href="status.html" class="active">Adoption Status</a></li>
-        <li><a href="contact.html">About/Contact Us</a></li>
-    </ul>
-
-    <ul class="nav-account">
-        <!-- ตรงนี้เคยมีปุ่ม login/register เราลบออก -->
-        <!-- ใส่ icon profile แทน -->
-        <li>
-            <img src="../homepageResources/profile.png" class="user-icon" alt="user">
-        </li>
-    </ul>
-</nav>
-
-        </nav>
-
-        <div class="hamburger">
-            ☰
+    <nav class="navbar">
+        <div class="logo">
+            <img src="../homepageResources/icon.png" alt="Logo">
         </div>
-    </header>
+
+        <!-- เมนูเหมือน petlist แต่เพิ่ม Adoption Status และให้หน้านี้ active -->
+        <ul class="nav-links">
+            <li><a href="../index.html">Homepage</a></li>
+            <li><a href="petlisting.html">Pet Listing</a></li>
+            <li class="active"><a href="status.html" class="active">Adoption Status</a></li>
+            <li><a href="contact.html">About/Contact Us</a></li>
+        </ul> 
+
+        <!-- จะใช้ logout แบบหน้า petlist -->
+        <button class="logout-btn" id="logout-button">Log out</button>
+    </nav>
+
+    <div class="hamburger">
+        ☰
+    </div>
+</header>
+
 
     <!-- MAIN CONTENT (ใช้ fullwidth-section + container เหมือน petdetail) -->
     <div class="fullwidth-section">
@@ -168,12 +161,9 @@
                 <div class="logo">
                     <img src="../homepageResources/icon.png" alt="Logo">
                 </div>
+            
                 <p>Pet Adoption System</p>
-                <p class="location">
-                    เลขที่ 11/1 ชั้น 1 ห้อง 111 อาคารสาทรธานี 1 ถนนสาทรเหนือ<br>
-                    แขวงสีลม เขตบางรัก กรุงเทพมหานคร 10100<br>
-                    Tel : 011-111-1111
-                </p>
+                <p class="location">เลขที่ 11/1 ชั้น 1 ห้อง 111 อาคารสาทรธานี 1 ถนนสาทรเหนือ<br>แขวงสีลม เขตบางรัก กรุงเทพมหานคร 10100<br>Tel : 011-111-1111</p>
             </div>
 
             <div class="social-container">
@@ -186,7 +176,7 @@
                     <img src="../homepageResources/InstagramLogo.png" alt="Instagram icon">
                     <span>pet_adoption</span>
                 </a>
-            </div>
+            </div>                
         </div>
     </footer>
     <!-- ===== Cancel Modal ===== -->
