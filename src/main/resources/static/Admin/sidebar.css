@@ -18,6 +18,7 @@
     --border-radius: 15px;
     --transition: all 0.3s ease;
     --box-shadow: 0px 10px 60px 0px rgba(0, 0, 0, 0.1);
+    --sidebar-width: 320px;
 }
 
 * {
@@ -35,16 +36,30 @@ body {
 .container {
     display: flex;
     height: 100vh;
+    width: 100%;
+}
+
+.layout {
+    display: flex;
+    width: 100%;
+    height: 100vh;
 }
 
 /*--- Sidebar --- */
 .sidebar {
-    width: 200px;
-    background: var(--bg-light);
-    padding: 30px 0;
+    position: fixed;   /* ตรึงกับ viewport */
+    top: 0;
+    left: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    padding: 50px 0;
+    white-space: nowrap;  /* hug content */
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
+    background: var(--bg-light);
+    z-index: 1000;  /* อยู่เหนือ main */
 }
 
 /* logo */
@@ -52,13 +67,12 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 40px;
     width: max-content;
 }
 
 .logo-icon {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     background: none;
     display: flex;
     align-items: center;
@@ -68,12 +82,14 @@ body {
 .logo-text h2 {
     font-size: 16px;
     color: #333;
+    display: block;
 }
 
 /* menu */
 .nav-menu {
-    flex: 1;
     width: 100%;
+    height: 700px;
+    padding: 50px 0;
 }
 
 .nav-menu a {
@@ -85,7 +101,7 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 12px 16px;
+    padding: 15px 60px;
     cursor: pointer;
     transition: all 0.3s;
     background: var(--bg-light);
@@ -142,51 +158,55 @@ body {
     display: block;
 }
 
+.mini-nav-item {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-item span{
+    display: block;
+}
+
+
 .logout {
     margin-top: auto;
     width: 100%;
-    text-decoration: none;
-    color: var(--text-color);
 }
 
-/* Main Content */
-.main-content {
+/*ส่วนของ main สำหรับทำงานคู่กับ sidebar*/
+/* Main จะถูกดันไปทางขวาโดยอัตโนมัติ */
+/* main ดันขวาให้เหลือพื้นที่ sidebar */
+main {
+    margin-left: var(--sidebar-width);
     flex: 1;
-    background: #e8eeff;
-    padding: 40px;
-    overflow-y: auto;
+    padding: 50px 2%;
+    height: fit-content;
 }
 
-.dashboard-header {
-    font-size: 24px;
-    font-weight: 600;
-    width: 50%;
-    margin-bottom: 30px;
-    padding-bottom: 15px;
-    color: var(--text-color);
-    border-bottom: 2px solid var(--text-color);
+@media (max-width: 1024px) {
+    :root {
+        --sidebar-width: 240px; /* hug content */
+    }
+
+    .sidebar {
+        width: var(--sidebar-width);
+    }
+
+    main {
+        margin-left: var(--sidebar-width);
+    }
 }
 
-/* ถ้าใช้ Grid content */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    grid-auto-rows: auto;
-    /* ✅ ให้ row ปรับความสูงเอง */
-    gap: 20px;
-}
-        /* ?
-        /
-    เลือกว่าจะใช้หรือไม่ใช้ Grid Layout สำหรับหน้านี้
-        /
-        * */
+@media (max-width: 768px) {
+    :root {
+        --sidebar-width: 64px; /* hug content */
+    }
+    .nav-item span,
+    .logo-text {
+        display: none;
+    }
 
-/* ล้าง Grid Layout เดิมที่ไม่ใช้แล้วสำหรับหน้านี้ */
-.grid {
-    display: block;
-    /* เปลี่ยนจาก grid เป็น block เพื่อใช้ตารางแทน */
-    gap: 0;
-    padding-top: 20px;
+    .nav-item {
+        padding: 15px 20px;
+    }
 }
-

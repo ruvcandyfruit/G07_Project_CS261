@@ -10,43 +10,45 @@
 </head>
 
 <body>
-    <div class="container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="logo">
-                <img class="logo-icon" src="../homepageResources/pet-house.png" alt="icon">
-                <div class="logo-text">
-                    <h2>Pet</h2>
-                    <h2>Adoption</h2>
-                </div>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">
+            <img class="logo-icon" src="../homepageResources/pet-house.png" alt="icon">
+            <div class="logo-text">
+                <h2>Pet</h2>
+                <h2>Adoption</h2>
             </div>
+        </div>
 
-            <nav class="nav-menu">
-                <a href="dashboard.html" class="nav-item" id="nav-dashboard">
+        <nav class="nav-menu">
+            <div class="nav-item active" id="nav-dashboard">
+                    <div class="mini-nav-item">
                     <img src="image-resources/dashboard-icon.svg" alt="Dashboard">
                     <img class="icon-active" src="image-resources/dashboard-icon-gradient.svg" alt="Dashboard">
                     <span>Dashboard</span>
-                </a>
-
-                <a href="allpet.html" class="nav-item active" id="nav-all-pet">
+                </div>
+            </div>
+            <div class="nav-item" id="nav-all-pet">
+                <div class="mini-nav-item">
                     <img src="image-resources/allpet-icon.svg" alt="All pet">
                     <img class="icon-active" src="image-resources/allpet-icon-gradient.svg" alt="All pet">
                     <span>All Pet</span>
-                </a>
-
-                <a href="schedule.html" class="nav-item" id="nav-schedule">
+                </div>
+            </div>
+            <div class="nav-item" id="nav-schedule">
+                <div class="mini-nav-item">
                     <img src="image-resources/schedule-icon.svg" alt="Schedule">
                     <img class="icon-active" src="image-resources/schedule-icon-gradient.svg" alt="Schedule">
                     <span>Schedule</span>
-                </a>
-            </nav>
+                </div>
+            </div>
+        </nav>
 
-            <!-- logout -->
-            <a href="#" class="nav-item logout" id="nav-logout">
-                <img src="image-resources/logout-icon.svg" alt="Log out">
-                <span>Log out</span>
-            </a>
-        </aside>
+        <div class="nav-item logout" id="nav-logout">
+            <img src="image-resources/logout-icon.svg" alt="Log out">
+            <span>Log out</span>
+        </div>
+    </aside>
 
         <main class="main-content">
             <div class="header-controls">
