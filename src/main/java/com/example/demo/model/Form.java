@@ -75,4 +75,7 @@ public class Form {
     @Column(name = "pet_id", nullable = false)
     private String petId;
 
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
+
 }

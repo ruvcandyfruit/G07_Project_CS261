@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 public class UserFormDTO {
-    
+    private Long userId;
     private String petId;
     private String firstName;
     private String lastName;

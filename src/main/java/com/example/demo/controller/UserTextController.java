@@ -73,6 +73,7 @@ public class UserTextController {
         user.setResidenceDoc(residencePath);
 
         user.setPetId(formDTO.getPetId());
+        user.setUserId(formDTO.getUserId());
         user.setStatus("PENDING");
 
         user1Repository.save(user);
@@ -106,7 +107,9 @@ public ResponseEntity<?> getAllUsers() {
             dto.setAcceptRight(user.getAcceptRight());
             dto.setHomeVisits(user.getHomeVisits());
             dto.setStatus(user.getStatus());
-            dto.setPetId(user.getPetId()); // กำหนดค่า petId เป็น null ชั่วคราว
+            dto.setPetId(user.getPetId()); 
+            dto.setUserId(user.getUserId());
+            
             String identityDocPath = user.getIdentityDoc();
             if (identityDocPath != null && !identityDocPath.isEmpty()) {
                 // ใช้ Paths.get().getFileName().toString() เพื่อดึงแค่ชื่อไฟล์

@@ -7,8 +7,9 @@ import lombok.Data;
 
 @Data
 public class UserFormOutputDTO {
+    private Long userId;
     private String petId;
-     private String firstName;
+    private String firstName;
     private String lastName;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dob;

@@ -51,6 +51,7 @@
         <table id="userTable">
             <thead>
                 <tr>
+                    <th>UserID</th>
                     <th>PetID</th>
                     <th>First Name</th>
                     <th>Last Name</th>
@@ -93,6 +94,7 @@
                     // สร้าง cell สำหรับแต่ละ field
                     // หมายเหตุ: ในโค้ดเดิม user.status อยู่ก่อน identityDoc/residenceDoc
                     tr.innerHTML = `
+                        <td>${user.userId || ''}</td>
                         <td>${user.petId || ''}</td>
                         <td>${user.firstName || ''}</td>
                         <td>${user.lastName || ''}</td>

@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
     const petId = params.get("petId");
 
-    /* (คอมเมนต์ส่วนตรวจสอบ user/login ไว้ก่อน)
+    // (คอมเมนต์ส่วนตรวจสอบ user/login ไว้ก่อน)
     if (!user || !user.id) {
         alert("กรุณาเข้าสู่ระบบก่อนกรอกฟอร์ม");
         window.location.href = "login.html";
@@ -16,8 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const userIdField = document.getElementById("userId");
     if (userIdField) userIdField.value = user.id;
-    */
-
+    
     if (petId) {
         const petIdField = document.getElementById("petID");
         if (petIdField) petIdField.value = petId;
