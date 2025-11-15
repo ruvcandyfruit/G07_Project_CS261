@@ -85,8 +85,11 @@ public class Form {
     @Column(name = "approved_by")
     private Long approvedBy;  // admin ID
 
-    @Column(name = "result_estimate" , nullable = true)
-    private LocalDateTime resultEstimate = null;
+    @Column (name = "recieveType")
+    private String recieveType;
+    
+    @Column(name = "approved_at" , nullable = true)
+    private LocalDateTime approvedAt = null;
 
     @Column(name = "meet_date", nullable = true)  
     private LocalDateTime meetDate = null;      
