@@ -219,10 +219,10 @@ public ResponseEntity<?> getAllUsers() {
             .toList();
     }
 
-    @GetMapping("/admin/pet/{petID}/requests")
-    public List<Form> getRequestsForPet(@PathVariable Long petId) {
-        return formRepository.findByPetId(petId);
-    }
+   @GetMapping("/admin/pet/{petId}/requests")
+    public List<Form> getRequestsForPet(@PathVariable("petId") Long petId) {    
+    return formRepository.findByPetId(petId);
+}
 
     
     // simple payload class

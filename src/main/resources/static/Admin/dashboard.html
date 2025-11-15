@@ -1,173 +1,90 @@
+<!-- แก้ได้เลยยย เขียนไว้ให้เห็นภาพเฉยๆ แก้เถอะ จากนีนี่ <3 -->
 <!DOCTYPE html>
-<html lang="th-en">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="homepageResources/icon.png" type="image/x-icon">
-    <link rel="stylesheet" href="dashboard.css">
-    <title>Pet Adoption Dashboard</title>
+    <title>Adoption Requests - Admin</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f8f8f8;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        /* PET LIST */
+        .pet-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .pet-card button {
+            background: #007bff;
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* REQUEST LIST */
+        .request-card {
+            background: #ffffff;
+            padding: 12px;
+            border-left: 4px solid #333;
+            border-radius: 6px;
+            margin-bottom: 12px;
+        }
+
+        .approve-btn {
+            background: #27ae60;
+            color: white;
+            padding: 6px 10px;
+            margin-right: 8px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .reject-btn {
+            background: #e74c3c;
+            color: white;
+            padding: 6px 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #requestList {
+            margin-top: 25px;
+        }
+
+    </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="logo">
-                <img class="logo-icon" src="../homepageResources/pet-house.png" alt="icon">
-                <div class="logo-text">
-                    <h2>Pet</h2>
-                    <h2>Adoption</h2>
-                </div>
-            </div>
 
-            <nav class="nav-menu">
-                <div class="nav-item active" id="nav-dashboard">
-                    <img src="image-resources/dashboard-icon.svg" alt="Dashboard">
-                    <img class="icon-active" src="image-resources/dashboard-icon-gradient.svg" alt="Dashboard">
-                    <span>Dashboard</span>
-                </div>
-                <div class="nav-item" id="nav-all-pet">
-                    <img src="image-resources/allpet-icon.svg" alt="All pet">
-                    <img class="icon-active" src="image-resources/allpet-icon-gradient.svg" alt="All pet">
-                   <span>All Pet</span>
-                </div>
-                <div class="nav-item" id="nav-schedule">
-                    <img src="image-resources/schedule-icon.svg" alt="Schedule">
-                    <img class="icon-active" src="image-resources/schedule-icon-gradient.svg" alt="Schedule">
-                    <span>Schedule</span>
-                </div>
-            </nav>
+    <h1>Adoption Requests</h1>
 
-            <div class="nav-item logout" id="nav-logout">
-                <img src="image-resources/logout-icon.svg" alt="Log out">
-                <span>Log out</span>
-            </div>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <h1 class="dashboard-header">DASHBOARD</h1>
-
-            <!-- Grid content-->
-            <div class="grid">
-
-                <!-- Pet Stats Card -->
-                 <div class="pet-stats-card card">
-                    <div class="pet-stats-title" id="pet-stats-title">สัตว์เลี้ยงทั้งหมด</div>
-                    
-                    <!-- Donut Chart -->
-                    <div class="donut-chart">
-                        <div class="donut-chart-container" >
-                            <canvas id="DoughnutChart"></canvas> 
-                        </div>
-                    </div>
-
-                    <div class="legend">
-                        <div class="legend-item">
-                            <div class="legend-dot" style="background: #010002;"></div>
-                            <span>Dog</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-dot" style="background: #ffd102;"></div>
-                            <span>Cat</span>
-                        </div>
-                    </div>
-
-                    <!-- Stats List -->
-                    <div class="stats-list">
-                        <div class="stat-item">
-                            <div class="stat-number" id="stat-pending"></div>
-                            <div class="stat-label">รอพิจารณา</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number" id="stat-waiting"></div>
-                            <div class="stat-label">รอส่งมอบ</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number" id="stat-delivered"></div>
-                            <div class="stat-label">ส่งมอบแล้ว</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number" id="stat-open"></div>
-                            <div class="stat-label">เปิดรับคำขอ</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number" id="stat-closed"></div>
-                            <div class="stat-label">ปิดรับคำขอ</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number" id="stat-user-id"></div>
-                            <div class="stat-label">User ID</div>
-                        </div>
-                    </div>
-                 </div>
-
-                <!-- Line Chart Card -->
-                <div class="chart-card card">
-                    <h3 class="chart-title">Line Chart</h3>
-                    <div class="chart-legend">
-                        <div class="chart-legend-item">
-                            <div class="legend-dot" style="background: #ffd102;"></div>
-                            <span>Add pet</span>
-                        </div>
-                        <div class="chart-legend-item">
-                            <div class="legend-dot" style="background: #64bdc6;"></div>
-                            <span>Request</span>
-                        </div>
-                        <div class="chart-legend-item">
-                            <div class="legend-dot" style="background: #2b72fb;"></div>
-                            <span>Adopted</span>
-                        </div>
-                    </div>
-                    <div class="line-chart-container" style="width: 80%; margin: auto; padding: 20px;">
-                        <canvas id="LineChart"></canvas>
-                    </div>
-                </div>
-
-                <!-- Calendar Card -->
-                <div class="calendar-card card">
-                    <div class="calendar-header">
-                        <div class="calendar-title" id="calendar-month">November 2025</div>
-                    </div>
-
-                    <div class="calendar-weekdays">
-                        <div class="calendar-weekday">SUN</div>
-                        <div class="calendar-weekday">MON</div>
-                        <div class="calendar-weekday">TUE</div>
-                        <div class="calendar-weekday">WED</div>
-                        <div class="calendar-weekday">THU</div>
-                        <div class="calendar-weekday">FRI</div>
-                        <div class="calendar-weekday">SAT</div>
-                    </div>
-
-                    <div class="calendar-days" id="calendar-days">
-                        <!-- Calendar days will be generated by JavaScript -->
-                    </div>
-
-                    <div class="calendar-time">
-                        <span>Time</span>
-                        <span id="calendar-current-time">9:41 AM</span>
-                    </div>
-                </div>
-
-                <!-- Notifications Card -->
-                <div class="notification-card card">
-                    <div class="notification-header">
-                        <img src="image-resources/notification-icon-gradient.svg" alt="Notification">   
-                        <span class="notification-title">Notification</span>
-                        <span class="notification-badge" id="notification-count">2</span>
-                    </div>
-
-                    <div class="notification-list" id="notification-list">
-                        <!-- JavaScript จะสร้าง notification items ที่นี่ -->
-                    </div>
-                </div>
-            </div>
-        </main>
+    <!-- PET LIST (matches your code "pet request counts") -->
+    <div id="petList">
+        <!-- JS will dynamically place pet list here -->
     </div>
 
-    <script src="dashboard.js"></script>     
-    <script src="chart.js"></script>
-    <!-- Import JS library to create chart-->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>               
+    <hr>
+
+    <h2>Requests for Selected Pet</h2>
+    <div id="requestList">
+        <!-- JS will load applicant list here -->
+    </div>
+
+    <!-- Import JS -->
+    <script src="dashboard.js"></script>
+
 </body>
 </html>

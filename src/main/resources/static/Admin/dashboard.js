@@ -15,7 +15,32 @@ async function loadPetRequestCounts() {
 
         const data = await response.json();
 
-        // js code here
+        const container = document.querySelector("#petList");
+        container.innerHTML = "";
+
+        if (data.length === 0) {
+            container.innerHTML = "<p>No pets found.</p>";
+            return;
+        }
+
+        // Load each row
+        data.forEach(async (petCount) => {
+            // Fetch pet details
+            const petResponse = await fetch(`http://localhost:8081/api/pets/${petCount.petId}`);
+            const pet = await petResponse.json();
+
+            const card = document.createElement("div");
+            card.classList.add("pet-card");
+
+            card.innerHTML = `
+                <img src="${pet.image ? `http://localhost:8081${pet.image}` : 'images/placeholder.jpg'}" width="150">
+                <h3>${pet.name}</h3>
+                <p><strong>Requests:</strong> ${petCount.count}</p>
+                <button onclick="viewRequests(${pet.id})">View Requests</button>
+            `;
+
+            container.appendChild(card);
+        });
 
     } catch (err) {
         console.error(err);
@@ -28,6 +53,7 @@ async function loadPetRequestCounts() {
 ------------------------------------------- */
 async function viewRequests(petId) {
     try {
+        console.log("Requesting petId:", petId);
         const response = await fetch(`http://localhost:8081/api/userform/admin/pet/${petId}/requests`);
 
         if (!response.ok) {
@@ -35,6 +61,7 @@ async function viewRequests(petId) {
         }
 
         const requests = await response.json();
+            console.log("Response:", requests);
 
         const container = document.querySelector("#requestList");
         container.innerHTML = ""; // clear previous
