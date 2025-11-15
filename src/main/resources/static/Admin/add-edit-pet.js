@@ -66,10 +66,10 @@ document.addEventListener('DOMContentLoaded', () => {
     handleGroupToggle(genderGroup);
 
     // --- 4. Calendar Icon Click (เหมือนเดิม) ---
-    calendarIcon.addEventListener('click', () => {
-        try { petDobInput.showPicker(); } catch (error) { console.warn("Browser doesn't support showPicker()", error); }
-    });
-    petDobInput.addEventListener('change', () => clearError(petDobInput.closest('.form-group')));
+    //calendarIcon.addEventListener('click', () => {
+    //    try { petDobInput.showPicker(); } catch (error) { console.warn("Browser doesn't support showPicker()", error); }
+    //});
+    //petDobInput.addEventListener('change', () => clearError(petDobInput.closest('.form-group')));
 
     // --- 5. Reset Buttons Logic (เหมือนเดิม) ---
     resetBasicBtn.addEventListener('click', (e) => { /* ... โค้ด Reset เดิม ... */ });
