@@ -13,35 +13,11 @@ body {
     min-height: 100vh;
 }
 
-main {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
 /* Main Content */
 .main-content {
     display: flex;
     flex-direction: column;
     gap: 20px;
-}
-
-/* header */
-.breadcrumb {
-    width: 550px;
-    padding: 0 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.breadcrumb-text {
-    color: var(--text-color);
-    font-size: 20px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 10px;
 }
 
 .line {
@@ -127,11 +103,6 @@ main {
     font-size: 14px;
     color: #666;
     margin-bottom: 15px;
-}
-
-/* Sidebar Right */
-.sidebar-right {
-    width: 350px;
 }
 
 /* Desktop view - แสดง cards ปกติ */
@@ -387,9 +358,6 @@ main {
 
 /* Mobile view - แสดง dropdown */
 @media (max-width: 768px) {
-    * {
-    }
-
     .content-wrapper {
         display: flex;
         flex-direction: column-reverse;
