@@ -1,0 +1,314 @@
+/* --- Import Fonts (ถ้าต้องการ) --- */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap');
+
+/* --- Base Body (สำหรับหน้านี้) --- */
+body {
+    font-family: 'Manrope', 'Itim', sans-serif;
+    color: #333;
+    /* (background, margin, ฯลฯ ถูกควบคุมโดย sidebar.css) */
+}
+
+/* --- การ์ด Pet/User --- */
+.admin-user-pet-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+.card {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.1);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+}
+.card-pet {
+    flex-grow: 1; /* (ให้ขนาดพอๆ กัน) */
+}
+.card-user {
+    flex-grow: 2; /* (ให้ User กว้างกว่า) */
+}
+.card-avatar img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #e0e0e0;
+}
+.card-label {
+    font-size: 14px;
+    color: #777;
+    margin-top: 4px;
+}
+.card-value {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* --- Status Timeline (อัปเดต 3 วง + ลบเส้นเขียว) --- */
+.status-section {
+    position: relative;
+    margin-bottom: 30px;
+    margin-top: 20px;
+    padding: 0 40px;
+}
+.status-line {
+    position: absolute;
+    top: 60px;
+    height: 4px;
+    background: #dde1ec; 
+    z-index: 0;
+
+    /* [!! แก้ไขตรงนี้ !!] */
+    /* 1. คำนวณความกว้าง: (500px - 120px) = 380px */
+    /* (ความกว้าง Container - ความกว้างวงกลม 1 วง) */
+    width: 380px; 
+
+    /* 2. จัดให้อยู่ตรงกลาง (เหมือน margin: 0 auto) */
+    left: 50%;
+    transform: translateX(-50%);
+}
+.status-steps {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+
+    /* [!! เพิ่ม 2 บรรทัดนี้ !!] */
+    max-width: 500px; /* 1. จำกัดความกว้างสูงสุด */
+    margin: 0 auto;   /* 2. จัดให้กล่อง 500px นี้อยู่ตรงกลาง */
+}
+.status-step {
+    text-align: center;
+    position: relative;
+    width: 100px;
+}
+
+/* 1. Default (Pending) State - 3 Grey Circles */
+.status-circle {
+    width: 120px; /* 1. Outer Circle (เทาอ่อนสุด) */
+    height: 120px;
+    border-radius: 50%;
+    background: #e6e8f0; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+    position: relative;
+}
+.status-circle .circle-middle {
+    width: 80px; /* 2. Middle Circle (เทากลาง) */
+    height: 80px;
+    border-radius: 50%;
+    background: #b8bcc8; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+.status-circle .circle-inner {
+    width: 50px; /* 3. Inner Circle (เทาเข้มสุด) */
+    height: 50px;
+    border-radius: 50%;
+    background: #7f8490; 
+    transition: background-color 0.2s ease;
+}
+.status-circle .circle-icon {
+    position: absolute;
+    font-size: 30px;
+    color: #fff;
+    opacity: 0; 
+    z-index: 2; /* (ไอคอนอยู่บนสุด) */
+}
+.status-label {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+/* 2. Completed State (Green Check) - 2 Circles */
+.status-step.completed .status-circle {
+    background: #F0FAF0; /* 1. เขียวอ่อน */
+}
+.status-step.completed .circle-middle {
+    background: #B6E4B2; /* 2. เขียวเข้ม */
+}
+.status-step.completed .circle-inner {
+    background: #6DC965; /* ซ่อนวงในสุด (วงที่ 3) */ 
+}
+.status-step.completed .circle-icon { 
+    opacity: 1; 
+    /* (JS จะใส่ '✓' ให้) */
+}
+
+/* 3. Rejected State (Red X) - 2 Circles */
+.status-step.rejected .status-circle {
+    background: #ffe6e6; /* 1. แดงอ่อน */
+}
+.status-step.rejected .circle-middle {
+    background: #ff8b8b; /* 2. แดงเข้ม */
+}
+.status-step.rejected .circle-inner { 
+    display: none; /* ซ่อนวงในสุด (วงที่ 3) */
+}
+.status-step.rejected .circle-icon { 
+    opacity: 1; 
+    /* (JS จะใส่ '✗' ให้) */
+}
+
+/* 4. [!! ลบแล้ว !!] 
+   เราลบ .status-step.completed::after ที่สร้างเส้นเขียวทิ้งไปแล้ว
+   (ไม่ต้องทำอะไรตรงนี้)
+*/
+
+/* --- Info Box (Pickup/Delivery) --- */
+.pickup-section {
+    margin-top: 30px;
+}
+.pickup-box {
+    border-radius: 12px;
+    border: 1px solid #e0e3ee;
+    background: #fafcff;
+    padding: 24px 30px;
+    max-width: 800px;
+    margin: 0 auto 30px;
+    text-align: center;
+}
+.pickup-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 600;
+}
+.pickup-icon {
+    font-size: 22px;
+}
+#pickupMessage {
+    font-size: 16px;
+    color: #555;
+    margin-top: 10px;
+}
+
+/* --- Admin Action Buttons --- */
+.admin-action-buttons {
+    text-align: center;
+    padding: 20px 0;
+}
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* ซ่อน/แสดง กลุ่มปุ่ม (JS จะเป็นคนควบคุม) */
+#approved-buttons.hidden,
+#completed-buttons.hidden {
+    display: none;
+}
+
+/* ปุ่มทั่วไป (Base Button) */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.btn:hover {
+    opacity: 0.8;
+    transform: translateY(-2px);
+}
+
+/* สีปุ่ม */
+.btn-danger {
+    background-color: #e53e3e; /* แดง */
+    color: white;
+    box-shadow: 0 3px 10px rgba(229, 62, 62, 0.3);
+}
+.btn-success {
+    background-color: #38a169; /* เขียว */
+    color: white;
+    box-shadow: 0 3px 10px rgba(56, 161, 105, 0.3);
+}
+.btn-grey {
+    background-color: #e2e8f0; /* เทา */
+    color: #4a5568;
+}
+
+/* --- Modals --- */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+.modal-backdrop.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+.modal-content {
+    background: white;
+    border-radius: 12px;
+    padding: 24px 30px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    text-align: center;
+    transform: scale(0.95);
+    transition: transform 0.2s ease;
+}
+.modal-backdrop.show .modal-content {
+    transform: scale(1);
+}
+.modal-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.modal-content p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 25px;
+}
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Modal "Success" */
+.success-pop .success-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #60c372;
+    color: white;
+    font-size: 40px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+.success-pop h3 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+.success-pop p {
+    margin-bottom: 20px;
+}
