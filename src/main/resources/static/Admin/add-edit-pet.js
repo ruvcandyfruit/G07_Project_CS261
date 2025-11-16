@@ -251,6 +251,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // [!! 2. ถ้าเป็นโหมด edit ให้โหลดข้อมูลเหมือนเดิม !!]
     if (mode === 'edit') {
         loadPetDataForEdit(petIdToEdit); // โหลดข้อมูลมาเติมฟอร์ม
+        
+        saveButton.textContent = 'Update'; // เปลี่ยนข้อความปุ่ม
     }
     
     // (เราลบ formModeTitle.textContent ทิ้งไปได้เลย)
