@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -109,7 +112,7 @@ public ResponseEntity<?> getAllUsers() {
             dto.setAcceptRight(user.getAcceptRight());
             dto.setHomeVisits(user.getHomeVisits());
             dto.setStatus(user.getStatus());
-            dto.setPetId(user.getPetId()); 
+            dto.setPetId(user.getPetID().toString());
             dto.setUserId(user.getUserId());
             dto.setResultEstimate(user.getResultEstimate());
             dto.setMeetDate(user.getMeetDate());
@@ -165,4 +168,33 @@ public ResponseEntity<?> getAllUsers() {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+ // ใน Controller ที่เกี่ยวข้อง
+// ...
+@GetMapping("/statuses")
+@CrossOrigin(origins = "*") 
+public ResponseEntity<List<Map<String, Object>>> getStatusesAndIds() {
+    
+    List<Form> forms; 
+
+    try {
+        forms = user1Repository.findAll(); 
+
+        // 🔴 แก้ไข: ใช้ (Map<String, Object>) เพื่อระบุ Type ให้ชัดเจน
+        List<Map<String, Object>> statusList = forms.stream()
+            .map(form -> (Map<String, Object>) Map.of(
+                "petId",form.getPetID(), 
+                "status", form.getStatus()
+            ))
+            .toList();
+
+        return ResponseEntity.ok(statusList);
+        
+    } catch (Exception e) {
+        System.err.println("Database error fetching statuses: " + e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(null); 
+    }
+}
+
 }

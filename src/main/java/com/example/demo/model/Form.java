@@ -82,6 +82,11 @@ public class Form {
     private LocalDate resultEstimate = null;
 
     @Column(name = "meet_date", nullable = true)  
-    private LocalDate meetDate = null;       
+    private LocalDate meetDate = null;
+
+    public Object getPetID() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPetID'");
+    }       
 
 }

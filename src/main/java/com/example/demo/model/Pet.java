@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -15,7 +17,8 @@ public class Pet {
     private String type;          
     private String image;
     private String name;
-    private int age;
+    @Column(name = "birth_date") 
+    private LocalDate birthDate;
     private String gender;
     private String breed;
     private double weight;
@@ -25,17 +28,23 @@ public class Pet {
     @Column(name = "food_allergy")
     private String foodAllergy;
 
-    // --- Constructor ---
+   
     public Pet() {
        
     }
 
-    public Pet(String petID, String type, String image, String name, int age, String gender, String breed, double weight, boolean sterilisation, boolean vaccine, String disease, String foodAllergy) {
+    // --- Constructor ---
+    public Pet(String petID, String type, String image, String name, LocalDate birthDate,
+               String gender, String breed, double weight, boolean sterilisation,
+               boolean vaccine, String disease, String foodAllergy) 
+{
+        
+
         this.petID = petID;
         this.type = type;
-        this.name = name;
         this.image = image;
-        this.age = age;
+        this.name = name;
+        this.birthDate = birthDate;
         this.gender = gender;
         this.breed = breed;
         this.weight = weight;
@@ -45,6 +54,7 @@ public class Pet {
         this.foodAllergy = foodAllergy;
     }
 
+       
     // --- Getters and Setters ---
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -61,8 +71,10 @@ public class Pet {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    public int getAge() { return age; }
-    public void setAge(int age) { this.age = age; }
+   public LocalDate getBirthDate() 
+    { return birthDate; }
+    public void setBirthDate(LocalDate birthDate) 
+    { this.birthDate = birthDate; }
 
     public String getGender() { return gender; }
     public void setGender(String gender) { this.gender = gender; }

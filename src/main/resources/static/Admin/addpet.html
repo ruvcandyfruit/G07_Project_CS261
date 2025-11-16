@@ -44,8 +44,8 @@
                         <div class="form-group">
                             <label class="form-label">Pet Name<span class="required">*</span></label>
                             <input type="text" class="form-control" id="petName" placeholder="Enter Pet Name">
-                            <label class="form-label">PetID<span class="required">*</span></label>
-                           <input type="text" class="form-control" id="petId" placeholder="D/cxxx">
+                          <label class="form-label" for="petId">Pet ID<span class="required">*</span></label>
+                          <input type="text" id="petId" name="petId" class="form-control" value="GG001" readonly>
 
                             <div class="error-message"></div>
                         </div>
@@ -137,12 +137,12 @@
 
                 <div class="action-buttons">
                     <button class="btn btn-cancel">Cancel</button>
-                    <button class="btn btn-save" id="saveButton">Save</button>
+                    <button class="btn btn-save" id="saveButton">update</button>
                 </div>
             </main>
         </div>
 
-    <script src="add-edit-pet.js"></script>
+    <script src="addpet.js"></script>
     <script src="sidebar.js"></script>
 </body>
 </html>
