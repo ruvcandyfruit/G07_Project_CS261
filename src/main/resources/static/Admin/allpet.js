@@ -191,12 +191,37 @@ document.addEventListener('DOMContentLoaded', () => {
     cancelDeleteBtn.addEventListener('click', () => hideModal(deleteModal));
     confirmDeleteBtn.addEventListener('click', confirmDelete);
 
-    // --- 10. ฟังก์ชันเริ่มต้น (Init) (เหมือนเดิม) ---
+    // --- 10. ฟังก์ชันเริ่มต้น (Init) [!! อัปเกรดแล้ว !!] ---
     function initializeApp() {
+        // (ในโลกจริง: allPets = await fetch('/api/pets').then(res => res.json()))
         allPets = mockPetData;
-        renderTable(allPets);
-        updatePetCount(allPets.length);
+        
+        // [!! LOGIC ใหม่ !!]
+        // 1. อ่านค่า 'status' จาก URL (เช่น ?status=Pending)
+        const urlParams = new URLSearchParams(window.location.search);
+        const statusFromURL = urlParams.get('status');
+
+        if (statusFromURL) {
+            // 2. ถ้ามีค่าส่งมา:
+            // 2.1 หา Dropdown ของ Status
+            const statusFilter = document.getElementById('statusFilter');
+            if (statusFilter) {
+                // 2.2 สั่งให้ Dropdown เลือกค่านั้น
+                statusFilter.value = statusFromURL;
+            }
+            
+            // 2.3 สั่งให้หน้าเว็บ "กรอง" ข้อมูลทันที
+            applyFilters();
+
+        } else {
+            // 3. ถ้าไม่มีค่าส่งมา (เปิดหน้า All Pet ตรงๆ):
+            // (ทำงานแบบเดิม)
+            renderTable(allPets);
+            updatePetCount(allPets.length);
+        }
     }
 
+    // เริ่มการทำงาน!
     initializeApp();
+
 });
