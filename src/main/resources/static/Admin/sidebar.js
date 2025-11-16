@@ -83,7 +83,7 @@ function addNavigation() {
             } else if (itemId === 'nav-schedule') {
                 window.location.href = 'schedule.html';
             } else if (itemId === 'nav-logout') {
-                window.location.href = 'ใส่pathโฟลเดอร์/login.html';
+                window.location.href = '../login.html';
             }
         });
     });

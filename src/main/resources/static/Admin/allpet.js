@@ -197,25 +197,36 @@ document.addEventListener('DOMContentLoaded', () => {
         allPets = mockPetData;
         
         // [!! LOGIC ใหม่ !!]
-        // 1. อ่านค่า 'status' จาก URL (เช่น ?status=Pending)
+        // 1. อ่านค่า Parameter ทั้งหมดจาก URL
         const urlParams = new URLSearchParams(window.location.search);
         const statusFromURL = urlParams.get('status');
+        const togglePendingFromURL = urlParams.get('togglePending'); // <-- 1. อ่านค่าใหม่
 
+        let filtersApplied = false; // (ตัวแปรเช็คว่ามีการตั้งค่า Filter หรือไม่)
+
+        // 2. จัดการ Filter Dropdown (ถ้ามี)
         if (statusFromURL) {
-            // 2. ถ้ามีค่าส่งมา:
-            // 2.1 หา Dropdown ของ Status
             const statusFilter = document.getElementById('statusFilter');
             if (statusFilter) {
-                // 2.2 สั่งให้ Dropdown เลือกค่านั้น
                 statusFilter.value = statusFromURL;
+                filtersApplied = true;
             }
-            
-            // 2.3 สั่งให้หน้าเว็บ "กรอง" ข้อมูลทันที
-            applyFilters();
+        }
+        
+        // 3. [!! ใหม่ !!] จัดการ Toggle (ถ้ามี)
+        if (togglePendingFromURL === 'true') {
+            const pendingToggle = document.getElementById('pendingToggle');
+            if (pendingToggle) {
+                pendingToggle.checked = true; // <-- 3. สั่งเปิด Toggle
+                filtersApplied = true;
+            }
+        }
 
+        // 4. สั่งกรองข้อมูล (ถ้ามีการตั้งค่าใดๆ จาก URL)
+        if (filtersApplied) {
+            applyFilters(); // (ฟังก์ชันนี้จะอ่านค่า dropdown และ toggle ที่เราเพิ่งตั้ง)
         } else {
-            // 3. ถ้าไม่มีค่าส่งมา (เปิดหน้า All Pet ตรงๆ):
-            // (ทำงานแบบเดิม)
+            // 5. ถ้าไม่มี Parameter ใดๆ (เปิดหน้าตรงๆ)
             renderTable(allPets);
             updatePetCount(allPets.length);
         }
