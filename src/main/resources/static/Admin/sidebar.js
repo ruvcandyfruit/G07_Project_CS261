@@ -87,7 +87,7 @@ function addNavigation() {
                 window.location.href = 'schedule.html';
             } else if (itemId === 'nav-logout') {
                 // [!! แก้ไข Path login ของคุณตรงนี้ !!]
-                window.location.href = 'login.html'; 
+                window.location.href = '../login.html'; 
             }
         });
     });
