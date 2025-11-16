@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="th-en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="viewform.css"> 
+    <link rel="icon" href="../homepageResources/icon.png" type="image/x-icon">
+    <title>Pet Adoption Form | Request form</title>
+</head>
+<body>
+    <div class="container">
+        <div id="loading" class="loading">กำลังโหลดข้อมูล...</div>
+        <div id="formContent" style="display: none;">
+            <div class="header">
+                <div class="profile-icon"><span class="solar--user-bold"></span></div>
+                <div class="user-info">
+                    <h2 id="userName">UserName</h2>
+                    <p id="userEmail">example@email.com</p>
+                </div>
+            </div>
+
+            <form id="userForm">
+                <div class="form-group">
+                    <label class="form-label">ชื่อจริง</label>
+                    <input type="text" class="form-input" id="firstName" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">นามสกุล</label>
+                    <input type="text" class="form-input" id="lastName" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">วัน/เดือน/ปีเกิด</label>
+                    <input type="text" class="form-input" id="birthDate" placeholder="DD/MM/YYYY" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">เบอร์โทรศัพท์</label>
+                    <input type="tel" class="form-input" id="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">อีเมล</label>
+                    <input type="email" class="form-input" id="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">อาชีพ</label>
+                    <input type="text" class="form-input" id="occupation" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">ที่อยู่อาศัยปัจจุบัน</label>
+                    <input type="text" class="form-input" id="address" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">ประเภทที่อยู่อาศัย</label>
+                    <input type="text" class="form-input" id="residenceType" required>
+                </div>
+
+                <div class="full-width-section">
+                    <label class="form-label">คุณเคยเลี้ยงสัตว์เลี้ยงมาก่อนหรือไม่? ถ้าเคย โปรดเล่าประสบการณ์ของคุณ</label>
+                    <textarea class="form-textarea" id="experience" required></textarea>
+                </div>
+
+                <div class="full-width-section">
+                    <label class="form-label">ทำไมคุณถึงอยากรับเลี้ยงสัตว์เลี้ยง?</label>
+                    <textarea class="form-textarea" id="reason" required></textarea>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn btn-secondary" id="backBtn">ย้อนกลับ</button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">แก้ไข</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="viewform.js"></script>
+</body>
+</html>
