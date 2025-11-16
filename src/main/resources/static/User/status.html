@@ -1,41 +1,64 @@
+<!--    2-frontend/status(user) branch   -->
 <!DOCTYPE html>
 <html lang="th-en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="status.css">
-<link rel="stylesheet" href="../all.css">
-
-
-    
+    <link rel="stylesheet" href="status.css">
+    <link rel="stylesheet" href="../all.css">
     <link rel="icon" href="../homepageResources/icon.png" type="image/x-icon">
     <title>Adoption Status | Pet Adoption System</title>
 </head>
 <body class="status-page">
 
-    <!-- navigation bar (copy มาจาก petdetail แล้วปรับ active) -->
-    <header>
-    <nav class="navbar">
-        <div class="logo">
-            <img src="../homepageResources/icon.png" alt="Logo">
-        </div>
+    <!-- navigation bar -->
+        <header>
+            <nav class="navbar">
+                <div class="logo">
+                    <img src="../homepageResources/icon.png" alt="Logo">
+                </div>
+                <!-- ปุ่มไปหน้าต่างๆ -->
+                <nav class="nav-button">
+                    <ul class="nav-links">
+                        <li><a href="../index.html">Homepage</a></li>
+                        <li class="active"><a href="petlisting.html">Pet Listing</a></li>
+                        <li><a href="status.html" class="active">Adoption Status</a></li>
+                        <li><a href="contact.html">About/Contact Us</a></li>
+                    </ul>
+                    <!-- ปุ่ม Log in, Create account, Profile -->
+                    <ul class="nav-account">
+                        <li id="login-butt"><a href="../login.html">Log in</a></li>
+                        <li id="register-butt"><a href="../register.html">Create account</a></li>
+                        <button id="profile"><span class="solar--user-bold"></span></button>
+                    </ul>
+                </nav>
+            </nav>
+            <!-- ที่ซ่อน nav-links ตอนหน้าจอเล็ก -->
+            <div class="hamburger">
+                ☰
+            </div>
 
-        <!-- เมนูเหมือน petlist แต่เพิ่ม Adoption Status และให้หน้านี้ active -->
-        <ul class="nav-links">
-            <li><a href="../index.html">Homepage</a></li>
-            <li><a href="petlisting.html">Pet Listing</a></li>
-            <li class="active"><a href="status.html" class="active">Adoption Status</a></li>
-            <li><a href="contact.html">About/Contact Us</a></li>
-        </ul> 
-
-        <!-- จะใช้ logout แบบหน้า petlist -->
-        <button class="logout-btn" id="logout-button">Log out</button>
-    </nav>
-
-    <div class="hamburger">
-        ☰
-    </div>
-</header>
+            <!-- เพิ่ม Profile Popup ตรงนี้ -->
+            <div id="profile-popup" class="profile-popup">
+                <div class="profile-content">
+                    <div class="profile-info">
+                        <div class="profile-image"><span class="solar--user-bold"></span></div>
+                        <div class="profile-user-info">
+                            <h4 id="profile-username">Username</h4>
+                            <p id="profile-email">example@email.com</p>
+                        </div>
+                    </div>
+                    <div class="profile-logout">
+                        <div class="profile-logout-butt">
+                            <button class="logout-btn" id="logout-btn">
+                                <span class="mdi--logout"></span>
+                                <p>Log out</p>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </header>
 
 
     <!-- MAIN CONTENT (ใช้ fullwidth-section + container เหมือน petdetail) -->
@@ -65,9 +88,7 @@
 
             <!-- User card -->
             <div class="card card-user">
-              <div class="card-avatar">
-              <img id="userAvatar" class="user-avatar-img" src="../images/default-user.png" alt="User avatar">
-              </div>
+              <div class="card-avatar"><span class="solar--user-bold"></span></div>
 
               <div class="card-body">
               <p class="card-label">UserName</p>
@@ -77,25 +98,22 @@
               <p class="card-value" id="user-email">example@gmail.com</p>
             </div>
 
+            <!-- ไม่ต้องการแก้ไขฟอร์มแล้ว)
             <div class="card-actions">
-            <button id="edit-form-btn" class="btn btn-outline-sm">
-            <span class="edit-icon-wrapper" aria-hidden="true">
-                <svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <g fill="none" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M4.333 16.048L16.57 3.81a2.56 2.56 0 0 1 3.62 3.619L7.951 19.667a2 2 0 0 1-1.022.547L3 21l.786-3.93a2 2 0 0 1 .547-1.022"/>
-                    <path d="m14.5 6.5l3 3"/>
-                </g>
-                </svg>
-            </span>
-            <span>แก้ไข</span>
-            </button>
-
+                <button id="edit-form-btn" class="btn btn-outline-sm">
+                    <span class="edit-icon-wrapper" aria-hidden="true">
+                        <svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <g fill="none" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M4.333 16.048L16.57 3.81a2.56 2.56 0 0 1 3.62 3.619L7.951 19.667a2 2 0 0 1-1.022.547L3 21l.786-3.93a2 2 0 0 1 .547-1.022"/>
+                                <path d="m14.5 6.5l3 3"/>
+                            </g>
+                        </svg>
+                    </span>
+                    <span>แก้ไข</span>
+                </button>
+            </div>-->
             </div>
-
-
-            </div>
-
         </section>
 
         <!-- STATUS TIMELINE -->
@@ -210,6 +228,77 @@
       </button>
     </div>
   </div>
+</div>
+
+<div class="overlay">
+    <div class="form-modal-container">
+        <div id="loading" class="loading">กำลังโหลดข้อมูล...</div>
+        <div id="formContent" style="display: none;">
+            <div class="form-modal-header">
+                <div class="form-modal-profile-icon"><span class="solar--user-bold"></span></div>
+                <div class="form-modal-user-info">
+                    <h2 id="userName">UserName</h2>
+                    <p id="userEmail">example@email.com</p>
+                </div>
+            </div>
+
+            <form id="userForm">
+                <div class="form-group">
+                    <label class="form-label">ชื่อจริง</label>
+                    <input type="text" class="form-input" id="firstName" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">นามสกุล</label>
+                    <input type="text" class="form-input" id="lastName" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">วัน/เดือน/ปีเกิด</label>
+                    <input type="text" class="form-input" id="birthDate" placeholder="DD/MM/YYYY" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">เบอร์โทรศัพท์</label>
+                    <input type="tel" class="form-input" id="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">อีเมล</label>
+                    <input type="email" class="form-input" id="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">อาชีพ</label>
+                    <input type="text" class="form-input" id="occupation" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">ที่อยู่อาศัยปัจจุบัน</label>
+                    <input type="text" class="form-input" id="address" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">ประเภทที่อยู่อาศัย</label>
+                    <input type="text" class="form-input" id="residenceType" required>
+                </div>
+
+                <div class="full-width-section">
+                    <label class="form-label">คุณเคยเลี้ยงสัตว์เลี้ยงมาก่อนหรือไม่? ถ้าเคย โปรดเล่าประสบการณ์ของคุณ</label>
+                    <textarea class="form-textarea" id="experience" required></textarea>
+                </div>
+
+                <div class="full-width-section">
+                    <label class="form-label">ทำไมคุณถึงอยากรับเลี้ยงสัตว์เลี้ยง?</label>
+                    <textarea class="form-textarea" id="reason" required></textarea>
+                </div>
+
+                <div class="form-modal-button-group">
+                    <button type="button" class="form-modal-btn" id="backBtn">ย้อนกลับ</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
     <!-- JS เฉพาะหน้านี้ -->
