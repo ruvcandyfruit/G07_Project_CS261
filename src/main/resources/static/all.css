@@ -43,25 +43,28 @@ header {
 }
 
 /*----- Menu -----*/
+/* รวมปุ่มบน navigation bar */
 .nav-button {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 40px;
-    width: 100%;
     list-style: none;
 }
 
+/* รวมปุ่มหน้าเพจต่างๆ */
 .nav-links {
     justify-content: end;
     width: 100%;
     gap: 20px;
 }
 
+/* รวมปุ่มที่เกี่ยวข้องกับ account (login, register, profile) */
 .nav-account {
     gap: 20px;
     justify-content: end;
     width: max-content;
+    min-width: 305px; /* เพิ่มบรรทัดนี้ - ปรับตามขนาดปุ่ม 2 ปุ่มของคุณ */
 }
 
 .nav-links,
@@ -113,10 +116,125 @@ header {
     box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.25);
 }
 
+#profile {
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50px;
+    padding-top: 5px;
+    overflow: hidden;
+    display: none;
+    background: rgba(1,0,2,0.2), rgba(255,255,255,1);
+    box-shadow: var(--box-shadow);
+    cursor: pointer;
+}
+
+#profile:hover {
+    box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.25);
+}
+
+#profile .solar--user-bold {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='6' r='4' fill='rgba(1, 0, 2, 0.5),rgba(255, 255, 255, 1)'/%3E%3Cpath fill='rgba(1, 0, 2, 0.5),rgba(255, 255, 255, 1)' d='M20 17.5c0 2.485 0 4.5-8 4.5s-8-2.015-8-4.5S7.582 13 12 13s8 2.015 8 4.5'/%3E%3C/svg%3E");
+}
+
+/* 3. ซ่อน hamburger ตอนหน้าจอใหญ่ */
 .hamburger {
     display: none;
     font-size: 1.8rem;
     cursor: pointer;
+}
+
+.profile-popup {
+    z-index: 10;
+    position: absolute;
+    width: max-content;
+    height: max-content;
+    border-radius: 16px;
+    padding: 20px 15px;
+    display: none;
+    gap: 10px;
+    top: 85px;
+    right: 80px;
+    background-color: #FFFFFF;
+    box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.25);
+}
+
+.profile-content {
+    width: 270px;
+    display: 20px;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--background-main);
+}
+
+.profile-image {
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 50px;
+    padding-top: 5px;
+    overflow: hidden;
+    background: rgba(1,0,2,0.2);
+    box-shadow: var(--box-shadow);
+}
+
+.profile-image .solar--user-bold {
+  display: inline-block;
+  width: 45px;
+  height: 45px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='6' r='4' fill='rgba(1, 0, 2, 0.5),rgba(255, 255, 255, 1)'/%3E%3Cpath fill='rgba(1, 0, 2, 0.5),rgba(255, 255, 255, 1)' d='M20 17.5c0 2.485 0 4.5-8 4.5s-8-2.015-8-4.5S7.582 13 12 13s8 2.015 8 4.5'/%3E%3C/svg%3E");
+}
+
+.profile-user-info #profile-username {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.profile-user-info #profile-email {
+    font-size: 14px;
+}
+
+.profile-logout {
+    width: 100%;
+    padding: 10px 10px 0 0;
+}
+
+/*----- Logout button -----*/
+.logout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 10px;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.logout-btn .mdi--logout {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='rgba(1, 0, 2, 0.7),rgba(255, 255, 255, 1)' d='m17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5M4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4z'/%3E%3C/svg%3E");
+}
+
+.logout-btn p {
+    font-size: 16px;
+    color: rgba(1, 0, 2, 0.7);
 }
 
 /* สำหรับหน้าจอ 600px - 768px */
@@ -147,6 +265,11 @@ header {
 
 /* Responsive Design for 768px and below */
 @media (max-width: 768px) {
+    /* ซ่อน header ปกติตอนหน้าจอเล็ก */
+    header:not(.header-restructured) {
+        display: none;
+    }
+
     /* Header แบบ 2 ชั้น */
     header.header-restructured {
         height: auto;
@@ -157,16 +280,27 @@ header {
 
     /* ชั้นบน: Top Bar */
     .top-bar {
+        order: 1; /* อยู่บนสุด */
         width: 100%;
         padding: 0.75rem 1.5rem;
         display: flex;
         justify-content: flex-end;
     }
 
+    /* ชั้นล่าง: navbar (logo + hamburger) */
+    .header-restructured .navbar {
+        order: 2; /* อยู่ล่าง top-bar */
+        position: relative;
+        padding: 10px 30px;
+        margin: 0;
+        height: auto;
+    }
+
     .top-bar .nav-account {
         gap: 0.75rem;
         width: auto;
         padding-top: 10px;
+        min-width: auto; /* เพิ่มบรรทัดนี้ - ยกเลิก min-width ในหน้าจอเล็ก */
     }
 
     .top-bar #login-butt a,
@@ -178,16 +312,24 @@ header {
         color: var(--button-black);
     }
 
+    /* ทำให้ปุ่ม profile แสดงใน top-bar ด้วย */
+    .top-bar #profile {
+        display: inline-block;
+    }
+
     .top-bar #login-butt a {
         color: white;
     }
 
-    /* ชั้นล่าง: Navbar */
-    .header-restructured .navbar {
-        position: relative;
-        padding: 10px 30px;
-        margin: 0;
-        height: auto;
+    /* ซ่อน login/register ถ้า profile แสดง */
+    .top-bar.logged-in #login-butt,
+    .top-bar.logged-in #register-butt {
+        display: none !important;
+    }
+
+    /* แสดง profile ถ้า login แล้ว */
+    .top-bar.logged-in #profile {
+        display: inline-block;
     }
 
     /* ซ่อน nav-account ในตำแหน่งเดิม */
@@ -249,23 +391,10 @@ header {
         width: 50px;
         height: 50px;
     }
-}
 
-/*----- Logout button -----*/
-.logout-btn {
-  border: 1px solid #000;
-  background: transparent;
-  border-radius: 20px;
-  padding: 6px 20px;
-  /*margin: 10px 20px;*/
-  cursor: pointer;
-  transition: all 0.2s;
-  font-family: 'Manrope', sans-serif;
-}
-
-.logout-btn:hover {
-  background-color: #000;
-  color: #fff;
+    .profile-popup {
+        right: 30px;
+    }
 }
 
 /*----- footer -----*/
