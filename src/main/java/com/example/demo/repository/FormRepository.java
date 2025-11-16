@@ -5,5 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.demo.model.Form;
 
 public interface FormRepository extends JpaRepository<Form, Long> {
+    
+    
+    Form findByPetId(String petId);
 
 }
