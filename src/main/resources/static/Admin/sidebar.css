@@ -32,8 +32,18 @@ body {
     font-family: 'Manrope', 'Mali', 'Itim', sans-serif;
     color: #333;
     background-color: var(--bg-main);
+
+    /* รวม Flicker Fix มาไว้ในนี้เลย */
+    opacity: 0;
+    transition: opacity 0.1s ease-in;
 }
 
+/* (และลบ body ที่บรรทัด 192 ทิ้งไป) */
+
+/* ส่วน .loaded นี้ยังอยู่เหมือนเดิม */
+body.loaded {
+    opacity: 1;
+}
 .container {
     display: flex;
     height: 100vh;
