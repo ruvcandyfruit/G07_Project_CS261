@@ -67,8 +67,7 @@ body {
 }
 
 .pet-stats-card {
-    width: 300px;
-    overflow: hidden;
+    width: fit-content;
 }
 
 .chart-card {
@@ -149,7 +148,6 @@ body {
 }
 
 .stat-item:hover > div {
-    color: var(--primary-color);
     transition: var(--transition);
 }
 
@@ -392,4 +390,30 @@ body {
         justify-content: center;
         margin: 0 20px;
     }
+}
+
+/* --- ทำให้ Stat Items ที่เป็นลิงก์ คลิกได้ --- */
+
+/* 1. ลบสไตล์ของลิงก์ (ขีดเส้นใต้, สีน้ำเงิน) */
+.stat-link {
+    text-decoration: none;
+    color: inherit;
+    display: block; /* ทำให้ลิงก์เต็มพื้นที่ */
+}
+
+/* 2. เพิ่ม Hover Effect ให้กับอันที่คลิกได้ */
+.stat-link .stat-item {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.stat-link .stat-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+
+/* 3. (ทางเลือก) ทำให้อันที่คลิกไม่ได้ดูจางลง */
+.stat-item-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }

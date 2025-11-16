@@ -43,27 +43,37 @@
                     </div>
                     <!-- Stats List -->
                     <div class="stats-list">
-                        <div class="stat-item">
-                            <div class="stat-number" id="stat-pending"></div>
-                            <div class="stat-label">รอพิจารณา</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number" id="stat-waiting"></div>
-                            <div class="stat-label">รอส่งมอบ</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number" id="stat-delivered"></div>
-                            <div class="stat-label">ส่งมอบแล้ว</div>
-                        </div>
-                        <div class="stat-item">
+                        
+                        <a href="allpet.html?status=Pending" class="stat-link">
+                            <div class="stat-item">
+                                <div class="stat-number" id="stat-pending"></div>
+                                <div class="stat-label">รอพิจารณา</div>
+                            </div>
+                        </a>
+
+                        <a href="allpet.html?status=Approved" class="stat-link">
+                            <div class="stat-item">
+                                <div class="stat-number" id="stat-waiting"></div>
+                                <div class="stat-label">รอส่งมอบ</div>
+                            </div>
+                        </a>
+
+                        <a href="allpet.html?status=Completed" class="stat-link">
+                            <div class="stat-item">
+                                <div class="stat-number" id="stat-delivered"></div>
+                                <div class="stat-label">ส่งมอบแล้ว</div>
+                            </div>
+                        </a>
+
+                        <div class="stat-item stat-item-disabled">
                             <div class="stat-number" id="stat-open"></div>
                             <div class="stat-label">เปิดรับคำขอ</div>
                         </div>
-                        <div class="stat-item">
+                        <div class="stat-item stat-item-disabled">
                             <div class="stat-number" id="stat-closed"></div>
                             <div class="stat-label">ปิดรับคำขอ</div>
                         </div>
-                        <div class="stat-item">
+                        <div class="stat-item stat-item-disabled">
                             <div class="stat-number" id="stat-user-id"></div>
                             <div class="stat-label">User ID</div>
                         </div>
