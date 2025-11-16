@@ -1,149 +1,121 @@
 <!DOCTYPE html>
 <html lang="th">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet Detail - รายละเอียดสัตว์เลี้ยง</title>
+    <link rel="stylesheet" href="sidebar.css">
     <link rel="stylesheet" href="petdetail.css">
-    <title>Pet Adoption All Pet</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-
 <body>
-    <!-- Side bar -->
     <div id="sidebar"></div>
 
-    <!-- Container -->
     <div class="container">
-
-
-        <!-- Main Content -->
         <main>
-            <!-- Breadcrumb -->
-            <div class="breadcrumb">
-                <a href="#">ALL PET</a>
-                <span>›</span>
-                <span>รายละเอียดสัตว์เลี้ยง</span>
-            </div>
+            <div id="breadcrumb-placeholder" class="header"></div>
 
-            <div class="content-wrapper">
-                <!-- Left: Pet Image -->
-                <div class="pet-image-section">
-                    <div class="pet-image-placeholder">🖼️</div>
-                    <div class="pet-name-display">PETNAME</div>
-                </div>
+            <div class="detail-container">
 
-                <!-- Right: All Info -->
-                <div class="right-section">
-                    <!-- Status and Action Buttons -->
-                    <div class="status-actions">
-
-
-                        <!-- Pet and Owner Info Cards -->
-                        <div class="info-cards">
-                            <div class="status-kub">
-                                <div class="status-badge">
-                                    <div class="status-label">Status</div>
-                                    <div class="status-value">Completed</div>
-
-                                </div>
-                                <div class="action-btns">
-                                    <button class="btn-icon btn-delete">
-                                        <span>🗑️</span>
-                                        Delete
-                                    </button>
-                                    <button class="btn-icon btn-edit">
-                                        <span>✏️</span>
-                                        Edit
-                                    </button>
-                                </div>
-
+                <div class="pet-header-wrapper">
+                    
+                    <div class="pet-image-section">
+                        <div class="pet-image-placeholder" id="petImage">
                             </div>
+                        <div class="pet-name-display" id="petNameDisplay">PETNAME</div>
+                    </div>
+
+                    <div class="pet-info-wrapper">
+                        <div class="status-actions">
+                            <div class="status-badge">
+                                <span>Status</span>
+                                <span class="status-value" id="statusValue">Loading...</span>
+                            </div>
+                            <div class="action-btns">
+                                <button class="btn-icon btn-delete" id="deleteBtn">
+                                    <i class="fa-solid fa-trash-can"></i> Delete
+                                </button>
+                                <button class="btn-icon btn-edit" id="editBtn">
+                                    <i class="fa-solid fa-pencil"></i> Edit
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="info-grid">
                             <div class="info-card">
                                 <h3 class="card-title">ข้อมูลน้อง</h3>
-                                <div class="info-item">รหัสประจำตัว : #8792</div>
-                                <div class="info-item">ชื่อ จินตรา</div>
-                                <div class="info-item">ชนิด แมว</div>
-                                <div class="info-item">เพศ ผู้</div>
-                                <div class="info-item">สายพันธุ์ ไม่ทราบ</div>
-                                <div class="info-item">บ้านดิน 5 ศิลครุบ</div>
+                                <div class="info-item" id="petID">รหัสประจำตัว : ...</div>
+                                <div class="info-item" id="petName">ชื่อ : ...</div>
+                                <div class="info-item" id="petType">ชนิด : ...</div>
+                                <div class="info-item" id="petGender">เพศ : ...</div>
+                                <div class="info-item" id="petBreed">สายพันธุ์ : ...</div>
+                                <div class="info-item" id="petAge">อายุ : ...</div>
                             </div>
-
                             <div class="info-card">
                                 <h3 class="card-title">สุขภาพและการดูแล</h3>
-                                <div class="info-item">การผ่าตัด : ทำแล้ว</div>
-                                <div class="info-item">การฉีดวัคซีน : ครบ</div>
-                                <div class="info-item">โรคประจำตัว : ไม่มี</div>
-                                <div class="info-item">แพ้อาหาร : ปลาดุกปั่นป่น</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Owner Information -->
-                    <div class="owner-info">
-                        <h3 class="owner-title">ข้อมูลผู้รับเลี้ยง</h3>
-
-                        <div class="owner-grid">
-                            <div class="owner-field">
-                                <div class="field-label">ชื่อจริง</div>
-                                <div class="field-value">xxxxxxxx</div>
-                            </div>
-                            <div class="owner-field">
-                                <div class="field-label">นามสกุล</div>
-                                <div class="field-value">xxxxxxxx</div>
-                            </div>
-                            <div class="owner-field">
-                                <div class="field-label">วัน/เดือน/ปีเกิด</div>
-                                <div class="field-value">xx/xx/xxxx</div>
-                            </div>
-                            <div class="owner-field">
-                                <div class="field-label">เบอร์โทรศัพท์</div>
-                                <div class="field-value">xxxxxxxx</div>
-                            </div>
-                            <div class="owner-field">
-                                <div class="field-label">อีเมล</div>
-                                <div class="field-value">xxxxx@gmail.com</div>
-                            </div>
-                            <div class="owner-field">
-                                <div class="field-label">อาชีพ</div>
-                                <div class="field-value">xxxxxxxx</div>
-                            </div>
-                            <div class="owner-field">
-                                <div class="field-label">ที่อยู่สำหรับจัดส่ง</div>
-                                <div class="field-value">xxxxxxxx</div>
-                            </div>
-                            <div class="owner-field">
-                                <div class="field-label">ประเภทที่อยู่อาศัย</div>
-                                <div class="field-value">ทาวน์เฮาส์</div>
-                            </div>
-                        </div>
-                        <div class="owner-questions">
-                            <div class="question-item">
-                                <div class="question-text">คุณเคยเลี้ยงสัตว์เลี้ยงมาก่อนหรือไม่? ถ้าเคย
-                                    ใประเภาประสบการณ์หรือจุดมุล</div>
-                                <div class="answer-text">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</div>
-                            </div>
-                            <div class="question-item">
-                                <div class="question-text">ทำไมคุณถึงอยากรับอุสิสตัวนี้สต?</div>
-                                <div class="answer-text">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</div>
+                                <div class="info-item" id="petSterilization">การทำหมัน : ...</div>
+                                <div class="info-item" id="petVaccine">การฉีดวัคซีน : ...</div>
+                                <div class="info-item" id="petDisease">โรคประจำตัว : ...</div>
+                                <div class="info-item" id="petFoodAllergy">แพ้อาหาร : ...</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <div class="owner-info hidden" id="ownerInfoSection">
+                    <h3 class="owner-title">ข้อมูลผู้รับเลี้ยง</h3>
+                    <div class="owner-grid">
+                        <div class="owner-field"><span class="field-label">ชื่อจริง</span><span class="field-value" id="ownerFirstname">...</span></div>
+                        <div class="owner-field"><span class="field-label">นามสกุล</span><span class="field-value" id="ownerLastname">...</span></div>
+                        <div class="owner-field"><span class="field-label">วัน/เดือน/ปีเกิด</span><span class="field-value" id="ownerDob">...</span></div>
+                        <div class="owner-field"><span class="field-label">เบอร์โทรศัพท์</span><span class="field-value" id="ownerPhone">...</span></div>
+                        <div class="owner-field"><span class="field-label">อีเมล</span><span class="field-value" id="ownerEmail">...</span></div>
+                        <div class="owner-field"><span class="field-label">อาชีพ</span><span class="field-value" id="ownerOccupation">...</span></div>
+                        <div class="owner-field full-width"><span class="field-label">ที่อยู่อาศัยปัจจุบัน</span><span class="field-value" id="ownerAddress">...</span></div>
+                        <div class="owner-field"><span class="field-label">ประเภทที่อยู่อาศัย</span><span class="field-value" id="ownerResidenceType">...</span></div>
+                    </div>
+                    <div class="owner-questions">
+                        <div class="question-item">
+                            <div class="question-text">คุณเคยเลี้ยงสัตว์เลี้ยงมาก่อนหรือไม่?</div>
+                            <div class="answer-text" id="ownerExperience">...</div>
+                        </div>
+                        <div class="question-item">
+                            <div class="question-text">ทำไมคุณถึงอยากรับสัตว์เลี้ยงตัวนี้ไว้?</div>
+                            <div class="answer-text" id="ownerReason">...</div>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="no-owner-message hidden" id="noOwnerMessage">
+                    <h3>ยังไม่มีข้อมูลผู้รับเลี้ยง</h3>
+                    <p>สัตว์เลี้ยงนี้ยังอยู่ในสถานะ Pending, No Request, หรือ Closed</p>
+                </div>
 
-
+                <div class="back-button-container">
+                    <button class="btn-back" id="backBtn">ย้อนกลับ</button>
+                </div>
             </div>
-            <!-- Back Button -->
-            <div class="back-button-container">
-                <button class="btn-back"><a href="allpet.html">ย้อนกลับ</a></button>
+        </main>
+    </div>
+
+    <div id="deleteModal" class="modal-backdrop modal-hidden">
+        <div class="modal-content delete-modal">
+            <div class="modal-header">
+                <h2>Confirm Deletion</h2>
             </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this pet? This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelDeleteBtn" class="btn-secondary">Cancel</button>
+                <button id="confirmDeleteBtn" class="btn-danger">Delete</button>
+            </div>
+        </div>
     </div>
-    </main>
-    </div>
+
 
     <script src="sidebar.js"></script>
+    <script src="breadcrumb.js" defer></script>
+    <script src="petdetail.js" defer></script>
 </body>
-
 </html>

@@ -1,80 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Mali&family=Itim&family=Kodchasan&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap');
-
-:root {
-    --bg-gray: #f2f2f2;
-    --bg-light: #f9f9f9;
-    --bg-main: #E5EEFF;
-    --bg-fade-yellow: rgba(255, 209, 2, 0.5);
-    --button-black: #010002;
-    --button-yellow: #ffd102;
-    --red: #f34e4e;
-    --linear-gradient: linear-gradient(74.49deg, #F840D0 -67.13%, #53DDFF 46.94%, #53FA9C 184.38%);
-    --text-color: #333;
-    --primary-color: #4A69FF;
-    --border-radius: 15px;
-    --transition: all 0.3s ease;
-    --box-shadow: 0px 10px 60px 0px rgba(0, 0, 0, 0.1);
-}
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #e3f2fd 100%, #f3e5f5 0%);
-    min-height: 100vh;
-}
-
-/* Breadcrumb */
-.breadcrumb {
+/* --- Base Layout --- */
+.detail-container {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 30px;
-    font-size: 18px;
-    font-weight: 600;
-}
-
-.breadcrumb a {
-    color: #333;
-    text-decoration: none;
-}
-
-.breadcrumb span {
-    color: #666;
-}
-
-.info-icon {
-    width: 30px;
-    height: 30px;
-    background: #53DDFF;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-/* Main Layout - 3 sections */
-.content-wrapper {
-    display: grid;
-    grid-template-columns: 350px 1fr;
+    flex-direction: column;
     gap: 30px;
 }
 
-/* Left Section - Pet Image */
-.pet-image-section {
-    background: white;
-    border-radius: 20px;
-    padding: 30px;
+/* 1. แถวบน (รูป + ข้อมูล) */
+.pet-header-wrapper {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    box-shadow: var(--box-shadow);
-    height: fit-content;
+    gap: 30px;
 }
 
-.pet-name {
+/* 1.1 ส่วนซ้าย (รูป) */
+.pet-image-section {
+    flex-basis: 300px;
     background: white;
     border-radius: 20px;
     padding: 30px;
@@ -82,89 +21,90 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    box-shadow: var(--box-shadow);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     height: fit-content;
 }
 
 .pet-image-placeholder {
     width: 250px;
     height: 250px;
-    background: #d9d9d9;
+    background: #e0e0e0;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 80px;
     color: #999;
+    overflow: hidden; /* (กันรูปภาพล้นกรอบ) */
+}
+
+.pet-image-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .pet-name-display {
-    background: var(--bg-light);
-    padding: 15px 30px;
+    background: #f4f6f9;
+    padding: 12px 30px;
     border-radius: 10px;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
     text-align: center;
     width: 100%;
 }
 
-/* Right Section */
-.right-section {
+/* 1.2 ส่วนขวา (ข้อมูล) */
+.pet-info-wrapper {
+    flex: 1; /* (กินพื้นที่ที่เหลือ) */
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-/* Status and Actions */
+/* 1.2.1 สถานะและปุ่ม */
 .status-actions {
-    order: 2;
-
-    border-radius: 20px;
-    padding: 25px 30px;
-    display: table-column;
+    display: flex;
     justify-content: space-between;
     align-items: center;
-
+    background: white;
+    border-radius: 20px;
+    padding: 20px 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
-
 .status-badge {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     font-size: 16px;
     font-weight: 600;
-    align-self: start;
 }
-
-.status-kub {
-    display: flex;
-    align-self: auto;
-    justify-content: space-between;
-    grid-column: span 2;
-    /* 👈 แก้เป็นอันนี้ครับ (หรือ grid-column: 1 / -1;) */
+.status-badge > span:first-child {
+    color: #555;
 }
-
-.status-label {
-    color: #333;
-}
-
 .status-value {
-    background: #E8F5FF;
-    color: #4A9EFF;
-    padding: 8px 20px;
-    border-radius: 8px;
-    border: 1px solid #4A9EFF;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    
+    /* Default (No Request) */
+    background-color: #f7fafc;
+    color: #718096;
 }
+/* (JS จะเปลี่ยนสีตามสถานะ) */
+.status-value.pending { background-color: #fffbeb; color: #d69e2e; }
+.status-value.approved { background-color: #f0fff4; color: #38a169; }
+.status-value.completed { background-color: #ebf8ff; color: #3182ce; }
+.status-value.closed { background-color: #f7fafc; color: #718096; }
+
 
 .action-btns {
     display: flex;
-    gap: 15px;
-    align-items: center;
-    /* (แนะนำ) ให้ปุ่มอยู่กลางแนวตั้ง */
+    gap: 10px;
 }
-
 .btn-icon {
-    padding: 10px 20px;
+    padding: 10px 18px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -173,173 +113,165 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    transition: var(--transition);
+    transition: all 0.2s;
 }
-
+.btn-icon i { font-size: 12px; }
 .btn-delete {
-    background: white;
-    color: #f34e4e;
-    border: 1px solid #f34e4e;
+    background: #fff5f5;
+    color: #e53e3e;
+    border: 1px solid #e53e3e;
 }
-
-.btn-delete:hover {
-    background: #f34e4e;
-    color: white;
-}
-
+.btn-delete:hover { background: #e53e3e; color: white; }
 .btn-edit {
-    background: white;
-    color: #4A9EFF;
-    border: 1px solid #4A9EFF;
+    background: #ebf8ff;
+    color: #3182ce;
+    border: 1px solid #3182ce;
 }
+.btn-edit:hover { background: #3182ce; color: white; }
 
-.btn-edit:hover {
-    background: #4A9EFF;
-    color: white;
-}
-
-/* Info Cards */
-.info-cards {
-    order: 1;
+/* 1.2.2 การ์ดข้อมูล 2 ใบ */
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
     background: white;
     border-radius: 20px;
     padding: 30px;
-    box-shadow: var(--box-shadow);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
-
 .card-title {
     font-size: 18px;
     font-weight: 700;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     color: #333;
 }
-
 .info-item {
-    display: flex;
-    gap: 10px;
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: 15px;
+    color: #444;
+    line-height: 1.8;
 }
-
 .info-item::before {
     content: "•";
-    color: #333;
+    color: #888;
     font-weight: bold;
+    margin-right: 8px;
 }
 
-/* Owner Info */
+/* 2. แถวล่าง (ข้อมูลผู้รับเลี้ยง) */
 .owner-info {
     background: white;
     border-radius: 20px;
-    padding: 30px;
-    box-shadow: var(--box-shadow);
-    order: 3;
+    padding: 30px 40px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
-
 .owner-title {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
-
 .owner-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr 1fr;
     gap: 20px 40px;
-    margin-bottom: 30px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
 }
-
 .owner-field {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
-
 .field-label {
     font-size: 14px;
-    color: #666;
+    color: #888;
     font-weight: 500;
 }
-
 .field-value {
-    font-size: 14px;
-    color: #333;
-}
-
-.owner-questions {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.question-item {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.question-text {
-    font-size: 14px;
+    font-size: 16px;
     color: #333;
     font-weight: 500;
 }
-
+.owner-field.full-width {
+    grid-column: 1 / -1; /* (ให้ช่องที่อยู่เต็มแถว) */
+}
+.owner-questions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 40px;
+    padding-top: 20px;
+}
+.question-text {
+    font-size: 15px;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
 .answer-text {
-    font-size: 14px;
-    color: #666;
-    padding-left: 0;
+    font-size: 15px;
+    color: #555;
+    line-height: 1.6;
 }
 
-/* Back Button */
+/* 3. ข้อความ (กรณีไม่มีผู้รับเลี้ยง) */
+.no-owner-message {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    border: 2px dashed #e0e0e0;
+}
+.no-owner-message h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #555;
+}
+.no-owner-message p {
+    font-size: 15px;
+    color: #888;
+}
+
+/* 4. ปุ่มย้อนกลับ */
 .back-button-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-    order: 4;
+    text-align: center;
+    margin-top: 10px;
 }
-
 .btn-back {
-    padding: 14px 60px;
+    padding: 12px 50px;
     background: white;
     color: #333;
-    border: 1px solid #ddd;
-    border-radius: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: var(--transition);
-
+    transition: all 0.2s;
 }
-
-.btn-back a {
-    text-decoration: none;
-    /* 👈 ลบขีดเส้นใต้ */
-    color: inherit;
-    /* 👈 ทำให้สีข้อความเป็นสีเดียวกับปุ่มแม่ (.btn-back) ซึ่งคือ #333 */
-    display: block;
-    /* 👈 ทำให้ลิงก์ขยายเต็มพื้นที่ปุ่ม (ถ้าจำเป็น) */
-    width: 100%;
-    height: 100%;
-}
-
 .btn-back:hover {
-    background: #f5f5f5;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: #f8f8f8;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
+/* --- Helper Classes --- */
+.hidden {
+    display: none !important;
+}
 
-/* Responsive */
+/* --- Responsive (ปรับสำหรับจอมือถือ/แท็บเล็ต) --- */
 @media (max-width: 1200px) {
-    .content-wrapper {
+    .pet-header-wrapper {
+        flex-direction: column;
+    }
+    .pet-image-section {
+        flex-basis: auto;
+    }
+}
+@media (max-width: 768px) {
+    .info-grid, .owner-grid, .owner-questions {
         grid-template-columns: 1fr;
     }
-
-    .info-cards {
-        grid-template-columns: 1fr;
+    .status-actions {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
     }
 }
