@@ -71,7 +71,20 @@ body.status-page {
     display: flex;
     align-items: center;
     gap: 14px;
+    
+    /* [!! เพิ่ม !!] ทำให้การ์ดเป็นลิงก์ได้สวยๆ */
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
+/* [!! เพิ่ม !!] Hover effect ให้การ์ดที่กดได้ */
+.card-pet:hover,
+.card-user:hover {
+    transform: translateY(-3px);
+    box-shadow: 4px 4px 15px 0px rgba(0,0,0,0.12);
+}
+
 
 .card-pet {
     flex: 0 0 260px;
@@ -431,7 +444,3 @@ body.status-page {
 .status-step.completed::after {
     display: none;
 }
-
-
-
-

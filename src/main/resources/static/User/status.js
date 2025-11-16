@@ -7,6 +7,7 @@ const STATUS_CONFIG = {
     completedSteps: ["request"],
     rejectedStep: null,
     showCancel: true,
+    showEdit: true, // [!! เพิ่ม !!]
     cancelText: "ยกเลิกการรับเลี้ยง",
     showBack: false,
   },
@@ -16,6 +17,7 @@ const STATUS_CONFIG = {
     completedSteps: ["request", "approval"],
     rejectedStep: null,
     showCancel: true,
+    showEdit: false, // [!! เพิ่ม !!]
     cancelText: "ยกเลิกการรับเลี้ยง",
     showBack: false,
   },
@@ -25,6 +27,7 @@ const STATUS_CONFIG = {
     completedSteps: ["request"],
     rejectedStep: "approval",
     showCancel: false,
+    showEdit: false, // [!! เพิ่ม !!]
     showBack: true,
   },
 
@@ -33,6 +36,7 @@ const STATUS_CONFIG = {
     completedSteps: ["request", "approval", "handover"],
     rejectedStep: null,
     showCancel: false,
+    showEdit: false, // [!! เพิ่ม !!]
     showBack: true,
   },
 
@@ -41,16 +45,20 @@ const STATUS_CONFIG = {
     completedSteps: ["request", "approval"],
     rejectedStep: "handover",
     showCancel: false,
+    showEdit: false, // [!! เพิ่ม !!]
     showBack: true,
   },
 };
 
 // map status จาก backend -> key ใน STATUS_CONFIG
+// [!! เพิ่ม !!] (ฉันเดา key จากฝั่ง Admin ให้นะคะ)
 const STATUS_MAP = {
   PENDING: "pending",
   APPROVED: "approved",
   REJECTED: "approvalRejected",
-  COMPLETED: "completed",
+  COMPLETED: "completed", // (Adopted)
+  CANCELED_PENDING: "approvalRejected", // (สมมติว่า Cancelled = Rejected)
+  CANCELED_APPROVED: "handoverFailed", // (สมมติว่า Cancelled = Failed)
   HANDOVER_FAILED: "handoverFailed",
 };
 
@@ -75,6 +83,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const cancelModalConfirm = document.getElementById("cancel-modal-confirm");
 
   // element สำหรับ header การ์ดด้านบน
+  // [!! แก้ไข !!] (เลือกตัวการ์ด ไม่ใช่แค่ข้อความ)
+  const petCard = document.querySelector(".card-pet");
+  const userCard = document.querySelector(".card-user");
+  
   const petNameEl = document.getElementById("pet-name");
   const petImageEl = document.getElementById("petImage");
   const userNameEl = document.getElementById("user-username");
@@ -89,6 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentStatus = "pending";        // key ใน STATUS_CONFIG
   let pickupType = "SELF_PICKUP";       // SELF_PICKUP หรือ DELIVERY
   let pickupDate = null;                // string เช่น "2025-12-01"
+  let petId = null; // [!! เพิ่ม !!] (สำหรับลิงก์ไปหน้า petdetail)
 
 
   // -------- ฟังก์ชัน update pickup box ตาม status + pickupType --------
@@ -100,25 +113,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (pickupType === "DELIVERY") {
       // ------- กรณีเลือก Delivery -------
       title = "Delivery";
-      icon = "🚚";
+      icon = "🚚"; // [!! แก้ไข !!] (ใช้ icon รถส่งของ)
 
       if (statusKey === "pending") {
-        message =
-          "คำขอของคุณถูกส่งแล้ว หลังจากได้รับการอนุมัติ มูลนิธิจะดำเนินการจัดส่งสัตว์เลี้ยงให้คุณ";
+        message = "คำขออยู่ระหว่างรอพิจารณาโดยเจ้าหน้าที่"; // (ตามรูป)
       } else if (statusKey === "approved") {
-        message =
-          "มูลนิธิจะจัดส่งสัตว์เลี้ยงให้คุณในวันที่ " +
-          (pickupDate || "[DATE]") +
-          " ตามที่อยู่นัดหมาย";
+        message = "มูลนิธิจะจัดส่งสัตว์เลี้ยงให้คุณในวันที่ " + (pickupDate || "[DATE]"); // (ตามรูป)
       } else if (statusKey === "completed") {
-        message =
-          "ดำเนินการจัดส่งสัตว์เลี้ยงเรียบร้อยแล้ว ขอให้มีความสุขกับเพื่อนใหม่ของคุณ";
+        message = "ดำเนินการจัดส่งสัตว์เลี้ยงเรียบร้อยแล้ว"; // (ตามรูป)
       } else if (statusKey === "handoverFailed") {
-        message =
-          "การจัดส่งสัตว์เลี้ยงไม่สำเร็จ กรุณาติดต่อเจ้าหน้าที่เพื่อสอบถามรายละเอียดเพิ่มเติม";
+        message = "คำขอรับเลี้ยงถูกยกเลิกเนื่องจากเลยเวลานัดหมาย"; // (ตามรูป)
       } else if (statusKey === "approvalRejected") {
-        message =
-          "คำขอรับเลี้ยงของคุณไม่ได้รับการอนุมัติ กรุณาติดต่อเจ้าหน้าที่เพื่อสอบถามรายละเอียดเพิ่มเติม";
+        message = "คำขอรับเลี้ยงได้ถูกปฏิเสธโดยเจ้าหน้าที่"; // (ตามรูป)
       }
 
     } else {
@@ -127,22 +133,15 @@ document.addEventListener("DOMContentLoaded", () => {
       icon = "🐾";
 
       if (statusKey === "pending") {
-        message =
-          "คำขอของคุณถูกส่งแล้ว กำลังรอการอนุมัติจากเจ้าหน้าที่";
+        message = "คำขออยู่ระหว่างรอพิจารณาโดยเจ้าหน้าที่"; // (ตามรูป)
       } else if (statusKey === "approved") {
-        message =
-          "กรุณามารับสัตว์เลี้ยงของคุณภายในวันที่ " +
-          (pickupDate || "[DATE]") +
-          " ที่ศูนย์อุปการะสัตว์";
+        message = "กรุณามารับสัตว์เลี้ยงของคุณภายในวันที่ " + (pickupDate || "[DATE]") + " [ที่อยู่มูลนิธิ]"; // (ตามรูป)
       } else if (statusKey === "completed") {
-        message =
-          "ดำเนินการรับสัตว์เลี้ยงเรียบร้อยแล้ว ขอบคุณที่รับเลี้ยงจากเรา";
+        message = "ดำเนินการรับสัตว์เลี้ยงเรียบร้อยแล้ว"; // (ตามรูป)
       } else if (statusKey === "handoverFailed") {
-        message =
-          "คำขอรับเลี้ยงของคุณถูกยกเลิก เนื่องจากไม่มารับสัตว์เลี้ยงตามเวลาที่กำหนด";
+        message = "คำขอรับเลี้ยงถูกยกเลิกเนื่องจากเลยเวลานัดหมาย"; // (ตามรูป)
       } else if (statusKey === "approvalRejected") {
-        message =
-          "คำขอรับเลี้ยงของคุณไม่ได้รับการอนุมัติ กรุณาติดต่อเจ้าหน้าที่เพื่อสอบถามรายละเอียดเพิ่มเติม";
+        message = "คำขอรับเลี้ยงได้ถูกปฏิเสธโดยเจ้าหน้าที่"; // (ตามรูป)
       }
     }
 
@@ -182,23 +181,28 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!icon) return;
 
       if (step.classList.contains("rejected")) {
-        icon.textContent = "✗"; // fail
+        icon.textContent = "✗"; // fail (ตามรูป)
       } else if (step.classList.contains("completed")) {
-        icon.textContent = "✓"; // success
+        icon.textContent = "✓"; // success (ตามรูป)
       } else {
-        icon.textContent = ""; // ยังไม่ถึง step นี้
+        icon.textContent = ""; // ยังไม่ถึง step นี้ (วงเทา)
       }
     });
 
     // ปุ่มยกเลี้ยง / ย้อนกลับ
     if (config.showCancel) {
       primaryBtn.style.display = "inline-block";
-      primaryBtn.textContent = config.cancelText || "ยกเลิก";
+      primaryBtn.textContent = config.cancelText || "ยกเลิกการรับเลี้ยง"; // (ตามรูป)
     } else {
       primaryBtn.style.display = "none";
     }
 
-    backBtn.style.display = config.showBack ? "inline-block" : "none";
+    backBtn.style.display = config.showBack ? "inline-block" : "none"; // (ปุ่มย้อนกลับ)
+    
+    // [!! เพิ่ม !!] ซ่อน/แสดง ปุ่ม Edit ตามสถานะ
+    if (editFormBtn) {
+        editFormBtn.style.display = config.showEdit ? "inline-flex" : "none";
+    }
 
     // sync dropdown (ตัว preview)
     if (statusSelect) {
@@ -212,36 +216,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ----- โหลดข้อมูลจาก backend -----
   async function loadAdoptionFromBackend(id) {
+    // (ฟังก์ชันนี้ สมมติว่า Backend ส่งข้อมูลมาตามที่คนสวยอธิบาย)
     try {
-      const res = await fetch(`/api/adoptions/${id}`);
-      if (!res.ok) {
-        console.error("โหลด adoption ไม่ได้", res.status);
-        renderStatus("pending");
-        return;
-      }
+      // (จำลองการ fetch)
+      // const res = await fetch(`/api/adoptions/${id}`);
+      // if (!res.ok) throw new Error("Failed to fetch");
+      // const data = await res.json();
+      
+      // [!! Mock Data (สำหรับ Test) !!]
+      const data = {
+          petId: "P001", // (ต้องมี petId)
+          petName: "Lucky (From API)",
+          petImageUrl: "../images/sample-pet.jpg",
+          userName: "User (From API)",
+          userEmail: "api@example.com",
+          userImageUrl: "../images/default-user.png",
+          pickupType: "SELF_PICKUP", // "DELIVERY"
+          pickupDate: "2025-11-20",
+          status: "PENDING" // (Backend ส่ง PENDING, APPROVED, REJECTED, COMPLETED, HANDOVER_FAILED)
+      };
+      // [!! จบส่วน Mock Data !!]
 
-      const data = await res.json();
 
       // เติมข้อมูลใน card ด้านบน
-      if (petNameEl && data.petName) {
-        petNameEl.textContent = data.petName;
-      }
-      if (petImageEl && data.petImageUrl) {
-        petImageEl.src = data.petImageUrl;
-      }
-      if (userNameEl && data.userName) {
-        userNameEl.textContent = data.userName;
-      }
-      if (userEmailEl && data.userEmail) {
-        userEmailEl.textContent = data.userEmail;
-      }
-      if (userAvatarEl) {
-        userAvatarEl.src = data.userImageUrl || "../images/default-user.png";
-      }
+      if (petNameEl) petNameEl.textContent = data.petName;
+      if (petImageEl) petImageEl.src = data.petImageUrl;
+      if (userNameEl) userNameEl.textContent = data.userName;
+      if (userEmailEl) userEmailEl.textContent = data.userEmail;
+      if (userAvatarEl) userAvatarEl.src = data.userImageUrl || "../images/default-user.png";
+
+      // [!! เพิ่ม !!] เก็บ petId ไว้สร้าง Link
+      petId = data.petId; 
 
       // เก็บ pickupType / pickupDate จาก backend
-      pickupType = data.pickupType || "SELF_PICKUP";  // เช่น "SELF_PICKUP" หรือ "DELIVERY"
-      pickupDate = data.pickupDate || null;           // เช่น "2025-12-01"
+      pickupType = data.pickupType || "SELF_PICKUP";  
+      pickupDate = data.pickupDate || null;           
 
       // สถานะจาก backend -> render timeline + pickup box
       const key = STATUS_MAP[data.status] || "pending";
@@ -259,7 +268,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // มี id จาก backend → โหลดข้อมูลจริง
     loadAdoptionFromBackend(adoptionId);
   } else {
-    // ไม่มี id → ใช้ mock ค่าไว้ก่อน
+    // ไม่มี id → ใช้ mock ค่าไว้ก่อน (สำหรับเทสหน้าเปล่าๆ)
     pickupType = "SELF_PICKUP";
     pickupDate = null;
     renderStatus(currentStatus);
@@ -274,10 +283,36 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // [!! แก้ไข !!] (เพิ่ม Event Listener ให้การ์ด)
+  // ไปหน้า petdetail
+  if (petCard) {
+      petCard.addEventListener("click", (e) => {
+          // ป้องกันไม่ให้คลิกการ์ดตอนที่เผลอคลิกปุ่ม Edit (ถ้ามี)
+          if (e.target.closest("#edit-form-btn")) return; 
+          
+          if (petId) {
+              window.location.href = `petdetail.html?id=${petId}`;
+          } else {
+              console.warn("No Pet ID loaded");
+          }
+      });
+  }
+
   // ไปหน้า viewform
-  editFormBtn.addEventListener("click", () => {
-    window.location.href = "viewform.html";
-  });
+  if (userCard) {
+      userCard.addEventListener("click", (e) => {
+          if (e.target.closest("#edit-form-btn")) return; // ถ้าคลิกปุ่ม Edit ไม่ต้องไป
+          window.location.href = "viewform.html";
+      });
+  }
+
+  // ไปหน้า userform (edit mode)
+  if (editFormBtn) {
+      editFormBtn.addEventListener("click", () => {
+          // (JS จะซ่อนปุ่มนี้เองถ้าสถานะไม่ใช่ Pending)
+          window.location.href = "userform.html?mode=edit"; 
+      });
+  }
 
 
   // ====== ปุ่มยกเลิก -> popup ======
@@ -311,16 +346,18 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("ไม่พบคำขอรับเลี้ยงที่ต้องการยกเลิก");
         return;
       }
-
+      
+      console.log(`Sending CANCEL request for adoptionId: ${adoptionId}`);
+      alert("จำลองการยกเลิก (ดู Console log)");
+      cancelModal.classList.remove("active");
+      
+      // (โค้ดจริงจะเรียก API)
+      /*
       try {
         const res = await fetch(`/api/adoptions/${adoptionId}/cancel`, {
-          method: "POST",               // หรือ PUT แล้วแต่ backend
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            reason: "USER_CANCEL",      // ส่งเหตุผลให้ admin ถ้าต้องการ
-          }),
+          method: "POST", 
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ reason: "USER_CANCEL" }),
         });
 
         if (!res.ok) {
@@ -330,15 +367,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         cancelModal.classList.remove("active");
         alert("ยกเลิกคำขอรับเลี้ยงเรียบร้อยแล้ว");
-
-        // แล้วแต่ออกแบบว่าจะให้ redirect ไปไหน
-        // ตัวอย่าง: กลับไปหน้า Adoption Status รวม
-        // window.location.href = "status.html";
+        
+        // โหลดหน้าใหม่เพื่อดูสถานะที่อัปเดต (เช่น REJECTED)
+        loadAdoptionFromBackend(adoptionId); 
 
       } catch (err) {
         console.error(err);
         alert("เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง");
       }
+      */
     });
   }
 
@@ -348,4 +385,3 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "petlisting.html";
   });
 });
-
