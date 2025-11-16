@@ -131,9 +131,10 @@ main {
 
 /* Sidebar Right */
 .sidebar-right {
-    width: 320px;
+    width: 350px;
 }
 
+/* Desktop view - แสดง cards ปกติ */
 .user-cards {
     display: flex;
     flex-direction: column;
@@ -193,6 +194,88 @@ main {
     color: #999;
 }
 
+/* Dropdown styles - ซ่อนไว้ใน desktop */
+.user-dropdown {
+    display: none;
+    position: relative;
+}
+
+.dropdown-selected {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0px 5px 30px 0px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dropdown-selected:hover {
+    box-shadow: 0px 5px 30px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-arrow {
+    margin-left: auto;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.dropdown-arrow::after {
+    content: '▼';
+    font-size: 12px;
+    color: #666;
+}
+
+.dropdown-arrow.open::after {
+    transform: rotate(180deg);
+    display: inline-block;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0px 5px 30px 0px rgba(0,0,0,0.15);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    z-index: 100;
+}
+
+.dropdown-menu.open {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.dropdown-item {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.dropdown-item:hover {
+    background: #f8f8f8;
+}
+
+
 /* Pet Card */
 .pet-card {
     background: white;
@@ -223,16 +306,26 @@ main {
 
 .pet-details {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr; /* แบ่งครึ่งเท่ากันพอดี */
     gap: 12px;
     font-size: 13px;
 }
 
 .pet-detail-item {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap; /* เพิ่มบรรทัดนี้ */
+    align-items: baseline;
     gap: 8px;
     color: var(--text-color);
+    /*text-wrap: wrap;*/
+}
+
+.pet-detail-item span {
+    color: #333;
+    font-weight: 500;
+    word-break: break-word;
+    flex: 1 1 auto; /* ให้ span ยืดหยุ่นได้ */
+    min-width: 0; /* สำคัญ! ให้ span สามารถหดได้เมื่อจำเป็น */
 }
 
 .pet-detail-item::before {
@@ -290,4 +383,70 @@ main {
 
 .btn-approve:hover {
     background: #4caf50;
+}
+
+/* Mobile view - แสดง dropdown */
+@media (max-width: 768px) {
+    * {
+    }
+
+    .content-wrapper {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 10px;
+    }
+
+    .sidebar-right {
+        display: flex;
+        flex-direction: column-reverse;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .button-group {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 10px;
+    }
+
+    .user-cards {
+        display: none;
+    }
+
+    .user-dropdown {
+        display: block;
+    }
+
+    .pet-card {
+        width: 100%;
+        display: flex;
+    }
+    
+    .pet-card-title {
+        width: 30%;
+        height: max-content;
+    }
+
+    .pet-image-container {
+        position: absolute;
+        top: 180px;
+    }
+
+    .pet-details {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        font-size: 12px;
+    }
+
+    .pet-detail-item {
+        padding: 10px;
+    }
+
+    .pet-detail-item:nth-child(7),
+    .pet-detail-item:nth-child(8),
+    .pet-detail-item:nth-child(9),
+    .pet-detail-item:nth-child(10) {
+        grid-column: 1;
+    }
+
 }

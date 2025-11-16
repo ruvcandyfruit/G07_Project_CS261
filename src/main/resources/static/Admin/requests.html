@@ -4,10 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pet Adoption - รายการคำขอรับเลี้ยง</title>
+    <title>Pet Adoption | Request form</title>
     <link rel="stylesheet" href="requests.css">
-    <title>Request</title>
-
 </head>
 
 <body>
@@ -35,60 +33,62 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label>ชื่อจริง</label>
-                                <input type="text" value="xxxxxxxx" readonly>
+                                <input type="text" id="user-firstname" value="" readonly>
                             </div>
                             <div class="form-group">
                                 <label>นามสกุล</label>
-                                <input type="text" value="xxxxxxxx" readonly>
+                                <input type="text" id="user-lastname" value="" readonly>
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
                                 <label>วัน/เดือน/ปีเกิด</label>
-                                <input type="text" value="xx/xx/xxxx" readonly>
+                                <input type="text" id="user-birthdate" value="" readonly>
                             </div>
                             <div class="form-group">
                                 <label>เบอร์โทรศัพท์</label>
-                                <input type="text" value="xxxxxxxxx" readonly>
+                                <input type="text" id="user-phone" value="" readonly>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label>อีเมล</label>
-                            <input type="email" value="xxxxx@gmail.com" readonly>
+                            <input type="email" id="user-email" value="" readonly>
                         </div><br>
 
                         <div class="form-row">
                             <div class="form-group">
                                 <label>อาชีพ</label>
-                                <input type="text" value="xxxxxxxxx" readonly>
+                                <input type="text" id="user-occupation" value="" readonly>
                             </div>
                             <div class="form-group">
                                 <label>ประเภทที่อยู่อาศัย</label>
-                                <input type="text" value="ทาวเฮาส์" readonly>
+                                <input type="text" id="user-residence-type" value="" readonly>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label>ที่อยู่อาศัยปัจจุบัน</label>
-                            <input type="text" value="xxxxxxxxx" readonly>
+                            <input type="text" id="user-address" value="" readonly>
                         </div><br>
 
                         <div class="form-group">
                             <label>คุณเคยเลี้ยงสัตว์เลี้ยงมาก่อนหรือไม่? ถ้าเคย โปรดเล่าประสบการณ์ของคุณ</label>
-                            <textarea readonly>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</textarea>
+                            <textarea id="user-pet-experience" readonly></textarea>
                         </div><br>
 
                         <div class="form-group">
                             <label>ทำไมคุณถึงอยากรับสัตว์เลี้ยงตัวนี้ไว้?</label>
-                            <textarea readonly>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</textarea>
+                            <textarea id="user-adoption-reason" readonly></textarea>
                         </div>
                     </div>
 
+
                     <!-- Right Sidebar -->
                     <div class="sidebar-right">
-                        <div class="user-cards">
+                        <!-- Desktop view: แสดง cards ทั้งหมด -->
+                        <div class="user-cards" id="userCards">
                             <div class="user-card">
                                 <div class="user-avatar"><span class="solar--user-bold"></span></div>
                                 <div class="user-info">
@@ -107,27 +107,77 @@
                                 <div class="user-avatar"><span class="solar--user-bold"></span></div>
                                 <div class="user-info">
                                     <div class="user-name">UserName</div>
-                                    <div class="user-email">example@email.com</div>
+                                    <div class="user-email"></div>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Mobile view: dropdown -->
+                        <div class="user-dropdown" id="userDropdown">
+                            <div class="dropdown-selected" id="dropdownSelected">
+                                <div class="user-avatar"><span class="solar--user-bold"></span></div>
+                                <div class="user-info">
+                                    <div class="user-name"></div>
+                                    <div class="user-email"></div>
+                                </div>
+                                <div class="dropdown-arrow" id="dropdownArrow"></div>
+                            </div>
+                            
+                            <div class="dropdown-menu" id="dropdownMenu">
+                                <!-- Items จะถูกสร้างโดย JavaScript -->
                             </div>
                         </div>
 
                         <div class="pet-card">
                             <div class="pet-card-title">ข้อมูลสัตว์เลี้ยง</div>
                             <div class="pet-image-container">
-                                <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=300&h=300&fit=crop" alt="SHOKUN" class="pet-image">
+                                <img class="pet-image" id="pet-image" alt="Pet image">
                             </div>
                             <div class="pet-details">
-                                <div class="pet-detail-item">ชื่อ SHOKUN</div>
-                                <div class="pet-detail-item">รหัส D001</div>
-                                <div class="pet-detail-item">เพศ ชาย</div>
-                                <div class="pet-detail-item">ชนิด หมา</div>
-                                <div class="pet-detail-item">สายพันธุ์ shiba inu</div>
-                                <div class="pet-detail-item">อายุ 2 ปี</div>
-                                <div class="pet-detail-item">โรคประจำตัว : ไม่มี</div>
-                                <div class="pet-detail-item">การทำหมัน : ทำแล้ว</div>
-                                <div class="pet-detail-item">แพ้อาหาร : ปลาทูน่าต้มน้ำปลา</div>
-                                <div class="pet-detail-item">การฉีดวัคซีน : ครบ</div>
+                                <div class="pet-details-left">
+                                    <div class="pet-detail-item">
+                                        ชื่อ
+                                        <span id="pet-name"></span>
+                                    </div>
+                                    <div class="pet-detail-item">
+                                        รหัส
+                                        <span id="pet-id"></span>
+                                    </div>
+                                    <div class="pet-detail-item">
+                                        เพศ
+                                        <span id="pet-gender"></span>
+                                    </div>
+                                    <div class="pet-detail-item">
+                                        ชนิด
+                                        <span id="pet-type"></span>
+                                    </div>
+                                    <div class="pet-detail-item">
+                                        สายพันธุ์
+                                        <span id="pet-breed"></span>
+                                    </div>
+                                </div>
+                                <div class="pet-details-right">
+                                    <div class="pet-detail-item">
+                                        อายุ
+                                        <span id="pet-age"></span>
+                                    </div>
+                                    <div class="pet-detail-item">
+                                        โรคประจำตัว
+                                        <span id="pet-disease"></span>
+                                    </div>
+                                    <div class="pet-detail-item">
+                                        การทำหมัน
+                                        <span id="pet-sterilization"></span>
+                                    </div>
+                                    <div class="pet-detail-item">
+                                        แพ้อาหาร
+                                        <span id="pet-food-allergy"></span>
+                                    </div>
+                                    <div class="pet-detail-item">
+                                        การฉีดวัคซีน
+                                        <span id="pet-vaccine"></span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -145,6 +195,7 @@
     </div>
 
     <script src="sidebar.js"></script>
+    <script src="requests.js"></script>
 </body>
 
 </html>
