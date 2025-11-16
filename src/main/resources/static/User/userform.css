@@ -139,9 +139,19 @@ textarea {
     gap: 10px 15px;     
 }
 
+.select.receiveType {
+    justify-content: start;
+    gap: 10%;
+}
+
+/* responsive for select input */
 @media (max-width: 768px) {
     .select label {
     flex: 0 0 48%;        /* แต่ละ label กว้างประมาณครึ่ง parent → 2 คอลัมน์ */
+    }
+
+    .select.receiveType label {
+        flex: 50%;
     }
 }
 
@@ -263,6 +273,8 @@ input[type="checkbox"] {
     cursor: pointer;
 }
 
+
+/* responsive for button */
 @media (max-width: 768px) {
     .goButton {
         flex-direction: column-reverse;
