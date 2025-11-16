@@ -1,8 +1,3 @@
-/* ======================= MAIN AREA ======================= */
-* {
-  /* border: 1px solid grey;    */
-
-}
 
 .main-content {
   display: flex;
@@ -10,37 +5,26 @@
   gap: 30px;
   padding: 0 40px;
 }
-
-.breadcrumb {
-  padding-bottom: 10px;
-  max-width: 50%;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-}
-
 .wrapper {
   max-width: 1040px;
   display: flex;
   flex-direction: column;
   gap: 30px;  
-  border-color: blue;
 }
-
 .status-wrapper {
   display: flex;
   flex-direction: column;
   padding: 30px 0;
 }
 
-
-
-/* ======================= PET / USER INFO ======================= */
-
+/* ======================= [!! ใหม่ !!] PET / USER INFO CARDS ======================= */
 .info-row {
   display: flex;
   gap: 26px;
-  margin-bottom: 26px;
+  margin-bottom: 40px; /* (เพิ่มระยะห่าง) */
 }
 
+/* (การ์ด 2 ใบที่เป็นลิงก์ <a>) */
 .info-card {
   background: #fff;
   padding: 20px 26px;
@@ -50,6 +34,13 @@
   align-items: center;
   gap: 18px;
   flex: 1;
+  text-decoration: none; /* (ลบขีดเส้นใต้) */
+  color: inherit; /* (ใช้สีปกติ) */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.info-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.12);
 }
 
 .info-avatar {
@@ -57,155 +48,149 @@
   height: 70px;
   border-radius: 50%;
   object-fit: cover;
+  background: #f0f0f0; 
+}
+/* (ไอคอน User) */
+.user-icon-avatar {
+    background: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    color: #888;
 }
 
 .info-label {
   font-size: 14px;
   color: #777;
 }
-
 .info-value {
   font-size: 17px;
   font-weight: 700;
 }
+/* (เบอร์โทร) */
+#userPhone {
+    font-size: 15px;
+    font-weight: 500;
+    color: #333;
+    margin-top: 5px;
+}
+/* (ที่อยู่) */
+.address-label {
+    font-size: 13px;
+    color: #555;
+    margin-top: 5px;
+    display: none; /* (ซ่อนไว้ก่อน JS จะสั่งโชว์) */
+}
+.address-label.show {
+    display: block; /* (แสดงเมื่อเป็น Delivery) */
+}
 
-/* ======================= STATUS STEPS ======================= */
 
+/* ======================= STATUS STEPS (3 วง) ======================= */
 .status-steps-box {
   border-radius: 26px;
   padding: 40px 80px;
   position: relative;
   margin-bottom: 32px;
+  max-width: 800px; 
+  margin-left: auto;
+  margin-right: auto;
 }
-
 .status-line {
   position: absolute;
-  top: 115px;
-  left: 160px;
-  right: 160px;
+  top: 115px; 
   height: 4px;
   background: #d0d5e0;
+  z-index: 0;
+  width: calc(100% - 300px); 
+  left: 50%;
+  transform: translateX(-50%);
 }
-
 .status-steps {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative; 
+  z-index: 1;
 }
-
 .status-step {
   text-align: center;
   position: relative;
 }
-
-/* วงนอก */
 .status-circle {
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  background: #e6e8f0;
+  background: #e6e8f0; 
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 12px;
+  transition: background-color 0.2s ease;
 }
-
-/* วงใน */
-.circle-inner {
-  width: 100px;
+.circle-middle {
+  width: 100px; 
   height: 100px;
   border-radius: 50%;
-  background: #b8bcc8;
+  background: #b8bcc8; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
 }
-
-/* ✓ icon */
+.circle-inner {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #7f8490; 
+  transition: background-color 0.2s ease;
+}
 .circle-icon {
   position: absolute;
   font-size: 46px;
   color: #fff;
   opacity: 0;
+  z-index: 2;
 }
-
-/* ชื่อใต้ step */
 .status-label {
   font-size: 15px;
   color: #4a4a4a;
 }
-
-/* ====== Completed (เขียว) ====== */
-
-.status-step.completed .status-circle {
-  background: #d7f4df;
-}
-
-.status-step.completed .circle-inner {
-  background: #60c372;
-}
-
-.status-step.completed .circle-icon {
-  opacity: 1;
-}
-
-/* เส้นเขียวเชื่อม
-.status-step.completed::after {
-  content: "";
-  position: absolute;
-  top: 115px;
-  left: 50%;
-  width: 100%;
-  height: 4px;
-  background: #60c372;
-  z-index: 1;
-}
-
-.status-step:last-child.completed::after {
-  display: none;
-}
-*/
-/* ====== Rejected (แดง) ====== */
-
-.status-step.rejected .status-circle {
-  background: #ffe6e6;
-}
-
-.status-step.rejected .circle-inner {
-  background: #ff8b8b;
-}
-
-.status-step.rejected .circle-icon {
-  opacity: 1;
-}
+/* (Completed - เขียว) */
+.status-step.completed .status-circle { background: #d7f4df; }
+.status-step.completed .circle-middle { background: #60c372; }
+.status-step.completed .circle-inner { display: none; }
+.status-step.completed .circle-icon { opacity: 1; content: "✓"; }
+/* (Rejected - แดง) */
+.status-step.rejected .status-circle { background: #ffe6e6; }
+.status-step.rejected .circle-middle { background: #ff8b8b; }
+.status-step.rejected .circle-inner { display: none; }
+.status-step.rejected .circle-icon { opacity: 1; content: "✗"; }
 
 /* ======================= PICKUP BOX ======================= */
-
 .pickup-box {
   background: #fff;
   padding: 32px 26px;
   border-radius: 20px;
   border: 1px solid #ccc;
   margin-bottom: 26px;
-
-  /* จัดให้อยู่กลางทั้งแนวนอนและแนวตั้ง */
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;   /* <— อันนี้สำคัญมาก */
+  align-items: center;  
   gap: 10px;
-  text-align: center;    /* จัดข้อความกลาง */
+  text-align: center;    
 }
-
-
 .pickup-title {
   display: flex;
-  justify-content: center;   /* ไอคอน + text อยู่ตรงกลาง */
+  justify-content: center;   
   align-items: center;
   gap: 10px;
   font-size: 20px;
-  width: 100%;               /* บังคับให้กินพื้นที่ทั้งหมด */
+  width: 100%;               
   text-align: center;
 }
-
-
 .pickup-text {
   margin-top: 8px;
   font-size: 15px;
@@ -214,13 +199,11 @@
 }
 
 /* ======================= BUTTONS ======================= */
-
 .action-row {
   display: flex;
   justify-content: center;
   gap: 24px;
 }
-
 .btn {
   padding: 12px 34px;
   border-radius: 10px;
@@ -229,31 +212,36 @@
   border: none;
   font-weight: 700;
   color: #fff;
+  display: inline-flex; 
+  align-items: center; 
+  gap: 8px; 
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.btn-red { background: #ff4f4f; }
+.btn-green { background: #35c66a; }
+.btn-outline {
+  background: #ffffff;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 10px 32px;
+  font-weight: 600;
 }
 
-.btn-red {
-  background: #ff4f4f;
-}
-
-.btn-green {
-  background: #35c66a;
-}
-/* ========== MODAL OVERLAY ========== */
-
+/* ======================= MODALS (เหมือนเดิม) ======================= */
 .modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.4);
-  display: none;             /* ซ่อนเริ่มต้น */
+  display: none;             
   align-items: center;
   justify-content: center;
   z-index: 999;
 }
-
-.modal-overlay.active {
-  display: flex;             /* โชว์ตอนมี class active */
-}
-
+.modal-overlay.active { display: flex; }
 .modal-box {
   background: #ffffff;
   border-radius: 20px;
@@ -263,26 +251,21 @@
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
   text-align: center;
 }
-
 .modal-title {
   font-size: 1.2rem;
   font-weight: 700;
   margin-bottom: 8px;
 }
-
 .modal-text {
   font-size: 0.95rem;
   color: #555;
   margin-bottom: 24px;
 }
-
 .modal-actions {
   display: flex;
   justify-content: center;
   gap: 14px;
 }
-
-/* ปุ่มใน modal */
 .btn-modal {
   min-width: 120px;
   padding: 9px 16px;
@@ -292,40 +275,17 @@
   font-weight: 600;
   cursor: pointer;
 }
+.btn-modal-secondary { background: #f2f2f2; color: #333; }
+.btn-modal-danger { background: #ff4f4f; color: #fff; }
+.btn-modal-success { background: #35c66a; color: #fff; }
 
-.btn-modal-secondary {
-  background: #f2f2f2;
-  color: #333;
-}
-
-.btn-modal-danger {
-  background: #ff4f4f;
-  color: #fff;
-}
-
-.btn-outline {
-  background: #ffffff;
-  color: #333;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 10px 32px;
-  font-weight: 600;
-  cursor: pointer;
-}
-/* ปุ่มเขียวใน modal (YES) */
-.btn-modal-success {
-  background: #35c66a;
-  color: #fff;
-}
-
-/* การ์ด Successful */
+/* (Success Modal) */
 .success-box {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 14px;
 }
-
 .success-icon-circle {
   width: 90px;
   height: 90px;
@@ -339,15 +299,5 @@
   font-weight: 700;
   margin-bottom: 4px;
 }
-
-.success-title {
-  font-size: 1.3rem;
-  font-weight: 700;
-}
-
-.success-text {
-  font-size: 0.95rem;
-  color: #555;
-}
-
-
+.success-title { font-size: 1.3rem; font-weight: 700; }
+.success-text { font-size: 0.95rem; color: #555; }
