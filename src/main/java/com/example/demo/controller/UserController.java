@@ -67,6 +67,7 @@ public class UserController {
                 "token", token,
                 "userId", userDTO.getId(),
                 "email", userDTO.getEmail(),
+                "username", userDTO.getUsername(),
                 "role", userDTO.getRole()
             ));
         } catch (Exception e) {

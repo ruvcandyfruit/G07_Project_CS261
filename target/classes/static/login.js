@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (data.role) localStorage.setItem("role", data.role);
             if (data.email) localStorage.setItem("email", data.email);
 
-            alert(`✅ Welcome back, ${loginData.username}!`);
+            alert(`✅ Welcome back, ${data.username}!`);
 
             if (data.role === 'ADMIN') {
                 window.location.href = 'Admin/dashboard.html';
