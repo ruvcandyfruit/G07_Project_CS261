@@ -18,29 +18,29 @@
 
             <!-- Grid content-->
             <div class="grid">
-
                 <!-- Pet Stats Card -->
                  <div class="pet-stats-card card">
-                    <div class="pet-stats-title" id="pet-stats-title">สัตว์เลี้ยงทั้งหมด</div>
-                    
-                    <!-- Donut Chart -->
-                    <div class="donut-chart">
-                        <div class="donut-chart-container" >
-                            <canvas id="DoughnutChart"></canvas> 
+                    <div class="pizza">
+                        <div class="pet-stats-title" id="pet-stats-title">สัตว์เลี้ยงทั้งหมด</div>
+                        
+                        <!-- Donut Chart -->
+                        <div class="donut-chart">
+                            <div class="donut-chart-container" >
+                                <canvas id="DoughnutChart"></canvas> 
+                            </div>
+                        </div>
+
+                        <div class="legend">
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background: #010002;"></div>
+                                <span>Dog</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background: #ffd102;"></div>
+                                <span>Cat</span>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="legend">
-                        <div class="legend-item">
-                            <div class="legend-dot" style="background: #010002;"></div>
-                            <span>Dog</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-dot" style="background: #ffd102;"></div>
-                            <span>Cat</span>
-                        </div>
-                    </div>
-
                     <!-- Stats List -->
                     <div class="stats-list">
                         <div class="stat-item">
@@ -69,65 +69,68 @@
                         </div>
                     </div>
                  </div>
-
-                <!-- Line Chart Card -->
-                <div class="chart-card card">
-                    <h3 class="chart-title">Line Chart</h3>
-                    <div class="chart-legend">
-                        <div class="chart-legend-item">
-                            <div class="legend-dot" style="background: #ffd102;"></div>
-                            <span>Add pet</span>
+                <div class="second-wrap">
+                    <!-- Line Chart Card -->
+                    <div class="chart-card card">
+                        <h3 class="chart-title">Line Chart</h3>
+                        <div class="chart-legend">
+                            <div class="chart-legend-item">
+                                <div class="legend-dot" style="background: #ffd102;"></div>
+                                <span>Add pet</span>
+                            </div>
+                            <div class="chart-legend-item">
+                                <div class="legend-dot" style="background: #64bdc6;"></div>
+                                <span>Request</span>
+                            </div>
+                            <div class="chart-legend-item">
+                                <div class="legend-dot" style="background: #2b72fb;"></div>
+                                <span>Adopted</span>
+                            </div>
                         </div>
-                        <div class="chart-legend-item">
-                            <div class="legend-dot" style="background: #64bdc6;"></div>
-                            <span>Request</span>
-                        </div>
-                        <div class="chart-legend-item">
-                            <div class="legend-dot" style="background: #2b72fb;"></div>
-                            <span>Adopted</span>
+                        <div class="line-chart-container" style="width: 80%; margin: auto; padding: 20px;">
+                            <canvas id="LineChart"></canvas>
                         </div>
                     </div>
-                    <div class="line-chart-container" style="width: 80%; margin: auto; padding: 20px;">
-                        <canvas id="LineChart"></canvas>
-                    </div>
-                </div>
 
-                <!-- Calendar Card -->
-                <div class="calendar-card card">
-                    <div class="calendar-header">
-                        <div class="calendar-title" id="calendar-month">November 2025</div>
-                    </div>
+                    <div class="first-wrap">
+                        <!-- Calendar Card -->
+                        <div class="calendar-card card">
+                            <div class="calendar-header">
+                                <div class="calendar-title" id="calendar-month">November 2025</div>
+                            </div>
 
-                    <div class="calendar-weekdays">
-                        <div class="calendar-weekday">SUN</div>
-                        <div class="calendar-weekday">MON</div>
-                        <div class="calendar-weekday">TUE</div>
-                        <div class="calendar-weekday">WED</div>
-                        <div class="calendar-weekday">THU</div>
-                        <div class="calendar-weekday">FRI</div>
-                        <div class="calendar-weekday">SAT</div>
-                    </div>
+                            <div class="calendar-weekdays">
+                                <div class="calendar-weekday">SUN</div>
+                                <div class="calendar-weekday">MON</div>
+                                <div class="calendar-weekday">TUE</div>
+                                <div class="calendar-weekday">WED</div>
+                                <div class="calendar-weekday">THU</div>
+                                <div class="calendar-weekday">FRI</div>
+                                <div class="calendar-weekday">SAT</div>
+                            </div>
 
-                    <div class="calendar-days" id="calendar-days">
-                        <!-- Calendar days will be generated by JavaScript -->
-                    </div>
+                            <div class="calendar-days" id="calendar-days">
+                                <!-- Calendar days will be generated by JavaScript -->
+                            </div>
 
-                    <div class="calendar-time">
-                        <span>Time</span>
-                        <span id="calendar-current-time">9:41 AM</span>
-                    </div>
-                </div>
+                            <div class="calendar-time">
+                                <span>Time</span>
+                                <span id="calendar-current-time">9:41 AM</span>
+                            </div>
+                        </div>
 
-                <!-- Notifications Card -->
-                <div class="notification-card card">
-                    <div class="notification-header">
-                        <img src="image-resources/notification-icon-gradient.svg" alt="Notification">   
-                        <span class="notification-title">Notification</span>
-                        <span class="notification-badge" id="notification-count">2</span>
-                    </div>
+                        <!-- Notifications Card -->
+                        <div class="notification-card card">
+                            <div class="notification-header">
+                                <img src="image-resources/notification-icon-gradient.svg" alt="Notification">   
+                                <span class="notification-title">Notification</span>
+                                <span class="notification-badge" id="notification-count">2</span>
+                            </div>
 
-                    <div class="notification-list" id="notification-list">
-                        <!-- JavaScript จะสร้าง notification items ที่นี่ -->
+                            <div class="notification-list" id="notification-list">
+                                <!-- JavaScript จะสร้าง notification items ที่นี่ -->
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
