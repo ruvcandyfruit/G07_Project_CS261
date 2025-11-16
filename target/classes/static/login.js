@@ -89,6 +89,12 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
+        // เพิ่มการตรวจสอบรูปแบบอีเมล
+        if (!/^\S+@\S+\.\S+$/.test(email)) {
+            alert("⚠️ Please enter a valid email format.");
+            return;
+        }
+
         // Build request payload
         const loginData = {
             username: username,

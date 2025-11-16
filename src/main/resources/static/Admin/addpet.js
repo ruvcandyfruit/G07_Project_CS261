@@ -114,19 +114,16 @@ document.addEventListener('DOMContentLoaded', () => {
              formData.append('file', fileUpload.files[0]); 
         }
 
-        try {
-            saveButton.disabled = true;
-            saveButton.textContent = "Saving...";
+         try {
+        saveButton.disabled = true;
+        saveButton.textContent = "Saving...";
 
-            const response = await fetch("http://localhost:8081/api/pets", {
-                method: "POST",
-                body: formData 
-            });
-
-            if (!response.ok) {
-                const txt = await response.text();
-                throw new Error(txt); 
-            }
+        const url = `http://localhost:8081/api/pets/${petIdToUpdate}`;
+        
+        const response = await fetch(url, {
+            method: "PUT",
+            body: formData 
+        });
 
             const result = await response.json();
             alert(`Saved Pet ID ${result.id} to Database! Image URL: ${result.image}`);
