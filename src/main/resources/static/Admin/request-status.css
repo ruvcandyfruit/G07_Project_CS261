@@ -1,50 +1,37 @@
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Manrope', sans-serif;
-}
-
-body {
-  background: #f2f6ff;
-}
-
-.layout {
-  display: flex;
-}
-
 /* ======================= MAIN AREA ======================= */
+* {
+  /* border: 1px solid grey;    */
 
-.status-main {
-  flex: 1;
-  background: #e7f1ff;
-  padding: 40px 60px;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 0 40px;
+}
+
+.breadcrumb {
+  padding-bottom: 10px;
+  max-width: 50%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.wrapper {
+  max-width: 1040px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;  
+  border-color: blue;
 }
 
 .status-wrapper {
-  max-width: 1040px;
-  margin: 0 auto;
-}
-
-/* ======================= BREADCRUMB ======================= */
-
-.breadcrumb {
-  font-size: 18px;
   display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 26px;
-  font-weight: 600;
+  flex-direction: column;
+  padding: 30px 0;
 }
 
-.breadcrumb .current {
-  font-weight: 700;
-}
 
-.divider {
-  color: #777;
-}
 
 /* ======================= PET / USER INFO ======================= */
 
@@ -85,7 +72,6 @@ body {
 /* ======================= STATUS STEPS ======================= */
 
 .status-steps-box {
-  background: #dce9ff;
   border-radius: 26px;
   padding: 40px 80px;
   position: relative;

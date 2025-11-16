@@ -94,6 +94,7 @@ h2.breadcrumb-current {
     font-weight: 400; /* ตัวจางกว่าลิงก์ (ตามดีไซน์) */
     color: #333;
     margin: 0; /* ล้าง margin ที่ h2 อาจจะมีมาเอง */
+    display: inline;
 }
 
 /*--- Sidebar --- */

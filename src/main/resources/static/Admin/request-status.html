@@ -5,116 +5,115 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Request Status | Admin</title>
     <link rel="stylesheet" href="request-status.css">
-    <link rel="stylesheet" href="../all.css">
     <link rel="icon" href="../homepageResources/icon.png" type="image/x-icon">
 </head>
 
 <body>
 
-<div class="layout">
-
     <!-- ========================= SIDEBAR ========================= -->
     <aside id="sidebar"></aside>
+    <!-- ========================= Container ========================= -->
+    <div class="container">
+      <!-- Main content -->
+      <main>
+        <div class="main-content">
+          <!-- Breadcrumb -->
+           <div class="breadcrumb">
+              <div id="breadcrumb-placeholder"></div>
+           </div>
+          <!-- cards & button -->
+           <div class="wrapper">
 
-    <!-- ========================= MAIN ========================= -->
-    <main class="status-main">
+              <!-- Cards -->
+              <div class="status-wrapper">
+                  <!-- PET + USER INFO -->
+                  <div class="info-row">
 
-        <div class="status-wrapper">
+                      <div class="info-card">
+                          <img id="petImage" class="info-avatar" src="../images/sample-pet.jpg" alt="">
+                          <div>
+                              <p class="info-label">PetName</p>
+                              <p class="info-value" id="petName">Lucky</p>
+                          </div>
+                      </div>
 
-            <!-- Breadcrumb -->
-            <div class="breadcrumb">
-                <span>ALL PET</span>
-                <span class="divider">></span>
-                <span class="current">สถานะผู้รับเลี้ยง</span>
-            </div>
+                      <div class="info-card">
+                          <img id="userAvatar" class="info-avatar" src="../images/default-user.png" alt="">
+                          <div>
+                              <p class="info-label">UserName</p>
+                              <p class="info-value" id="userName">User</p>
 
-            <!-- PET + USER INFO -->
-            <div class="info-row">
+                              <p class="info-label">Email</p>
+                              <p class="info-value" id="userEmail">example@gmail.com</p>
+                          </div>
+                      </div>
 
-                <div class="info-card">
-                    <img id="petImage" class="info-avatar" src="../images/sample-pet.jpg" alt="">
-                    <div>
-                        <p class="info-label">PetName</p>
-                        <p class="info-value" id="petName">Lucky</p>
-                    </div>
-                </div>
+                  </div>
 
-                <div class="info-card">
-                    <img id="userAvatar" class="info-avatar" src="../images/default-user.png" alt="">
-                    <div>
-                        <p class="info-label">UserName</p>
-                        <p class="info-value" id="userName">User</p>
+                  <!-- ========================= STATUS STEPS ========================= -->
+                  <section class="status-steps-box">
 
-                        <p class="info-label">Email</p>
-                        <p class="info-value" id="userEmail">example@gmail.com</p>
-                    </div>
-                </div>
+                      <div class="status-line"></div>
 
-            </div>
+                      <div class="status-steps">
 
-            <!-- ========================= STATUS STEPS ========================= -->
-            <section class="status-steps-box">
+                          <!-- Request -->
+                          <div class="status-step" data-key="request">
+                              <div class="status-circle">
+                                  <div class="circle-inner"></div>
+                                  <span class="circle-icon">✓</span>
+                              </div>
+                              <p class="status-label">ส่งคำขอ</p>
+                          </div>
 
-                <div class="status-line"></div>
+                          <!-- Approval -->
+                          <div class="status-step" data-key="approval">
+                              <div class="status-circle">
+                                  <div class="circle-inner"></div>
+                                  <span class="circle-icon">✓</span>
+                              </div>
+                              <p class="status-label">อนุมัติคำขอ</p>
+                          </div>
 
-                <div class="status-steps">
+                          <!-- Handover -->
+                          <div class="status-step" data-key="handover">
+                              <div class="status-circle">
+                                  <div class="circle-inner"></div>
+                                  <span class="circle-icon">✓</span>
+                              </div>
+                              <p class="status-label">ส่งมอบ</p>
+                          </div>
 
-                    <!-- Request -->
-                    <div class="status-step" data-key="request">
-                        <div class="status-circle">
-                            <div class="circle-inner"></div>
-                            <span class="circle-icon">✓</span>
-                        </div>
-                        <p class="status-label">ส่งคำขอ</p>
-                    </div>
+                      </div>
+                  </section>
 
-                    <!-- Approval -->
-                    <div class="status-step" data-key="approval">
-                        <div class="status-circle">
-                            <div class="circle-inner"></div>
-                            <span class="circle-icon">✓</span>
-                        </div>
-                        <p class="status-label">อนุมัติคำขอ</p>
-                    </div>
+                  <!-- ========================= PICKUP INFO ========================= -->
+                  <section class="pickup-box">
+                      <h3 class="pickup-title">
+                          <span id="pickupIcon">🐾</span>
+                          <span id="pickupTitle">Delivery</span>
+                      </h3>
+                      <p class="pickup-text" id="pickupMessage">
+                          ระบบได้รับนัดจัดส่งสัตว์เลี้ยงให้ผู้รับเลี้ยงในวันที่ [DATE] เรียบร้อยแล้ว
+                      </p>
+                  </section>
+              </div>
 
-                    <!-- Handover -->
-                    <div class="status-step" data-key="handover">
-                        <div class="status-circle">
-                            <div class="circle-inner"></div>
-                            <span class="circle-icon">✓</span>
-                        </div>
-                        <p class="status-label">ส่งมอบ</p>
-                    </div>
+              <!--  ACTION BUTTONS  -->
+              <div class="action-row">
+                  <button id="rejectBtn" class="btn btn-red">ยกเลิกการรับเลี้ยง</button>
+                  <button id="confirmBtn" class="btn btn-green">ยืนยันการรับเลี้ยง</button>
 
-                </div>
-            </section>
-
-            <!-- ========================= PICKUP INFO ========================= -->
-            <section class="pickup-box">
-                <h3 class="pickup-title">
-                    <span id="pickupIcon">🐾</span>
-                    <span id="pickupTitle">Delivery</span>
-                </h3>
-                <p class="pickup-text" id="pickupMessage">
-                    ระบบได้รับนัดจัดส่งสัตว์เลี้ยงให้ผู้รับเลี้ยงในวันที่ [DATE] เรียบร้อยแล้ว
-                </p>
-            </section>
-
-            <!-- ========================= ACTION BUTTONS ========================= -->
-            <div class="action-row">
-                <button id="rejectBtn" class="btn btn-red">ยกเลิการรับเลี้ยง</button>
-                <button id="confirmBtn" class="btn btn-green">ยืนยันการรับเลี้ยง</button>
-
-                 <!-- ปุ่มย้อนกลับ (ซ่อนเริ่มต้น) -->
-                <button id="backBtn" class="btn btn-outline" style="display: none;">
-                    ย้อนกลับ
-                </button>
-            </div>
+                  <!-- ปุ่มย้อนกลับ (ซ่อนเริ่มต้น) -->
+                  <button id="backBtn" class="btn btn-outline" style="display: none;">
+                      ย้อนกลับ
+                  </button>
+              </div>
+           </div>
 
         </div>
-
-    </main>
-</div>
+      </main>
+    </div>
 <!-- ===== Cancel Modal ===== -->
 <div id="admin-cancel-modal" class="modal-overlay">
   <div class="modal-box">
@@ -170,6 +169,7 @@
 <!-- JS -->
 <script src="request-status.js"></script>
 <script src="sidebar.js"></script>
+<script src="breadcrumb.js"></script>
 
 </body>
 </html>

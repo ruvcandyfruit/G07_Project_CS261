@@ -50,7 +50,7 @@ function setActiveMenu() {
 
     } else if (currentPage.includes('allpet.html') || 
                currentPage.includes('add-edit-pet.html') ||
-               currentPage.includes('request-status-admin.html') ||
+               currentPage.includes('request-status.html') ||
                currentPage.includes('requests.html') ||
                currentPage.includes('petdetail.html')) {
         // 2. หน้า "All Pet" และลูกๆ ทั้งหมด
@@ -87,7 +87,7 @@ function addNavigation() {
                 window.location.href = 'schedule.html';
             } else if (itemId === 'nav-logout') {
                 // [!! แก้ไข Path login ของคุณตรงนี้ !!]
-                window.location.href = 'login.html'; 
+                window.location.href = '../login.html'; 
             }
         });
     });
