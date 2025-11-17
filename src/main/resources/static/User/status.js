@@ -1,6 +1,4 @@
-//    2-frontend/status(user) branch
-
-// ตอนนี้มี mock data 2 อัน คือ STATUS_CONFIG สำหรับจำลองสถานะต่างๆ, mockFormData สำหรับใส่ข้อมูล user + การ์ดฟอร์ม 
+//  2-frontend/status(user) branch
 
 // =======================
 //  CONFIG สถานะ – ใช้คุม step + ปุ่ม
@@ -11,7 +9,7 @@ const STATUS_CONFIG = {
     completedSteps: ["request"],
     rejectedStep: null,
     showCancel: true,
-    //showEdit: true, // [!! เพิ่ม !!]
+    showEdit: true, // (สำหรับปุ่มใน Modal)
     cancelText: "ยกเลิกการรับเลี้ยง",
     showBack: false,
   },
@@ -21,7 +19,7 @@ const STATUS_CONFIG = {
     completedSteps: ["request", "approval"],
     rejectedStep: null,
     showCancel: true,
-    //showEdit: false, // [!! เพิ่ม !!]
+    showEdit: false,
     cancelText: "ยกเลิกการรับเลี้ยง",
     showBack: false,
   },
@@ -31,7 +29,7 @@ const STATUS_CONFIG = {
     completedSteps: ["request"],
     rejectedStep: "approval",
     showCancel: false,
-    //showEdit: false, // [!! เพิ่ม !!]
+    showEdit: false,
     showBack: true,
   },
 
@@ -40,55 +38,55 @@ const STATUS_CONFIG = {
     completedSteps: ["request", "approval", "handover"],
     rejectedStep: null,
     showCancel: false,
-    //showEdit: false, // [!! เพิ่ม !!]
+    showEdit: false,
     showBack: true,
   },
 
-  // 3. ส่งมอบไม่สำเร็จ
+  // 3. ส่งมอบไม่สำเร็จ / ถูกยกเลิก
   handoverFailed: {
     completedSteps: ["request", "approval"],
     rejectedStep: "handover",
     showCancel: false,
-    //showEdit: false, // [!! เพิ่ม !!]
+    showEdit: false,
     showBack: true,
   },
 };
 
 // map status จาก backend -> key ใน STATUS_CONFIG
-// [!! เพิ่ม !!] (ฉันเดา key จากฝั่ง Admin ให้นะคะ)
 const STATUS_MAP = {
   PENDING: "pending",
   APPROVED: "approved",
   REJECTED: "approvalRejected",
-  COMPLETED: "completed", // (Adopted)
-  CANCELED_PENDING: "approvalRejected", // (สมมติว่า Cancelled = Rejected)
-  CANCELED_APPROVED: "handoverFailed", // (สมมติว่า Cancelled = Failed)
+  COMPLETED: "completed",
   HANDOVER_FAILED: "handoverFailed",
+  CANCELED: "handoverFailed", // (สำหรับ Test Case 9, 10)
+  CANCELED_PENDING: "approvalRejected", 
+  CANCELED_APPROVED: "handoverFailed",
 };
 
-// Mock API data ตาม Form Model
+// Mock API data ตาม Form Model (สำหรับ Modal)
 const mockFormData = {
     id: 1,
-    firstName: "สมชาย",
-    lastName: "ใจดี",
-    dob: "1990-05-15", // LocalDate format จาก API
+    firstName: "สมสวย",
+    lastName: "คนงาม",
+    dob: "1995-01-10", // LocalDate format จาก API
     phone: "0812345678",
-    email: "somchai@example.com",
-    occupation: "วิศวกรซอฟต์แวร์",
+    email: "khonsuay@example.com",
+    occupation: "Frontend Developer",
     identityDoc: "https://example.com/uploads/identity-somchai.pdf",
     address: "123 ถนนสุขุมวิท แขวงคลองเตย เขตคลองเตย กรุงเทพฯ 10110",
     residenceType: "คอนโด",
     residenceDoc: "https://example.com/uploads/residence-somchai.pdf",
-    experience: "เคยเลี้ยงแมวมา 2 ตัว เป็นเวลา 5 ปี แมวทั้งสองตัวมีสุขภาพแข็งแรงและได้รับการดูแลเป็นอย่างดี",
-    reason: "รักและชอบสัตว์มาก ต้องการมีเพื่อนเลี้ยงในบ้านเพื่อลดความเหงา และพร้อมที่จะดูแลอย่างเต็มที่",
+    experience: "เคยเลี้ยงแมวเปอร์เซีย 1 ตัวค่ะ",
+    reason: "รักแมวมากค่ะ",
     trueInfo: true,
     acceptRight: true,
     homeVisits: true,
     recieveType: "มารับด้วยตนเอง",
     user: {
         id: 101,
-        username: "somchai_dev",
-        email: "somchai@example.com",
+        username: "khonsuay_dev",
+        email: "khonsuay@example.com",
         role: "USER",
         active: true
     },
@@ -108,14 +106,14 @@ const mockFormData = {
         foodAllergy: "ไม่มี",
         status: "AVAILABLE"
     },
-    status: "PENDING",
+    status: "PENDING", // (สถานะนี้มาจาก mock data ของฟอร์ม)
     approvedBy: null,
     approvedAt: null,
     meetDate: null
 };
 
 // API Configuration
-const API_BASE_URL = 'http://localhost:8080/api'; // เปลี่ยนเป็น URL จริงของคุณ
+const API_BASE_URL = 'http://localhost:8080/api'; // (URL จริง)
 
 // =======================
 //  HELPER FUNCTIONS
@@ -124,95 +122,88 @@ const API_BASE_URL = 'http://localhost:8080/api'; // เปลี่ยนเป
 // ฟังก์ชันแปลงวันที่จาก YYYY-MM-DD เป็น DD/MM/YYYY
 function formatDateThai(dateString) {
     if (!dateString) return '';
-    
-    const [year, month, day] = dateString.split('-');
+    const date = new Date(dateString); // (เผื่อ format อื่นๆ)
+    if (isNaN(date.getTime())) {
+        // ถ้า YYYY-MM-DD
+        const parts = dateString.split('-');
+        if (parts.length === 3) {
+            return `${parts[2]}/${parts[1]}/${parts[0]}`;
+        }
+        return dateString; // คืนค่าเดิมถ้าไม่รู้จัก
+    }
+    // ถ้าเป็น ISO string
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
     return `${day}/${month}/${year}`;
 }
 
-// Fetch data from real API
+
+// Fetch data for FORM (Modal)
 async function fetchUserFormFromAPI(formId) {
     const response = await fetch(`${API_BASE_URL}/userform/${formId}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            // 'Authorization': 'Bearer YOUR_TOKEN' // ถ้ามี authentication
+            // 'Authorization': 'Bearer YOUR_TOKEN' 
         }
     });
-    
     if (!response.ok) {
         throw new Error(`API Error: ${response.status}`);
     }
-    
     return await response.json();
 }
 
-// Get user form with fallback to mock data
+// Get user form (Modal) with fallback to mock data
 async function getUserForm(formId) {
     try {
-        console.log('🔄 กำลังเรียก API...');
+        console.log(`🔄 กำลังเรียก API (Form data) สำหรับ formId: ${formId}`);
         const data = await fetchUserFormFromAPI(formId);
-        console.log('✅ เรียก API สำเร็จ:', data);
+        console.log('✅ เรียก API (Form data) สำเร็จ:', data);
         return data;
     } catch (error) {
-        console.warn('⚠️ เรียก API ไม่สำเร็จ:', error.message);
-        console.log('📦 ใช้ Mock Data แทน');
-        
-        // Fallback to mock data
+        console.warn('⚠️ เรียก API (Form data) ไม่สำเร็จ:', error.message);
+        console.log('📦 ใช้ Mock Data (Form data) แทน');
         return new Promise((resolve) => {
             setTimeout(() => {
-                resolve(mockFormData);
+                // คืนค่า mock โดยจำลองว่า id ตรงกัน
+                resolve({ ...mockFormData, id: formId }); 
             }, 500);
         });
     }
 }
 
-// Load form data โหลดข้อมูลฟอร์มและแสดงใน overlay
-async function loadFormData() {
+// Load form data (Modal) โหลดข้อมูลฟอร์มและแสดงใน overlay
+async function loadFormData(formId) {
     try {
-        console.log('📝 เริ่มโหลดข้อมูลฟอร์ม...');
-
-        // แสดง loading, ซ่อนฟอร์ม
+        console.log('📝 เริ่มโหลดข้อมูลฟอร์ม (Modal)...');
         const loadingEl = document.getElementById('loading');
         const formContentEl = document.getElementById('formContent');
+        const editFormBtn = document.getElementById('editFormBtn');
 
         if (loadingEl) loadingEl.style.display = 'block';
         if (formContentEl) formContentEl.style.display = 'none';
 
-        // รอให้ overlay แสดงผลก่อน (100ms)
         await new Promise(resolve => setTimeout(resolve, 100));
         
-        // Get formId from URL parameter or use default
-        const urlParams = new URLSearchParams(window.location.search);
-        const formId = urlParams.get('formId') || '1';
-
-        // เรียกข้อมูลจาก API หรือ Mock
         const data = await getUserForm(formId);
 
-        console.log('📦 Data received:', data);
+        console.log('📦 Data received (Modal):', data);
 
-        // ตรวจสอบว่า elements มีอยู่จริง
-        const userNameEl = document.getElementById('formUserName');
-        const userEmailEl = document.getElementById('formUserEmail');
-        
-        if (!userNameEl || !userEmailEl) {
-            console.error('❌ ไม่พบ form elements!');
-            return;
-        }
-        
         // Populate user info (Header ของฟอร์ม)
-        userNameEl.textContent = data.user.username;
-        userEmailEl.textContent = data.user.email;
+        document.getElementById('formUserName').textContent = data.user.username;
+        document.getElementById('formUserEmail').textContent = data.user.email;
 
         // Populate form fields
         document.getElementById('firstName').value = data.firstName;
         document.getElementById('lastName').value = data.lastName;
-        document.getElementById('dob').value = formatDateThai(data.dob); // แปลงเป็น DD/MM/YYYY
+        document.getElementById('dob').value = formatDateThai(data.dob);
         document.getElementById('phone').value = data.phone;
         document.getElementById('email').value = data.email;
         document.getElementById('occupation').value = data.occupation;
         document.getElementById('address').value = data.address;
         document.getElementById('residenceType').value = data.residenceType;
-        document.getElementById('recieveType').value = data.recieveType || '-'; // ถ้าไม่มีให้แสดง -
+        document.getElementById('recieveType').value = data.recieveType || '-';
         document.getElementById('experience').value = data.experience;
         document.getElementById('reason').value = data.reason;
 
@@ -220,17 +211,21 @@ async function loadFormData() {
         const formInputs = document.querySelectorAll('.form-input, .form-textarea');
         formInputs.forEach(input => input.disabled = true);
 
-        console.log('✅ โหลดข้อมูลฟอร์มสำเร็จ');
+        // [!! สำคัญ !!] แสดง/ซ่อน ปุ่ม "แก้ไขฟอร์ม" ตามสถานะ (currentShowEdit)
+        if (editFormBtn) {
+            editFormBtn.style.display = currentShowEdit ? 'inline-block' : 'none';
+        }
 
-        // ซ่อน loading, แสดงฟอร์ม
+        console.log('✅ โหลดข้อมูลฟอร์ม (Modal) สำเร็จ');
         if (loadingEl) loadingEl.style.display = 'none';
         if (formContentEl) formContentEl.style.display = 'block';
 
     } catch (error) {
-        console.error('❌ Error loading form:', error);
-        alert('เกิดข้อผิดพลาดในการโหลดข้อมูล');
+        console.error('❌ Error loading form (Modal):', error);
+        alert('เกิดข้อผิดพลาดในการโหลดข้อมูลฟอร์ม');
     }
 }
+
 
 // =======================
 //  MAIN
@@ -244,8 +239,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const primaryBtn = document.getElementById("primary-action-btn");
   const backBtn = document.getElementById("back-btn");
-  const statusSelect = document.getElementById("status-select");
-  //const editFormBtn = document.getElementById("edit-form-btn");
+  
+  // (เรา comment out <select> ใน HTML ไปแล้ว แต่เผื่ออนาคต)
+  const statusSelect = document.getElementById("status-select"); 
 
   // element popup ยกเลิก
   const cancelModal = document.getElementById("cancel-modal");
@@ -253,64 +249,86 @@ document.addEventListener("DOMContentLoaded", () => {
   const cancelModalConfirm = document.getElementById("cancel-modal-confirm");
 
   // element สำหรับ header การ์ดด้านบน
-  // [!! แก้ไข !!] (เลือกตัวการ์ด ไม่ใช่แค่ข้อความ)
   const petCard = document.querySelector(".card-pet");
-  const userCard = document.querySelector(".card-user");
-  
   const petNameEl = document.getElementById("pet-name");
   const petImageEl = document.getElementById("petImage");
-  const userNameEl = document.getElementById("user-username");
-  const userEmailEl = document.getElementById("user-email");
-  const userAvatarEl = document.getElementById("userAvatar");
+  
+  const userCard = document.getElementById("view-form-card");
+  const userNameEl = document.getElementById("user-username"); // [!! สำคัญ !!]
+  const userEmailEl = document.getElementById("user-email"); // [!! สำคัญ !!]
 
-  // ดึง adoptionId จาก query string เช่น status.html?adoptionId=5
+  // element สำหรับ Modal (Form)
+  const overlayEl = document.querySelector('.overlay');
+  const formBackBtn = document.getElementById('backBtn'); // (ปุ่มใน Modal)
+  const formModalCloseBtn = document.getElementById('formModalCloseBtn');
+  const editFormBtn = document.getElementById('editFormBtn');
+
+  // ดึง formId จาก query string เช่น status.html?formId=5
   const params = new URLSearchParams(window.location.search);
-  const adoptionId = params.get("adoptionId");
+  const formId = params.get("formId"); // (นี่คือ ID หลักของหน้า)
 
   // state ในหน้านี้
-  let currentStatus = "pending";        // key ใน STATUS_CONFIG
-  let pickupType = "SELF_PICKUP";       // SELF_PICKUP หรือ DELIVERY
-  let pickupDate = null;                // string เช่น "2025-12-01"
-  let petId = null; // [!! เพิ่ม !!] (สำหรับลิงก์ไปหน้า petdetail)
+  let currentStatus = "pending";
+  let currentShowEdit = false; // (สถานะปุ่มแก้ไข)
+  let pickupType = "SELF_PICKUP";
+  let pickupDate = null; 
+  let petId = null;
 
-  // -------- ฟังก์ชัน update pickup box ตาม status + pickupType --------
+  // -------- [!! แก้ไข !!] ฟังก์ชัน update pickup box (ตาม Test Cases 1-10) --------
   function updatePickupView(statusKey) {
     let title = "Pickup";
     let icon = "🐾";
     let message = "";
+    
+    // (ใช้ '20/11/2025' ถ้าไม่มีข้อมูล)
+    const dateStr = pickupDate ? formatDateThai(pickupDate) : "[DATE]"; 
+    const addressStr = "[ที่อยู่มูลนิธิ]"; // (ใส่ที่อยู่จริงถ้ามี)
 
     if (pickupType === "DELIVERY") {
-      // ------- กรณีเลือก Delivery -------
       title = "Delivery";
-      icon = "🚚"; // [!! แก้ไข !!] (ใช้ icon รถส่งของ)
+      icon = "🚚";
 
-      if (statusKey === "pending") {
-        message = "คำขออยู่ระหว่างรอพิจารณาโดยเจ้าหน้าที่"; // (ตามรูป)
-      } else if (statusKey === "approved") {
-        message = "มูลนิธิจะจัดส่งสัตว์เลี้ยงให้คุณในวันที่ " + (pickupDate || "[DATE]"); // (ตามรูป)
-      } else if (statusKey === "completed") {
-        message = "ดำเนินการจัดส่งสัตว์เลี้ยงเรียบร้อยแล้ว"; // (ตามรูป)
-      } else if (statusKey === "handoverFailed") {
-        message = "คำขอรับเลี้ยงถูกยกเลิกเนื่องจากเลยเวลานัดหมาย"; // (ตามรูป)
-      } else if (statusKey === "approvalRejected") {
-        message = "คำขอรับเลี้ยงได้ถูกปฏิเสธโดยเจ้าหน้าที่"; // (ตามรูป)
+      switch (statusKey) {
+        case "pending": // Test Case 1
+          message = "คำขออยู่ระหว่างรอพิจารณาโดยเจ้าหน้าที่";
+          break;
+        case "approved": // Test Case 3
+          message = `มูลนิธิจะจัดส่งสัตว์เลี้ยงให้คุณในวันที่ ${dateStr}`;
+          break;
+        case "approvalRejected": // Test Case 5
+          message = "คำขอรับเลี้ยงได้ถูกปฎิเสธโดยเจ้าหน้าที่";
+          break;
+        case "completed": // Test Case 7
+          message = "ดำเนินการรับเลี้ยงสำเร็จเรียบร้อยแล้ว";
+          break;
+        case "handoverFailed": // Test Case 9 (Canceled)
+          message = "คำขอรับเลี้ยงถูกยกเลิกเนื่องจากเลยเวลานัดหมาย/เจ้าหน้าที่ยกเลิกการส่งมอบครั้งนี้/คุณได้ยกเลิกการรับเลี้ยงแล้ว";
+          break;
+        default:
+          message = "กำลังโหลดข้อมูล...";
       }
-
-    } else {
-      // ------- กรณี Self Pickup -------
+    } else { // Self Pickup
       title = "Self Pickup";
       icon = "🐾";
 
-      if (statusKey === "pending") {
-        message = "คำขออยู่ระหว่างรอพิจารณาโดยเจ้าหน้าที่"; // (ตามรูป)
-      } else if (statusKey === "approved") {
-        message = "กรุณามารับสัตว์เลี้ยงของคุณภายในวันที่ " + (pickupDate || "[DATE]") + " [ที่อยู่มูลนิธิ]"; // (ตามรูป)
-      } else if (statusKey === "completed") {
-        message = "ดำเนินการรับสัตว์เลี้ยงเรียบร้อยแล้ว"; // (ตามรูป)
-      } else if (statusKey === "handoverFailed") {
-        message = "คำขอรับเลี้ยงถูกยกเลิกเนื่องจากเลยเวลานัดหมาย"; // (ตามรูป)
-      } else if (statusKey === "approvalRejected") {
-        message = "คำขอรับเลี้ยงได้ถูกปฏิเสธโดยเจ้าหน้าที่"; // (ตามรูป)
+      switch (statusKey) {
+        case "pending": // Test Case 2
+          message = "คำขออยู่ระหว่างรอพิจารณาโดยเจ้าหน้าที่";
+          break;
+        case "approved": // Test Case 4
+          message = `กรุณามารับสัตว์เลี้ยงของคุณภายในวันที่ ${dateStr}\n${addressStr}`;
+          break;
+        case "approvalRejected": // Test Case 6
+          message = "คำขอรับเลี้ยงได้ถูกปฎิเสธโดยเจ้าหน้าที่";
+          break;
+        case "completed": // Test Case 8
+          message = "ดำเนินการรับเลี้ยงสำเร็จเรียบร้อยแล้ว";
+          break;
+        case "handoverFailed": // Test Case 10 (Canceled)
+          message = "คำขอรับเลี้ยงถูกยกเลิกเนื่องจากเลยเวลาที่กำหนด/เจ้าหน้าที่ยกเลิกการส่งมอบครั้งนี้/คุณได้ยกเลิกการรับเลี้ยงแล้ว";
+          break;
+        default:
+          message = "กำลังโหลดข้อมูล...";
       }
     }
 
@@ -318,6 +336,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (pickupTitleEl) pickupTitleEl.textContent = title;
     if (pickupMessageEl) pickupMessageEl.textContent = message;
     if (pickupIconEl) pickupIconEl.textContent = icon;
+
+    // (จัดการ \n ให้ขึ้นบรรทัดใหม่)
+    if (pickupMessageEl && pickupType === "SELF_PICKUP" && statusKey === "approved") {
+        pickupMessageEl.style.whiteSpace = "pre-line";
+    } else {
+        pickupMessageEl.style.whiteSpace = "normal";
+    }
   }
 
   // -------- ฟังก์ชัน render timeline / ปุ่มต่าง ๆ --------
@@ -326,6 +351,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!config) return;
 
     currentStatus = statusKey;
+    currentShowEdit = config.showEdit; // [!! สำคัญ !!] (เก็บสถานะปุ่มแก้ไข)
 
     // รีเซ็ต class
     steps.forEach((s) => s.classList.remove("completed", "rejected"));
@@ -350,29 +376,24 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!icon) return;
 
       if (step.classList.contains("rejected")) {
-        icon.textContent = "✗"; // fail (ตามรูป)
+        icon.textContent = "✗";
       } else if (step.classList.contains("completed")) {
-        icon.textContent = "✓"; // success (ตามรูป)
+        icon.textContent = "✓";
       } else {
-        icon.textContent = ""; // ยังไม่ถึง step นี้ (วงเทา)
+        icon.textContent = "";
       }
     });
 
-    // ปุ่มยกเลิก / ย้อนกลับ
+    // ปุ่มยกเลิก / ย้อนกลับ (หน้าหลัก)
     if (config.showCancel) {
       primaryBtn.style.display = "inline-block";
-      primaryBtn.textContent = config.cancelText || "ยกเลิกการรับเลี้ยง"; // (ตามรูป)
+      primaryBtn.textContent = config.cancelText || "ยกเลิกการรับเลี้ยง";
     } else {
       primaryBtn.style.display = "none";
     }
 
-    backBtn.style.display = config.showBack ? "inline-block" : "none"; // (ปุ่มย้อนกลับ)
+    backBtn.style.display = config.showBack ? "inline-block" : "none";
     
-    // [!! เพิ่ม !!] ซ่อน/แสดง ปุ่ม Edit ตามสถานะ
-    //if (editFormBtn) {
-    //    editFormBtn.style.display = config.showEdit ? "inline-flex" : "none";
-    //}
-
     // sync dropdown (ตัว preview)
     if (statusSelect) {
       statusSelect.value = statusKey;
@@ -380,38 +401,57 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // อัปเดต pickup box ตาม status + pickupType
     updatePickupView(statusKey);
+
+    if (currentStatus === "approved") {
+    messageBox.textContent = `ระบบได้บันทึกวันจัดส่งสัตว์เลี้ยงให้ผู้รับเลี้ยงในวันที่ ${pickupDate}`;
+}
+
+if (currentStatus === "completed") {
+    messageBox.textContent = `ดำเนินการรับเลี้ยงสำเร็จเรียบร้อยแล้วเมื่อวันที่ ${pickupDate}`;
+}
+if (currentStatus === "approved") {
+   step1.classList.add("done");
+   step2.classList.add("done");
+   step3.classList.remove("done");
+}
+
+if (currentStatus === "completed") {
+   step1.classList.add("done");
+   step2.classList.add("done");
+   step3.classList.add("done");
+}
+
   }
 
-  // ----- โหลดข้อมูลจาก backend -----
-  async function loadAdoptionFromBackend(id) {
-    // (ฟังก์ชันนี้ สมมติว่า Backend ส่งข้อมูลมาตามที่คนสวยอธิบาย)
+  // ----- โหลดข้อมูลจาก backend (สำหรับหน้า Status) -----
+  async function loadAdoptionStatus(id) {
     try {
       // (จำลองการ fetch)
-      // const res = await fetch(`/api/adoptions/${id}`);
-      // if (!res.ok) throw new Error("Failed to fetch");
+      // const res = await fetch(`${API_BASE_URL}/adoption-status/${id}`); 
+      // if (!res.ok) throw new Error("Failed to fetch status");
       // const data = await res.json();
       
-      // [!! Mock Data (สำหรับ Test) !!]
+      // [!! Mock Data (สำหรับ Test หน้า Status) - (เวอร์ชันที่ถูกต้อง) !!]
       const data = {
-          petId: "P001", // (ต้องมี petId)
-          petName: "Lucky (From API)",
+          petId: "P001", 
+          petName: "Lucky (จาก API)",
           petImageUrl: "../images/sample-pet.jpg",
-          userName: "User (From API)",
-          userEmail: "api@example.com",
-          userImageUrl: "../images/default-user.png",
-          pickupType: "SELF_PICKUP", // "DELIVERY"
-          pickupDate: "2025-11-20",
-          status: "PENDING" // (Backend ส่ง PENDING, APPROVED, REJECTED, COMPLETED, HANDOVER_FAILED)
+          userName: "khonsuay_api", // [!! ข้อมูล Mock !!]
+          userEmail: "khonsuay@api.com", // [!! ข้อมูล Mock !!]
+          pickupType: "DELIVERY", // หรือ "DELIVERY" "SELF_PICKUP"
+          pickupDate: "2025-11-20", // (วันที่นัดรับ/ส่ง)
+          status: "APPROVED" // (PENDING, APPROVED, REJECTED, COMPLETED, CANCELED)
       };
       // [!! จบส่วน Mock Data !!]
 
 
       // เติมข้อมูลใน card ด้านบน
       if (petNameEl) petNameEl.textContent = data.petName;
-      if (petImageEl) petImageEl.src = data.petImageUrl;
+      if (petImageEl) petImageEl.src = data.petImageUrl || "../images/sample-pet.jpg";
+
+      // [!! แก้ไข !!] เติมข้อมูล User Card (นี่คือส่วนที่ถูกต้อง)
       if (userNameEl) userNameEl.textContent = data.userName;
       if (userEmailEl) userEmailEl.textContent = data.userEmail;
-      //if (userAvatarEl) userAvatarEl.src = data.userImageUrl || "../images/default-user.png";
 
       // [!! เพิ่ม !!] เก็บ petId ไว้สร้าง Link
       petId = data.petId; 
@@ -425,23 +465,154 @@ document.addEventListener("DOMContentLoaded", () => {
       renderStatus(key);
 
     } catch (err) {
-      console.error("Error loading adoption", err);
-      renderStatus("pending");
+      console.error("Error loading adoption status", err);
+      renderStatus("pending"); // (ถ้าพัง ให้แสดง pending)
     }
   }
 
 
-  // ----- แสดงครั้งแรก -----
-  if (adoptionId) {
-    // มี id จาก backend → โหลดข้อมูลจริง
-    loadAdoptionFromBackend(adoptionId);
-  } else {
-    // ไม่มี id → ใช้ mock ค่าไว้ก่อน (สำหรับเทสหน้าเปล่าๆ)
-    pickupType = "SELF_PICKUP";
-    pickupDate = null;
-    renderStatus(currentStatus);
+  // ===================================
+  //  FORM OVERLAY (ดูฟอร์มผู้ใช้)
+  // ===================================
+
+  // ฟังก์ชันเปิด overlay
+  function openFormOverlay() {
+      if (overlayEl) {
+          overlayEl.classList.add('active');
+          // โหลดข้อมูลฟอร์ม (ใช้ formId จาก URL)
+          loadFormData(formId);
+      }
   }
 
+  // ฟังก์ชันปิด overlay
+  function closeFormOverlay() {
+      if (overlayEl) {
+          overlayEl.classList.remove('active');
+      }
+  }
+
+  // เมื่อคลิก user card
+  if (userCard) {
+      userCard.addEventListener("click", openFormOverlay);
+  }
+
+  // คลิกนอก container (บนพื้นหลังสีดำ) ให้ปิด overlay
+  if (overlayEl) {
+      overlayEl.addEventListener('click', (e) => {
+          if (e.target === overlayEl) {
+              closeFormOverlay();
+          }
+      });
+  }
+
+  // [!! เพิ่ม !!] ปุ่ม 'X' ปิด Modal
+  if (formModalCloseBtn) {
+      formModalCloseBtn.addEventListener('click', closeFormOverlay);
+  }
+
+  // ปุ่มย้อนกลับใน form ให้ปิด overlay
+  if (formBackBtn) {
+      formBackBtn.addEventListener('click', function(e) {
+          e.preventDefault(); // ป้องกันการ submit form
+          closeFormOverlay();
+      });
+  }
+
+  // [!! เพิ่ม !!] ปุ่ม "แก้ไขฟอร์ม" ใน Modal
+  if (editFormBtn) {
+      editFormBtn.addEventListener('click', function() {
+          if (formId) {
+              // (พาไปหน้า userform.html mode=edit)
+              window.location.href = `userform.html?mode=edit&formId=${formId}`;
+          } else {
+              alert('ไม่พบ ID ของฟอร์ม');
+          }
+      });
+  }
+
+
+  // ----- Event Listeners (ที่เหลือ) -----
+
+  // การ์ด Pet (ไปหน้า petdetail)
+  if (petCard) {
+      petCard.addEventListener("click", (e) => {
+          if (petId) {
+              // (สมมติว่าอยู่ path เดียวกัน)
+              window.location.href = `petdetail.html?id=${petId}`;
+          } else {
+              console.warn("No Pet ID loaded");
+          }
+      });
+  }
+  
+  // ====== ปุ่มยกเลิก (หน้าหลัก) -> popup ======
+  primaryBtn.addEventListener("click", () => {
+    if (!cancelModal) return;
+    cancelModal.classList.add("active");
+  });
+
+  // ปิด modal (Cancel) เมื่อกดปุ่ม CANCEL
+  if (cancelModalClose) {
+    cancelModalClose.addEventListener("click", () => {
+      cancelModal.classList.remove("active");
+    });
+  }
+
+  // คลิก overlay ด้านนอก (Cancel Modal) ก็ปิดได้
+  if (cancelModal) {
+    cancelModal.addEventListener("click", (e) => {
+      if (e.target === cancelModal) {
+        cancelModal.classList.remove("active");
+      }
+    });
+  }
+
+  // กด YES (Confirm Cancel)
+  if (cancelModalConfirm) {
+    cancelModalConfirm.addEventListener("click", async () => {
+      if (!formId) {
+        alert("ไม่พบคำขอรับเลี้ยงที่ต้องการยกเลิก");
+        return;
+      }
+      
+      console.log(`Sending CANCEL request for formId: ${formId}`);
+      alert("จำลองการยกเลิก (ดู Console log)");
+      cancelModal.classList.remove("active");
+      
+      // (โค้ดจริงจะเรียก API ยกเลิก)
+      /*
+      try {
+        const res = await fetch(`${API_BASE_URL}/userform/${formId}/cancel`, {
+          method: "POST", 
+        });
+        if (!res.ok) throw new Error("Cancel failed");
+
+        alert("ยกเลิกคำขอรับเลี้ยงเรียบร้อยแล้ว");
+        // โหลดหน้าใหม่เพื่อดูสถานะ (เช่น CANCELED/handoverFailed)
+        loadAdoptionStatus(formId); 
+
+      } catch (err) {
+        alert("เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง");
+      }
+      */
+    });
+  }
+
+  // ปุ่มย้อนกลับ (หน้าหลัก) -> ไป Pet Listing
+  backBtn.addEventListener("click", () => {
+    window.location.href = "petlisting.html";
+  });
+
+
+  // ----- โหลดข้อมูลครั้งแรก -----
+  if (formId) {
+    // มี id จาก backend → โหลดข้อมูลจริง
+    loadAdoptionStatus(formId);
+  } else {
+    // ไม่มี id → ใช้ mock ค่าไว้ก่อน (สำหรับเทสหน้าเปล่าๆ)
+    console.warn("ไม่มี formId ใน URL! กำลังใช้ mock data เริ่มต้น");
+    renderStatus("pending");
+  }
 
   // dropdown preview UI (ไว้เทสต์)
   if (statusSelect) {
@@ -451,165 +622,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // [!! แก้ไข !!] (เพิ่ม Event Listener ให้การ์ด)
-  // ไปหน้า petdetail
-  if (petCard) {
-      petCard.addEventListener("click", (e) => {
-          // ป้องกันไม่ให้คลิกการ์ดตอนที่เผลอคลิกปุ่ม Edit (ถ้ามี)
-          if (e.target.closest("#edit-form-btn")) return; 
-          
-          if (petId) {
-              window.location.href = `petdetail.html?id=${petId}`;
-          } else {
-              console.warn("No Pet ID loaded");
-          }
-      });
-  }
-
-    // ===================================
-    //  [!! ส่วนที่ย้ายเข้ามา !!] FORM OVERLAY (ดูฟอร์มผู้ใช้)
-    // ===================================
-
-    // ดึง element overlay
-    const overlayEl = document.querySelector('.overlay');
-    const formBackBtn = document.getElementById('backBtn');
-
-    // ฟังก์ชันเปิด overlay
-    function openFormOverlay() {
-        if (overlayEl) {
-            overlayEl.classList.add('active');
-            // โหลดข้อมูลฟอร์ม
-            loadFormData();
-        }
-    }
-
-    // ฟังก์ชันปิด overlay
-    function closeFormOverlay() {
-        if (overlayEl) {
-            overlayEl.classList.remove('active');
-        }
-    }
-
-        // เมื่อคลิก user card ให้เปิด overlay
-    if (userCard) {
-        userCard.addEventListener("click", (e) => {
-            // openFormOverlay(); // [!! แก้ไข: ลบ // ออก !!] 
-            openFormOverlay();
-        });
-    }
-
-    // คลิกนอก container (บนพื้นหลังสีดำ) ให้ปิด overlay
-    if (overlayEl) {
-        overlayEl.addEventListener('click', (e) => {
-            // ถ้าคลิกบน overlay โดยตรง (ไม่ใช่ใน container) ให้ปิด
-            if (e.target === overlayEl) {
-                closeFormOverlay();
-            }
-        });
-    }
-
-    // ปุ่มย้อนกลับใน form ให้ปิด overlay
-    if (formBackBtn) {
-        formBackBtn.addEventListener('click', function(e) {
-            e.preventDefault(); // ป้องกันการ submit form
-            closeFormOverlay();
-        });
-    }
-
-  // ====== ปุ่มยกเลิก -> popup ======
-
-  // ปุ่ม "ยกเลิกการรับเลี้ยง" -> เปิด popup
-  primaryBtn.addEventListener("click", () => {
-    if (!cancelModal) return;
-    cancelModal.classList.add("active");
-  });
-
-  // ปิด modal เมื่อกดปุ่ม CANCEL
-  if (cancelModalClose) {
-    cancelModalClose.addEventListener("click", () => {
-      cancelModal.classList.remove("active");
-    });
-  }
-
-  // คลิก overlay ด้านนอกก็ปิดได้
-  if (cancelModal) {
-    cancelModal.addEventListener("click", (e) => {
-      if (e.target === cancelModal) {
-        cancelModal.classList.remove("active");
-      }
-    });
-  }
-
-  // กด YES → เรียก API แจ้ง backend ว่ายกเลิกแล้ว
-  if (cancelModalConfirm) {
-    cancelModalConfirm.addEventListener("click", async () => {
-      if (!adoptionId) {
-        alert("ไม่พบคำขอรับเลี้ยงที่ต้องการยกเลิก");
-        return;
-      }
-      
-      console.log(`Sending CANCEL request for adoptionId: ${adoptionId}`);
-      alert("จำลองการยกเลิก (ดู Console log)");
-      cancelModal.classList.remove("active");
-      
-      // (โค้ดจริงจะเรียก API)
-      /*
-      try {
-        const res = await fetch(`/api/adoptions/${adoptionId}/cancel`, {
-          method: "POST", 
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ reason: "USER_CANCEL" }),
-        });
-
-        if (!res.ok) {
-          alert("ยกเลิกไม่สำเร็จ กรุณาลองใหม่อีกครั้ง");
-          return;
-        }
-
-        cancelModal.classList.remove("active");
-        alert("ยกเลิกคำขอรับเลี้ยงเรียบร้อยแล้ว");
-        
-        // โหลดหน้าใหม่เพื่อดูสถานะที่อัปเดต (เช่น REJECTED)
-        loadAdoptionFromBackend(adoptionId); 
-
-      } catch (err) {
-        console.error(err);
-        alert("เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง");
-      }
-      */
-    });
-  }
-
-  // ปุ่มย้อนกลับ
-  backBtn.addEventListener("click", () => {
-    window.location.href = "petlisting.html";
-  });
-
 });
-
-/*
-## สิ่งที่ปรับเปลี่ยน:
-
-✅ **ลบส่วนที่ไม่มีใน HTML ออก**
-- ไม่มี loading element
-- ไม่มี formContent element
-- ไม่มี pet info section
-- ไม่มี document links
-
-✅ **เพิ่มฟังก์ชัน `formatDateThai()`**
-- แปลง `2024-05-15` → `15/05/2024`
-- เพื่อให้แสดงผลในรูปแบบไทย
-
-✅ **เพิ่ม `recieveType` ใน Mock Data**
-- มีค่าเป็น "มารับด้วยตนเอง" หรือ "ให้จัดส่ง"
-
-✅ **เพิ่ม Event Listener ให้ปุ่มย้อนกลับ**
-- กด "ย้อนกลับ" จะใช้ `window.history.back()`
-
-✅ **ทำให้ฟอร์มแก้ไขไม่ได้**
-- ใช้ `disabled = true` กับทุก input
-
-## วิธีใช้งาน:
-
-1. **เรียกหน้าพร้อม formId:**
-   request-status.html?formId=1 */

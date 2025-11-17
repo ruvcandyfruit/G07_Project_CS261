@@ -1,3 +1,14 @@
+:root {
+  --outer-green:#F0FAF0;
+  --middle-green:#B6E4B2;
+  --inner-green: #6DC965;
+  --outer-red:#FCEAEA;
+  --middle-red:#F29797;
+  --inner-red: #E53030;
+  --outer-gray:#F2F2F2;
+  --middle-gray:#cccccc;
+  --inner-gray: #808081;
+}
 /*    2-frontend/status(user) branch    */
 @import url('https://fonts.googleapis.com/css2?family=Mali&family=Itim&family=Kodchasan&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap');
@@ -145,111 +156,88 @@ body.status-page {
     transform: translateY(-2px);
 }
 
-/* ---------- TIMELINE 3 วง ---------- */
 
-.status-section {
-    position: relative;
-    margin-bottom: 30px;
-    margin-top: 6px;
+/* ======================= STATUS STEPS (3 วง) ======================= */
+.status-steps-box {
+  border-radius: 26px;
+  padding: 40px 80px;
+  position: relative;
+  margin-bottom: 32px;
+  max-width: 800px; 
+  margin-left: auto;
+  margin-right: auto;
 }
-
 .status-line {
-    position: absolute;
-    top: 43px;
-    left: 70px;
-    right: 70px;
-    height: 3px;
-    background: #dde1ec;
-    z-index: 0;
+  position: absolute;
+  top: 115px; 
+  height: 4px;
+  background: #d0d5e0;
+  z-index: 0;
+  width: calc(100% - 300px); 
+  left: 50%;
+  transform: translateX(-50%);
 }
-
 .status-steps {
-    display: flex;
-    justify-content: space-between;
-    position: relative;
-    z-index: 1;
-    padding: 10px 40px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative; 
+  z-index: 1;
+  gap: 100px;
 }
-
 .status-step {
-    text-align: center;
-    position: relative;
+  text-align: center;
+  position: relative;
 }
-
 .status-circle {
-    width: 94px;
-    height: 94px;
-    border-radius: 50%;
-    background: #e6e8f0; /* เทาอ่อนรอบนอก */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 10px;
-    position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: var(--outer-gray); 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  transition: background-color 0.2s ease;
 }
-
-.status-circle .circle-inner {
-    width: 62px;
-    height: 62px;
-    border-radius: 50%;
-    background: #b8bcc8; /* เทาเข้มด้านใน */
+.circle-middle {
+  width: 100px; 
+  height: 100px;
+  border-radius: 50%;
+  background: var(--middle-gray); 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
 }
-
-.status-circle .circle-icon {
-    position: absolute;
-    font-size: 34px;
-    color: #fff;
-    opacity: 0;  /* JS เป็นคนใส่ ✓ / ✗ */
+.circle-inner {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--inner-gray); 
+  transition: background-color 0.2s ease;
 }
-
+.circle-icon {
+  position: absolute;
+  font-size: 46px;
+  color: #fff;
+  opacity: 0;
+  z-index: 2;
+}
 .status-label {
-    font-size: 13px;
-    color: #666;
+  font-size: 15px;
+  color: #4a4a4a;
 }
-
-/* completed = เขียว */
-.status-step.completed .status-circle {
-    background: #d7f4df;
-}
-
-.status-step.completed .circle-inner {
-    background: #60c372;
-}
-
-.status-step.completed .circle-icon {
-    opacity: 1;
-}
-
-/* rejected = แดง */
-.status-step.rejected .status-circle {
-    background: #ffe6e6;
-    border-color: #ff6b6b;
-}
-
-.status-step.rejected .circle-inner {
-    background: #ff8b8b;
-}
-
-.status-step.rejected .circle-icon {
-    opacity: 1;
-    color: white;
-}
-
-/* เส้นเขียวเชื่อม step ที่ completed */
-.status-step.completed::after {
-    content: "";
-    position: absolute;
-    top: 43px;
-    left: 50%;
-    width: 100%;
-    height: 3px;
-    background: #60c372;
-    z-index: -1;
-}
-
-.status-step:last-child.completed::after {
-    display: none;
-}
+/* (Completed - เขียว) */
+.status-step.completed .status-circle { background: var(--outer-green); }
+.status-step.completed .circle-middle { background: var(--middle-green); }
+.status-step.completed .circle-inner { background-color: var(--inner-green); }
+.status-step.completed .circle-icon { opacity: 1; content: "✓"; }
+/* (Rejected - แดง) */
+.status-step.rejected .status-circle { background: var(--outer-red); }
+.status-step.rejected .circle-middle { background: var(--middle-red); }
+.status-step.rejected .circle-inner { background: var(--inner-red); }
+.status-step.rejected .circle-icon { opacity: 1; content: "✗"; }
 
 /* ---------- PICKUP BOX + ปุ่มใหญ่ ---------- */
 
@@ -646,4 +634,41 @@ body.status-page {
     .form-label {
         text-align: left;
     }
+}
+
+/* ========== [!! เพิ่ม !!] CSS สำหรับปุ่มใน Modal ========== */
+
+/* ปุ่มปิด (X) ใน Form Modal */
+.form-modal-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2.5rem;
+    color: #999;
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+}
+.form-modal-close-btn:hover {
+    color: #333;
+}
+
+/* ปุ่ม "แก้ไขฟอร์ม" ใน Modal */
+.form-modal-btn#editFormBtn {
+    /* (ใช้สีเหลืองตามที่เคยคุยกัน) */
+    background-color: var(--button-yellow, #ffd700); 
+    border-color: var(--button-yellow, #ffd700);
+    color: #333;
+    font-weight: 600;
+}
+.form-modal-btn#editFormBtn:hover {
+    background-color: #f0c900;
+    border-color: #f0c900;
+}
+
+/* จัดการ์ดฟอร์มคำขอให้คลิกได้ */
+.card-user#view-form-card {
+    cursor: pointer;
 }

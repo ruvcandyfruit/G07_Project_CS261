@@ -1,8 +1,7 @@
-<!--    2-frontend/status(user) branch   -->
 <!DOCTYPE html>
 <html lang="th-en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-AR">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="status.css">
     <link rel="stylesheet" href="../all.css">
@@ -61,23 +60,19 @@
       </header>
 
 
-    <!-- MAIN CONTENT (ใช้ fullwidth-section + container เหมือน petdetail) -->
+
     <div class="fullwidth-section">
       <div class="container status-page">
 
-        <!-- ชื่อ section เล็ก ๆ -->
         <div class="status-title">
             <hr>
             <h1>Adoption Status</h1>
             <hr>
         </div>
 
-        <!-- แถว Pet + User -->
         <section class="user-pet-row">
-            <!-- Pet card -->
             <div class="card card-pet">
                 <div class="card-avatar">
-                    <!-- รูปน้อง (จะเปลี่ยนจาก JS ก็ได้) -->
                     <img id="petImage" src="../images/sample-pet.jpg" alt="Pet avatar">
                 </div>
                 <div class="card-body">
@@ -86,68 +81,40 @@
                 </div>
             </div>
 
-            <!-- User card -->
-            <div class="card card-user">
-              <div class="card-avatar"><span class="solar--user-bold"></span></div>
-
-              <div class="card-body">
-              <p class="card-label">UserName</p>
-              <p class="card-value" id="user-username">User</p>
-
-              <p class="card-label">Email</p>
-              <p class="card-value" id="user-email">example@gmail.com</p>
-            </div>
-
-            <!-- ไม่ต้องการแก้ไขฟอร์มแล้ว)
-            <div class="card-actions">
-                <button id="edit-form-btn" class="btn btn-outline-sm">
-                    <span class="edit-icon-wrapper" aria-hidden="true">
-                        <svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <g fill="none" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M4.333 16.048L16.57 3.81a2.56 2.56 0 0 1 3.62 3.619L7.951 19.667a2 2 0 0 1-1.022.547L3 21l.786-3.93a2 2 0 0 1 .547-1.022"/>
-                                <path d="m14.5 6.5l3 3"/>
-                            </g>
-                        </svg>
-                    </span>
-                    <span>แก้ไข</span>
-                </button>
-            </div>-->
-            </div>
-        </section>
-
-        <!-- STATUS TIMELINE -->
-        <section class="status-section">
-            <div class="status-line"></div>
-
-            <div id="status-steps" class="status-steps">
-                <div class="status-step" data-key="request">
-                    <div class="status-circle">
-                        <div class="circle-inner"></div>
-                        <span class="circle-icon">✓</span>
-                    </div>
-                    <p class="status-label">ส่งคำขอ</p>
-                </div>
-
-                <div class="status-step" data-key="approval">
-                    <div class="status-circle">
-                        <div class="circle-inner"></div>
-                        <span class="circle-icon">✓</span>
-                    </div>
-                    <p class="status-label">อนุมัติคำขอ</p>
-                </div>
-
-                <div class="status-step" data-key="handover">
-                    <div class="status-circle">
-                        <div class="circle-inner"></div>
-                        <span class="circle-icon">✓</span>
-                    </div>
-                    <p class="status-label">ส่งมอบ</p>
+            <div class="card card-user" id="view-form-card">
+                <div class="card-avatar"><span class="solar--user-bold"></span></div>
+                <div class="card-body">
+                    <p class="card-label">UserName</p>
+                    <p class="card-value" id="user-username">User</p>
+                    <p class="card-label">Email</p>
+                    <p class="card-value" id="user-email">example@gmail.com</p>
                 </div>
             </div>
         </section>
 
-        <!-- PICKUP BOX -->
+        <section class="status-steps-box">
+                      <div class="status-line"></div>
+                      <div class="status-steps">
+                          <div class="status-step" data-key="request">
+                              <div class="status-circle">
+                                <div class="circle-middle">
+                                  <div class="circle-inner"></div>
+                                </div>
+                                <span class="circle-icon">✓</span>
+                              </div>
+                              <p class="status-label">ส่งคำขอ</p>
+                          </div>
+                          <div class="status-step" data-key="approval">
+                              <div class="status-circle"><div class="circle-middle"><div class="circle-inner"></div></div><span class="circle-icon">✓</span></div>
+                              <p class="status-label">อนุมัติคำขอ</p>
+                          </div>
+                          <div class="status-step" data-key="handover">
+                              <div class="status-circle"><div class="circle-middle"><div class="circle-inner"></div></div><span class="circle-icon">✓</span></div>
+                              <p class="status-label">ส่งมอบ</p>
+                          </div>
+                      </div>
+                  </section>
+
         <section class="pickup-section">
             <div class="pickup-box">
                 <h3 class="pickup-title">
@@ -158,7 +125,6 @@
                     คำขอของคุณถูกส่งแล้ว กำลังรอการอนุมัติจากเจ้าหน้าที่
                 </p>
             </div>
-
             <div class="pickup-actions">
                 <button id="primary-action-btn" class="btn btn-danger-lg">
                     ยกเลิกการรับเลี้ยง
@@ -169,10 +135,7 @@
             </div>
         </section>
 
-
-
-        <!-- DEMO: เลือกสถานะไว้เทสต์ UI (อยากลบภายหลังก็ได้) -->
-        <section class="demo-section">
+        <!--<section class="demo-section">
             <label for="status-select">Preview สถานะ:</label>
             <select id="status-select">
                 <option value="pending">1. ส่งคำขอ (pending)</option>
@@ -181,7 +144,7 @@
                 <option value="completed">3. ส่งมอบสำเร็จ</option>
                 <option value="handoverFailed">3. ส่งมอบไม่สำเร็จ</option>
             </select>
-        </section>
+        </section>-->
 
       </div>
     </div>
@@ -211,104 +174,96 @@
             </div>                
         </div>
     </footer>
-    <!-- ===== Cancel Modal ===== -->
+
     <div id="cancel-modal" class="modal-overlay">
-    <div class="modal-box">
-        <h3 class="modal-title">ยืนยันการยกเลิกคำขอรับเลี้ยง</h3>
-        <p class="modal-text">
-         คุณแน่ใจหรือไม่ว่าต้องการยกเลิกคำขอรับเลี้ยงสัตว์?
-        </p>
-
-    <div class="modal-actions">
-      <button id="cancel-modal-close" class="btn btn-outline-lg">
-        CANCEL
-      </button>
-      <button id="cancel-modal-confirm" class="btn btn-danger-lg">
-        YES
-      </button>
-    </div>
-  </div>
-</div>
-
-<div class="overlay" id="overlay">
-    <div class="form-modal-container">
-        <div id="loading" class="loading">กำลังโหลดข้อมูล...</div>
-        <div id="formContent" style="display: none;">
-            <div class="form-modal-header">
-                <div class="form-modal-profile-icon"><span class="solar--user-bold"></span></div>
-                <div class="form-modal-user-info">
-                    <h2 id="formUserName">UserName</h2>
-                    <p id="formUserEmail">example@email.com</p>
-                </div>
+        <div class="modal-box">
+            <h3 class="modal-title">ยืนยันการยกเลิกคำขอรับเลี้ยง</h3>
+            <p class="modal-text">
+              คุณแน่ใจหรือไม่ว่าต้องการยกเลิกคำขอรับเลี้ยงสัตว์?
+            </p>
+            <div class="modal-actions">
+                <button id="cancel-modal-close" class="btn btn-outline-lg">
+                  CANCEL
+                </button>
+                <button id="cancel-modal-confirm" class="btn btn-danger-lg">
+                  YES
+                </button>
             </div>
-
-            <form id="userForm">
-                <div class="form-group">
-                    <label class="form-label">ชื่อจริง</label>
-                    <input type="text" class="form-input" id="firstName">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">นามสกุล</label>
-                    <input type="text" class="form-input" id="lastName">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">วัน/เดือน/ปีเกิด</label>
-                    <input type="text" class="form-input" id="dob" placeholder="DD/MM/YYYY">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">เบอร์โทรศัพท์</label>
-                    <input type="tel" class="form-input" id="phone">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">อีเมล</label>
-                    <input type="email" class="form-input" id="email">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">อาชีพ</label>
-                    <input type="text" class="form-input" id="occupation">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">ที่อยู่อาศัยปัจจุบัน</label>
-                    <input type="text" class="form-input" id="address">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">ประเภทที่อยู่อาศัย</label>
-                    <input type="text" class="form-input" id="residenceType">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">คุณต้องการให้เราจัดส่งสัตว์เลี้ยงให้หรือมารับด้วยตนเอง</label>
-                    <input type="text" class="form-input" id="recieveType">
-                </div>
-
-                <div class="full-width-section">
-                    <label class="form-label">คุณเคยเลี้ยงสัตว์เลี้ยงมาก่อนหรือไม่? ถ้าเคย โปรดเล่าประสบการณ์ของคุณ</label>
-                    <textarea class="form-textarea" id="experience"></textarea>
-                </div>
-
-                <div class="full-width-section">
-                    <label class="form-label">ทำไมคุณถึงอยากรับเลี้ยงสัตว์เลี้ยง?</label>
-                    <textarea class="form-textarea" id="reason"></textarea>
-                </div>
-
-                <div class="form-modal-button-group">
-                    <button type="button" class="form-modal-btn" id="backBtn">ย้อนกลับ</button>
-                </div>
-            </form>
         </div>
     </div>
-</div>
 
-    <!-- JS เฉพาะหน้านี้ -->
+    <div class="overlay" id="overlay">
+        <div class="form-modal-container">
+            <button class="form-modal-close-btn" id="formModalCloseBtn">&times;</button>
+            
+            <div id="loading" class="loading">กำลังโหลดข้อมูล...</div>
+            
+            <div id="formContent" style="display: none;">
+                <div class="form-modal-header">
+                    <div class="form-modal-profile-icon"><span class="solar--user-bold"></span></div>
+                    <div class="form-modal-user-info">
+                        <h2 id="formUserName">UserName</h2>
+                        <p id="formUserEmail">example@email.com</p>
+                    </div>
+                </div>
+
+                <form id="userForm">
+                    <div class="form-group">
+                        <label class="form-label">ชื่อจริง</label>
+                        <input type="text" class="form-input" id="firstName">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">นามสกุล</label>
+                        <input type="text" class="form-input" id="lastName">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">วัน/เดือน/ปีเกิด</label>
+                        <input type="text" class="form-input" id="dob" placeholder="DD/MM/YYYY">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">เบอร์โทรศัพท์</label>
+                        <input type="tel" class="form-input" id="phone">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">อีเมล</label>
+                        <input type="email" class="form-input" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">อาชีพ</label>
+                        <input type="text" class="form-input" id="occupation">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">ที่อยู่อาศัยปัจจุบัน</label>
+                        <input type="text" class="form-input" id="address">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">ประเภทที่อยู่อาศัย</label>
+                        <input type="text" class="form-input" id="residenceType">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">คุณต้องการให้เราจัดส่งสัตว์เลี้ยงให้หรือมารับด้วยตนเอง</label>
+                        <input type="text" class="form-input" id="recieveType">
+                    </div>
+                    <div class="full-width-section">
+                        <label class="form-label">คุณเคยเลี้ยงสัตว์เลี้ยงมาก่อนหรือไม่? ถ้าเคย โปรดเล่าประสบการณ์ของคุณ</label>
+                        <textarea class="form-textarea" id="experience"></textarea>
+                    </div>
+                    <div class="full-width-section">
+                        <label class="form-label">ทำไมคุณถึงอยากรับเลี้ยงสัตว์เลี้ยง?</label>
+                        <textarea class="form-textarea" id="reason"></textarea>
+                    </div>
+                    <div class="form-modal-button-group">
+                        <button type="button" class="form-modal-btn" id="editFormBtn" style="display: none;">
+                            แก้ไขฟอร์ม
+                        </button>
+                        <button type="button" class="form-modal-btn" id="backBtn">ย้อนกลับ</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="status.js"></script>
-    <!-- JS รวมของเว็บ (hamburger / เปลี่ยนปุ่ม login ฯลฯ) -->
     <script src="../all.js"></script>
 </body>
 </html>
