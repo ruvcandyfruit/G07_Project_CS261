@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // 1.3 เติมข้อมูลการ์ด User (เหมือนเดิม)
         userNameEl.textContent = data.userName;
         // ... (โค้ดเติมการ์ด User) ...
-        userCardLink.href = `viewform-admin.html?id=${data.userId}`; 
+        userCardLink.href = `../User/viewform.html?id=${data.userId}`; 
         if (data.pickup_type === 'DELIVERY') {
             userAddressEl.textContent = data.userAddress;
             userAddressEl.classList.add('show');

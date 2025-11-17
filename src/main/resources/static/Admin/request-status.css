@@ -1,4 +1,14 @@
-
+:root {
+  --outer-green:#F0FAF0;
+  --middle-green:#B6E4B2;
+  --inner-green: #6DC965;
+  --outer-red:#FCEAEA;
+  --middle-red:#F29797;
+  --inner-red: #E53030;
+  --outer-gray:#F2F2F2;
+  --middle-gray:#cccccc;
+  --inner-gray: #808081;
+}
 .main-content {
   display: flex;
   flex-direction: column;
@@ -41,6 +51,13 @@
 .info-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+}
+
+.pet-card {
+  flex: 1;
+}
+.user-card{
+  flex: 2;
 }
 
 .info-avatar {
@@ -113,6 +130,7 @@
   align-items: center;
   position: relative; 
   z-index: 1;
+  gap: 100px;
 }
 .status-step {
   text-align: center;
@@ -122,7 +140,7 @@
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  background: #e6e8f0; 
+  background: var(--outer-gray); 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -133,7 +151,7 @@
   width: 100px; 
   height: 100px;
   border-radius: 50%;
-  background: #b8bcc8; 
+  background: var(--middle-gray); 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -143,7 +161,7 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: #7f8490; 
+  background: var(--inner-gray); 
   transition: background-color 0.2s ease;
 }
 .circle-icon {
@@ -158,14 +176,14 @@
   color: #4a4a4a;
 }
 /* (Completed - เขียว) */
-.status-step.completed .status-circle { background: #d7f4df; }
-.status-step.completed .circle-middle { background: #60c372; }
-.status-step.completed .circle-inner { display: none; }
+.status-step.completed .status-circle { background: var(--outer-green); }
+.status-step.completed .circle-middle { background: var(--middle-green); }
+.status-step.completed .circle-inner { background-color: var(--inner-green); }
 .status-step.completed .circle-icon { opacity: 1; content: "✓"; }
 /* (Rejected - แดง) */
-.status-step.rejected .status-circle { background: #ffe6e6; }
-.status-step.rejected .circle-middle { background: #ff8b8b; }
-.status-step.rejected .circle-inner { display: none; }
+.status-step.rejected .status-circle { background: var(--outer-red); }
+.status-step.rejected .circle-middle { background: var(--middle-red); }
+.status-step.rejected .circle-inner { background: var(--inner-red); }
 .status-step.rejected .circle-icon { opacity: 1; content: "✗"; }
 
 /* ======================= PICKUP BOX ======================= */
