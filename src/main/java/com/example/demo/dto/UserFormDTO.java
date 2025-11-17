@@ -29,7 +29,7 @@ public class UserFormDTO {
     private LocalDateTime meetDate;
     private String receiveType;
 
-    private String identityDoc; // ใช้สำหรับแสดงชื่อไฟล์ในตาราง
-    private String residenceDoc; // ใช้สำหรับแสดงชื่อไฟล์ในตาราง
+    // private String identityDoc; // ใช้สำหรับแสดงชื่อไฟล์ในตาราง
+    // private String residenceDoc; // ใช้สำหรับแสดงชื่อไฟล์ในตาราง
     
 }
