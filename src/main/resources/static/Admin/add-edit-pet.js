@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => { 
 
     // --- 0. อ่านค่าจาก URL ---
     const urlParams = new URLSearchParams(window.location.search);
@@ -66,10 +66,10 @@ document.addEventListener('DOMContentLoaded', () => {
     handleGroupToggle(genderGroup);
 
     // --- 4. Calendar Icon Click (เหมือนเดิม) ---
-    calendarIcon.addEventListener('click', () => {
-        try { petDobInput.showPicker(); } catch (error) { console.warn("Browser doesn't support showPicker()", error); }
-    });
-    petDobInput.addEventListener('change', () => clearError(petDobInput.closest('.form-group')));
+    //calendarIcon.addEventListener('click', () => {
+    //    try { petDobInput.showPicker(); } catch (error) { console.warn("Browser doesn't support showPicker()", error); }
+    //});
+    //petDobInput.addEventListener('change', () => clearError(petDobInput.closest('.form-group')));
 
     // --- 5. Reset Buttons Logic (เหมือนเดิม) ---
     resetBasicBtn.addEventListener('click', (e) => { /* ... โค้ด Reset เดิม ... */ });
@@ -247,11 +247,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- 9. [ใหม่] Logic ตอนเริ่มโหลดหน้า ---
+
+    // [!! 2. ถ้าเป็นโหมด edit ให้โหลดข้อมูลเหมือนเดิม !!]
     if (mode === 'edit') {
-        formModeTitle.textContent = 'Edit Pet'; // เปลี่ยนหัวข้อ
         loadPetDataForEdit(petIdToEdit); // โหลดข้อมูลมาเติมฟอร์ม
-    } else {
-        formModeTitle.textContent = 'Add Pet'; // ตั้งค่าหัวข้อ (default)
-        // ไม่ต้องทำอะไร ฟอร์มจะว่างเปล่ารอรับข้อมูลใหม่
+        
+        saveButton.textContent = 'Update'; // เปลี่ยนข้อความปุ่ม
     }
+    
+    // (เราลบ formModeTitle.textContent ทิ้งไปได้เลย)
 });
