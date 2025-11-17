@@ -9,12 +9,58 @@ document.addEventListener('DOMContentLoaded', () => {
     const tableBody = document.getElementById('petTableBody');
     const petCount = document.getElementById('petCount');
     const searchInput = document.getElementById('searchInput');
-    const pendingToggle = document.getElementById('pendingToggle');
     const deleteModal = document.getElementById('deleteModal');
-    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn'); 
+    const pendingToggle = document.getElementById('pendingToggle');
+    const statusFilter = document.getElementById('statusFilter');
+    const typeFilter = document.getElementById('typeFilter');
+    const breedFilter = document.getElementById('breedFilter');
+    const applyFilterBtn = document.getElementById('applyFilterBtn');
+    const resetFilterBtn = document.getElementById('resetFilterBtn');
+    const filterButton = document.getElementById('filterButton');
+    const filterModal = document.getElementById('filterModal');
+     const closeFilterModal = document.getElementById('closeFilterModal');
+
     let petIdToDelete = null;
 
     // 🟢 (ต้องแน่ใจว่า Elements อื่นๆ เช่น filterButton, typeGroup มี ID ถูกต้อง)
+    if (filterButton) {
+    filterButton.addEventListener('click', () => {
+        filterModal.classList.remove('modal-hidden');
+    });
+}
+
+if (closeFilterModal) {
+    closeFilterModal.addEventListener('click', () => {
+        filterModal.classList.add('modal-hidden');
+    });
+}
+
+    // ทำงานเมื่อพิมพ์ค้นหา
+searchInput.addEventListener('input', applyFilters);
+
+// ทำงานเมื่อกด toggle pending only
+if (pendingToggle) {
+    pendingToggle.addEventListener('change', applyFilters);
+}
+
+// เผื่อมี modal filter (กดปุ่ม Apply Filter)
+if (applyFilterBtn) {
+    applyFilterBtn.addEventListener('click', applyFilters);
+}
+
+// ปุ่ม Reset Filter
+if (resetFilterBtn) {
+    resetFilterBtn.addEventListener('click', () => {
+        statusFilter.value = "";
+        typeFilter.value = "";
+        breedFilter.value = "";
+        pendingToggle.checked = false;
+        searchInput.value = "";
+        applyFilters();
+    });
+}
+
     
     // --- 3. Modal Helper Functions (ต้องถูกกำหนดก่อนใช้งาน) ---
     // (***ฟังก์ชันเหล่านี้จำเป็นต้องมีในไฟล์ของคุณ***)
@@ -144,15 +190,43 @@ document.addEventListener('DOMContentLoaded', () => {
         // ... (โค้ด Filter Logic ที่คุณมีอยู่) ...
         const searchText = searchInput.value.toLowerCase();
         // ... (การดึงค่าจาก DOM filters) ...
-        
-        // (สมมติว่าคุณมี Logic การกรองที่ถูกต้อง)
-        let filteredPets = allPets.filter(pet => {
-            // Logic การกรอง...
-            return pet.name.toLowerCase().includes(searchText);
-        });
-        
-        renderTable(filteredPets);
-        updatePetCount(filteredPets.length);
+         let filteredPets = allPets;
+      // Filter: Pending toggle
+     if (pendingToggle && pendingToggle.checked) 
+        {
+           filteredPets = filteredPets.filter(pet => pet.status === "Pending");
+        }
+
+// Filter: Search by name
+        if (searchText) 
+         {
+            filteredPets = filteredPets.filter(pet =>
+            pet.name.toLowerCase().includes(searchText)
+        );
+           }
+
+         // Filter: By Status
+     if (statusFilter && statusFilter.value) {
+    filteredPets = filteredPets.filter(pet =>
+        pet.status === statusFilter.value
+    );
+             }
+
+   // Filter: By Type
+   if (typeFilter && typeFilter.value) {
+    filteredPets = filteredPets.filter(pet =>
+        pet.type === typeFilter.value
+    );
+ }
+
+// Filter: By Breed
+   if (breedFilter && breedFilter.value) {
+    filteredPets = filteredPets.filter(pet =>
+        pet.breed === breedFilter.value
+    );
+}
+renderTable(filteredPets);
+updatePetCount(filteredPets.length);
     }
 
 
