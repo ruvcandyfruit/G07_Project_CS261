@@ -1,12 +1,15 @@
 package com.example.demo.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -63,9 +66,31 @@ public class Form {
     private Boolean trueInfo;
 
     @Column(name = "accept_right", nullable = false)
-    private Boolean acceptRight;
+    private Boolean acceptRight;    
 
     @Column(name = "home_visits", nullable = false)
     private Boolean homeVisits;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user; // reference to the user who submitted
+
+    @ManyToOne
+    @JoinColumn(name = "pet_id", nullable = false)
+    private Pet pet; // reference to the adopted pet
+
+    @Column(name = "status")
+    private String status = "PENDING";  // e.g. PENDING, APPROVED, REJECTED
+
+    @Column(name = "approved_by")
+    private Long approvedBy;  // admin ID
+
+    @Column (name = "recieveType")
+    private String recieveType;
+    
+    @Column(name = "approved_at" , nullable = true)
+    private LocalDateTime approvedAt = null;
+
+    @Column(name = "meet_date", nullable = true)  
+    private LocalDateTime meetDate = null;      
 }

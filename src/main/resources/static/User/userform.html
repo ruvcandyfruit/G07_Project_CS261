@@ -44,12 +44,12 @@
     <!-- adoption form -->
     <form id="adoptionForm" method="post" action="/api/userform/submit" enctype="multipart/form-data">
 
-
         <!--- part 1 --->
         <div class="part">
             <p>Part 1: ข้อมูลของผู้รับเลี้ยง</p>
             <hr>
-
+            <input type="hidden" id="petId" name="petId">
+            <input type="hidden" id="userId" name="userId">
             <label for="firstName">ชื่อจริง <span class="required">*</span></label>
             <input type="text" id="firstName" name="firstName" placeholder="ไม่ต้องใส่คำนำหน้า" required />
             <div id="firstNameError" class="error"></div>
