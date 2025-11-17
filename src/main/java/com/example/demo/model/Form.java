@@ -15,6 +15,10 @@ import lombok.Data;
 @Table(name = "userforms")
 public class Form {
 
+    
+    public Form() {
+        
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
