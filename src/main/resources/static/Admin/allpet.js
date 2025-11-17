@@ -11,26 +11,30 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 1. Master Data and API URLs ---
+    // --- 1. Master Data + API ---
     let allPets = [];
     const API_URL = "http://localhost:8081/api/pets";
+
+    // --- 2. DOM elements ---
     const STATUS_API_URL = "http://localhost:8081/api/userform/statuses";
 
     // --- 2. Mock Data (fallback) ---
-    const mockPetData = [
-        { id: '0001', name: 'พยัคฆ์เสี้ยววาน', imageUrl: 'https://tse4.mm.bing.net/th/id/OIP.HnHSF9J0wkbZWn1unKAOxwHaEJ?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3', type: 'Cat', breed: 'Persian', status: 'No Request' },
-        { id: '0002', name: 'น้องเหมียว', imageUrl: 'https://tse4.mm.bing.net/th/id/OIP.HnHSF9J0wkbZWn1unKAOxwHaEJ?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3', type: 'Cat', breed: 'Persian', status: 'Pending' },
-        { id: '0003', name: 'เจ้าสี่ขา', imageUrl: 'https://tse4.mm.bing.net/th/id/OIP.HnHSF9J0wkbZWn1unKAOxwHaEJ?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3', type: 'Dog', breed: 'Golden Retriever', status: 'Approved' },
-        { id: '0004', name: 'ส้มซ่า', imageUrl: 'https://tse4.mm.bing.net/th/id/OIP.HnHSF9J0wkbZWn1unKAOxwHaEJ?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3', type: 'Cat', breed: 'Siam', status: 'Completed' },
-        { id: '0005', name: 'ด่างทับทิม', imageUrl: 'https://tse4.mm.bing.net/th/id/OIP.HnHSF9J0wkbZWn1unKAOxwHaEJ?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3', type: 'Dog', breed: 'Mixed', status: 'Closed' },
-        { id: '0006', name: 'มณี', imageUrl: 'https://tse4.mm.bing.net/th/id/OIP.HnHSF9J0wkbZWn1unKAOxwHaEJ?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3', type: 'Cat', breed: 'Persian', status: 'No Request' },
-        { id: '0007', name: 'โกลดี้', imageUrl: 'https://tse4.mm.bing.net/th/id/OIP.HnHSF9J0wkbZWn1unKAOxwHaEJ?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3', type: 'Dog', breed: 'Golden Retriever', status: 'Pending' },
-    ];
+    // const mockPetData = [
+    //     { id: '0001', name: 'พยัคฆ์เสี้ยววาน', imageUrl: 'https://tse4.mm.bing.net/th/id/OIP.HnHSF9J0wkbZWn1unKAOxwHaEJ?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3', type: 'Cat', breed: 'Persian', status: 'No Request' },
+    //     { id: '0002', name: 'น้องเหมียว', imageUrl: 'https://tse4.mm.bing.net/th/id/OIP.HnHSF9J0wkbZWn1unKAOxwHaEJ?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3', type: 'Cat', breed: 'Persian', status: 'Pending' },
+    //     { id: '0003', name: 'เจ้าสี่ขา', imageUrl: 'https://tse4.mm.bing.net/th/id/OIP.HnHSF9J0wkbZWn1unKAOxwHaEJ?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3', type: 'Dog', breed: 'Golden Retriever', status: 'Approved' },
+    //     { id: '0004', name: 'ส้มซ่า', imageUrl: 'https://tse4.mm.bing.net/th/id/OIP.HnHSF9J0wkbZWn1unKAOxwHaEJ?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3', type: 'Cat', breed: 'Siam', status: 'Completed' },
+    //     { id: '0005', name: 'ด่างทับทิม', imageUrl: 'https://tse4.mm.bing.net/th/id/OIP.HnHSF9J0wkbZWn1unKAOxwHaEJ?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3', type: 'Dog', breed: 'Mixed', status: 'Closed' },
+    //     { id: '0006', name: 'มณี', imageUrl: 'https://tse4.mm.bing.net/th/id/OIP.HnHSF9J0wkbZWn1unKAOxwHaEJ?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3', type: 'Cat', breed: 'Persian', status: 'No Request' },
+    //     { id: '0007', name: 'โกลดี้', imageUrl: 'https://tse4.mm.bing.net/th/id/OIP.HnHSF9J0wkbZWn1unKAOxwHaEJ?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3', type: 'Dog', breed: 'Golden Retriever', status: 'Pending' },
+    // ];
 
     // --- 3. DOM Selections ---
     const tableBody = document.getElementById('petTableBody');
     const petCount = document.getElementById('petCount');
     const searchInput = document.getElementById('searchInput');
+    const deleteModal = document.getElementById('deleteModal');
+    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
     const pendingToggle = document.getElementById('pendingToggle');
     const filterButton = document.getElementById('filterButton');
     const filterModal = document.getElementById('filterModal');
@@ -40,28 +44,121 @@ document.addEventListener('DOMContentLoaded', () => {
     const statusFilter = document.getElementById('statusFilter');
     const typeFilter = document.getElementById('typeFilter');
     const breedFilter = document.getElementById('breedFilter');
-    const deleteModal = document.getElementById('deleteModal');
-    const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
-    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
     let petIdToDelete = null;
 
+    // --- Filter Modal ---
+    if (filterButton) {
+        filterButton.addEventListener('click', () => {
+            filterModal.classList.remove('modal-hidden');
+        });
+    }
+    if (closeFilterModal) {
+        closeFilterModal.addEventListener('click', () => {
+            filterModal.classList.add('modal-hidden');
+        });
+    }
+
+    // --- 3. Search + Filters ---
+    if (searchInput) searchInput.addEventListener('input', applyFilters);
+    if (pendingToggle) pendingToggle.addEventListener('change', applyFilters);
+    if (applyFilterBtn) applyFilterBtn.addEventListener('click', applyFilters);
+
+    if (resetFilterBtn) {
+        resetFilterBtn.addEventListener('click', () => {
+            statusFilter.value = "";
+            typeFilter.value = "";
+            breedFilter.value = "";
+            pendingToggle.checked = false;
+            searchInput.value = "";
+            applyFilters();
+        });
+    }
+
+    // --- Modal helpers ---
     // --- 4. Modal Helpers ---
     function showModal(modal) { modal.classList.remove('modal-hidden'); }
     function hideModal(modal) { modal.classList.add('modal-hidden'); }
 
-    // --- 5. Table Rendering ---
+    window.openDeleteModal = (id) => {
+        petIdToDelete = id.toString();
+        showModal(deleteModal);
+    };
+
+    // --- count pets ---
+    function updatePetCount(count) {
+        petCount.textContent = `There are ${count} pets in total`;
+    }
+
+    async function fetchPetStatuses() {
+    try {
+        const response = await fetch(STATUS_API_URL);
+        if (!response.ok) throw new Error(`HTTP status: ${response.status}`);
+
+        const statuses = await response.json();  
+        const statusMap = new Map();
+
+        // 1. สร้าง Map เพื่อให้ค้นหาสถานะได้เร็ว
+        statuses.forEach(s => {
+            // ใช้ Optional Chaining และตรวจสอบค่าว่างก่อน
+            const id = s.petId?.toString().trim();
+            const status = s.status?.trim();
+            if (id && status) {
+                statusMap.set(id, status);
+            }
+        });
+
+        allPets.forEach(pet => {
+            
+            const petIdToFind = (pet.id ?? pet.petID ?? pet.petId)?.toString().trim(); 
+
+            if (petIdToFind && statusMap.has(petIdToFind)) {
+                pet.status = statusMap.get(petIdToFind);
+            } 
+            
+        });
+
+    } catch (error) {
+        
+        console.error("Error fetching pet statuses:", error);
+    }
+}
+
+    
+    async function confirmDelete() {
+        if (petIdToDelete) {
+            try {
+                const response = await fetch(`${API_URL}/${petIdToDelete}`, { method: 'DELETE' });
+                if (response.ok) {
+                    allPets = allPets.filter(pet => pet.id.toString() !== petIdToDelete);
+                    applyFilters();
+                    alert(`Pet ID ${petIdToDelete} successfully deleted.`);
+                } else {
+                    const errorText = await response.text();
+                    alert(`Failed: ${response.status} - ${errorText}`);
+                }
+            } catch (error) {
+                alert('Error connecting to server.');
+            }
+            hideModal(deleteModal);
+            petIdToDelete = null;
+        }
+    }
+
+    // --- Render table ---
     function renderTable(pets) {
         tableBody.innerHTML = '';
-        if (!pets.length) {
-            tableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;">No pets found.</td></tr>';
+        if (pets.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;">No pets found.</td></tr>';
             return;
         }
 
         pets.forEach(pet => {
-            const statusClass = (pet.status || 'No Request').toLowerCase().replace(' ', '-');
-            let statusTagHTML = '';
+            const displayStatus = pet.status || 'No Request';
+            const statusClass = displayStatus.toLowerCase().replace(' ', '-');
 
-            switch (pet.status) {
+            let statusTagHTML = '';
+            switch (displayStatus) {
                 case 'Pending':
                     statusTagHTML = `<a href="requests.html?id=${pet.id}" class="status-tag status-pending">${pet.status}</a>`;
                     break;
@@ -69,11 +166,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 case 'Completed':
                     statusTagHTML = `<a href="request-status.html?id=${pet.id}&status=${pet.status}" class="status-tag status-${statusClass}">${pet.status}</a>`;
                     break;
+                case 'Approved':
+                    statusTagHTML = `<span class="status-tag status-approved">${displayStatus}</span>`;
+                    break;
+                case 'Completed':
+                    statusTagHTML = `<span class="status-tag status-completed">${displayStatus}</span>`;
+                    break;
                 default:
                     statusTagHTML = `<span class="status-tag status-${statusClass}">${pet.status}</span>`;
             }
 
             const tr = document.createElement('tr');
+            const displayId = pet.petID || pet.petId || pet.id;
+            const petImageUrl = `http://localhost:8081${pet.image || '/images/placeholder.jpg'}`;
+
             tr.innerHTML = `
                 <td>${pet.id}</td>
                 <td>
@@ -82,16 +188,18 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span>${pet.name}</span>
                     </a>
                 </td>
-                <td>${pet.type}</td>
-                <td>${pet.breed}</td>
+                <td>${pet.type || ''}</td>
+                <td>${pet.breed || ''}</td>
                 <td>${statusTagHTML}</td>
                 <td class="action-col action-col-edit">
-                    <a href="add-edit-pet.html?mode=edit&id=${pet.id}">
+                    <a href="addpet.html?mode=edit&id=${pet.id}">
                         <button class="action-button edit-btn"><i class="fa-solid fa-pencil"></i> Edit</button>
                     </a>
                 </td>
                 <td class="action-col action-col-delete">
-                    <button class="action-button delete-btn" data-id="${pet.id}"><i class="fa-solid fa-trash-can"></i> Delete</button>
+                    <button class="action-button delete-btn" onclick="openDeleteModal('${pet.id}')">
+                        <i class="fa-solid fa-trash-can"></i> Delete
+                    </button>
                 </td>
             `;
             tableBody.appendChild(tr);
@@ -104,13 +212,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 6. Filter and Search ---
     function applyFilters() {
-        let filteredPets = allPets;
         const searchText = searchInput.value.toLowerCase();
-        if (pendingToggle.checked) filteredPets = filteredPets.filter(p => p.status === 'Pending');
-        if (searchText) filteredPets = filteredPets.filter(p => p.name.toLowerCase().includes(searchText));
-        if (statusFilter.value) filteredPets = filteredPets.filter(p => p.status === statusFilter.value);
-        if (typeFilter.value) filteredPets = filteredPets.filter(p => p.type === typeFilter.value);
-        if (breedFilter.value) filteredPets = filteredPets.filter(p => p.breed === breedFilter.value);
+
+        if (pendingToggle.checked) {
+            filteredPets = filteredPets.filter(
+                pet => (pet.status || "").trim().toLowerCase() === "pending"
+            );
+        }
+
+        if (searchText) {
+            filteredPets = filteredPets.filter(pet =>
+                pet.name.toLowerCase().includes(searchText)
+            );
+        }
+
+        if (statusFilter.value) {
+            const f = statusFilter.value.toLowerCase();
+            filteredPets = filteredPets.filter(
+                pet => (pet.status || "").trim().toLowerCase() === f
+            );
+        }
+
+        if (typeFilter.value) {
+            filteredPets = filteredPets.filter(pet => pet.type === typeFilter.value);
+        }
+
+        if (breedFilter.value) {
+            filteredPets = filteredPets.filter(pet => pet.breed === breedFilter.value);
+        }
 
         renderTable(filteredPets);
         updatePetCount(filteredPets.length);
@@ -155,44 +284,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 9. Fetch Data from API or use mock ---
     async function fetchPets() {
         try {
-            const res = await fetch(API_URL);
-            if (!res.ok) throw new Error('API failed');
-            const data = await res.json();
-            allPets = data.map(p => ({ ...p, status: 'No Request', imageUrl: p.image ? `http://localhost:8081${p.image}` : '/images/placeholder.jpg' }));
+            const response = await fetch(API_URL);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
-            // Fetch status mapping
-            try {
-                const statusRes = await fetch(STATUS_API_URL);
-                const statuses = await statusRes.json();
-                allPets.forEach(p => {
-                    const match = statuses.find(s => s.petId.toString() === (p.petID || p.id).toString());
-                    if (match) p.status = match.status;
-                });
-            } catch (_) { /* ignore */ }
+            allPets = await response.json();
 
-        } catch (err) {
-            console.warn('Using mock data due to API failure', err);
-            allPets = mockPetData;
+            allPets.forEach(pet => pet.status = "No Request");
+
+            await fetchPetStatuses();
+
+            renderTable(allPets);
+            updatePetCount(allPets.length);
+
+        } catch (error) {
+            tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;color:red;">Failed to load data.</td></tr>';
+            updatePetCount(0);
         }
     }
 
-    // --- 10. Initialization ---
-    async function initializeApp() {
-        // Redirect if not ADMIN
-        try {
-            const user = JSON.parse(localStorage.getItem('user') || 'null');
-            if (!user || user.role !== 'ADMIN') window.location.href = '/index.html';
-        } catch (_) { window.location.href = '/index.html'; }
+    confirmDeleteBtn.addEventListener('click', confirmDelete);
 
-        await fetchPets();
-
-        // Apply URL filters
-        const params = new URLSearchParams(window.location.search);
-        if (params.get('status')) statusFilter.value = params.get('status');
-        if (params.get('togglePending') === 'true') pendingToggle.checked = true;
-
-        applyFilters();
-    }
-
-    initializeApp();
+    // Init
+    fetchPets();
 });
+

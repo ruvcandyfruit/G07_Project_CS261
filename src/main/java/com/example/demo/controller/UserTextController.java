@@ -118,7 +118,7 @@ public ResponseEntity<?> getAllUsers() {
         // ดึง entity ทั้งหมด
         java.util.List<Form> users = formRepository.findAll();
 
-        // map entity -> DTO
+        
         java.util.List<UserFormOutputDTO> userDTOs = users.stream().map(user -> {
             UserFormOutputDTO dto = new UserFormOutputDTO();
             dto.setFirstName(user.getFirstName());
@@ -210,26 +210,30 @@ public ResponseEntity<?> getStatusByPetID(@PathVariable Long petID) {
         }
     }
 
- 
+ // ใน Controller ที่เกี่ยวข้อง
+// ...
 @GetMapping("/statuses")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*") 
 public ResponseEntity<List<Map<String, Object>>> getStatusesAndIds() {
-    List<Form> forms;
+    
+    List<Form> forms; 
+
     try {
         forms = formRepository.findAll(); 
 
-        // ใช้ HashMap แทน Map.of()
+        // 🔴 แก้ไข: ใช้ (Map<String, Object>) เพื่อระบุ Type ให้ชัดเจน
         List<Map<String, Object>> statusList = forms.stream()
             .map(form -> {
-                Map<String, Object> statusMap = new HashMap<>();
-                statusMap.put("petId", form.getPet().getId());
-                statusMap.put("status", form.getStatus());
-                return statusMap;
-            })
-            .toList();
+                Map<String, Object> map = new HashMap<>();
+                map.put("petId", form.getPet().getId());
+                map.put("status", form.getStatus());
+                return map;
+})
+.toList();
 
-        return ResponseEntity.ok(statusList); 
 
+        return ResponseEntity.ok(statusList);
+        
     } catch (Exception e) {
         System.err.println("Database error fetching statuses: " + e.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

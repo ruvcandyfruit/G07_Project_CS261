@@ -11,7 +11,8 @@
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
-
+    const urlParams = new URLSearchParams(window.location.search);
+    const petId = urlParams.get('id') || urlParams.get('pet_id');
     // --- 1. DOM Selections ---
     const petImageEl = document.getElementById('petImage');
     const petNameDisplayEl = document.getElementById('petNameDisplay');
@@ -220,8 +221,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- 6. เริ่มการทำงาน ---
-    const urlParams = new URLSearchParams(window.location.search);
-    const petId = urlParams.get('id') || urlParams.get('pet_id');
     
     loadData(petId);
 });
