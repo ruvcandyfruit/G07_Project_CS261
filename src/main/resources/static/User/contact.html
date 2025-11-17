@@ -27,14 +27,36 @@
                 <ul class="nav-account">
                     <li id="login-butt"><a href="../login.html">Log in</a></li>
                     <li id="register-butt"><a href="../register.html">Create account</a></li>
+                    <button id="profile"><span class="solar--user-bold"></span></button>
                 </ul>
             </nav>
         </nav>
 
-            <div class="hamburger">
-                ☰
+        <div class="hamburger">
+            ☰
+        </div>
+
+        <!-- เพิ่ม Profile Popup ตรงนี้ -->
+        <div id="profile-popup" class="profile-popup">
+            <div class="profile-content">
+                <div class="profile-info">
+                    <div class="profile-image"><span class="solar--user-bold"></span></div>
+                    <div class="profile-user-info">
+                        <h4 id="profile-username">Username</h4>
+                        <p id="profile-email">example@email.com</p>
+                    </div>
+                </div>
+                <div class="profile-logout">
+                    <div class="profile-logout-butt">
+                        <button class="logout-btn" id="logout-btn">
+                            <span class="mdi--logout"></span>
+                            <p>Log out</p>
+                        </button>
+                    </div>
+                </div>
             </div>
-        </header>
+        </div>
+    </header>
 
     <main>
         <div class="section">
