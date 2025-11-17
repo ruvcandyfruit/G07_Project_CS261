@@ -1,16 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 1. ตัวแปรหลัก (Master Data) และ API URL ---
+    // --- 1. Master Data + API ---
     let allPets = [];
     const API_URL = "http://localhost:8081/api/pets";
-    const STATUS_API_URL = "http://localhost:8081/api/userform/statuses"; // 🔴 Endpoint สำหรับ Status
+    const STATUS_API_URL = "http://localhost:8081/api/userform/statuses";
 
-    // --- 2. DOM Selections ---
+    // --- 2. DOM elements ---
     const tableBody = document.getElementById('petTableBody');
     const petCount = document.getElementById('petCount');
     const searchInput = document.getElementById('searchInput');
     const deleteModal = document.getElementById('deleteModal');
-    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn'); 
+    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
     const pendingToggle = document.getElementById('pendingToggle');
     const statusFilter = document.getElementById('statusFilter');
     const typeFilter = document.getElementById('typeFilter');
@@ -19,145 +19,136 @@ document.addEventListener('DOMContentLoaded', () => {
     const resetFilterBtn = document.getElementById('resetFilterBtn');
     const filterButton = document.getElementById('filterButton');
     const filterModal = document.getElementById('filterModal');
-     const closeFilterModal = document.getElementById('closeFilterModal');
+    const closeFilterModal = document.getElementById('closeFilterModal');
 
     let petIdToDelete = null;
 
-    // 🟢 (ต้องแน่ใจว่า Elements อื่นๆ เช่น filterButton, typeGroup มี ID ถูกต้อง)
+    // --- Filter Modal ---
     if (filterButton) {
-    filterButton.addEventListener('click', () => {
-        filterModal.classList.remove('modal-hidden');
-    });
-}
+        filterButton.addEventListener('click', () => {
+            filterModal.classList.remove('modal-hidden');
+        });
+    }
+    if (closeFilterModal) {
+        closeFilterModal.addEventListener('click', () => {
+            filterModal.classList.add('modal-hidden');
+        });
+    }
 
-if (closeFilterModal) {
-    closeFilterModal.addEventListener('click', () => {
-        filterModal.classList.add('modal-hidden');
-    });
-}
+    // --- 3. Search + Filters ---
+    if (searchInput) searchInput.addEventListener('input', applyFilters);
+    if (pendingToggle) pendingToggle.addEventListener('change', applyFilters);
+    if (applyFilterBtn) applyFilterBtn.addEventListener('click', applyFilters);
 
-    // ทำงานเมื่อพิมพ์ค้นหา
-searchInput.addEventListener('input', applyFilters);
+    if (resetFilterBtn) {
+        resetFilterBtn.addEventListener('click', () => {
+            statusFilter.value = "";
+            typeFilter.value = "";
+            breedFilter.value = "";
+            pendingToggle.checked = false;
+            searchInput.value = "";
+            applyFilters();
+        });
+    }
 
-// ทำงานเมื่อกด toggle pending only
-if (pendingToggle) {
-    pendingToggle.addEventListener('change', applyFilters);
-}
-
-// เผื่อมี modal filter (กดปุ่ม Apply Filter)
-if (applyFilterBtn) {
-    applyFilterBtn.addEventListener('click', applyFilters);
-}
-
-// ปุ่ม Reset Filter
-if (resetFilterBtn) {
-    resetFilterBtn.addEventListener('click', () => {
-        statusFilter.value = "";
-        typeFilter.value = "";
-        breedFilter.value = "";
-        pendingToggle.checked = false;
-        searchInput.value = "";
-        applyFilters();
-    });
-}
-
-    
-    // --- 3. Modal Helper Functions (ต้องถูกกำหนดก่อนใช้งาน) ---
-    // (***ฟังก์ชันเหล่านี้จำเป็นต้องมีในไฟล์ของคุณ***)
+    // --- Modal helpers ---
     function showModal(modal) { modal.classList.remove('modal-hidden'); }
     function hideModal(modal) { modal.classList.add('modal-hidden'); }
-    
-    // 🟢 ฟังก์ชัน Modal สำหรับปุ่ม Delete (ถูกเรียกจาก onclick ใน HTML)
+
     window.openDeleteModal = (id) => {
-        petIdToDelete = id.toString(); // เก็บ ID เป็น String
-        showModal(deleteModal); 
+        petIdToDelete = id.toString();
+        showModal(deleteModal);
     };
 
-    // --- 4. Core Utility Functions ---
-
+    // --- count pets ---
     function updatePetCount(count) {
         petCount.textContent = `There are ${count} pets in total`;
     }
 
-    // 🔴 ฟังก์ชันดึง Status และ Mapping
     async function fetchPetStatuses() {
-        try {
-            const response = await fetch(STATUS_API_URL);
-            if (!response.ok) throw new Error(`HTTP status: ${response.status}`);
-            const statuses = await response.json(); 
-            if (statusObj) {
-           pet.status = statusObj.status ? statusObj.status.trim() : 'No Request';
-             }
+    try {
+        const response = await fetch(STATUS_API_URL);
+        if (!response.ok) throw new Error(`HTTP status: ${response.status}`);
 
-            allPets.forEach(pet => {
-                // แปลง ID Long เป็น String เพื่อให้เปรียบเทียบกับ petId (String) จาก API ได้
-                const petIdString = pet.id ? pet.id.toString() : pet.id; 
-                
-                // ค้นหาจาก petID (String) หรือ id (Long/String)
-                const statusObj = statuses.find(s => 
-                    s.petId === pet.petID || s.petId === petIdString
-                );
-                
-                if (statusObj) {
-                   pet.status = statusObj.status; 
-                }
-            });
+        const statuses = await response.json();  
+        const statusMap = new Map();
 
-        } catch (error) {
-            console.error("Error fetching pet statuses:", error);
-            // ปล่อยให้โค้ดทำงานต่อไปด้วยสถานะเริ่มต้นที่กำหนดไว้
-        }
+        // 1. สร้าง Map เพื่อให้ค้นหาสถานะได้เร็ว
+        statuses.forEach(s => {
+            // ใช้ Optional Chaining และตรวจสอบค่าว่างก่อน
+            const id = s.petId?.toString().trim();
+            const status = s.status?.trim();
+            if (id && status) {
+                statusMap.set(id, status);
+            }
+        });
+
+        allPets.forEach(pet => {
+            
+            const petIdToFind = (pet.id ?? pet.petID ?? pet.petId)?.toString().trim(); 
+
+            if (petIdToFind && statusMap.has(petIdToFind)) {
+                pet.status = statusMap.get(petIdToFind);
+            } 
+            
+        });
+
+    } catch (error) {
+        
+        console.error("Error fetching pet statuses:", error);
     }
+}
+
     
-    // 🔴 ฟังก์ชันลบข้อมูล (ถูกเรียกเมื่อกดยืนยันใน Modal)
     async function confirmDelete() {
         if (petIdToDelete) {
             try {
                 const response = await fetch(`${API_URL}/${petIdToDelete}`, { method: 'DELETE' });
                 if (response.ok) {
-                    allPets = allPets.filter(pet => pet.id.toString() !== petIdToDelete); // 🔴 เปรียบเทียบ ID เป็น String
+                    allPets = allPets.filter(pet => pet.id.toString() !== petIdToDelete);
                     applyFilters();
                     alert(`Pet ID ${petIdToDelete} successfully deleted.`);
                 } else {
                     const errorText = await response.text();
-                    alert(`Failed to delete pet: ${response.status} - ${errorText}`);
+                    alert(`Failed: ${response.status} - ${errorText}`);
                 }
             } catch (error) {
-                alert('Error connecting to server during deletion.');
-                console.error('Delete error:', error);
+                alert('Error connecting to server.');
             }
-            hideModal(deleteModal); 
+            hideModal(deleteModal);
             petIdToDelete = null;
         }
     }
 
-
-    // 🔴 ฟังก์ชันแสดงตาราง (Render Table)
+    // --- Render table ---
     function renderTable(pets) {
-        tableBody.innerHTML = ''; 
+        tableBody.innerHTML = '';
         if (pets.length === 0) {
-            tableBody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px;">No pets found.</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;">No pets found.</td></tr>';
             return;
         }
 
         pets.forEach(pet => {
-            // 🟢 การสร้าง Status Tag
             const displayStatus = pet.status || 'No Request';
-            const statusClass = displayStatus.toLowerCase().replace(' ', '-'); 
+            const statusClass = displayStatus.toLowerCase().replace(' ', '-');
+
             let statusTagHTML = '';
-            
             switch (displayStatus) {
                 case 'Pending':
                     statusTagHTML = `<a href="requests.html?id=${pet.id}" class="status-tag status-pending">${displayStatus}</a>`;
                     break;
-                // ... (Approved และ Completed เหมือนเดิม) ...
+                case 'Approved':
+                    statusTagHTML = `<span class="status-tag status-approved">${displayStatus}</span>`;
+                    break;
+                case 'Completed':
+                    statusTagHTML = `<span class="status-tag status-completed">${displayStatus}</span>`;
+                    break;
                 default:
                     statusTagHTML = `<span class="status-tag status-${statusClass}">${displayStatus}</span>`;
             }
 
             const tr = document.createElement('tr');
-            const displayId = pet.petID || pet.id; 
-            // 🟢 การสร้าง Absolute URL สำหรับรูปภาพ
+            const displayId = pet.petID || pet.petId || pet.id;
             const petImageUrl = `http://localhost:8081${pet.image || '/images/placeholder.jpg'}`;
 
             tr.innerHTML = `
@@ -170,16 +161,14 @@ if (resetFilterBtn) {
                 </td>
                 <td>${pet.type || ''}</td>
                 <td>${pet.breed || ''}</td>
-                <td>${statusTagHTML}</td> 
+                <td>${statusTagHTML}</td>
                 <td class="action-col action-col-edit">
                     <a href="addpet.html?mode=edit&id=${pet.id}">
-                        <button class="action-button edit-btn">
-                            <i class="fa-solid fa-pencil"></i> Edit
-                        </button>
+                        <button class="action-button edit-btn"><i class="fa-solid fa-pencil"></i> Edit</button>
                     </a>
                 </td>
                 <td class="action-col action-col-delete">
-                    <button class="action-button delete-btn" data-id="${pet.id}" onclick="openDeleteModal(${pet.id})">
+                    <button class="action-button delete-btn" onclick="openDeleteModal('${pet.id}')">
                         <i class="fa-solid fa-trash-can"></i> Delete
                     </button>
                 </td>
@@ -187,90 +176,66 @@ if (resetFilterBtn) {
             tableBody.appendChild(tr);
         });
     }
-    
-    // 🔴 ฟังก์ชัน Filter และ Search
+
+    // --- Filters ---
     function applyFilters() {
-        // ... (โค้ด Filter Logic ที่คุณมีอยู่) ...
+        let filteredPets = allPets;
         const searchText = searchInput.value.toLowerCase();
-        // ... (การดึงค่าจาก DOM filters) ...
-         let filteredPets = allPets;
-    if (pendingToggle && pendingToggle.checked) {
-    filteredPets = filteredPets.filter(pet =>
-        (pet.status || 'no request').trim().toLowerCase() === "pending"
-    );
-}
 
-// Filter: Search by name
-        if (searchText) 
-         {
+        if (pendingToggle.checked) {
+            filteredPets = filteredPets.filter(
+                pet => (pet.status || "").trim().toLowerCase() === "pending"
+            );
+        }
+
+        if (searchText) {
             filteredPets = filteredPets.filter(pet =>
-            pet.name.toLowerCase().includes(searchText)
-        );
-           }
+                pet.name.toLowerCase().includes(searchText)
+            );
+        }
 
-         // Filter: By Status
-    if (statusFilter && statusFilter.value) {
-    const filterVal = statusFilter.value.trim().toLowerCase();
-    filteredPets = filteredPets.filter(pet =>
-        (pet.status || 'no request').trim().toLowerCase() === filterVal
-    );
-}
+        if (statusFilter.value) {
+            const f = statusFilter.value.toLowerCase();
+            filteredPets = filteredPets.filter(
+                pet => (pet.status || "").trim().toLowerCase() === f
+            );
+        }
 
-   // Filter: By Type
-   if (typeFilter && typeFilter.value) {
-    filteredPets = filteredPets.filter(pet =>
-        pet.type === typeFilter.value
-    );
- }
+        if (typeFilter.value) {
+            filteredPets = filteredPets.filter(pet => pet.type === typeFilter.value);
+        }
 
-// Filter: By Breed
-   if (breedFilter && breedFilter.value) {
-    filteredPets = filteredPets.filter(pet =>
-        pet.breed === breedFilter.value
-    );
-}
-renderTable(filteredPets);
-updatePetCount(filteredPets.length);
+        if (breedFilter.value) {
+            filteredPets = filteredPets.filter(pet => pet.breed === breedFilter.value);
+        }
+
+        renderTable(filteredPets);
+        updatePetCount(filteredPets.length);
     }
 
-
-    // --- 5. Data Fetching Function ---
-
+    // --- Fetch Pets ---
     async function fetchPets() {
         try {
             const response = await fetch(API_URL);
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            const data = await response.json(); 
-            allPets = data;
 
-            // 🟢 1. กำหนดสถานะเริ่มต้น
-            allPets.forEach(pet => {
-                 pet.status = 'No Request';
-            });
-            
-            // 🟢 2. เรียกดึง Status และ Mapping
-            await fetchPetStatuses(); 
+            allPets = await response.json();
+
+            allPets.forEach(pet => pet.status = "No Request");
+
+            await fetchPetStatuses();
 
             renderTable(allPets);
             updatePetCount(allPets.length);
 
         } catch (error) {
-            console.error("Could not fetch pets:", error);
-            tableBody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px; color: red;">Failed to load data from server.</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;color:red;">Failed to load data.</td></tr>';
             updatePetCount(0);
         }
     }
-    
-    // --- 6. Event Listeners ---
-    // 🟢 การผูก Event สำหรับ Modal ยืนยันการลบ
+
     confirmDeleteBtn.addEventListener('click', confirmDelete);
 
-    // ... (Listeners อื่นๆ) ...
-    
-    // --- 7. Initialization ---
-    function initializeApp() {
-        fetchPets();
-    }
-    
-    initializeApp();
+    // Init
+    fetchPets();
 });
