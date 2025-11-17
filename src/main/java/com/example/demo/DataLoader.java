@@ -1,19 +1,26 @@
 package com.example.demo;
 import com.example.demo.model.Pet;
+import com.example.demo.model.User;
 import com.example.demo.repository.PetRepository;
+import com.example.demo.repository.UserRepository;
 
 import java.util.List;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 @Component
 public class DataLoader implements CommandLineRunner {
 
     private final PetRepository petRepository;
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public DataLoader(PetRepository petRepository) {
+    public DataLoader(PetRepository petRepository, UserRepository userRepository) {
         this.petRepository = petRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -28,6 +35,17 @@ public class DataLoader implements CommandLineRunner {
                 new Pet("D002", "Dog", "/images/doggo.jpg", "Cindy", 1, "Female", "Golden Retriever", 28, false, true, "None", "None"),
                 new Pet("D003", "Dog", "/images/poodle.jpg", "Luna", 1, "Female", "Poodle Toy", 4.2, false, true, "None", "Chicken")
             ));
+        }
+
+          // --- Seed Admin User ---
+        if (userRepository.findByUsername("admin").isEmpty()) {
+            User admin = new User();
+            admin.setUsername("admin");
+            admin.setEmail("admin@gmail.com");
+            admin.setPassword(passwordEncoder.encode("admin@12345"));
+            admin.setRole("ADMIN");
+            admin.setActive(true);
+            userRepository.save(admin);
         }
     }
 }
