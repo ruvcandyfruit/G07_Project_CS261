@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="th-en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="petdetail.css">
+    <link rel="stylesheet" href="all.css">
+    
+    <link rel="icon" href="homepageResources/icon.png" type="image/x-icon">
+    <title>Pet details | Pet Adoption System</title>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="homepageResources/icon.png" alt="Logo">
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="homepage.html">Homepage</a></li>
+                <li><a href="petlisting.html" class="active">Pet Listing</a></li>
+                <li><a href="contact.html">About/Contact Us</a></li>
+            </ul> 
+
+            <!-- Log out Button -->
+            <button class="logout-btn" id="logout-button">Log out</button>
+        </nav>
+      <div class="hamburger">
+        ☰
+    </div>        
+    </header>
+
+
+    <div class="fullwidth-section">
+    <div class="container">
+        <h1>ทำความรู้จักน้อง</h1>
+        
+        <div class="pet-profile">
+          
+            <div class="pet-image-section">
+                <div class="pet-image" id="petImage">
+                   <img id="petImages" src="" alt="" style="width:100%">
+                </div>
+                <div class="pet-name" id="petName"></div>
+            </div>
+
+           
+            <div class="pet-details">
+                <div class="detail-section">
+                    <h3>ข้อมูลน้อง</h3>
+                    <ul id="petInfo">
+                        <li>รหัสประจำตัว : <span id="petIds"></span></li>
+                        <li>ชื่อ  <span id="petNames"></span></li>
+                        <li>ชนิด  <span id="petType"></span></li>
+                        <li>เพศ <span id="petGender"></span></li>
+                        <li>วันเกิด <span id="petDateBirth"></span> </li>
+                        <li>สายพันธุ์ <span id="petBreed"></span></li>
+                        <li>น้ำหนัก <span id="petWeight"></span>  กิโลกรัม</li>
+                    </ul>
+                </div>
+
+                <div class="detail-section">
+                    <h3>สุขภาพและการดูแล</h3>
+                    <ul id="healthInfo">
+                        <li>การทำหมัน : <span id="petSterilisation"></span></li>
+                        <li>การฉีดวัคซีน : <span id="petVaccine"></span></li>
+                        <li>โรคประจำตัว : <span id="petDisease"></span></li>
+                        <li>แพ้อาหาร : <span id="petFoodAllergy"></span></li>
+                    </ul>
+
+                    <h3 style="margin-top: 20px;">ช่องทางการติดต่อ</h3>
+                    <ul id="contactInfo">
+                        <li>เบอร์โทร : 0821569909</li>
+                        <li>Facebook : เจ้าของสุขภาษา</li>
+                        <li>Line : 0821569909</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="buttons">
+            <a href="petlisting.html" style="text-decoration: none; color: inherit;">
+            <button class="btn btn-secondary" id="backBtn">ย้อนกลับ</button></a>
+            <a href="userform.html" style="text-decoration: none; color: inherit;">
+            <button class="btn btn-primary" id="adoptBtn">ขอรับเลี่้ยง</button></a>
+        </div>
+    </div>
+    </div>
+    
+    <footer>
+        <div class="footer">
+            <div class="about">
+                <div class="logo">
+                    <img src="homepageResources/icon.png" alt="Logo">
+                </div>
+                <p>Pet Adoption System</p>
+                <p class="location">เลขที่ 11/1 ชั้น 1 ห้อง 111 อาคารสาทรธานี 1 ถนนสาทรเหนือ<br>แขวงสีลม เขตบางรัก กรุงเทพมหานคร 10100<br>Tel : 011-111-1111</p>
+            </div>
+
+            <div class="social-container">
+                <a href="#" class="social-btn">
+                    <img src="homepageResources/FacebookLogo.png" alt="Facebook icon">
+                    <span>Pet Adoption</span>
+                </a>
+
+                <a href="#" class="social-btn">
+                    <img src="homepageResources/InstagramLogo.png" alt="Instagram icon">
+                    <span>pet_adoption</span>
+                </a>
+            </div>                
+        </div>
+    </footer>
+
+    <script src="petdetail.js"></script>
+    <script src="all.js"></script>
+    
+</body>
+</html>

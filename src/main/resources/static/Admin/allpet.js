@@ -85,6 +85,9 @@ if (resetFilterBtn) {
             const response = await fetch(STATUS_API_URL);
             if (!response.ok) throw new Error(`HTTP status: ${response.status}`);
             const statuses = await response.json(); 
+            if (statusObj) {
+           pet.status = statusObj.status ? statusObj.status.trim() : 'No Request';
+             }
 
             allPets.forEach(pet => {
                 // แปลง ID Long เป็น String เพื่อให้เปรียบเทียบกับ petId (String) จาก API ได้
@@ -191,11 +194,11 @@ if (resetFilterBtn) {
         const searchText = searchInput.value.toLowerCase();
         // ... (การดึงค่าจาก DOM filters) ...
          let filteredPets = allPets;
-      // Filter: Pending toggle
-     if (pendingToggle && pendingToggle.checked) 
-        {
-           filteredPets = filteredPets.filter(pet => pet.status === "Pending");
-        }
+    if (pendingToggle && pendingToggle.checked) {
+    filteredPets = filteredPets.filter(pet =>
+        (pet.status || 'no request').trim().toLowerCase() === "pending"
+    );
+}
 
 // Filter: Search by name
         if (searchText) 
@@ -206,11 +209,12 @@ if (resetFilterBtn) {
            }
 
          // Filter: By Status
-     if (statusFilter && statusFilter.value) {
+    if (statusFilter && statusFilter.value) {
+    const filterVal = statusFilter.value.trim().toLowerCase();
     filteredPets = filteredPets.filter(pet =>
-        pet.status === statusFilter.value
+        (pet.status || 'no request').trim().toLowerCase() === filterVal
     );
-             }
+}
 
    // Filter: By Type
    if (typeFilter && typeFilter.value) {
