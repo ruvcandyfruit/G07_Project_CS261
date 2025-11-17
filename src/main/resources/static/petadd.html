@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>แอดมินจัดการข้อมูลสัตว์</title>
+  <link rel="stylesheet" href="petadd.css">
+</head>
+<body>
+
+  <h1>🐾 ระบบจัดการข้อมูลสัตว์</h1>
+
+
+  <div class="form">
+    <h2>เพิ่มข้อมูลสัตว์</h2>
+
+    <label>รหัสสัตว์</label>
+    <input type="text" id="petID" placeholder="P001">
+
+    <label>ชื่อ</label>
+    <input type="text" id="petName" placeholder="เช่น โกโก้">
+
+    <label>ชนิด</label>
+    <input type="text" id="petType" placeholder="เช่น สุนัข / แมว">
+
+    <label>เพศ</label>
+    <input type="text" id="petGender" placeholder="ผู้ / เมีย">
+
+    <label>วันเกิด</label>
+    <input type="date" id="petDateBirth">
+  
+
+
+
+    <label>สายพันธุ์</label>
+    <input type="text" id="petBreed" placeholder="เช่น พุดเดิ้ล">
+
+    <label>น้ำหนัก (กก.)</label>
+    <input type="number" id="petWeight" placeholder="เช่น 5">
+
+    <label>ทำหมันหรือยัง</label>
+    <input type="text" id="petSterilization" placeholder="ใช่ / ไม่ใช่">
+
+    <label>การฉีดวัคซีน</label>
+    <input type="text" id="petVaccination" placeholder="ครบแล้ว / ยังไม่ครบ">
+
+    <label>โรคประจำตัว</label>
+    <input type="text" id="petDisease" placeholder="ไม่มี / ระบุโรค">
+
+    <label>แพ้อาหาร</label>
+    <input type="text" id="petAllergy" placeholder="ไม่มี / ระบุ">
+
+    <label>รูป</label>
+    <input type="text" id="petImages" placeholder="URL รูป">
+
+    <button type="button" onclick="addAnimal()"> เพิ่มข้อมูล</button>
+  </div>
+
+  <!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>แอดมินจัดการข้อมูลสัตว์</title>
+  <link rel="stylesheet" href="petedit.css">
+</head>
+<body>
+
+
+  <script src="petadd.js" defer></script>
+  
+</body>
+</html>
+
