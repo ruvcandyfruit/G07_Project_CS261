@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="th-en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="homepageResources/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="allpet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Pet Adoption Allpet</title>
+</head>
+
+<body>
+        <!-- Sidebar -->
+        <div id="sidebar"></div>
+
+        <div class="container">
+        <!-- Main Content -->
+            <main>
+                <div class="header-controls">
+                    <h1 class="dashboard-header">ALL PET</h1>
+                    <a href="add-edit-pet.html?mode=add" class="add-new-pet-button">
+                        + Add New Pet
+                    </a>
+                </div>
+
+                <div class="pet-table-container">
+                    <div class="data-controls-panel">
+                        <div class="summary-and-toggle">
+                            <span class="pet-summary" id="petCount">There are 0 pets in total</span>
+                            <label class="toggle-switch-container">
+                                <input type="checkbox" id="pendingToggle" class="toggle-input">
+                                <span class="slider"></span>
+                                <span class="toggle-label">See pets that are pending request</span>
+                            </label>
+                        </div>
+
+                        <div class="search-and-filter">
+                            <div class="search-box">
+                                <i class="fas fa-search search-icon"></i>
+                                <input type="text" placeholder="Search" class="search-input" id="searchInput">
+                            </div>
+                            <button class="filter-button" id="filterButton">
+                                <i class="fas fa-filter"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <table class="pet-data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Pet</th>
+                                <th>Type</th>
+                                <th>Breed</th>
+                                <th>Status</th>                           
+                                <th colspan="2" class="actions-header"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="petTableBody">
+                            </tbody>
+                    </table>
+                </div>
+            </main>
+
+            <div id="filterModal" class="modal-backdrop modal-hidden">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Filter Pets</h2>
+                        <button id="closeFilterModal" class="close-modal-btn">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="statusFilter">Status</label>
+                            <select id="statusFilter">
+                                <option value="">All</option>
+                                <option value="No Request">No Request</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Approved">Approved</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Closed">Closed</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="typeFilter">Type</label>
+                            <select id="typeFilter">
+                                <option value="">All</option>
+                                <option value="Cat">Cat</option>
+                                <option value="Dog">Dog</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="breedFilter">Breed</label>
+                            <select id="breedFilter">
+                                <option value="">All</option>
+                                <option value="Persian">Persian</option>
+                                <option value="Siam">Siam</option>
+                                <option value="Mixed">Mixed</option>
+                                <option value="Golden Retriever">Golden Retriever</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="resetFilterBtn" class="btn-secondary">Reset</button>
+                        <button id="applyFilterBtn" class="btn-primary">Apply</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="deleteModal" class="modal-backdrop modal-hidden">
+                <div class="modal-content delete-modal">
+                    <div class="modal-header">
+                        <h2>Confirm Deletion</h2>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete this pet? This action cannot be undone.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="cancelDeleteBtn" class="btn-secondary">Cancel</button>
+                        <button id="confirmDeleteBtn" class="btn-danger">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="allpet.js"></script>
+        <script src="sidebar.js"></script>
+    </body>
+</html>

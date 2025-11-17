@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } 
     
     // 3.4: หน้า Admin ดูสถานะ (ลูกของ All Pet)
-    else if (currentPage.includes('request-status-admin.html')) {
+    else if (currentPage.includes('request-status.html')) {
         breadcrumbHTML = `
             <a href="allpet.html" class="breadcrumb-link">ALL PET</a>
             <span class="breadcrumb-separator">&gt;</span>

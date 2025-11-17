@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="th-en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Status | Admin</title>
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="request-status.css">
+    <link rel="icon" href="../homepageResources/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <aside id="sidebar"></aside>
+    <div class="container">
+      <main>
+        <div class="main-content">
+          <div class="breadcrumb">
+              <div id="breadcrumb-placeholder"></div>
+           </div>
+          <div class="wrapper">
+
+              <div class="status-wrapper">
+                  
+                  <div class="info-row">
+
+                      <a href="#" id="pet-card-link" class="info-card pet-card">
+                          <img id="petImage" class="info-avatar" src="../images/sample-pet.jpg" alt="">
+                          <div>
+                              <p class="info-label">PetName</p>
+                              <p class="info-value" id="petName">Loading...</p>
+                          </div>
+                      </a>
+
+                      <a href="#" id="user-card-link" class="info-card user-card">
+                          <div class="info-avatar user-icon-avatar">
+                              <i class="fa-solid fa-user"></i>
+                          </div>
+                          <div>
+                              <p class="info-label">UserName</p>
+                              <p class="info-value" id="userName">Loading...</p>
+                              <p class="info-label" id="userPhone">...</p>
+                              <p class="info-label address-label" id="userAddress">...</p> </div>
+                      </a>
+                  </div>
+
+                  <section class="status-steps-box">
+                      <div class="status-line"></div>
+                      <div class="status-steps">
+                          <div class="status-step" data-key="request">
+                              <div class="status-circle"><div class="circle-middle"><div class="circle-inner"></div></div><span class="circle-icon">✓</span></div>
+                              <p class="status-label">ส่งคำขอ</p>
+                          </div>
+                          <div class="status-step" data-key="approval">
+                              <div class="status-circle"><div class="circle-middle"><div class="circle-inner"></div></div><span class="circle-icon">✓</span></div>
+                              <p class="status-label">อนุมัติคำขอ</p>
+                          </div>
+                          <div class="status-step" data-key="handover">
+                              <div class="status-circle"><div class="circle-middle"><div class="circle-inner"></div></div><span class="circle-icon">✓</span></div>
+                              <p class="status-label">ส่งมอบ</p>
+                          </div>
+                      </div>
+                  </section>
+
+
+                  <section class="pickup-box">
+                    <h3 class="pickup-title">
+                        <span id="pickupIcon">🐾</span> 
+                        
+                        <span id="pickupTitle">Loading...</span>
+                    </h3>
+                    
+                    <p class="pickup-text" id="pickupMessage">
+                        กำลังโหลดข้อมูล...
+                    </p>
+                  </section>
+              </div>
+
+              <div class="action-row">
+                  <button id="rejectBtn" class="btn btn-red">
+                      <i class="fa-solid fa-times"></i> ยกเลิกการรับเลี้ยง
+                  </button>
+                  <button id="confirmBtn" class="btn btn-green">
+                      <i class="fa-solid fa-check"></i> ยืนยันการรับเลี้ยง
+                  </button>
+                  <button id="backBtn" class="btn btn-outline" style="display: none;">
+                      <i class="fa-solid fa-arrow-left"></i> ย้อนกลับ
+                  </button>
+              </div>
+           </div>
+
+        </div>
+      </main>
+    </div>
+
+<div id="admin-cancel-modal" class="modal-overlay">
+  <div class="modal-box">
+    <h3 class="modal-title">ยืนยันการยกเลิกคำขอรับเลี้ยง</h3>
+    <p class="modal-text">
+      คุณแน่ใจหรือไม่ว่าต้องการยกเลิกคำขอรับเลี้ยงสัตว์?
+    </p>
+    <div class="modal-actions">
+      <button id="admin-cancel-close" class="btn-modal btn-modal-secondary">
+        CANCEL
+      </button>
+      <button id="admin-cancel-yes" class="btn-modal btn-modal-danger">
+        YES
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="handover-modal" class="modal-overlay">
+  <div class="modal-box">
+    <h3 class="modal-title">ยืนยันการส่งมอบสัตว์เลี้ยง</h3>
+    <p class="modal-text">
+      ส่งมอบสัตว์เลี้ยงเรียบร้อยแล้วใช่หรือไม่?
+    </p>
+    <div class="modal-actions">
+      <button id="handover-cancel" class="btn-modal btn-modal-secondary">
+        CANCEL
+      </button>
+      <button id="handover-yes" class="btn-modal btn-modal-success">
+        YES
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="handover-success-modal" class="modal-overlay">
+  <div class="modal-box success-box">
+    <div class="success-icon-circle">
+      ✓
+    </div>
+    <h3 class="success-title">Successful</h3>
+    <p class="success-text">
+      Pet handover confirmed successfully
+    </p>
+    </div>
+</div>
+
+
+<script src="request-status.js" defer></script> 
+<script src="sidebar.js" defer></script>
+<script src="breadcrumb.js" defer></script>
+
+</body>
+</html>
