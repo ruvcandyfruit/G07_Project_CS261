@@ -2,10 +2,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 0. อ่านค่าจาก URL ---
     const urlParams = new URLSearchParams(window.location.search);
-    const mode = urlParams.get('mode') || 'add'; // ถ้าไม่บอก mode ให้ถือว่าเป็น 'add'
+    const mode = urlParams.get('mode') || 'add'; // default 'add'
     const petIdToEdit = urlParams.get('id');
 
-    // --- 1. DOM Selections (เหมือนเดิม) ---
+    // --- 1. DOM Selections ---
     const formModeTitle = document.getElementById('formModeTitle');
     const fileUpload = document.getElementById('fileUpload');
     const uploadArea = document.querySelector('.upload-area');
@@ -33,8 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const saveButton = document.getElementById('saveButton');
 
-    // --- 2. Image Upload Logic (เหมือนเดิม) ---
-    // (*** ลบ uploadArea.addEventListener('click', ...)
+    // --- 2. Image Upload Logic ---
     fileUpload.addEventListener('change', (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -50,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- 3. Button Group Toggle Logic (เหมือนเดิม) ---
+    // --- 3. Button Group Toggle Logic ---
     function handleGroupToggle(groupElement) {
         const buttons = groupElement.querySelectorAll('.selection-btn');
         buttons.forEach(button => {
@@ -65,109 +64,77 @@ document.addEventListener('DOMContentLoaded', () => {
     handleGroupToggle(typeGroup);
     handleGroupToggle(genderGroup);
 
-    // --- 4. Calendar Icon Click (เหมือนเดิม) ---
-    //calendarIcon.addEventListener('click', () => {
-    //    try { petDobInput.showPicker(); } catch (error) { console.warn("Browser doesn't support showPicker()", error); }
-    //});
-    //petDobInput.addEventListener('change', () => clearError(petDobInput.closest('.form-group')));
+    // --- 4. Calendar Icon Click ---
+    // calendarIcon.addEventListener('click', () => {
+    //     try { petDobInput.showPicker(); } catch (error) { console.warn("Browser doesn't support showPicker()", error); }
+    // });
+    // petDobInput.addEventListener('change', () => clearError(petDobInput.closest('.form-group')));
 
-    // --- 5. Reset Buttons Logic (เหมือนเดิม) ---
-    resetBasicBtn.addEventListener('click', (e) => { /* ... โค้ด Reset เดิม ... */ });
-    resetHealthBtn.addEventListener('click', (e) => { /* ... โค้ด Reset เดิม ... */ });
+    // --- 5. Reset Buttons Logic ---
+    resetBasicBtn.addEventListener('click', (e) => { /* ... reset code ... */ });
+    resetHealthBtn.addEventListener('click', (e) => { /* ... reset code ... */ });
 
-    // --- 6. Validation Logic (เหมือนเดิม) ---
-    function showError(formGroup, message) { /* ... โค้ด Error เดิม ... */ }
-    function clearError(formGroup) { /* ... โค้ด Error เดิม ... */ }
-    function clearAllErrorsInCard(cardElement) { /* ... โค้ด Error เดิม ... */ }
-    function clearAllErrors() { /* ... โค้ด Error เดิม ... */ }
-    function validateForm() { /* ... โค้ด Validation เดิม ... */ return true; } // สมมติว่าผ่าน
-    function calculateAge(dobString) { /* ... โค้ดคำนวณอายุเดิม ... */ }
+    // --- 6. Validation Logic ---
+    function showError(formGroup, message) { /* ... code ... */ }
+    function clearError(formGroup) { /* ... code ... */ }
+    function clearAllErrorsInCard(cardElement) { /* ... code ... */ }
+    function clearAllErrors() { /* ... code ... */ }
+    function validateForm() { /* ... code ... */ return true; } 
+    function calculateAge(dobString) { /* ... code ... */ }
 
-
-    // --- [ใหม่] ฟังก์ชันสำหรับดึงข้อมูลมาเติมฟอร์ม ---
+    // --- 7. Populate Form for Edit ---
     function populateForm(petData) {
         petNameInput.value = petData.name || '';
         petBreedSelect.value = petData.breed || '';
-        
-        // สมมติว่า API คืนค่า dob เป็น 'YYYY-MM-DD'
         petDobInput.value = petData.dob || ''; 
-        
         foodAllergyInput.value = petData.foodAllergy || '';
         diseaseInput.value = petData.disease || '';
         petWeightInput.value = petData.weight || '';
         sterilizedCheck.checked = petData.sterilisation;
         vaccinatedCheck.checked = petData.vaccine;
 
-        // เติมค่าปุ่ม Type
         typeGroup.querySelectorAll('.selection-btn').forEach(btn => {
             btn.classList.remove('active');
-            if (btn.dataset.value === petData.type) {
-                btn.classList.add('active');
-            }
+            if (btn.dataset.value === petData.type) btn.classList.add('active');
         });
 
-        // เติมค่าปุ่ม Gender
         genderGroup.querySelectorAll('.selection-btn').forEach(btn => {
             btn.classList.remove('active');
-            if (btn.dataset.value === petData.gender) {
-                btn.classList.add('active');
-            }
+            if (btn.dataset.value === petData.gender) btn.classList.add('active');
         });
-        
-        // เติมรูปภาพ
+
         if (petData.image) {
-            uploadedImageBase64 = petData.image; // เก็บ URL หรือ Base64 เดิมไว้
+            uploadedImageBase64 = petData.image;
             imagePreview.src = petData.image;
             imagePreview.style.display = 'block';
             uploadPrompt.style.display = 'none';
         }
     }
 
-    // --- [ใหม่] ฟังก์ชันสำหรับโหลดข้อมูลสัตว์ (ตอน Edit) ---
     async function loadPetDataForEdit(petId) {
-        // *** ให้เปลี่ยน '/api/pet-detail/' เป็น Endpoint GET ของคุณ ***
         try {
-            const response = await fetch(`/api/pet-detail/${petId}`); // เช่น GET /api/pet-detail/abc-123
-            if (!response.ok) {
-                throw new Error('Could not fetch pet data');
-            }
+            const response = await fetch(`/api/pet-detail/${petId}`);
+            if (!response.ok) throw new Error('Could not fetch pet data');
             const petData = await response.json();
-            
-            // เติมข้อมูลลงฟอร์ม
             populateForm(petData);
-
         } catch (error) {
             console.error('Failed to load pet data:', error);
             alert('Error: Could not load pet data. Returning to add mode.');
-            // ถ้าโหลดไม่ผ่าน ก็กลับไป Add Mode
             formModeTitle.textContent = 'Add Pet';
         }
     }
 
-    // --- 7. Save Button (*** อัปเดตครั้งใหญ่ ***) ---
+    // --- 8. Save Button Logic ---
     saveButton.addEventListener('click', async (e) => {
         e.preventDefault();
-        
-        if (!validateForm()) {
-            console.error('Validation Failed');
-            return;
-        }
-        
-        // 7.2 รวบรวมข้อมูล
+        if (!validateForm()) return;
+
         const petData = {
             petID: (mode === 'edit' ? petIdToEdit : crypto.randomUUID()),
             type: typeGroup.querySelector('.selection-btn.active').dataset.value,
             image: uploadedImageBase64, 
             name: petNameInput.value.trim(),
-            
-            // --- นี่คือส่วนที่แก้ไข ---
-            // ลบบรรทัด age: ออก
-            // age: calculateAge(petDobInput.value), // [ลบบรรทัดนี้]
-            
-            // เพิ่มบรรทัด dob: เข้าไปแทน
-            dob: petDobInput.value, // นี่คือ 'YYYY-MM-DD' จากช่อง <input type="date">
-            // --- จบส่วนแก้ไข ---
-            
+            dob: petDobInput.value,
             gender: genderGroup.querySelector('.selection-btn.active').dataset.value,
             breed: petBreedSelect.value,
             weight: petWeightInput.value ? parseFloat(petWeightInput.value) : 0,
@@ -176,31 +143,21 @@ document.addEventListener('DOMContentLoaded', () => {
             disease: diseaseInput.value.trim(),
             foodAllergy: foodAllergyInput.value.trim()
         };
-        
-        // --- 7.3 [ใหม่] แยก Logic การ Save ---
-        
-        if (mode === 'edit') {
-            // ----- EDIT MODE (UPDATE ข้อมูล) -----
-            petData.petID = petIdToEdit; // ใส่ ID เดิมของสัตว์
-            console.log('--- Updating Pet (PUT) ---');
-            console.log(petData);
 
-            // *** ให้เปลี่ยน '/api/pet-detail/' เป็น Endpoint UPDATE (PUT) ของคุณ ***
+        if (mode === 'edit') {
             try {
                 saveButton.textContent = 'Updating...';
                 saveButton.disabled = true;
 
-                const response = await fetch(`/api/pet-detail/${petIdToEdit}`, { 
-                    method: 'PUT', // หรือ 'PATCH'
+                const response = await fetch(`/api/pet-detail/${petIdToEdit}`, {
+                    method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(petData)
                 });
 
-                if (!response.ok) { throw new Error(`API Error: ${response.statusText}`); }
+                if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
 
                 alert('Pet profile updated successfully!');
-                // window.location.href = '/all-pet.html'; // กลับไปหน้า All Pet
-
             } catch (error) {
                 console.error('Failed to update pet:', error);
                 alert('Error: Could not update pet profile.');
@@ -210,27 +167,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
         } else {
-            // ----- ADD MODE (CREATE ใหม่) -----
-            petData.petID = crypto.randomUUID(); // สร้าง ID ใหม่
-            console.log('--- Creating new Pet (POST) ---');
-            console.log(petData);
-
-            // (นี่คือโค้ด POST เดิมของคุณ)
             try {
                 saveButton.textContent = 'Saving...';
                 saveButton.disabled = true;
 
-                const response = await fetch('/api/pet-detail', { // Endpoint POST
+                const response = await fetch('/api/pet-detail', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(petData)
                 });
 
-                if (!response.ok) { throw new Error(`API Error: ${response.statusText}`); }
-                
+                if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
+
                 alert('Pet profile saved successfully!');
-                // (อาจจะล้างฟอร์ม หรือกลับไปหน้า All Pet)
-                
             } catch (error) {
                 console.error('Failed to save pet details:', error);
                 alert('Error: Could not save pet profile.');
@@ -240,20 +189,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
-    
-    // --- 8. ล้าง Error เมื่อ User พิมพ์ (เหมือนเดิม) ---
+
+    // --- 9. Clear Errors on Input ---
     [petNameInput, petBreedSelect].forEach(input => {
         input.addEventListener('input', () => clearError(input.closest('.form-group')));
     });
 
-    // --- 9. [ใหม่] Logic ตอนเริ่มโหลดหน้า ---
-
-    // [!! 2. ถ้าเป็นโหมด edit ให้โหลดข้อมูลเหมือนเดิม !!]
-    if (mode === 'edit') {
-        loadPetDataForEdit(petIdToEdit); // โหลดข้อมูลมาเติมฟอร์ม
-        
-        saveButton.textContent = 'Update'; // เปลี่ยนข้อความปุ่ม
+    // --- 10. Load Edit Mode Data ---
+    if (mode === 'edit' && petIdToEdit) {
+        loadPetDataForEdit(petIdToEdit);
+        saveButton.textContent = 'Update';
     }
-    
-    // (เราลบ formModeTitle.textContent ทิ้งไปได้เลย)
 });

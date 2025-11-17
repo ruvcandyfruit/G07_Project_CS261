@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -179,13 +182,15 @@ public ResponseEntity<?> getStatusByPetID(@PathVariable String petID) {
     public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
         try {
             
+            
             Path filePath = Paths.get(uploadDir).resolve(filename).normalize();
             Resource resource = new UrlResource(filePath.toUri());
 
            
+           
             if (resource.exists() && resource.isReadable()) {
                 // ส่งไฟล์กลับไป
-                String contentType = "application/octet-stream"; 
+                String contentType = "application/octet-stream"; // ประเภทไฟล์ทั่วไป (binary stream)
                 
                 return ResponseEntity.ok()
                         .contentType(MediaType.parseMediaType(contentType))
@@ -204,6 +209,34 @@ public ResponseEntity<?> getStatusByPetID(@PathVariable String petID) {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+ 
+@GetMapping("/statuses")
+@CrossOrigin(origins = "*")
+public ResponseEntity<List<Map<String, Object>>> getStatusesAndIds() {
+    List<Form> forms;
+    try {
+        forms = formRepository.findAll(); 
+
+        // ใช้ HashMap แทน Map.of()
+        List<Map<String, Object>> statusList = forms.stream()
+            .map(form -> {
+                Map<String, Object> statusMap = new HashMap<>();
+                statusMap.put("petId", form.getPet().getId());
+                statusMap.put("status", form.getStatus());
+                return statusMap;
+            })
+            .toList();
+
+        return ResponseEntity.ok(statusList); 
+
+    } catch (Exception e) {
+        System.err.println("Database error fetching statuses: " + e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(null); 
+    }
+}
+
 
     @GetMapping("/pending")
     public ResponseEntity<Form> getPending(@RequestHeader("X-USER-ID") Long userId,@PathVariable Long id, @RequestBody StatusPayload payload) {
