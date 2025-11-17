@@ -8,4 +8,6 @@ public interface FormRepository extends JpaRepository<Form, Long>{
     List<Form> findByUserId(Long userId);
     List<Form> findByPetId(Long petId);
     List<Form> findByStatus(String status);
+    // Form findByPetId(String petId);
+
 }

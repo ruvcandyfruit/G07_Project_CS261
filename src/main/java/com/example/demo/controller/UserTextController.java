@@ -158,21 +158,36 @@ public ResponseEntity<?> getAllUsers() {
         return ResponseEntity.status(500).body("Error fetching users: " + e.getMessage());
     }
 }
+@GetMapping("/pet-status/{petID}")
+public ResponseEntity<?> getStatusByPetID(@PathVariable String petID) {
+    Form form = user1Repository.findByPetId(petID);
+
+    if (form == null) {
+        return ResponseEntity.ok(
+            java.util.Collections.singletonMap("status", "NO_FORM")
+        );
+    }
+
+    return ResponseEntity.ok(
+        java.util.Collections.singletonMap("status", form.getStatus())
+    );
+}
+
 @GetMapping("/download/{filename}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
         try {
-            // 1. สร้าง Path ไปยังไฟล์จริง (รวมกับ uploadDir)
+            
             Path filePath = Paths.get(uploadDir).resolve(filename).normalize();
             Resource resource = new UrlResource(filePath.toUri());
 
-            // 2. ตรวจสอบว่าไฟล์มีอยู่และสามารถอ่านได้
+           
             if (resource.exists() && resource.isReadable()) {
                 // ส่งไฟล์กลับไป
-                String contentType = "application/octet-stream"; // ประเภทไฟล์ทั่วไป (binary stream)
+                String contentType = "application/octet-stream"; 
                 
                 return ResponseEntity.ok()
                         .contentType(MediaType.parseMediaType(contentType))
-                        // กำหนด Header เพื่อบังคับให้ Browser ดาวน์โหลดไฟล์ (attachment)
+                      
                         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                         .body(resource);
             } else {
