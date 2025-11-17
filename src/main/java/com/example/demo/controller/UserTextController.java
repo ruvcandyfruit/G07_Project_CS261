@@ -160,7 +160,7 @@ public ResponseEntity<?> getAllUsers() {
 }
 @GetMapping("/pet-status/{petID}")
 public ResponseEntity<?> getStatusByPetID(@PathVariable String petID) {
-    Form form = user1Repository.findByPetId(petID);
+    Form form = formRepository.findByPetId(petID);
 
     if (form == null) {
         return ResponseEntity.ok(
