@@ -91,14 +91,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const data = await response.json();
             localStorage.setItem('user', JSON.stringify({
-                username: loginData.username,
+                id: data.userId,
+                username: data.username,
+                email: data.email,
                 role: data.role
             }));
             
-            if (data.token) localStorage.setItem("token", data.token);
-            if (data.userId) localStorage.setItem("userId", data.userId);
-            if (data.role) localStorage.setItem("role", data.role);
-            if (data.email) localStorage.setItem("email", data.email);
+            localStorage.setItem("jwtToken", data.token);
+            // if (data.token) localStorage.setItem("token", data.token);
+            // if (data.userId) localStorage.setItem("userId", data.userId);
+            // if (data.role) localStorage.setItem("role", data.role);
+            // if (data.email) localStorage.setItem("email", data.email);
 
             alert(`✅ Welcome back, ${data.username}!`);
 

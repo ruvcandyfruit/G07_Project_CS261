@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.demo.model.User;
@@ -95,7 +94,7 @@ public class UserTextController {
         user.setHomeVisits(formDTO.getHomeVisits());
         user.setIdentityDoc(identityPath);
         user.setResidenceDoc(residencePath);
-        user.setRecieveType(formDTO.getRecieveType());
+        user.setReceiveType(formDTO.getReceiveType());
 
         User userEntity = userRepository.findById(formDTO.getUserId())
         .orElseThrow(() -> new RuntimeException("User not found"));
@@ -164,17 +163,18 @@ public ResponseEntity<?> getAllUsers() {
     }
 }
 @GetMapping("/pet-status/{petID}")
-public ResponseEntity<?> getStatusByPetID(@PathVariable String petID) {
-    Form form = formRepository.findByPetId(petID);
+public ResponseEntity<?> getStatusByPetID(@PathVariable Long petID) {
+    List<Form> form = formRepository.findByPetId(petID);
 
-    if (form == null) {
+    if (form.isEmpty()) {
         return ResponseEntity.ok(
             java.util.Collections.singletonMap("status", "NO_FORM")
         );
     }
 
+    Form forms = form.get(0); // take the first Form
     return ResponseEntity.ok(
-        java.util.Collections.singletonMap("status", form.getStatus())
+        java.util.Collections.singletonMap("status", forms.getStatus())
     );
 }
 

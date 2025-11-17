@@ -139,19 +139,23 @@ document.addEventListener("DOMContentLoaded", () => {
         const formData = new FormData(form);
         // RecieveType set logic
         // Radio buttons (if you used radio)
-        // const selectedReceiveType = form.querySelector('input[name="receiveType"]:checked');
-        // if (selectedReceiveType) {
-        //     formData.set("receiveType", selectedReceiveType.value);
-        // }
+        const selectedReceiveType = form.querySelector('input[name="receiveType"]:checked');
+        if (selectedReceiveType) {
+            formData.set("receiveType", selectedReceiveType.value);
+        }
 
         // // OR Select (if you used select)
         // const receiveSelect = document.getElementById("receiveType");
         // if (receiveSelect) {
         //     formData.set("receiveType", receiveSelect.value);
         // }
+        const token = localStorage.getItem("jwtToken");
         fetch("http://localhost:8081/api/userform/submit", {
             method: 'POST',
-            body: formData
+            body: formData,
+            headers: {
+                'Authorization': `Bearer ${token}`
+    }
         })
         .then(async response => {
             // ดึงข้อความทั้งหมดมาเป็น text ก่อน

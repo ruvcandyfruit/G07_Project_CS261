@@ -27,7 +27,7 @@ public class UserFormOutputDTO {
     private String status;
     private LocalDateTime approvedAt;
     private LocalDateTime meetDate;
-    private String recieveType;
+    private String receiveType;
     
     private String identityDoc; // ใช้สำหรับแสดงชื่อไฟล์ในตาราง
     private String residenceDoc; // ใช้สำหรับแสดงชื่อไฟล์ในตาราง

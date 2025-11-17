@@ -89,8 +89,8 @@ public class Form {
     @Column(name = "approved_by")
     private Long approvedBy;  // admin ID
 
-    @Column (name = "recieveType")
-    private String recieveType;
+    @Column (name = "receiveType")
+    private String receiveType;
     
     @Column(name = "approved_at" , nullable = true)
     private LocalDateTime approvedAt = null;
