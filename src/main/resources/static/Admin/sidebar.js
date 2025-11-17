@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // แม้จะ Error เราก็ต้องสั่งให้มันโผล่
             document.body.classList.add('loaded');
         });
+    // 4. Init popup ทันที (ไม่ต้องรอ sidebar)
+    initLogoutPopup();
 });
 
 
@@ -86,9 +88,82 @@ function addNavigation() {
             } else if (itemId === 'nav-schedule') {
                 window.location.href = 'schedule.html';
             } else if (itemId === 'nav-logout') {
-                // [!! แก้ไข Path login ของคุณตรงนี้ !!]
-                window.location.href = '../login.html'; 
+                // แสดง popup แทนการ redirect ทันที
+                console.log('🔴 Logout clicked');   // ไว้ดู Bug ใน console
+                showLogoutPopup();
             }
         });
     });
+}
+
+
+/**
+ * ฟังก์ชันจัดการ Logout Popup แบบ Event Delegation
+ */
+function initLogoutPopup() {
+    console.log('🟢 initLogoutPopup called');   // ไว้ดู Bug ใน console
+    
+    // ใช้ document.body แทน เพราะมันมีอยู่แน่นอน
+    document.body.addEventListener('click', (e) => {
+        
+        // ถ้าคลิกปุ่ม Cancel
+        if (e.target.id === 'btn-cancel' || e.target.closest('#btn-cancel')) {
+            console.log('🔵 Cancel clicked');   // ไว้ดู Bug ใน console
+            hideLogoutPopup();
+        }
+        
+        // ถ้าคลิกปุ่ม Yes
+        if (e.target.id === 'btn-yes' || e.target.closest('#btn-yes')) {
+            console.log('🟣 Yes clicked');  // ไว้ดู Bug ใน console
+            
+            // ลบคุกกี้
+            deleteCookie('userRole');
+            deleteCookie('adminRole');
+            
+            console.log('🚀 Redirecting to login...');  // ไว้ดู Bug ใน console
+            window.location.href = '../login.html';
+        }
+        
+        // ถ้าคลิกพื้นหลัง (overlay)
+        if (e.target.id === 'logout-popup') {
+            console.log('🟡 Overlay clicked');  // ไว้ดู Bug ใน console
+            hideLogoutPopup();
+        }
+    });
+}
+
+/**
+ * แสดง popup
+ */
+function showLogoutPopup() {
+    console.log('🟢 showLogoutPopup called');   // ไว้ดู Bug ใน console
+    const popup = document.getElementById('logout-popup');
+    
+    if (popup) {
+        popup.classList.add('show');
+        console.log('✅ Popup shown');  // ไว้ดู Bug ใน console
+    } else {
+        console.error('❌ Popup element not found!');   // ไว้ดู Bug ใน console
+    }
+}
+
+/**
+ * ซ่อน popup
+ */
+function hideLogoutPopup() {
+    console.log('🔴 hideLogoutPopup called');   // ไว้ดู Bug ใน console
+    const popup = document.getElementById('logout-popup');
+    
+    if (popup) {
+        popup.classList.remove('show');
+        console.log('✅ Popup hidden'); // ไว้ดู Bug ใน console
+    }
+}
+
+/**
+ * ฟังก์ชันลบคุกกี้
+ */
+function deleteCookie(name) {
+    document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    console.log(`🍪 Cookie "${name}" deleted`); // ไว้ดู Bug ใน console
 }
