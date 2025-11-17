@@ -1,5 +1,7 @@
 //    2-frontend/status(user) branch
 
+// ตอนนี้มี mock data 2 อัน คือ STATUS_CONFIG สำหรับจำลองสถานะต่างๆ, mockFormData สำหรับใส่ข้อมูล user + การ์ดฟอร์ม 
+
 // =======================
 //  CONFIG สถานะ – ใช้คุม step + ปุ่ม
 // =======================
@@ -64,11 +66,177 @@ const STATUS_MAP = {
   HANDOVER_FAILED: "handoverFailed",
 };
 
+// Mock API data ตาม Form Model
+const mockFormData = {
+    id: 1,
+    firstName: "สมชาย",
+    lastName: "ใจดี",
+    dob: "1990-05-15", // LocalDate format จาก API
+    phone: "0812345678",
+    email: "somchai@example.com",
+    occupation: "วิศวกรซอฟต์แวร์",
+    identityDoc: "https://example.com/uploads/identity-somchai.pdf",
+    address: "123 ถนนสุขุมวิท แขวงคลองเตย เขตคลองเตย กรุงเทพฯ 10110",
+    residenceType: "คอนโด",
+    residenceDoc: "https://example.com/uploads/residence-somchai.pdf",
+    experience: "เคยเลี้ยงแมวมา 2 ตัว เป็นเวลา 5 ปี แมวทั้งสองตัวมีสุขภาพแข็งแรงและได้รับการดูแลเป็นอย่างดี",
+    reason: "รักและชอบสัตว์มาก ต้องการมีเพื่อนเลี้ยงในบ้านเพื่อลดความเหงา และพร้อมที่จะดูแลอย่างเต็มที่",
+    trueInfo: true,
+    acceptRight: true,
+    homeVisits: true,
+    recieveType: "มารับด้วยตนเอง",
+    user: {
+        id: 101,
+        username: "somchai_dev",
+        email: "somchai@example.com",
+        role: "USER",
+        active: true
+    },
+    pet: {
+        id: 5,
+        petID: "PET001",
+        type: "แมว",
+        image: "https://example.com/uploads/cat-lucky.jpg",
+        name: "Lucky",
+        age: 2,
+        gender: "เมีย",
+        breed: "แมวไทย",
+        weight: 3.5,
+        sterilisation: true,
+        vaccine: true,
+        disease: "ไม่มี",
+        foodAllergy: "ไม่มี",
+        status: "AVAILABLE"
+    },
+    status: "PENDING",
+    approvedBy: null,
+    approvedAt: null,
+    meetDate: null
+};
+
+// API Configuration
+const API_BASE_URL = 'http://localhost:8080/api'; // เปลี่ยนเป็น URL จริงของคุณ
+
+// =======================
+//  HELPER FUNCTIONS
+// =======================
+
+// ฟังก์ชันแปลงวันที่จาก YYYY-MM-DD เป็น DD/MM/YYYY
+function formatDateThai(dateString) {
+    if (!dateString) return '';
+    
+    const [year, month, day] = dateString.split('-');
+    return `${day}/${month}/${year}`;
+}
+
+// Fetch data from real API
+async function fetchUserFormFromAPI(formId) {
+    const response = await fetch(`${API_BASE_URL}/userform/${formId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            // 'Authorization': 'Bearer YOUR_TOKEN' // ถ้ามี authentication
+        }
+    });
+    
+    if (!response.ok) {
+        throw new Error(`API Error: ${response.status}`);
+    }
+    
+    return await response.json();
+}
+
+// Get user form with fallback to mock data
+async function getUserForm(formId) {
+    try {
+        console.log('🔄 กำลังเรียก API...');
+        const data = await fetchUserFormFromAPI(formId);
+        console.log('✅ เรียก API สำเร็จ:', data);
+        return data;
+    } catch (error) {
+        console.warn('⚠️ เรียก API ไม่สำเร็จ:', error.message);
+        console.log('📦 ใช้ Mock Data แทน');
+        
+        // Fallback to mock data
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(mockFormData);
+            }, 500);
+        });
+    }
+}
+
+// Load form data โหลดข้อมูลฟอร์มและแสดงใน overlay
+async function loadFormData() {
+    try {
+        console.log('📝 เริ่มโหลดข้อมูลฟอร์ม...');
+
+        // แสดง loading, ซ่อนฟอร์ม
+        const loadingEl = document.getElementById('loading');
+        const formContentEl = document.getElementById('formContent');
+
+        if (loadingEl) loadingEl.style.display = 'block';
+        if (formContentEl) formContentEl.style.display = 'none';
+
+        // รอให้ overlay แสดงผลก่อน (100ms)
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        // Get formId from URL parameter or use default
+        const urlParams = new URLSearchParams(window.location.search);
+        const formId = urlParams.get('formId') || '1';
+
+        // เรียกข้อมูลจาก API หรือ Mock
+        const data = await getUserForm(formId);
+
+        console.log('📦 Data received:', data);
+
+        // ตรวจสอบว่า elements มีอยู่จริง
+        const userNameEl = document.getElementById('formUserName');
+        const userEmailEl = document.getElementById('formUserEmail');
+        
+        if (!userNameEl || !userEmailEl) {
+            console.error('❌ ไม่พบ form elements!');
+            return;
+        }
+        
+        // Populate user info (Header ของฟอร์ม)
+        userNameEl.textContent = data.user.username;
+        userEmailEl.textContent = data.user.email;
+
+        // Populate form fields
+        document.getElementById('firstName').value = data.firstName;
+        document.getElementById('lastName').value = data.lastName;
+        document.getElementById('dob').value = formatDateThai(data.dob); // แปลงเป็น DD/MM/YYYY
+        document.getElementById('phone').value = data.phone;
+        document.getElementById('email').value = data.email;
+        document.getElementById('occupation').value = data.occupation;
+        document.getElementById('address').value = data.address;
+        document.getElementById('residenceType').value = data.residenceType;
+        document.getElementById('recieveType').value = data.recieveType || '-'; // ถ้าไม่มีให้แสดง -
+        document.getElementById('experience').value = data.experience;
+        document.getElementById('reason').value = data.reason;
+
+        // ทำให้ฟอร์มแก้ไขไม่ได้ (read-only)
+        const formInputs = document.querySelectorAll('.form-input, .form-textarea');
+        formInputs.forEach(input => input.disabled = true);
+
+        console.log('✅ โหลดข้อมูลฟอร์มสำเร็จ');
+
+        // ซ่อน loading, แสดงฟอร์ม
+        if (loadingEl) loadingEl.style.display = 'none';
+        if (formContentEl) formContentEl.style.display = 'block';
+
+    } catch (error) {
+        console.error('❌ Error loading form:', error);
+        alert('เกิดข้อผิดพลาดในการโหลดข้อมูล');
+    }
+}
 
 // =======================
 //  MAIN
 // =======================
 document.addEventListener("DOMContentLoaded", () => {
+  // ดึง DOM elements ทั้งหมด
   const steps = document.querySelectorAll(".status-step");
   const pickupTitleEl = document.getElementById("pickup-title-text");
   const pickupMessageEl = document.getElementById("pickup-message");
@@ -77,7 +245,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const primaryBtn = document.getElementById("primary-action-btn");
   const backBtn = document.getElementById("back-btn");
   const statusSelect = document.getElementById("status-select");
-  const editFormBtn = document.getElementById("edit-form-btn");
+  //const editFormBtn = document.getElementById("edit-form-btn");
 
   // element popup ยกเลิก
   const cancelModal = document.getElementById("cancel-modal");
@@ -104,7 +272,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let pickupType = "SELF_PICKUP";       // SELF_PICKUP หรือ DELIVERY
   let pickupDate = null;                // string เช่น "2025-12-01"
   let petId = null; // [!! เพิ่ม !!] (สำหรับลิงก์ไปหน้า petdetail)
-
 
   // -------- ฟังก์ชัน update pickup box ตาม status + pickupType --------
   function updatePickupView(statusKey) {
@@ -147,11 +314,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
+    // อัปเดตข้อความใน DOM
     if (pickupTitleEl) pickupTitleEl.textContent = title;
     if (pickupMessageEl) pickupMessageEl.textContent = message;
     if (pickupIconEl) pickupIconEl.textContent = icon;
   }
-
 
   // -------- ฟังก์ชัน render timeline / ปุ่มต่าง ๆ --------
   function renderStatus(statusKey) {
@@ -191,7 +358,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // ปุ่มยกเลี้ยง / ย้อนกลับ
+    // ปุ่มยกเลิก / ย้อนกลับ
     if (config.showCancel) {
       primaryBtn.style.display = "inline-block";
       primaryBtn.textContent = config.cancelText || "ยกเลิกการรับเลี้ยง"; // (ตามรูป)
@@ -214,7 +381,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // อัปเดต pickup box ตาม status + pickupType
     updatePickupView(statusKey);
   }
-
 
   // ----- โหลดข้อมูลจาก backend -----
   async function loadAdoptionFromBackend(id) {
@@ -245,7 +411,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (petImageEl) petImageEl.src = data.petImageUrl;
       if (userNameEl) userNameEl.textContent = data.userName;
       if (userEmailEl) userEmailEl.textContent = data.userEmail;
-      if (userAvatarEl) userAvatarEl.src = data.userImageUrl || "../images/default-user.png";
+      //if (userAvatarEl) userAvatarEl.src = data.userImageUrl || "../images/default-user.png";
 
       // [!! เพิ่ม !!] เก็บ petId ไว้สร้าง Link
       petId = data.petId; 
@@ -299,6 +465,56 @@ document.addEventListener("DOMContentLoaded", () => {
           }
       });
   }
+
+    // ===================================
+    //  [!! ส่วนที่ย้ายเข้ามา !!] FORM OVERLAY (ดูฟอร์มผู้ใช้)
+    // ===================================
+
+    // ดึง element overlay
+    const overlayEl = document.querySelector('.overlay');
+    const formBackBtn = document.getElementById('backBtn');
+
+    // ฟังก์ชันเปิด overlay
+    function openFormOverlay() {
+        if (overlayEl) {
+            overlayEl.classList.add('active');
+            // โหลดข้อมูลฟอร์ม
+            loadFormData();
+        }
+    }
+
+    // ฟังก์ชันปิด overlay
+    function closeFormOverlay() {
+        if (overlayEl) {
+            overlayEl.classList.remove('active');
+        }
+    }
+
+        // เมื่อคลิก user card ให้เปิด overlay
+    if (userCard) {
+        userCard.addEventListener("click", (e) => {
+            // openFormOverlay(); // [!! แก้ไข: ลบ // ออก !!] 
+            openFormOverlay();
+        });
+    }
+
+    // คลิกนอก container (บนพื้นหลังสีดำ) ให้ปิด overlay
+    if (overlayEl) {
+        overlayEl.addEventListener('click', (e) => {
+            // ถ้าคลิกบน overlay โดยตรง (ไม่ใช่ใน container) ให้ปิด
+            if (e.target === overlayEl) {
+                closeFormOverlay();
+            }
+        });
+    }
+
+    // ปุ่มย้อนกลับใน form ให้ปิด overlay
+    if (formBackBtn) {
+        formBackBtn.addEventListener('click', function(e) {
+            e.preventDefault(); // ป้องกันการ submit form
+            closeFormOverlay();
+        });
+    }
 
   // ====== ปุ่มยกเลิก -> popup ======
 
@@ -364,182 +580,36 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-
   // ปุ่มย้อนกลับ
   backBtn.addEventListener("click", () => {
     window.location.href = "petlisting.html";
   });
 
-    // ===================================
-    //  [!! ส่วนที่ย้ายเข้ามา !!] FORM OVERLAY (ดูฟอร์มผู้ใช้)
-    // ===================================
-
-    // ดึง element overlay
-    const overlayEl = document.querySelector('.overlay');
-    const formBackBtn = document.getElementById('backBtn');
-
-    // ฟังก์ชันเปิด overlay
-    function openFormOverlay() {
-        if (overlayEl) {
-            overlayEl.classList.add('active');
-            // โหลดข้อมูลฟอร์ม
-            loadFormData();
-        }
-    }
-
-    // ฟังก์ชันปิด overlay
-    function closeFormOverlay() {
-        if (overlayEl) {
-            overlayEl.classList.remove('active');
-        }
-    }
-    
-    // เมื่อคลิก user card ให้เปิด overlay
-    if (userCard) {
-        userCard.addEventListener("click", (e) => {
-            // openFormOverlay(); // [!! แก้ไข: ลบ // ออก !!] 
-            openFormOverlay();
-        });
-    }
-
-    // คลิกนอก container (บนพื้นหลังสีดำ) ให้ปิด overlay
-    if (overlayEl) {
-        overlayEl.addEventListener('click', (e) => {
-            // ถ้าคลิกบน overlay โดยตรง (ไม่ใช่ใน container) ให้ปิด
-            if (e.target === overlayEl) {
-                closeFormOverlay();
-            }
-        });
-    }
-
-    // ปุ่มย้อนกลับใน form ให้ปิด overlay
-    if (formBackBtn) {
-        formBackBtn.addEventListener('click', function(e) {
-            e.preventDefault(); // ป้องกันการ submit form
-            closeFormOverlay();
-        });
-    }
-
 });
 
+/*
+## สิ่งที่ปรับเปลี่ยน:
 
-//----- ฟังก์ชั่นสำหรับเรียก API หรือใช้ mock data มาแสดงใน form overlay ------
+✅ **ลบส่วนที่ไม่มีใน HTML ออก**
+- ไม่มี loading element
+- ไม่มี formContent element
+- ไม่มี pet info section
+- ไม่มี document links
 
-// Mock API data ไว้เทสก่อนเรียก API ของจริง
-const mockFormData = {
-    pending: {
-        status: "pending",
-        user: {
-            username: "สมชาย ใจดี",
-            email: "somchai@example.com"
-        },
-        firstName: "สมชาย",
-        lastName: "ใจดี",
-        birthDate: "15/05/1990",
-        phone: "081-234-5678",
-        email: "somchai@example.com",
-        occupation: "วิศวกรซอฟต์แวร์",
-        address: "123 ถนนสุขุมวิท แขวงคลองเตย เขตคลองเตย กรุงเทพฯ 10110",
-        residenceType: "คอนโด",
-        experience: "เคยเลี้ยงแมวมา 2 ตัว เป็นเวลา 5 ปี แมวทั้งสองตัวมีสุขภาพแข็งแรงและได้รับการดูแลเป็นอย่างดี",
-        reason: "รักและชอบสัตว์มาก ต้องการมีเพื่อนเลี้ยงในบ้านเพื่อลดความเหงา และพร้อมที่จะดูแลอย่างเต็มที่"
-    },
-    approved: {
-        status: "approved",
-        user: {
-            username: "สมหญิง รักสัตว์",
-            email: "somying@example.com"
-        },
-        firstName: "สมหญิง",
-        lastName: "รักสัตว์",
-        birthDate: "20/08/1988",
-        phone: "089-876-5432",
-        email: "somying@example.com",
-        occupation: "ครู",
-        address: "456 ถนนพระราม 9 แขวงห้วยขวาง เขตห้วยขวาง กรุงเทพฯ 10310",
-        residenceType: "บ้านเดี่ยว",
-        experience: "เลี้ยงสุนัขและแมวมาตลอด มีประสบการณ์ดูแลสัตว์ป่วยและพาไปพบสัตวแพทย์เป็นประจำ",
-        reason: "อยากให้ความรักและบ้านที่อบอุ่นแก่สัตว์ที่ต้องการ มีเวลาและพร้อมดูแลอย่างเต็มที่"
-    }
-};
+✅ **เพิ่มฟังก์ชัน `formatDateThai()`**
+- แปลง `2024-05-15` → `15/05/2024`
+- เพื่อให้แสดงผลในรูปแบบไทย
 
-// API Configuration
-const API_BASE_URL = 'https://your-api-domain.com/api'; // เปลี่ยนเป็น URL จริงของคุณ
+✅ **เพิ่ม `recieveType` ใน Mock Data**
+- มีค่าเป็น "มารับด้วยตนเอง" หรือ "ให้จัดส่ง"
 
-// Fetch data from real API
-async function fetchUserFormFromAPI(formID) {
-    const response = await fetch(`${API_BASE_URL}/form/${formID}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            // 'Authorization': 'Bearer YOUR_TOKEN' // ถ้ามี authentication
-        }
-    });
-    
-    if (!response.ok) {
-        throw new Error(`API Error: ${response.status}`);
-    }
-    
-    return await response.json();
-}
+✅ **เพิ่ม Event Listener ให้ปุ่มย้อนกลับ**
+- กด "ย้อนกลับ" จะใช้ `window.history.back()`
 
-// Get user form with fallback to mock data
-async function getUserForm(formID) {
-    try {
-        console.log('🔄 กำลังเรียก API...');
-        // await fetchUserFormFromAPI(formID) จะเกิด Error ถ้า API ล้มเหลว/URL ผิด
-        const data = await fetchUserFormFromAPI(formID);
-        console.log('✅ เรียก API สำเร็จ:', data);
-        return data; // ถ้าสำเร็จ จะใช้ข้อมูล API
-    } catch (error) {
-      // เมื่อเกิด Error (API ล้มเหลว) จะเข้าส่วนนี้
-        console.warn('⚠️ เรียก API ไม่สำเร็จ:', error.message);
-        console.log('📦 ใช้ Mock Data แทน');
-        
-        // Fallback to mock data **ส่วนนี้คือ Fallback ที่สำคัญ** return new Promise((resolve) => {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-              // คืนค่า Mock Data ตาม formID หรือใช้ pending เป็นค่าเริ่มต้น
-                resolve(mockFormData[formID] || mockFormData.pending);
-            }, 500);
-        });
-    }
-}
+✅ **ทำให้ฟอร์มแก้ไขไม่ได้**
+- ใช้ `disabled = true` กับทุก input
 
-// Get formID from URL parameter or use default
-const urlParams = new URLSearchParams(window.location.search);
-const formID = urlParams.get('formId') || 'pending';
+## วิธีใช้งาน:
 
-// Load form data
-async function loadFormData() {
-    try {
-        const data = await getUserForm(formID);
-        
-        // Populate user info
-        document.getElementById('userName').textContent = data.user.username;
-        document.getElementById('userEmail').textContent = data.user.email;
-
-        // Populate form fields
-        document.getElementById('firstName').value = data.firstName;
-        document.getElementById('lastName').value = data.lastName;
-        document.getElementById('birthDate').value = data.birthDate;
-        document.getElementById('phone').value = data.phone;
-        document.getElementById('email').value = data.email;
-        document.getElementById('occupation').value = data.occupation;
-        document.getElementById('address').value = data.address;
-        document.getElementById('residenceType').value = data.residenceType;
-        document.getElementById('experience').value = data.experience;
-        document.getElementById('reason').value = data.reason;
-
-        // ประกาศ formInputs ใหม่ภายในฟังก์ชัน (เพื่อให้แน่ใจว่า DOM โหลดเสร็จแล้ว)
-        const formInputs = document.querySelectorAll('.form-input, .form-textarea');
-        formInputs.forEach(input => input.disabled = true); // ทำให้แก้ไขฟอร์มไม่ได้
-
-        // Show form
-        document.getElementById('loading').style.display = 'none';
-        document.getElementById('formContent').style.display = 'block';
-
-    } catch (error) {
-        document.getElementById('loading').textContent = 'เกิดข้อผิดพลาดในการโหลดข้อมูล';
-    }
-}
+1. **เรียกหน้าพร้อม formId:**
+   request-status.html?formId=1 */

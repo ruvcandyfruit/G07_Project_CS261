@@ -230,67 +230,72 @@
   </div>
 </div>
 
-<div class="overlay">
+<div class="overlay" id="overlay">
     <div class="form-modal-container">
         <div id="loading" class="loading">กำลังโหลดข้อมูล...</div>
         <div id="formContent" style="display: none;">
             <div class="form-modal-header">
                 <div class="form-modal-profile-icon"><span class="solar--user-bold"></span></div>
                 <div class="form-modal-user-info">
-                    <h2 id="userName">UserName</h2>
-                    <p id="userEmail">example@email.com</p>
+                    <h2 id="formUserName">UserName</h2>
+                    <p id="formUserEmail">example@email.com</p>
                 </div>
             </div>
 
             <form id="userForm">
                 <div class="form-group">
                     <label class="form-label">ชื่อจริง</label>
-                    <input type="text" class="form-input" id="firstName" required>
+                    <input type="text" class="form-input" id="firstName">
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">นามสกุล</label>
-                    <input type="text" class="form-input" id="lastName" required>
+                    <input type="text" class="form-input" id="lastName">
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">วัน/เดือน/ปีเกิด</label>
-                    <input type="text" class="form-input" id="birthDate" placeholder="DD/MM/YYYY" required>
+                    <input type="text" class="form-input" id="dob" placeholder="DD/MM/YYYY">
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">เบอร์โทรศัพท์</label>
-                    <input type="tel" class="form-input" id="phone" required>
+                    <input type="tel" class="form-input" id="phone">
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">อีเมล</label>
-                    <input type="email" class="form-input" id="email" required>
+                    <input type="email" class="form-input" id="email">
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">อาชีพ</label>
-                    <input type="text" class="form-input" id="occupation" required>
+                    <input type="text" class="form-input" id="occupation">
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">ที่อยู่อาศัยปัจจุบัน</label>
-                    <input type="text" class="form-input" id="address" required>
+                    <input type="text" class="form-input" id="address">
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">ประเภทที่อยู่อาศัย</label>
-                    <input type="text" class="form-input" id="residenceType" required>
+                    <input type="text" class="form-input" id="residenceType">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">คุณต้องการให้เราจัดส่งสัตว์เลี้ยงให้หรือมารับด้วยตนเอง</label>
+                    <input type="text" class="form-input" id="recieveType">
                 </div>
 
                 <div class="full-width-section">
                     <label class="form-label">คุณเคยเลี้ยงสัตว์เลี้ยงมาก่อนหรือไม่? ถ้าเคย โปรดเล่าประสบการณ์ของคุณ</label>
-                    <textarea class="form-textarea" id="experience" required></textarea>
+                    <textarea class="form-textarea" id="experience"></textarea>
                 </div>
 
                 <div class="full-width-section">
                     <label class="form-label">ทำไมคุณถึงอยากรับเลี้ยงสัตว์เลี้ยง?</label>
-                    <textarea class="form-textarea" id="reason" required></textarea>
+                    <textarea class="form-textarea" id="reason"></textarea>
                 </div>
 
                 <div class="form-modal-button-group">
