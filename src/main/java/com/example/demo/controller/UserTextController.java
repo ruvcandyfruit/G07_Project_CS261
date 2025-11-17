@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -30,6 +31,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.FormService;
+import com.example.demo.dto.FormCountDTO;
 import com.example.demo.dto.UserFormDTO;
 import com.example.demo.dto.UserFormOutputDTO;
 import com.example.demo.model.Form;
@@ -222,6 +224,23 @@ public ResponseEntity<?> getStatusByPetID(@PathVariable String petID) {
         if (!"ADMIN".equalsIgnoreCase(u.getRole())) throw new ResponseStatusException(HttpStatus.FORBIDDEN,"Requires ADMIN role");
     }
 
+    @GetMapping("/admin/pet-requests")
+    public List<FormCountDTO> getFormCounts() {
+        List<Object[]> results = formRepository.countRequestsByPet();
+        return results.stream()
+            .map(row -> new FormCountDTO(
+            (Long) row[0],
+            (Long) row[1]
+            ))
+            .toList();
+    }
+
+   @GetMapping("/admin/pet/{petId}/requests")
+    public List<Form> getRequestsForPet(@PathVariable("petId") Long petId) {    
+    return formRepository.findByPetId(petId);
+}
+
+    
     // simple payload class
     public static class StatusPayload {
         private String status;
