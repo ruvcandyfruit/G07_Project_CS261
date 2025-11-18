@@ -126,67 +126,73 @@ document.addEventListener('DOMContentLoaded', () => {
     // 6. MAIN LOADING LOGIC
     // -------------------------------
     async function loadData(petId) {
-        if (!petId) {
-            alert("Pet ID not found");
-            window.location.href = "allpet.html";
-            return;
-        }
-
-        CURRENT_PET_ID = petId;
-
-        try {
-            // -------- Load PET --------
-            const petRes = await fetch(`http://localhost:8081/api/pets/${petId}`);
-            if (!petRes.ok) {
-                console.error("Pet API error:", petRes.status, petRes.statusText);
-                alert("Pet not found");
-                window.location.href = "allpet.html";
-                return; 
-            }
-            const pet = await petRes.json();
-            pet.dob =
-                pet.birthDate ||
-                pet.birthdate ||
-                pet.dob ||
-                null;
-
-            try {
-                populatePetInfo(pet);
-            } catch (err) {
-                console.error("Error rendering pet info:", err);
-            }
-
-            // -------- Load related forms (adoption requests) --------
-            const reqRes = await fetch(`http://localhost:8081/api/userform/admin/pet/${petId}/requests`);
-            if (!reqRes.ok) {
-                console.warn("No adoption forms found.");
-                noOwnerMessage.classList.remove("hidden");
-                return; // not a fatal error—just no owner
-            }
-            const requests = await reqRes.json();
-
-            // const approved = requests.find(r =>
-            //     r.status === "APPROVED" || r.status === "COMPLETED"
-            // );
-
-            // if (approved) {
-            //     populateOwnerInfo(approved);
-            //     ownerInfoSection.classList.remove("hidden");
-            // } else {
-            //     noOwnerMessage.classList.remove("hidden");
-            // }
-            if (requests.length > 0) {
-                populateOwnerInfo(requests[0]);   // show first form (e.g. PENDING)
-                ownerInfoSection.classList.remove("hidden");
-            } else {
-                noOwnerMessage.classList.remove("hidden");
-            }
-
-        } catch (err) {
-            console.error(err);
-            alert("Failed to load pet data");
-        }
+    if (!petId) {
+        alert("Pet ID not found");
+        window.location.href = "allpet.html";
+        return;
     }
+
+    CURRENT_PET_ID = petId;
+
+    try {
+        // -------- Load PET --------
+        const petRes = await fetch(`http://localhost:8081/api/pets/${petId}`);
+        if (!petRes.ok) {
+            console.error("Pet API error:", petRes.status, petRes.statusText);
+            alert("Pet not found");
+            window.location.href = "allpet.html";
+            return; 
+        }
+        const pet = await petRes.json();
+        pet.dob = pet.birthDate || pet.birthdate || pet.dob || null;
+
+        populatePetInfo(pet);
+
+        // -------- Load related forms (adoption requests) --------
+        const reqRes = await fetch(`http://localhost:8081/api/userform/admin/pet/${petId}/requests`);
+        if (!reqRes.ok) {
+            console.warn("No adoption forms found.");
+            noOwnerMessage.classList.remove("hidden");
+            ownerInfoSection.classList.add("hidden");
+            return; 
+        }
+        const requests = await reqRes.json();
+
+        const ownerRequestsContainer = document.getElementById('ownerRequestsContainer');
+        ownerRequestsContainer.innerHTML = ""; // Clear previous content
+
+        if (requests.length > 0) {
+            ownerInfoSection.classList.remove("hidden");
+            noOwnerMessage.classList.add("hidden");
+
+            requests.forEach((request, index) => {
+                const reqDiv = document.createElement('div');
+                reqDiv.className = 'owner-request-card';
+                reqDiv.innerHTML = `
+                    <h4>Request #${index + 1} (${request.status || "N/A"})</h4>
+                    <p><strong>ชื่อ:</strong> ${request.firstName || request.firstname} ${request.lastName || request.lastname}</p>
+                    <p><strong>วัน/เดือน/ปีเกิด:</strong> ${request.dob || request.birthdate || "N/A"}</p>
+                    <p><strong>เบอร์โทรศัพท์:</strong> ${request.phone || "N/A"}</p>
+                    <p><strong>อีเมล:</strong> ${request.email || "N/A"}</p>
+                    <p><strong>อาชีพ:</strong> ${request.occupation || "N/A"}</p>
+                    <p><strong>ที่อยู่อาศัย:</strong> ${request.address || "N/A"}</p>
+                    <p><strong>ประเภทที่อยู่อาศัย:</strong> ${request.residenceType || "N/A"}</p>
+                    <p><strong>เคยเลี้ยงสัตว์หรือไม่:</strong> ${request.experience || request.petExperience || "N/A"}</p>
+                    <p><strong>เหตุผลในการรับเลี้ยง:</strong> ${request.reason || request.adoptionReason || "N/A"}</p>
+                    <hr>
+                `;
+                ownerRequestsContainer.appendChild(reqDiv);
+            });
+        } else {
+            ownerInfoSection.classList.add("hidden");
+            noOwnerMessage.classList.remove("hidden");
+        }
+
+    } catch (err) {
+        console.error(err);
+        alert("Failed to load pet data");
+    }
+}
 
     // -------------------------------
     // 7. BUTTON EVENTS

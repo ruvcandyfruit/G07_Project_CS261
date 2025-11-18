@@ -92,6 +92,40 @@
     background-color: #f7fafc;
     color: #718096;
 }
+.owner-request-card {
+    background: white;              /* match info-card */
+    border-radius: 20px;            /* rounded corners */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* soft shadow */
+    padding: 25px 30px;             /* spacing inside */
+    margin-bottom: 20px;            /* spacing between cards */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.owner-request-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.owner-request-card .card-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+}
+
+.owner-request-card .card-item {
+    font-size: 15px;
+    color: #444;
+    line-height: 1.6;
+}
+
+.owner-request-card .card-item span.label {
+    font-weight: 600;
+    color: #555;
+    margin-right: 6px;
+}
 /* (JS จะเปลี่ยนสีตามสถานะ) */
 .status-value.pending { background-color: #fffbeb; color: #d69e2e; }
 .status-value.approved { background-color: #f0fff4; color: #38a169; }
