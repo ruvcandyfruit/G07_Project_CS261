@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------
     editBtn.addEventListener("click", () => {
         if (CURRENT_PET_ID)
-            window.location.href = `addpet.html?mode=edit&id=${CURRENT_PET_ID}`;
+            window.location.href = `add-edit-pet.html?mode=edit&id=${CURRENT_PET_ID}`;
     });
 
     backBtn.addEventListener("click", () => {

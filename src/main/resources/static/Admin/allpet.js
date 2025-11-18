@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${pet.breed || ''}</td>
                 <td>${statusTagHTML}</td>
                 <td class="action-col action-col-edit">
-                    <a href="addpet.html?mode=edit&id=${pet.id}">
+                    <a href="aadd-edit-pet.html?mode=edit&id=${pet.id}">
                         <button class="action-button edit-btn"><i class="fa-solid fa-pencil"></i> Edit</button>
                     </a>
                 </td>
