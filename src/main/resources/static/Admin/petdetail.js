@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // -------- Load related forms (adoption requests) --------
-            const reqRes = await fetch(`http://localhost:8081/api/userform/admin/pet/${petId}`);
+            const reqRes = await fetch(`http://localhost:8081/api/userform/admin/pet/${petId}/requests`);
             if (!reqRes.ok) {
                 console.warn("No adoption forms found.");
                 noOwnerMessage.classList.remove("hidden");
@@ -165,12 +165,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const requests = await reqRes.json();
 
-            const approved = requests.find(r =>
-                r.status === "APPROVED" || r.status === "COMPLETED"
-            );
+            // const approved = requests.find(r =>
+            //     r.status === "APPROVED" || r.status === "COMPLETED"
+            // );
 
-            if (approved) {
-                populateOwnerInfo(approved);
+            // if (approved) {
+            //     populateOwnerInfo(approved);
+            //     ownerInfoSection.classList.remove("hidden");
+            // } else {
+            //     noOwnerMessage.classList.remove("hidden");
+            // }
+            if (requests.length > 0) {
+                populateOwnerInfo(requests[0]);   // show first form (e.g. PENDING)
                 ownerInfoSection.classList.remove("hidden");
             } else {
                 noOwnerMessage.classList.remove("hidden");

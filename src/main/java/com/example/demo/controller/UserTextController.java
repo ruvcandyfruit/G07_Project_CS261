@@ -242,10 +242,10 @@ public ResponseEntity<List<Map<String, Object>>> getStatusesAndIds() {
 }
 
 
-    @GetMapping("/pending")
-    public ResponseEntity<Form> getPending(@RequestHeader("X-USER-ID") Long userId,@PathVariable Long id, @RequestBody StatusPayload payload) {
+    @GetMapping("/pending/{id}")
+    public ResponseEntity<Form> getPending(@RequestHeader("X-USER-ID") Long userId,@PathVariable Long id) {
         ensureAdmin(userId);
-        Form updated = formService.changeStatus(id, payload.getStatus(), userId);
+        Form updated = formService.changeStatus(id,"PENDING", userId);
         return ResponseEntity.ok(updated);
     }
     // Admin approve/reject
