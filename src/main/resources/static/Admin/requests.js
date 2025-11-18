@@ -67,7 +67,6 @@ async function loadPendingRequests() {
         const allForms = await res.json();
 
         usersData = allForms
-            .filter(f => f.pet.id == petId && f.status === 'PENDING')
             .map(f => ({
                 formId: f.id,
                 userId: f.user.id,
