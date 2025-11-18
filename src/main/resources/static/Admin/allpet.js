@@ -162,7 +162,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 case 'Pending':
                     statusTagHTML = `<a href="requests.html?id=${pet.id}" class="status-tag status-pending">${pet.status}</a>`;
                     break;
-                case 'Approved':
                 case 'Completed':
                     statusTagHTML = `<a href="request-status.html?id=${pet.id}&status=${pet.status}" class="status-tag status-${statusClass}">${pet.status}</a>`;
                     break;
@@ -184,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${pet.id}</td>
                 <td>
                     <a href="petdetail.html?id=${pet.id}" class="pet-name-cell">
-                        <img src="${pet.imageUrl}" alt="${pet.name}" class="pet-profile-img">
+                        <img src="${petImageUrl}" alt="${pet.name}" class="pet-profile-img">
                         <span>${pet.name}</span>
                     </a>
                 </td>
@@ -192,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${pet.breed || ''}</td>
                 <td>${statusTagHTML}</td>
                 <td class="action-col action-col-edit">
-                    <a href="addpet.html?mode=edit&id=${pet.id}">
+                    <a href="add-edit-pet.html?mode=edit&id=${pet.id}">
                         <button class="action-button edit-btn"><i class="fa-solid fa-pencil"></i> Edit</button>
                     </a>
                 </td>
@@ -212,6 +211,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 6. Filter and Search ---
     function applyFilters() {
+        let filteredPets = [...allPets];
+
         const searchText = searchInput.value.toLowerCase();
 
         if (pendingToggle.checked) {
@@ -252,14 +253,6 @@ document.addEventListener('DOMContentLoaded', () => {
             petIdToDelete = target.dataset.id;
             showModal(deleteModal);
         }
-    }
-
-    function confirmDelete() {
-        if (!petIdToDelete) return;
-        allPets = allPets.filter(p => p.id !== petIdToDelete);
-        applyFilters();
-        hideModal(deleteModal);
-        petIdToDelete = null;
     }
 
     // --- 8. Event Listeners ---

@@ -1,4 +1,4 @@
-// Redirect กลับหน้าแรกถ้าไม่ได้ล็อกอินหรือไม่ใช่ ADMIN
+// --- Redirect ถ้าไม่ใช่ ADMIN ---
 (function enforceAdmin() {
   try {
     const user = JSON.parse(localStorage.getItem('user') || 'null');
@@ -11,9 +11,16 @@
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    // -------------------------------
+    // 1. Read Pet ID From Query Params
+    // -------------------------------
     const urlParams = new URLSearchParams(window.location.search);
     const petId = urlParams.get('id') || urlParams.get('pet_id');
-    // --- 1. DOM Selections ---
+
+    // -------------------------------
+    // 2. DOM ELEMENTS
+    // -------------------------------
     const petImageEl = document.getElementById('petImage');
     const petNameDisplayEl = document.getElementById('petNameDisplay');
     const statusValueEl = document.getElementById('statusValue');
@@ -21,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const editBtn = document.getElementById('editBtn');
     const backBtn = document.getElementById('backBtn');
 
-    // Pet Info
+    // Pet info
     const petIDEl = document.getElementById('petID');
     const petNameEl = document.getElementById('petName');
     const petTypeEl = document.getElementById('petType');
@@ -33,9 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const petDiseaseEl = document.getElementById('petDisease');
     const petFoodAllergyEl = document.getElementById('petFoodAllergy');
 
-    // Owner Info
+    // Owner info
     const ownerInfoSection = document.getElementById('ownerInfoSection');
     const noOwnerMessage = document.getElementById('noOwnerMessage');
+
     const ownerFirstname = document.getElementById('ownerFirstname');
     const ownerLastname = document.getElementById('ownerLastname');
     const ownerDob = document.getElementById('ownerDob');
@@ -47,180 +55,168 @@ document.addEventListener('DOMContentLoaded', () => {
     const ownerExperience = document.getElementById('ownerExperience');
     const ownerReason = document.getElementById('ownerReason');
 
-    // Delete Modal
+    // Delete modal
     const deleteModal = document.getElementById('deleteModal');
     const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
     const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
 
     let CURRENT_PET_ID = null;
 
-    // --- 2. Helper Functions ---
-    
-    // (ฟังก์ชันคำนวณอายุ)
+    // -------------------------------
+    // 3. Helper - Age Calculator
+    // -------------------------------
     function calculateAge(dobString) {
         if (!dobString) return "N/A";
         const dob = new Date(dobString);
-        const diff_ms = Date.now() - dob.getTime();
-        const age_dt = new Date(diff_ms);
-        return Math.abs(age_dt.getUTCFullYear() - 1970);
-    }
-    
-    // (ฟังก์ชันแสดง Modal)
-    function showModal(modal) {
-        modal.classList.remove('modal-hidden');
-    }
-    function hideModal(modal) {
-        modal.classList.add('modal-hidden');
+        const diff = Date.now() - dob.getTime();
+        return Math.abs(new Date(diff).getUTCFullYear() - 1970);
     }
 
-    // --- 3. Data Population Functions ---
-    
+    function showModal(m) { m.classList.remove("modal-hidden"); }
+    function hideModal(m) { m.classList.add("modal-hidden"); }
+
+    // -------------------------------
+    // 4. Populate PET Information
+    // -------------------------------
     function populatePetInfo(pet) {
-        petImageEl.innerHTML = `<img src="${pet.imageUrl}" alt="${pet.name}">`;
-        petNameDisplayEl.textContent = pet.name;
-        
-        statusValueEl.textContent = pet.pet_status;
-        statusValueEl.className = `status-value ${pet.pet_status.toLowerCase()}`;
 
-        petIDEl.textContent = `รหัสประจำตัว : ${pet.id}`;
+        const finalImageUrl = pet.image
+            ? `http://localhost:8081${pet.image}`
+            : "images/placeholder.jpg";
+
+        petImageEl.innerHTML = `<img src="${finalImageUrl}" alt="${pet.name}">`;
+
+        petNameDisplayEl.textContent = pet.name;
+
+        const status = pet.status ? pet.status.toUpperCase() : "NO_FORM";
+        statusValueEl.textContent = status;
+        statusValueEl.className = `status-value ${status.toLowerCase()}`;
+
+        const idField = pet.id || pet.petID;
+
+        petIDEl.textContent = `รหัสประจำตัว : ${idField}`;
         petNameEl.textContent = `ชื่อ : ${pet.name}`;
         petTypeEl.textContent = `ชนิด : ${pet.type}`;
         petGenderEl.textContent = `เพศ : ${pet.gender}`;
         petBreedEl.textContent = `สายพันธุ์ : ${pet.breed}`;
         petAgeEl.textContent = `อายุ : ${calculateAge(pet.dob)} ปี`;
-        
-        petSterilizationEl.textContent = `การทำหมัน : ${pet.sterilisation ? 'ทำแล้ว' : 'ยังไม่ทำ'}`;
-        petVaccineEl.textContent = `การฉีดวัคซีน : ${pet.vaccine ? 'ครบ' : 'ไม่ครบ'}`;
-        petDiseaseEl.textContent = `โรคประจำตัว : ${pet.disease || 'ไม่มี'}`;
-        petFoodAllergyEl.textContent = `แพ้อาหาร : ${pet.foodAllergy || 'ไม่มี'}`;
+        petSterilizationEl.textContent = `การทำหมัน : ${pet.sterilisation ? "ทำแล้ว" : "ยังไม่ทำ"}`;
+        petVaccineEl.textContent = `การฉีดวัคซีน : ${pet.vaccine ? "ครบ" : "ไม่ครบ"}`;
+        petDiseaseEl.textContent = `โรคประจำตัว : ${pet.disease || "ไม่มี"}`;
+        petFoodAllergyEl.textContent = `แพ้อาหาร : ${pet.foodAllergy || "ไม่มี"}`;
     }
 
+    // -------------------------------
+    // 5. Populate OWNER Info
+    // -------------------------------
     function populateOwnerInfo(owner) {
-        ownerFirstname.textContent = owner.firstname;
-        ownerLastname.textContent = owner.lastname;
-        ownerDob.textContent = owner.birthdate;
+        ownerFirstname.textContent = owner.firstName || owner.firstname;
+        ownerLastname.textContent = owner.lastName || owner.lastname;
+        ownerDob.textContent = owner.dob || owner.birthdate;
         ownerPhone.textContent = owner.phone;
         ownerEmail.textContent = owner.email;
         ownerOccupation.textContent = owner.occupation;
         ownerAddress.textContent = owner.address;
         ownerResidenceType.textContent = owner.residenceType;
-        ownerExperience.textContent = owner.petExperience;
-        ownerReason.textContent = owner.adoptionReason;
+        ownerExperience.textContent = owner.experience || owner.petExperience;
+        ownerReason.textContent = owner.reason || owner.adoptionReason;
     }
 
-    // --- 4. Main Data Loading Function ---
+    // -------------------------------
+    // 6. MAIN LOADING LOGIC
+    // -------------------------------
     async function loadData(petId) {
         if (!petId) {
-            alert('ไม่พบ ID ของสัตว์เลี้ยง');
-            window.location.href = 'allpet.html';
+            alert("Pet ID not found");
+            window.location.href = "allpet.html";
             return;
         }
-        
+
         CURRENT_PET_ID = petId;
 
         try {
-            // [!! ในโลกจริง: แก้ Endpoint !!]
-            // 4.1 ดึงข้อมูลสัตว์
-            // const petResponse = await fetch(`/api/pets/${petId}`);
-            // const petData = await petResponse.json();
+            // -------- Load PET --------
+            const petRes = await fetch(`http://localhost:8081/api/pets/${petId}`);
+            if (!petRes.ok) {
+                console.error("Pet API error:", petRes.status, petRes.statusText);
+                alert("Pet not found");
+                window.location.href = "allpet.html";
+                return; 
+            }
+            const pet = await petRes.json();
+            pet.dob =
+                pet.birthDate ||
+                pet.birthdate ||
+                pet.dob ||
+                null;
 
-            // [!! Mock Pet Data (สำหรับ Test) !!]
-            const petData = {
-                id: petId,
-                name: "จินตรา",
-                imageUrl: "images/sample-pet.jpg",
-                type: "แมว",
-                gender: "ผู้",
-                breed: "ไม่ทราบ",
-                dob: "2020-01-01",
-                sterilisation: true,
-                vaccine: true,
-                disease: "ไม่มี",
-                foodAllergy: "ปลาดุกปั่นป่น",
-                pet_status: "Completed", // [!! ลองเปลี่ยนเป็น 'Pending' หรือ 'Approved' เพื่อเทส !!]
-                associated_request_id: "R123" // (ID ของคำขอที่ Approved/Completed)
-            };
-            
-            // 4.2 เติมข้อมูลสัตว์ (ทำเสมอ)
-            populatePetInfo(petData);
-            
-            // 4.3 (สำคัญ) Logic การซ่อน/แสดง
-            if (petData.pet_status === 'Approved' || petData.pet_status === 'Completed') {
-                
-                // [!! ในโลกจริง: แก้ Endpoint !!]
-                // ดึงข้อมูลผู้รับเลี้ยง
-                // const ownerResponse = await fetch(`/api/request-details/${petData.associated_request_id}`);
-                // const ownerData = await ownerResponse.json();
-
-                // [!! Mock Owner Data (สำหรับ Test) !!]
-                const ownerData = {
-                    firstname: "สมหญิง", lastname: "จริงใจ", birthdate: "10/10/1990",
-                    phone: "081-234-5678", email: "somying@example.com",
-                    occupation: "โปรแกรมเมอร์", address: "123 กทม.",
-                    residenceType: "ทาวน์เฮาส์", petExperience: "เคยเลี้ยงแมว 2 ตัว",
-                    adoptionReason: "น้องน่ารักมากค่ะ"
-                };
-
-                populateOwnerInfo(ownerData);
-                ownerInfoSection.classList.remove('hidden'); // [!! แสดง !!]
-                
-            } else {
-                // (สถานะ No Request, Pending, Closed)
-                noOwnerMessage.classList.remove('hidden'); // [!! แสดง !!]
+            try {
+                populatePetInfo(pet);
+            } catch (err) {
+                console.error("Error rendering pet info:", err);
             }
 
-        } catch (error) {
-            console.error('Failed to load data:', error);
-            alert('ไม่สามารถโหลดข้อมูลได้');
+            // -------- Load related forms (adoption requests) --------
+            const reqRes = await fetch(`http://localhost:8081/api/userform/admin/pet/${petId}`);
+            if (!reqRes.ok) {
+                console.warn("No adoption forms found.");
+                noOwnerMessage.classList.remove("hidden");
+                return; // not a fatal error—just no owner
+            }
+            const requests = await reqRes.json();
+
+            const approved = requests.find(r =>
+                r.status === "APPROVED" || r.status === "COMPLETED"
+            );
+
+            if (approved) {
+                populateOwnerInfo(approved);
+                ownerInfoSection.classList.remove("hidden");
+            } else {
+                noOwnerMessage.classList.remove("hidden");
+            }
+
+        } catch (err) {
+            console.error(err);
+            alert("Failed to load pet data");
         }
     }
 
-    // --- 5. Button Event Listeners ---
-    
-    // (ปุ่ม Edit)
-    editBtn.addEventListener('click', () => {
-        if (CURRENT_PET_ID) {
-            window.location.href = `add-edit-pet.html?mode=edit&id=${CURRENT_PET_ID}`;
-        }
+    // -------------------------------
+    // 7. BUTTON EVENTS
+    // -------------------------------
+    editBtn.addEventListener("click", () => {
+        if (CURRENT_PET_ID)
+            window.location.href = `addpet.html?mode=edit&id=${CURRENT_PET_ID}`;
     });
 
-    // (ปุ่มย้อนกลับ)
-    backBtn.addEventListener('click', () => {
-        window.location.href = 'allpet.html';
+    backBtn.addEventListener("click", () => {
+        window.location.href = "allpet.html";
     });
 
-    // (ปุ่ม Delete - เปิด Modal)
-    deleteBtn.addEventListener('click', () => {
-        showModal(deleteModal);
-    });
-    
-    // (ปุ่ม Cancel ใน Modal)
-    cancelDeleteBtn.addEventListener('click', () => {
-        hideModal(deleteModal);
-    });
+    deleteBtn.addEventListener("click", () => showModal(deleteModal));
 
-    // (ปุ่ม Confirm Delete)
-    confirmDeleteBtn.addEventListener('click', async () => {
+    cancelDeleteBtn.addEventListener("click", () => hideModal(deleteModal));
+
+    confirmDeleteBtn.addEventListener("click", async () => {
         if (!CURRENT_PET_ID) return;
 
         try {
-            // [!! ในโลกจริง: แก้ Endpoint !!]
-            // const response = await fetch(`/api/pets/${CURRENT_PET_ID}`, { method: 'DELETE' });
-            
-            // (จำลองว่าลบสำเร็จ)
-            console.log(`Sending DELETE request for pet: ${CURRENT_PET_ID}`);
-            
-            alert('ลบข้อมูลสัตว์เรียบร้อยแล้ว');
-            hideModal(deleteModal);
-            window.location.href = 'allpet.html'; // เด้งกลับหน้าหลัก
+            await fetch(`http://localhost:8081/api/pets/${CURRENT_PET_ID}`, {
+                method: "DELETE"
+            });
 
-        } catch (error) {
-            console.error('Failed to delete pet:', error);
-            alert('เกิดข้อผิดพลาดในการลบ');
+            alert("Pet deleted");
+            window.location.href = "allpet.html";
+
+        } catch (e) {
+            console.error(e);
+            alert("Failed to delete");
         }
     });
 
-    // --- 6. เริ่มการทำงาน ---
-    
+    // -------------------------------
+    // 8. INIT
+    // -------------------------------
     loadData(petId);
 });
