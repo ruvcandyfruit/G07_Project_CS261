@@ -153,7 +153,7 @@ public class DataLoader implements CommandLineRunner {
                 form3.setAcceptRight(true);
                 form3.setHomeVisits(false);
                 form3.setReceiveType("Home Delivery");
-                form3.setStatus("REJECTED");
+                form3.setStatus("COMPLETED");
                 form3.setApprovedBy(1L); // admin ID
                 form3.setApprovedAt(LocalDateTime.of(2024, 10, 12, 9, 45));
                 form3.setUser(alice);

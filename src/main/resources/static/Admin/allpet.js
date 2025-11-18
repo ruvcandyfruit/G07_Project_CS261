@@ -33,9 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const tableBody = document.getElementById('petTableBody');
     const petCount = document.getElementById('petCount');
     const searchInput = document.getElementById('searchInput');
-    const deleteModal = document.getElementById('deleteModal');
-    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
     const pendingToggle = document.getElementById('pendingToggle');
+
     const filterButton = document.getElementById('filterButton');
     const filterModal = document.getElementById('filterModal');
     const closeFilterModal = document.getElementById('closeFilterModal');
@@ -44,6 +43,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const statusFilter = document.getElementById('statusFilter');
     const typeFilter = document.getElementById('typeFilter');
     const breedFilter = document.getElementById('breedFilter');
+    const deleteModal = document.getElementById('deleteModal');
+    const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
 
     let petIdToDelete = null;
 
@@ -157,21 +159,39 @@ document.addEventListener('DOMContentLoaded', () => {
             const displayStatus = pet.status || 'No Request';
             const statusClass = displayStatus.toLowerCase().replace(' ', '-');
 
+            // let statusTagHTML = '';
+            // switch (displayStatus) {
+            //     case 'Pending':
+            //         statusTagHTML = `<a href="requests.html?id=${pet.id}" class="status-tag status-pending">${pet.status}</a>`;
+            //         break;
+            //     case 'Completed':
+            //         statusTagHTML = `<a href="request-status.html?id=${pet.id}&status=${pet.status}" class="status-tag status-${statusClass}">${pet.status}</a>`;
+            //         break;
+            //     case 'Approved':
+            //         statusTagHTML = `<span class="status-tag status-approved">${displayStatus}</span>`;
+            //         break;
+            //     case 'Completed':
+            //         statusTagHTML = `<span class="status-tag status-completed">${displayStatus}</span>`;
+            //         break;
+            //     default:
+            //         statusTagHTML = `<span class="status-tag status-${statusClass}">${pet.status}</span>`;
+            // }
             let statusTagHTML = '';
-            switch (displayStatus) {
-                case 'Pending':
+            switch (statusClass) {
+                case 'pending':
+                    // ถ้า Pending: ไปหน้า requests.html
                     statusTagHTML = `<a href="requests.html?id=${pet.id}" class="status-tag status-pending">${pet.status}</a>`;
                     break;
-                case 'Completed':
-                    statusTagHTML = `<a href="request-status.html?id=${pet.id}&status=${pet.status}" class="status-tag status-${statusClass}">${pet.status}</a>`;
+                case 'approved':
+                    // ถ้า Approved: ไปหน้า request-status.html
+                    statusTagHTML = `<a href="request-status.html?id=${pet.id}&status=Approved" class="status-tag status-approved">${pet.status}</a>`;
                     break;
-                case 'Approved':
-                    statusTagHTML = `<span class="status-tag status-approved">${displayStatus}</span>`;
-                    break;
-                case 'Completed':
-                    statusTagHTML = `<span class="status-tag status-completed">${displayStatus}</span>`;
+                case 'completed':
+                    // ถ้า Completed: ไปหน้า request-status.html
+                    statusTagHTML = `<a href="request-status.html?id=${pet.id}&status=Completed" class="status-tag status-completed">${pet.status}</a>`;
                     break;
                 default:
+                    // ถ้า Closed หรือ No Request: เป็น <span> ธรรมดา
                     statusTagHTML = `<span class="status-tag status-${statusClass}">${pet.status}</span>`;
             }
 

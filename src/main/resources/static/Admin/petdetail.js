@@ -156,24 +156,38 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // -------- Load related forms (adoption requests) --------
-            const reqRes = await fetch(`http://localhost:8081/api/userform/admin/pet/${petId}`);
+            const reqRes = await fetch(`http://localhost:8081/api/userform/admin/pet/${petId}/requests`);
             if (!reqRes.ok) {
                 console.warn("No adoption forms found.");
                 noOwnerMessage.classList.remove("hidden");
                 return; // not a fatal error—just no owner
             }
             const requests = await reqRes.json();
+            // Find a COMPLETED form first
+            const completedForm = requests.find(r => r.status === "COMPLETED");
 
-            const approved = requests.find(r =>
-                r.status === "APPROVED" || r.status === "COMPLETED"
-            );
+            // If no COMPLETED, fallback to APPROVED
+            const displayForm = completedForm || requests.find(r => r.status === "APPROVED");
 
-            if (approved) {
-                populateOwnerInfo(approved);
+            if (displayForm) {
+                populateOwnerInfo(displayForm);
                 ownerInfoSection.classList.remove("hidden");
+                noOwnerMessage.classList.add("hidden"); // hide the "no owner" message
             } else {
+                ownerInfoSection.classList.add("hidden");
                 noOwnerMessage.classList.remove("hidden");
             }
+
+            // const approved = requests.find(r =>
+            //     r.status === "APPROVED" || r.status === "COMPLETED"
+            // );
+
+            // if (approved) {
+            //     populateOwnerInfo(approved);
+            //     ownerInfoSection.classList.remove("hidden");
+            // } else {
+            //     noOwnerMessage.classList.remove("hidden");
+            // }
 
         } catch (err) {
             console.error(err);
