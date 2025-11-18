@@ -17,7 +17,22 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = `userform.html?petId=${petId}`;
     });
   }
+  function calculatePetAge(birthDateStr) {
+    if (!birthDateStr) return "-"; // in case birthDate is missing
 
+    const birthDate = new Date(birthDateStr);
+    const today = new Date();
+
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+
+    // if the birthday hasn’t occurred yet this year, subtract 1
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+
+    return age >= 0 ? age : "-";
+}
   async function loadPetData() {
     try {
       const response = await fetch(`http://localhost:8081/api/pets/${petId}`);
@@ -30,12 +45,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const pet = await response.json();
 
       // Populate page
+      console.log("Pet object:", pet);
       document.getElementById("petNames").textContent = pet.name || "-";
       document.getElementById("petImages").src = pet.image ? `http://localhost:8081${pet.image}` : "images/placeholder.jpg";
       document.getElementById("petIds").textContent = pet.petID || "-";
       document.getElementById("petType").textContent = pet.type || "-";
       document.getElementById("petGender").textContent = pet.gender || "-";
-      document.getElementById("petDateBirth").textContent = pet.birthDate || "-";
+      document.getElementById("petAge").textContent = calculatePetAge(pet.birthDate) || "-";
       document.getElementById("petBreed").textContent = pet.breed || "-";
       document.getElementById("petWeight").textContent = pet.weight || "-";
       document.getElementById("petSterilisation").textContent = pet.sterilisation ? "ทำแล้ว" : "ยังไม่ทำ";
