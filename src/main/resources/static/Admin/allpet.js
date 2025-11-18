@@ -184,11 +184,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     break;
                 case 'approved':
                     // ถ้า Approved: ไปหน้า request-status.html
-                    statusTagHTML = `<a href="request-status.html?id=${pet.id}&status=Approved" class="status-tag status-approved">${pet.status}</a>`;
+                    statusTagHTML = `<a href="request.html?id=${pet.id}&status=Approved" class="status-tag status-approved">${pet.status}</a>`;
                     break;
                 case 'completed':
                     // ถ้า Completed: ไปหน้า request-status.html
-                    statusTagHTML = `<a href="request-status.html?id=${pet.id}&status=Completed" class="status-tag status-completed">${pet.status}</a>`;
+                    statusTagHTML = `<a href="request.html?id=${pet.id}&status=Completed" class="status-tag status-completed">${pet.status}</a>`;
                     break;
                 default:
                     // ถ้า Closed หรือ No Request: เป็น <span> ธรรมดา

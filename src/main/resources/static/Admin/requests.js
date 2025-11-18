@@ -1,90 +1,39 @@
-// Redirect กลับหน้าแรกถ้าไม่ได้ล็อกอินหรือไม่ใช่ ADMIN
+// =====================================
+// admin-requests.js - Adoption Request Manager
+// =====================================
+
+// 0. Redirect non-admin users
 (function enforceAdmin() {
-  try {
-    const user = JSON.parse(localStorage.getItem('user') || 'null');
-    if (!user || user.role !== 'ADMIN') {
-      window.location.href = '/index.html';
+    try {
+        const user = JSON.parse(localStorage.getItem('user') || 'null');
+        if (!user || user.role !== 'ADMIN') window.location.href = '/index.html';
+    } catch (_) {
+        window.location.href = '/index.html';
     }
-  } catch (_) {
-    window.location.href = '/index.html';
-  }
 })();
-// =====================================
-// requests.js - Adoption Request Manager
-// ระบบจัดการคำขอรับเลี้ยงสัตว์สำหรับ Admin
-// =====================================
 
-// ตัวแปรส่วนกลาง (Global variables)
-let currentSelectedUserId = null; // เก็บ ID ของ User ที่กำลังถูกเลือกอยู่
-let petData = null; // เก็บข้อมูลสัตว์เลี้ยง
-let usersData = []; // เก็บข้อมูลผู้ใช้ทั้งหมดที่ส่งคำขอมา
-let petId = null; // เก็บ ID ของสัตว์เลี้ยงที่กำลังพิจารณา
+// =====================================
+// 1. Global variables
+// =====================================
+let currentSelectedUserId = null;
+let petData = null;
+let usersData = [];
+let petId = null;
 
-// API Base URL (adjust as needed)
 const API_BASE_URL = '/api';
 
-// Mock data for testing
-const MOCK_PET_DATA = {
-    pet_id: 'P002',
-    name: 'น้องเหมียว',
-    image_url: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=300',
-    gender: 'เมีย',
-    type: 'แมว',
-    breed: 'สีส้ม',
-    age: '2 ปี',
-    disease: 'ไม่มี',
-    sterilization: true,
-    food_allergy: 'ไม่มี',
-    vaccine: true
-};
-
-const MOCK_USERS_DATA = [
-    {
-        user_id: 'U001',
-        firstname: 'สมชาย',
-        lastname: 'ใจดี',
-        birthdate: '1990-05-15',
-        phone: '081-234-5678',
-        email: 'somchai@email.com',
-        occupation: 'พนักงานบริษัท',
-        residence_type: 'บ้านเดี่ยว',
-        address: '123 ถนนสุขุมวิท แขวงคลองเตย เขตคลองเตย กรุงเทพฯ 10110',
-        receive_type: 'รับด้วยตนเอง',
-        pet_experience: 'เคยเลี้ยงแมวมา 3 ตัว ดูแลจนอายุยืน รักและเข้าใจนิสัยแมวดี',
-        adoption_reason: 'อยากมีเพื่อนในบ้าน และชอบดูแลสัตว์ มีเวลาดูแลเต็มที่',
-        identity_document_url: 'https://example.com/doc1.pdf',
-        residence_document_url: 'https://example.com/doc2.pdf'
-    },
-    {
-        user_id: 'U002',
-        firstname: 'สมหญิง',
-        lastname: 'รักสัตว์',
-        birthdate: '1995-08-20',
-        phone: '089-876-5432',
-        email: 'somying@email.com',
-        occupation: 'ครู',
-        residence_type: 'คอนโด',
-        address: '456 ซอยอารีย์ แขวงสามเสนใน เขตพญาไท กรุงเทพฯ 10400',
-        receive_type: 'จัดส่งถึงบ้าน',
-        pet_experience: 'เลี้ยงแมวมาตั้งแต่เด็ก ปัจจุบันเลี้ยง 2 ตัว',
-        adoption_reason: 'ต้องการช่วยเหลือสัตว์จรจัด และให้บ้านที่อบอุ่น',
-        identity_document_url: 'https://example.com/doc3.pdf',
-        residence_document_url: 'https://example.com/doc4.pdf'
-    }
-];
-
 // =====================================
-// 1. Initialize on page load
+// 2. Initialization
 // =====================================
 document.addEventListener('DOMContentLoaded', async () => {
     // Get pet_id from URL
     const urlParams = new URLSearchParams(window.location.search);
-    petId = urlParams.get('pet_id');
+    petId = urlParams.get('id');
 
-    // ถ้าไม่มี pet_id ให้ใช้ mock data แทน
     if (!petId) {
-        console.warn('ไม่พบ pet_id ใน URL กำลังใช้ mock data');
-        petId = 'P002';
+        alert('ไม่พบรหัสสัตว์เลี้ยง');
+        window.location.href = '/allpet.html';
+        return;
     }
 
     // Fetch data
@@ -96,170 +45,151 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 // =====================================
-// 2. Data Fetching
+// 3. Data fetching
 // =====================================
-
-// API 1: Get pet data
 async function loadPetData() {
     try {
-        const response = await fetch(`${API_BASE_URL}/pets/${petId}`);
-        if (!response.ok) throw new Error('Failed to fetch pet data');
-        
-        petData = await response.json();
+        const res = await fetch(`${API_BASE_URL}/pets/${petId}`);
+        if (!res.ok) throw new Error('Failed to fetch pet data');
+        petData = await res.json();
         displayPetData(petData);
-    } catch (error) {
-        console.error('Error loading pet data:', error);
-        console.log('ใช้ mock data สำหรับข้อมูลสัตว์เลี้ยง');
-        
-        // ใช้ mock data
-        petData = MOCK_PET_DATA;
-        displayPetData(petData);
+    } catch (err) {
+        console.error('Error fetching pet data:', err);
+        alert('ไม่สามารถโหลดข้อมูลสัตว์เลี้ยงได้');
     }
 }
 
-// API 2: Get pending adoption requests
 async function loadPendingRequests() {
     try {
-        const response = await fetch(`${API_BASE_URL}/adoption-requests?pet_id=${petId}&status=PENDING`);
-        if (!response.ok) throw new Error('Failed to fetch requests');
-        
-        usersData = await response.json();
+        const res = await fetch(`${API_BASE_URL}/userform/admin/pet/${petId}/requests`);
+        if (!res.ok) throw new Error('Failed to fetch requests');
 
-        if (usersData.length === 0) {
-            console.warn('ไม่มีคำขอที่รอดำเนินการ ใช้ mock data แทน');
-            usersData = MOCK_USERS_DATA;
+        const allForms = await res.json();
+
+        usersData = allForms
+            .filter(f => f.pet.id == petId && f.status === 'PENDING')
+            .map(f => ({
+                formId: f.id,
+                userId: f.user.id,
+                petId: f.pet.id,
+                status: f.status,
+                firstname: f.firstName,
+                lastname: f.lastName,
+                birthdate: f.dob,
+                email: f.email,
+                phone: f.phone,
+                occupation: f.occupation,
+                residence_type: f.residenceType,
+                address: f.address,
+                receive_type: f.receiveType,
+                pet_experience: f.experience,
+                adoption_reason: f.reason,
+                identity_document_url: f.identityDoc ? `/api/userform/download/${f.identityDoc}` : null,
+                residence_document_url: f.residenceDoc ? `/api/userform/download/${f.residenceDoc}` : null
+            }));
+
+        if (!usersData.length) {
+            document.getElementById('userCards').innerHTML = '<p>ไม่มีคำขอที่รอดำเนินการ</p>';
+            return;
         }
 
-        // Display users list
         displayUsersList(usersData);
+        selectUser(usersData[0].userId);
 
-        // Set first user as default
-        selectUser(usersData[0].user_id);
-    } catch (error) {
-        console.error('Error loading requests:', error);
-        console.log('ใช้ mock data สำหรับคำขอรับเลี้ยง');
-        
-        // ใช้ mock data
-        usersData = MOCK_USERS_DATA;
-        
-        // Display users list
-        displayUsersList(usersData);
-
-        // Set first user as default
-        selectUser(usersData[0].user_id);
+    } catch (err) {
+        console.error('Error fetching adoption requests:', err);
+        alert('ไม่สามารถโหลดคำขอรับเลี้ยงได้');
     }
 }
 
 // =====================================
-// 3. Display Pet Data (Right Sidebar)
+// 4. Display pet data
 // =====================================
 function displayPetData(pet) {
-    document.getElementById('pet-image').src = pet.image_url || 'default-pet.png';
+    const calculateAge = (birthDateStr) => {
+        if (!birthDateStr) return '-';
+        const birth = new Date(birthDateStr);
+        const today = new Date();
+        let age = today.getFullYear() - birth.getFullYear();
+        const m = today.getMonth() - birth.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+        return age >= 0 ? age : '-';
+    };
+
+    document.getElementById('pet-image').src = pet.image ? `http://localhost:8081${pet.image}` : 'images/placeholder.jpg';
     document.getElementById('pet-name').textContent = pet.name || '-';
-    document.getElementById('pet-id').textContent = pet.pet_id || '-';
+    document.getElementById('pet-id').textContent = pet.petID || '-';
     document.getElementById('pet-gender').textContent = pet.gender || '-';
     document.getElementById('pet-type').textContent = pet.type || '-';
     document.getElementById('pet-breed').textContent = pet.breed || '-';
-    document.getElementById('pet-age').textContent = pet.age || '-';
+    document.getElementById('pet-age').textContent = calculateAge(pet.birthDate);
     document.getElementById('pet-disease').textContent = pet.disease || 'ไม่มี';
-    document.getElementById('pet-sterilization').textContent = pet.sterilization ? 'ทำหมันแล้ว' : 'ยังไม่ทำหมัน';
+    document.getElementById('pet-sterilization').textContent = pet.sterilization ? 'ทำหมันแล้ว' : 'ยัง';
     document.getElementById('pet-food-allergy').textContent = pet.food_allergy || 'ไม่มี';
     document.getElementById('pet-vaccine').textContent = pet.vaccine ? 'ฉีดแล้ว' : 'ยังไม่ฉีด';
 }
 
 // =====================================
-// 4. Display Users List (Right Sidebar)
+// 5. Display users list
 // =====================================
 function displayUsersList(users) {
     const userCardsContainer = document.getElementById('userCards');
     const dropdownMenu = document.getElementById('dropdownMenu');
-
-    // Clear existing content
     userCardsContainer.innerHTML = '';
     dropdownMenu.innerHTML = '';
 
-    users.forEach((user, index) => {
-        // Desktop view: User cards
-        const userCard = createUserCard(user, index === 0);
-        userCardsContainer.appendChild(userCard);
-
-        // Mobile view: Dropdown items
-        const dropdownItem = createDropdownItem(user);
-        dropdownMenu.appendChild(dropdownItem);
+    users.forEach((user, i) => {
+        userCardsContainer.appendChild(createUserCard(user, i === 0));
+        dropdownMenu.appendChild(createDropdownItem(user));
     });
 }
 
-// Create user card for desktop
-function createUserCard(user, isActive = false) {
+function createUserCard(user, isActive) {
     const card = document.createElement('div');
     card.className = `user-card ${isActive ? 'active' : ''}`;
-    card.dataset.userId = user.user_id;
-    card.onclick = () => selectUser(user.user_id);
-
+    card.dataset.userId = user.userId;
+    card.onclick = () => selectUser(user.userId);
     card.innerHTML = `
-        <div class="user-avatar">
-            <span class="solar--user-bold"></span>
-        </div>
+        <div class="user-avatar"><span class="solar--user-bold"></span></div>
         <div class="user-info">
             <div class="user-name">${user.firstname} ${user.lastname}</div>
             <div class="user-email">${user.email}</div>
         </div>
     `;
-
     return card;
 }
 
-// Create dropdown item for mobile
 function createDropdownItem(user) {
     const item = document.createElement('div');
     item.className = 'dropdown-item';
-    item.dataset.userId = user.user_id;
-    item.onclick = () => {
-        selectUser(user.user_id);
-        closeDropdown();
-    };
-
+    item.dataset.userId = user.userId;
+    item.onclick = () => { selectUser(user.userId); closeDropdown(); };
     item.innerHTML = `
-        <div class="user-avatar">
-            <span class="solar--user-bold"></span>
-        </div>
+        <div class="user-avatar"><span class="solar--user-bold"></span></div>
         <div class="user-info">
             <div class="user-name">${user.firstname} ${user.lastname}</div>
             <div class="user-email">${user.email}</div>
         </div>
     `;
-
     return item;
 }
 
 // =====================================
-// 5. User Selection Logic
+// 6. User selection
 // =====================================
 function selectUser(userId) {
-    // Update current selected user
-    currentSelectedUserId = userId;
-
-    // Find user data
-    const user = usersData.find(u => u.user_id === userId);
+    const user = usersData.find(u => u.userId === userId);
     if (!user) return;
-
-    // Display user form
+    currentSelectedUserId = userId;
     displayUserForm(user);
-
-    // Update active state for desktop cards
-    document.querySelectorAll('.user-card').forEach(card => {
-        card.classList.toggle('active', card.dataset.userId === userId);
-    });
-
-    // Update selected display for mobile dropdown
+    updateActiveCard(userId);
     updateDropdownSelected(user);
 }
 
-// Display user form data (Left Form Section)
 function displayUserForm(user) {
     document.getElementById('user-firstname').value = user.firstname || '';
     document.getElementById('user-lastname').value = user.lastname || '';
-    document.getElementById('user-birthdate').value = formatDate(user.birthdate) || '';
+    document.getElementById('user-birthdate').value = formatDate(user.birthdate);
     document.getElementById('user-phone').value = user.phone || '';
     document.getElementById('user-email').value = user.email || '';
     document.getElementById('user-occupation').value = user.occupation || '';
@@ -270,22 +200,26 @@ function displayUserForm(user) {
     document.getElementById('user-adoption-reason').value = user.adoption_reason || '';
 
     // Document links
+    const idLink = document.getElementById('identity-doc-link');
+    const resLink = document.getElementById('residence-doc-link');
+
     if (user.identity_document_url) {
-        document.getElementById('identity-doc-link').href = user.identity_document_url;
-        document.getElementById('identity-doc-link').style.display = 'inline';
-    } else {
-        document.getElementById('identity-doc-link').style.display = 'none';
-    }
+        idLink.href = user.identity_document_url;
+        idLink.style.display = 'inline';
+    } else idLink.style.display = 'none';
 
     if (user.residence_document_url) {
-        document.getElementById('residence-doc-link').href = user.residence_document_url;
-        document.getElementById('residence-doc-link').style.display = 'inline';
-    } else {
-        document.getElementById('residence-doc-link').style.display = 'none';
-    }
+        resLink.href = user.residence_document_url;
+        resLink.style.display = 'inline';
+    } else resLink.style.display = 'none';
 }
 
-// Update dropdown selected display for mobile
+function updateActiveCard(userId) {
+    document.querySelectorAll('.user-card').forEach(card => {
+        card.classList.toggle('active', card.dataset.userId == userId);
+    });
+}
+
 function updateDropdownSelected(user) {
     const selectedDiv = document.getElementById('dropdownSelected');
     selectedDiv.querySelector('.user-name').textContent = `${user.firstname} ${user.lastname}`;
@@ -293,32 +227,21 @@ function updateDropdownSelected(user) {
 }
 
 // =====================================
-// 6. Event Listeners Setup
+// 7. Event listeners
 // =====================================
 function setupEventListeners() {
-    // Approve button
     document.querySelector('.btn-approve').addEventListener('click', handleApprove);
-
-    // Reject button
     document.querySelector('.btn-reject').addEventListener('click', handleReject);
-
-    // Mobile dropdown toggle
     document.getElementById('dropdownSelected').addEventListener('click', toggleDropdown);
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.user-dropdown')) {
-            closeDropdown();
-        }
+    document.addEventListener('click', e => {
+        if (!e.target.closest('.user-dropdown')) closeDropdown();
     });
-
-    // Modal buttons
     document.getElementById('btn-modal-cancel').addEventListener('click', closeModal);
     document.getElementById('btn-modal-confirm').addEventListener('click', confirmAction);
 }
 
 // =====================================
-// 7. Approve/Reject Actions
+// 8. Approve / Reject
 // =====================================
 let pendingAction = null; // 'approve' or 'reject'
 
@@ -328,9 +251,10 @@ function handleApprove() {
         return;
     }
 
-    const user = usersData.find(u => u.user_id === currentSelectedUserId);
-    pendingAction = 'approve';
+    const user = usersData.find(u => u.userId === currentSelectedUserId);
+    if (!user) return;
 
+    pendingAction = 'approve';
     showModal(
         'ยืนยันการอนุมัติคำขอ',
         `คุณต้องการอนุมัติคำขอของ ${user.firstname} ${user.lastname} ใช่หรือไม่?`,
@@ -344,9 +268,10 @@ function handleReject() {
         return;
     }
 
-    const user = usersData.find(u => u.user_id === currentSelectedUserId);
-    pendingAction = 'reject';
+    const user = usersData.find(u => u.userId === currentSelectedUserId);
+    if (!user) return;
 
+    pendingAction = 'reject';
     showModal(
         'ยืนยันการปฏิเสธคำขอ',
         `คุณต้องการปฏิเสธคำขอของ ${user.firstname} ${user.lastname} ใช่หรือไม่?`,
@@ -357,74 +282,63 @@ function handleReject() {
 async function confirmAction() {
     closeModal();
 
-    if (pendingAction === 'approve') {
-        await approveRequest();
-    } else if (pendingAction === 'reject') {
-        await rejectRequest();
+    if (!currentSelectedUserId) return;
+
+    const selected = usersData.find(u => u.userId === currentSelectedUserId);
+    if (!selected) return;
+
+    // Get admin userId from localStorage
+    const adminUser = JSON.parse(localStorage.getItem('user') || '{}');
+    if (!adminUser || adminUser.role !== 'ADMIN') {
+        alert('คุณไม่ได้รับอนุญาตให้ทำรายการนี้');
+        return;
     }
 
-    pendingAction = null;
-}
-
-// API call to approve request
-async function approveRequest() {
     try {
-        const response = await fetch(`${API_BASE_URL}/admin/approve-request`, {
-            method: 'POST',
+        const status = pendingAction === 'approve' ? 'APPROVED' : 'REJECTED';
+
+        const response = await fetch(`${API_BASE_URL}/userform/${selected.formId}/status`, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
+                'X-USER-ID': adminUser.id // <-- send admin ID to backend
             },
-            body: JSON.stringify({
-                pet_id: petId,
-                approved_user_id: currentSelectedUserId
-            })
+            body: JSON.stringify({ status })
         });
 
-        if (!response.ok) throw new Error('Failed to approve request');
+        if (!response.ok) {
+            const errText = await response.text();
+            throw new Error(errText || 'Failed to update request');
+        }
 
-        alert('อนุมัติคำขอเรียบร้อย');
-        window.location.href = 'allpet.html';
-    } catch (error) {
-        console.error('Error approving request:', error);
-        alert('เกิดข้อผิดพลาดในการอนุมัติคำขอ');
-    }
-}
+        alert(pendingAction === 'approve' ? 'อนุมัติคำขอเรียบร้อย' : 'ปฏิเสธคำขอแล้ว');
 
-// API call to reject request
-async function rejectRequest() {
-    try {
-        const response = await fetch(`${API_BASE_URL}/admin/reject-request`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                pet_id: petId,
-                rejected_user_id: currentSelectedUserId
-            })
-        });
+        // Remove user from list and select next one
+        usersData = usersData.filter(u => u.formId !== selected.formId);
+        if (usersData.length > 0) {
+            selectUser(usersData[0].userId);
+        } else {
+            document.getElementById('userCards').innerHTML = '<p>ไม่มีคำขอที่รอดำเนินการ</p>';
+        }
 
-        if (!response.ok) throw new Error('Failed to reject request');
+        // Optionally refresh the page or sidebar
+        await loadPendingRequests();
 
-        alert('ปฏิเสธคำขอแล้ว');
-        window.location.reload(); // Refresh to update the list
-    } catch (error) {
-        console.error('Error rejecting request:', error);
-        alert('เกิดข้อผิดพลาดในการปฏิเสธคำขอ');
+    } catch (err) {
+        console.error(err);
+        alert('เกิดข้อผิดพลาดในการประมวลผลคำขอ: ' + err.message);
+    } finally {
+        pendingAction = null;
     }
 }
 
 // =====================================
-// 8. Modal Functions
+// 9. Modal
 // =====================================
-function showModal(title, message, actionType) {
+function showModal(title, message) {
     const modal = document.getElementById('confirmation-modal');
     document.getElementById('modal-title').textContent = title;
     document.getElementById('modal-message').textContent = message;
-
-    const confirmBtn = document.getElementById('btn-modal-confirm');
-    confirmBtn.className = `btn-confirm ${actionType}`;
-
     modal.style.display = 'flex';
     setTimeout(() => modal.classList.add('active'), 10);
 }
@@ -436,12 +350,11 @@ function closeModal() {
 }
 
 // =====================================
-// 9. Mobile Dropdown Functions
+// 10. Mobile Dropdown
 // =====================================
 function toggleDropdown() {
     const menu = document.getElementById('dropdownMenu');
     const arrow = document.getElementById('dropdownArrow');
-    
     menu.classList.toggle('open');
     arrow.classList.toggle('open');
 }
@@ -449,21 +362,18 @@ function toggleDropdown() {
 function closeDropdown() {
     const menu = document.getElementById('dropdownMenu');
     const arrow = document.getElementById('dropdownArrow');
-    
     menu.classList.remove('open');
     arrow.classList.remove('open');
 }
 
 // =====================================
-// 10. Helper Functions
+// 11. Helper
 // =====================================
-function formatDate(dateString) {
-    if (!dateString) return '';
-    
-    const date = new Date(dateString);
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear() + 543; // Convert to Buddhist year
-    
+function formatDate(dateStr) {
+    if (!dateStr) return '';
+    const date = new Date(dateStr);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear() + 543;
     return `${day}/${month}/${year}`;
 }
