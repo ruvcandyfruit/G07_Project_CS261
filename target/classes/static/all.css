@@ -1,0 +1,465 @@
+@import url('https://fonts.googleapis.com/css2?family=Mali&family=Itim&family=Kodchasan&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap');
+
+* {
+    font-family: 'Manrope', 'Itim', sans-serif;
+}
+:root {
+    --gray-bg: #f2f2f2;
+    --transition: all 0.3s ease;
+    --border-radius: 15px;
+    --primary-color: #4A69FF;
+    --text-color: #333;
+    --button-black:#010002;
+    --background-light: #f9f9f9;
+    --background-main: #E5EEFF;
+    --button-yellow: #ffd102;
+    --box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.1); 
+    --linear-gradient: linear-gradient(74.49deg, #F840D0 -67.13%, #53DDFF 46.94%, #53FA9C 184.38%);
+}
+
+/*----- header -----*/
+header {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    padding: 30px 50px 30px 50px;
+    background-color: #E5EEFF;
+}
+
+/*----- Navigation bar -----*/
+.navbar {
+    width: 100%;
+    margin: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/*----- Logo -----*/
+.logo img {
+    width: 60px;
+    height: 60px;
+}
+
+/*----- Menu -----*/
+/* รวมปุ่มบน navigation bar */
+.nav-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    list-style: none;
+}
+
+/* รวมปุ่มหน้าเพจต่างๆ */
+.nav-links {
+    justify-content: end;
+    width: 100%;
+    gap: 20px;
+}
+
+/* รวมปุ่มที่เกี่ยวข้องกับ account (login, register, profile) */
+.nav-account {
+    gap: 20px;
+    justify-content: end;
+    width: max-content;
+    min-width: 305px; /* เพิ่มบรรทัดนี้ - ปรับตามขนาดปุ่ม 2 ปุ่มของคุณ */
+}
+
+.nav-links,
+.nav-account {
+    display: flex;
+    gap: 12px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    gap: 1rem;
+}
+
+.nav-button a {
+    text-decoration: none;
+    color: var(--button-black);
+    padding: 10px 30px 10px 30px;
+    gap: 10px;
+    border-radius: 50px;
+    transition: background 0.2s;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    background-color: #FFFFFF;
+    box-shadow: var(--box-shadow);
+}
+
+.nav-links a.active {
+    font-weight: 600;
+}
+
+#login-butt a {
+    background: var(--linear-gradient);
+    color: white;
+    box-shadow: var(--box-shadow);
+}
+
+#register-butt a {
+    background-color: #FFFFFF;
+    box-shadow: var(--box-shadow);
+}
+
+#login-butt a:hover, 
+#register-butt a:hover {
+    box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.25);
+}
+
+#profile {
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50px;
+    padding-top: 5px;
+    overflow: hidden;
+    display: none;
+    background: rgba(1,0,2,0.2), rgba(255,255,255,1);
+    box-shadow: var(--box-shadow);
+    cursor: pointer;
+}
+
+#profile:hover {
+    box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.25);
+}
+
+#profile .solar--user-bold {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='6' r='4' fill='rgba(1, 0, 2, 0.5),rgba(255, 255, 255, 1)'/%3E%3Cpath fill='rgba(1, 0, 2, 0.5),rgba(255, 255, 255, 1)' d='M20 17.5c0 2.485 0 4.5-8 4.5s-8-2.015-8-4.5S7.582 13 12 13s8 2.015 8 4.5'/%3E%3C/svg%3E");
+}
+
+/* 3. ซ่อน hamburger ตอนหน้าจอใหญ่ */
+.hamburger {
+    display: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+.profile-popup {
+    z-index: 10;
+    position: absolute;
+    width: max-content;
+    height: max-content;
+    border-radius: 16px;
+    padding: 20px 15px;
+    display: none;
+    gap: 10px;
+    top: 85px;
+    right: 80px;
+    background-color: #FFFFFF;
+    box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.25);
+}
+
+.profile-content {
+    width: 270px;
+    display: 20px;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--background-main);
+}
+
+.profile-image {
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 50px;
+    padding-top: 5px;
+    overflow: hidden;
+    background: rgba(1,0,2,0.2);
+    box-shadow: var(--box-shadow);
+}
+
+.profile-image .solar--user-bold {
+  display: inline-block;
+  width: 45px;
+  height: 45px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='6' r='4' fill='rgba(1, 0, 2, 0.5),rgba(255, 255, 255, 1)'/%3E%3Cpath fill='rgba(1, 0, 2, 0.5),rgba(255, 255, 255, 1)' d='M20 17.5c0 2.485 0 4.5-8 4.5s-8-2.015-8-4.5S7.582 13 12 13s8 2.015 8 4.5'/%3E%3C/svg%3E");
+}
+
+.profile-user-info #profile-username {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.profile-user-info #profile-email {
+    font-size: 14px;
+}
+
+.profile-logout {
+    width: 100%;
+    padding: 10px 10px 0 0;
+}
+
+/*----- Logout button -----*/
+.logout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 10px;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.logout-btn .mdi--logout {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='rgba(1, 0, 2, 0.7),rgba(255, 255, 255, 1)' d='m17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5M4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4z'/%3E%3C/svg%3E");
+}
+
+.logout-btn p {
+    font-size: 16px;
+    color: rgba(1, 0, 2, 0.7);
+}
+
+/* สำหรับหน้าจอ 600px - 768px */
+@media (max-width: 900px) {
+    header {
+        padding: 0 20px; /* ลด padding */
+    }
+    
+    .navbar {
+        margin: 0 10px; /* ลด margin */
+    }
+    
+    .nav-button a {
+        padding: 8px 20px; /* ลดขนาด padding ของปุ่ม */
+        font-size: 0.85rem; /* ลดขนาดตัวอักษร */
+    }
+    
+    .nav-links,
+    .nav-account {
+        gap: 0.5rem; /* ลดช่องว่างระหว่างปุ่ม */
+    }
+    
+    .logo img {
+        width: 50px; /* ลดขนาด logo */
+        height: 50px;
+    }
+}
+
+/* Responsive Design for 768px and below */
+@media (max-width: 768px) {
+    /* ซ่อน header ปกติตอนหน้าจอเล็ก */
+    header:not(.header-restructured) {
+        display: none;
+    }
+
+    /* Header แบบ 2 ชั้น */
+    header.header-restructured {
+        height: auto;
+        padding: 0;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    /* ชั้นบน: Top Bar */
+    .top-bar {
+        order: 1; /* อยู่บนสุด */
+        width: 100%;
+        padding: 0.75rem 1.5rem;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    /* ชั้นล่าง: navbar (logo + hamburger) */
+    .header-restructured .navbar {
+        order: 2; /* อยู่ล่าง top-bar */
+        position: relative;
+        padding: 10px 30px;
+        margin: 0;
+        height: auto;
+    }
+
+    .top-bar .nav-account {
+        gap: 0.75rem;
+        width: auto;
+        padding-top: 10px;
+        min-width: auto; /* เพิ่มบรรทัดนี้ - ยกเลิก min-width ในหน้าจอเล็ก */
+    }
+
+    .top-bar #login-butt a,
+    .top-bar #register-butt a {
+        text-decoration: none;
+        padding: 10px 30px 10px 30px;
+        font-size: 0.85rem;
+        border-radius: 50px;
+        color: var(--button-black);
+    }
+
+    /* ทำให้ปุ่ม profile แสดงใน top-bar ด้วย */
+    .top-bar #profile {
+        display: inline-block;
+    }
+
+    .top-bar #login-butt a {
+        color: white;
+    }
+
+    /* ซ่อน login/register ถ้า profile แสดง */
+    .top-bar.logged-in #login-butt,
+    .top-bar.logged-in #register-butt {
+        display: none !important;
+    }
+
+    /* แสดง profile ถ้า login แล้ว */
+    .top-bar.logged-in #profile {
+        display: inline-block;
+    }
+
+    /* ซ่อน nav-account ในตำแหน่งเดิม */
+    .header-restructured .nav-button .nav-account {
+        display: none;
+    }
+
+    /* สไตล์เมนู dropdown */
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        z-index: 1000;
+        top: 60px;
+        right: 40px;
+        background: white;
+        padding: 1rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        width: max-content;
+        gap: 0;
+    }
+
+    .nav-links a:hover, 
+    .nav-links a.active {
+        background: none;
+        box-shadow: none;
+    }
+
+    .nav-links li {
+        padding: 0.5rem;
+        border-radius: 8px;
+    }
+
+    .nav-links li.active {
+        background: #E5EEFF;
+    }
+
+    .nav-links li:hover {
+        background: #E5EEFF;
+    }
+
+    .nav-links a {
+        padding: 0.5rem 1rem;
+    }
+
+    /* เมื่อเปิดเมนู */
+    .nav-links.active {
+        display: flex;
+    }
+
+    /* แสดง Hamburger */
+    .hamburger {
+        display: flex;
+        justify-content: end;
+    }
+
+    .logo img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .profile-popup {
+        right: 30px;
+    }
+}
+
+/*----- footer -----*/
+footer {
+    width: 100%;
+    background-color: #E5EEFF;
+    display: flex;
+    padding: 30px 100px;
+}
+
+.footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+}
+
+/* responsive for footer*/
+@media (max-width: 768px) {
+    .footer {
+        display: flex;
+        flex-direction: column; /* ให้ div เรียงลง */
+        gap: 20px;
+    }
+}
+
+.about {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.about p {
+    font-family: 'Mali', sans-serif;
+}
+
+.location {
+    margin-top: 15px;
+    line-height: 1.5;
+}
+
+/*contact button*/
+.social-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #222;
+  font-size: 1rem;
+  font-family: 'Manrope', sans-serif;
+  cursor: pointer;
+}
+
+.social-btn img {
+  width: 30px;
+  height: 30px;
+  margin-right: 12px;
+  object-fit: contain;
+}
+
+.social-btn:hover {
+    transform: scale(1.05);
+}

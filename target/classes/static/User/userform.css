@@ -1,0 +1,312 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+main {
+    background: #fbfbfb;
+    padding: 50px;
+}
+
+/*--- Title ---*/
+.title {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+.title h1 {
+    text-align: center;
+    color: #010002;
+    font-size: clamp(1.5rem, 5vw, 1.8rem);
+    width: fit-content;
+}
+
+.title hr {
+  flex: 1;
+  height: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--button-yellow);
+}
+
+/* --- main part ---*/
+.form {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- form part ---*/
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    margin: 0 20px;
+}
+
+.part p {
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-family: 'Mali', sans-serif;
+    color: rgba(1, 0, 2, 0.7);
+}
+
+.part hr {
+  flex: 1;
+  height: 2px;
+  border: none;
+  border-radius: 5px;
+  background-color: #FFD102;
+}
+
+label {
+    display: block;
+    margin-top: 25px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Mali', sans-serif;
+    color: #010002;
+}
+
+.required { 
+    color: red;
+}
+
+/* input style */
+input[type="text"],
+input[type="date"],
+input[type="number"],
+input[type="tel"],
+input[type="email"],
+textarea,
+input[type="file"] {
+    width: 100%;
+    padding: 12px 10px;
+    margin-top: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Manrope', 'Mali', sans-serif;
+    border: 1.8px solid #a8a8a8;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    transition: border-color 0.3s ease;
+}
+
+input::placeholder {
+    color: #a8a8a8;
+    opacity: 1;
+}
+
+input[type="date"],
+input[type="file"] {
+    color: #a8a8a8;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="number"]:focus,
+input[type="tel"]:focus,
+input[type="email"]:focus,
+textarea:focus,
+input[type="file"]:focus {
+    outline: none;
+    border-color: #4A69FF;
+    color: #010002;
+}
+
+input:valid {
+    color: black;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    accent-color: var(--primary-color);
+}
+
+textarea {
+    height: 90px;
+    resize: vertical;
+}
+
+.select {
+    display: flex;
+    flex-wrap: wrap;      
+    justify-content: space-between;  
+    gap: 10px 15px;     
+}
+
+.select.receiveType {
+    justify-content: start;
+    gap: 10%;
+}
+
+/* responsive for select input */
+@media (max-width: 768px) {
+    .select label {
+    flex: 0 0 48%;        /* แต่ละ label กว้างประมาณครึ่ง parent → 2 คอลัมน์ */
+    }
+
+    .select.receiveType label {
+        flex: 50%;
+    }
+}
+
+.select label,
+.agreement {
+    font-weight: 400;
+    line-height: 1.4;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    margin-right: 6px;
+}
+
+/*--- button part ---*/
+.form-btn {
+    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#submit {
+    width: 100%;
+    padding: 14px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    background-color: rgb(180, 179, 179);
+    color: #333;
+    border: none;
+    border-radius: 10px;
+    cursor: not-allowed;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.3s ease;
+}
+
+#submit.enabled:hover {
+    background-color: #ffb300;
+    cursor: pointer;
+}
+
+#cancel {
+    width: 100%;
+    padding: 14px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    background: #e0e0e0;
+    color: #333;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.3s ease;
+}
+
+#cancel:hover {
+    background: #d0d0d0;
+}
+
+.error {
+    color: #e74c3c;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2); 
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; 
+}
+
+.popup {
+  position: relative; /* ทำให้ปุ่ม absolute อ้างอิง popup */
+  top: 50%;
+  left: 50%;
+  width: max-content;
+  margin: 10px;
+  padding: 20px 30px;
+  transform: translate(-50%, -50%);
+  background: #fbfbfb;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+.popup h1 {
+    font-size: clamp(1.1rem, 5vw, 1.5rem);
+    font-weight: 500;
+    color: #333;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    white-space: pre-line;
+}
+
+.goButton {
+    display: flex;
+    width: 100%;
+    margin-top: 25px;
+    gap: 20px;
+}
+
+.popup button {
+    padding: 8px 16px;
+    font-size: 1rem;
+    font-family: 'Itim', sans-serif;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+/* responsive for button */
+@media (max-width: 768px) {
+    .goButton {
+        flex-direction: column-reverse;
+        gap: 10px;
+    }
+}
+
+#goHome {
+    background: #e0e0e0;
+}
+
+#goHome:hover,
+#close:hover {
+    background: #d0d0d0;
+}
+
+#goStatus {
+    background: #ffc107;
+}
+
+#goStatus:hover {
+    background: #ffb300;
+}
+
+#close {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 10px; 
+    right: 10px;
+    background: none;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+}

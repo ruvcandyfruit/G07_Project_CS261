@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="th-en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="status.css">
+    <link rel="stylesheet" href="../all.css">
+    <link rel="icon" href="../homepageResources/icon.png" type="image/x-icon">
+    <title>Adoption Status | Pet Adoption System</title>
+</head>
+<body class="status-page">
+
+    <!-- navigation bar -->
+        <header>
+            <nav class="navbar">
+                <div class="logo">
+                    <img src="../homepageResources/icon.png" alt="Logo">
+                </div>
+                <!-- ปุ่มไปหน้าต่างๆ -->
+                <nav class="nav-button">
+                    <ul class="nav-links">
+                        <li><a href="../index.html">Homepage</a></li>
+                        <li class="active"><a href="petlisting.html">Pet Listing</a></li>
+                        <li><a href="status.html" class="active">Adoption Status</a></li>
+                        <li><a href="contact.html">About/Contact Us</a></li>
+                    </ul>
+                    <!-- ปุ่ม Log in, Create account, Profile -->
+                    <ul class="nav-account">
+                        <li id="login-butt"><a href="../login.html">Log in</a></li>
+                        <li id="register-butt"><a href="../register.html">Create account</a></li>
+                        <button id="profile"><span class="solar--user-bold"></span></button>
+                    </ul>
+                </nav>
+            </nav>
+            <!-- ที่ซ่อน nav-links ตอนหน้าจอเล็ก -->
+            <div class="hamburger">
+                ☰
+            </div>
+
+            <!-- เพิ่ม Profile Popup ตรงนี้ -->
+            <div id="profile-popup" class="profile-popup">
+                <div class="profile-content">
+                    <div class="profile-info">
+                        <div class="profile-image"><span class="solar--user-bold"></span></div>
+                        <div class="profile-user-info">
+                            <h4 id="profile-username">Username</h4>
+                            <p id="profile-email">example@email.com</p>
+                        </div>
+                    </div>
+                    <div class="profile-logout">
+                        <div class="profile-logout-butt">
+                            <button class="logout-btn" id="logout-btn">
+                                <span class="mdi--logout"></span>
+                                <p>Log out</p>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </header>
+
+
+
+    <div class="fullwidth-section">
+      <div class="container status-page">
+
+        <div class="status-title">
+            <hr>
+            <h1>Adoption Status</h1>
+            <hr>
+        </div>
+
+        <section class="user-pet-row">
+            <div class="card card-pet">
+                <div class="card-avatar">
+                    <img id="petImage" src="../images/sample-pet.jpg" alt="Pet avatar">
+                </div>
+                <div class="card-body">
+                    <p class="card-label">PetName</p>
+                    <p class="card-value" id="pet-name"></p>
+                </div>
+            </div>
+
+            <div class="card card-user" id="view-form-card">
+                <div class="card-avatar"><span class="solar--user-bold"></span></div>
+                <div class="card-body">
+                    <p class="card-label">UserName</p>
+                    <p class="card-value" id="user-username"></p>
+                    <p class="card-label">Email</p>
+                    <p class="card-value" id="user-email"></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="status-steps-box">
+                      <div class="status-line"></div>
+                      <div class="status-steps">
+                          <div class="status-step" data-key="request">
+                              <div class="status-circle">
+                                <div class="circle-middle">
+                                  <div class="circle-inner"></div>
+                                </div>
+                                <span class="circle-icon">✓</span>
+                              </div>
+                              <p class="status-label">ส่งคำขอ</p>
+                          </div>
+                          <div class="status-step" data-key="approval">
+                              <div class="status-circle"><div class="circle-middle"><div class="circle-inner"></div></div><span class="circle-icon">✓</span></div>
+                              <p class="status-label">อนุมัติคำขอ</p>
+                          </div>
+                          <div class="status-step" data-key="handover">
+                              <div class="status-circle"><div class="circle-middle"><div class="circle-inner"></div></div><span class="circle-icon">✓</span></div>
+                              <p class="status-label">ส่งมอบ</p>
+                          </div>
+                      </div>
+                  </section>
+
+        <section class="pickup-section">
+            <div class="pickup-box">
+                <h3 class="pickup-title">
+                    <span class="pickup-icon">🐾</span>
+                    <span id="pickup-title-text">Pickup</span>
+                </h3>
+                <p id="pickup-message">
+                    คำขอของคุณถูกส่งแล้ว กำลังรอการอนุมัติจากเจ้าหน้าที่
+                </p>
+            </div>
+            <div class="pickup-actions">
+                <button id="primary-action-btn" class="btn btn-danger-lg">
+                    ยกเลิกการรับเลี้ยง
+                </button>
+                <button id="back-btn" class="btn btn-outline-lg" style="display:none;">
+                    ย้อนกลับ
+                </button>
+            </div>
+        </section>
+
+        <!--<section class="demo-section">
+            <label for="status-select">Preview สถานะ:</label>
+            <select id="status-select">
+                <option value="pending">1. ส่งคำขอ (pending)</option>
+                <option value="approved">2. อนุมัติคำขอ (รอรับ)</option>
+                <option value="approvalRejected">2. ปฏิเสธคำขอ</option>
+                <option value="completed">3. ส่งมอบสำเร็จ</option>
+                <option value="handoverFailed">3. ส่งมอบไม่สำเร็จ</option>
+            </select>
+        </section>-->
+
+      </div>
+    </div>
+
+    <!-- footer (copy จาก petdetail) -->
+    <footer>
+        <div class="footer">
+            <div class="about">
+                <div class="logo">
+                    <img src="../homepageResources/icon.png" alt="Logo">
+                </div>
+            
+                <p>Pet Adoption System</p>
+                <p class="location">เลขที่ 11/1 ชั้น 1 ห้อง 111 อาคารสาทรธานี 1 ถนนสาทรเหนือ<br>แขวงสีลม เขตบางรัก กรุงเทพมหานคร 10100<br>Tel : 011-111-1111</p>
+            </div>
+
+            <div class="social-container">
+                <a href="#" class="social-btn">
+                    <img src="../homepageResources/FacebookLogo.png" alt="Facebook icon">
+                    <span>Pet Adoption</span>
+                </a>
+
+                <a href="#" class="social-btn">
+                    <img src="../homepageResources/InstagramLogo.png" alt="Instagram icon">
+                    <span>pet_adoption</span>
+                </a>
+            </div>                
+        </div>
+    </footer>
+
+    <div id="cancel-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h3 class="modal-title">ยืนยันการยกเลิกคำขอรับเลี้ยง</h3>
+            <p class="modal-text">
+              คุณแน่ใจหรือไม่ว่าต้องการยกเลิกคำขอรับเลี้ยงสัตว์?
+            </p>
+            <div class="modal-actions">
+                <button id="cancel-modal-close" class="btn btn-outline-lg">
+                  CANCEL
+                </button>
+                <button id="cancel-modal-confirm" class="btn btn-danger-lg">
+                  YES
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay">
+        <div class="form-modal-container">
+            <button class="form-modal-close-btn" id="formModalCloseBtn">&times;</button>
+            
+            <div id="loading" class="loading">กำลังโหลดข้อมูล...</div>
+            
+            <div id="formContent" style="display: none;">
+                <div class="form-modal-header">
+                    <div class="form-modal-profile-icon"><span class="solar--user-bold"></span></div>
+                    <div class="form-modal-user-info">
+                        <h2 id="formUserName">UserName</h2>
+                        <p id="formUserEmail">example@email.com</p>
+                    </div>
+                </div>
+
+                <form id="userForm">
+                    <div class="form-group">
+                        <label class="form-label">ชื่อจริง</label>
+                        <input type="text" class="form-input" id="firstName">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">นามสกุล</label>
+                        <input type="text" class="form-input" id="lastName">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">วัน/เดือน/ปีเกิด</label>
+                        <input type="text" class="form-input" id="dob" placeholder="DD/MM/YYYY">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">เบอร์โทรศัพท์</label>
+                        <input type="tel" class="form-input" id="phone">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">อีเมล</label>
+                        <input type="email" class="form-input" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">อาชีพ</label>
+                        <input type="text" class="form-input" id="occupation">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">ที่อยู่อาศัยปัจจุบัน</label>
+                        <input type="text" class="form-input" id="address">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">ประเภทที่อยู่อาศัย</label>
+                        <input type="text" class="form-input" id="residenceType">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">คุณต้องการให้เราจัดส่งสัตว์เลี้ยงให้หรือมารับด้วยตนเอง</label>
+                        <input type="text" class="form-input" id="recieveType">
+                    </div>
+                    <div class="full-width-section">
+                        <label class="form-label">คุณเคยเลี้ยงสัตว์เลี้ยงมาก่อนหรือไม่? ถ้าเคย โปรดเล่าประสบการณ์ของคุณ</label>
+                        <textarea class="form-textarea" id="experience"></textarea>
+                    </div>
+                    <div class="full-width-section">
+                        <label class="form-label">ทำไมคุณถึงอยากรับเลี้ยงสัตว์เลี้ยง?</label>
+                        <textarea class="form-textarea" id="reason"></textarea>
+                    </div>
+                    <div class="form-modal-button-group">
+                        <button type="button" class="form-modal-btn" id="editFormBtn" style="display: none;">
+                            แก้ไขฟอร์ม
+                        </button>
+                        <button type="button" class="form-modal-btn" id="backBtn">ย้อนกลับ</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="status.js"></script>
+    <script src="../all.js"></script>
+</body>
+</html>

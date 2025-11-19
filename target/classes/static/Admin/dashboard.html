@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="homepageResources/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="dashboard.css">
+    <title>Pet Adoption Dashboard</title>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div id="sidebar"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div id="breadcrumb-placeholder" class="header"></div>
+
+            <!-- Grid content-->
+            <div class="grid">
+                <!-- Pet Stats Card -->
+                 <div class="pet-stats-card card">
+                    <div class="pizza">
+                        <div class="pet-stats-title" id="pet-stats-title">สัตว์เลี้ยงทั้งหมด</div>
+                        
+                        <!-- Donut Chart -->
+                        <div class="donut-chart">
+                            <div class="donut-chart-container" >
+                                <canvas id="DoughnutChart"></canvas> 
+                            </div>
+                        </div>
+
+                        <div class="legend">
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background: #010002;"></div>
+                                <span>Dog</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background: #ffd102;"></div>
+                                <span>Cat</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Stats List -->
+                    <div class="stats-list">
+                        
+                        <a href="allpet.html?status=Pending&togglePending=true" class="stat-link">
+                            <div class="stat-item">
+                                <div class="stat-number" id="stat-pending"></div>
+                                <div class="stat-label">รอพิจารณา</div>
+                            </div>
+                        </a>
+
+                        <a href="allpet.html?status=Approved" class="stat-link">
+                            <div class="stat-item">
+                                <div class="stat-number" id="stat-waiting"></div>
+                                <div class="stat-label">รอส่งมอบ</div>
+                            </div>
+                        </a>
+
+                        <a href="allpet.html?status=Completed" class="stat-link">
+                            <div class="stat-item">
+                                <div class="stat-number" id="stat-delivered"></div>
+                                <div class="stat-label">ส่งมอบแล้ว</div>
+                            </div>
+                        </a>
+
+                        <div class="stat-item stat-item-disabled">
+                            <div class="stat-number" id="stat-open"></div>
+                            <div class="stat-label">เปิดรับคำขอ</div>
+                        </div>
+                        <div class="stat-item stat-item-disabled">
+                            <div class="stat-number" id="stat-closed"></div>
+                            <div class="stat-label">ปิดรับคำขอ</div>
+                        </div>
+                        <div class="stat-item stat-item-disabled">
+                            <div class="stat-number" id="stat-user-id"></div>
+                            <div class="stat-label">User ID</div>
+                        </div>
+                    </div>
+                 </div>
+                <div class="second-wrap">
+                    <!-- Line Chart Card -->
+                    <div class="chart-card card">
+                        <h3 class="chart-title">Line Chart</h3>
+                        <div class="chart-legend">
+                            <div class="chart-legend-item">
+                                <div class="legend-dot" style="background: #ffd102;"></div>
+                                <span>Add pet</span>
+                            </div>
+                            <div class="chart-legend-item">
+                                <div class="legend-dot" style="background: #64bdc6;"></div>
+                                <span>Request</span>
+                            </div>
+                            <div class="chart-legend-item">
+                                <div class="legend-dot" style="background: #2b72fb;"></div>
+                                <span>Adopted</span>
+                            </div>
+                        </div>
+                        <div class="line-chart-container" style="width: 80%; margin: auto; padding: 20px;">
+                            <canvas id="LineChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="first-wrap">
+                        <!-- Calendar Card -->
+                        <div class="calendar-card card">
+                            <div class="calendar-header">
+                                <div class="calendar-title" id="calendar-month">November 2025</div>
+                            </div>
+
+                            <div class="calendar-weekdays">
+                                <div class="calendar-weekday">SUN</div>
+                                <div class="calendar-weekday">MON</div>
+                                <div class="calendar-weekday">TUE</div>
+                                <div class="calendar-weekday">WED</div>
+                                <div class="calendar-weekday">THU</div>
+                                <div class="calendar-weekday">FRI</div>
+                                <div class="calendar-weekday">SAT</div>
+                            </div>
+
+                            <div class="calendar-days" id="calendar-days">
+                                <!-- Calendar days will be generated by JavaScript -->
+                            </div>
+
+                            <div class="calendar-time">
+                                <span>Time</span>
+                                <span id="calendar-current-time">9:41 AM</span>
+                            </div>
+                        </div>
+
+                        <!-- Notifications Card -->
+                        <div class="notification-card card">
+                            <div class="notification-header">
+                                <img src="image-resources/notification-icon-gradient.svg" alt="Notification">   
+                                <span class="notification-title">Notification</span>
+                                <span class="notification-badge" id="notification-count">2</span>
+                            </div>
+
+                            <div class="notification-list" id="notification-list">
+                                <!-- JavaScript จะสร้าง notification items ที่นี่ -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="dashboard.js"></script>     
+    <script src="chart.js"></script>
+    <script src="sidebar.js"></script>  
+    </div> <script src="breadcrumb.js" defer></script>
+    <!-- Import JS library to create chart-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>               
+</body>
+</html>

@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Mali&family=Itim&family=Kodchasan&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.fullwidth-section {
+    width: 100%;
+    background-color: #fff; 
+    padding: 50px 0; 
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto; 
+    background-color: transparent; 
+    padding: 0 20px; 
+}
+
+.title {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.title h1 {
+    text-align: center;
+    color: #010002;
+    font-size: clamp(1.5rem, 5vw, 1.8rem);
+}
+
+.title hr {
+  flex: 1;
+  height: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--button-yellow);
+}
+
+.pet-profile {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 50px;
+    margin-bottom: 40px;
+}
+
+.pet-image-section {
+    text-align: center;
+}
+
+.pet-image {
+    width: 250px;
+    height: 250px;
+    background: #d8d8d8;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    overflow: hidden; 
+    transition: transform 0.3s;
+}
+
+.pet-image:hover {
+    transform: scale(1.05);
+}
+
+.pet-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    display: block;
+}
+
+
+.pet-name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.pet-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.detail-section h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.detail-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.detail-section li {
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.btn {
+    padding: 12px 40px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-secondary {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.btn-secondary:hover {
+    background: #d0d0d0;
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background: #ffc107;
+    color: #333;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background: #ffb300;
+    transform: translateY(-2px);
+}
+
+
+/*----- responsive -----*/
+@media (max-width: 768px) {
+    .pet-profile {
+        grid-template-columns: 1fr;
+    }
+
+    .pet-details {
+        grid-template-columns: 1fr;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 15px;
+    }
+}

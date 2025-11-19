@@ -1,0 +1,405 @@
+@import url('https://fonts.googleapis.com/css2?family=Mali&family=Itim&family=Kodchasan&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap');
+
+:root {
+    --bg-gray: #f2f2f2;
+    /*gray95*/
+    --bg-light: #f9f9f9;
+    /*almost white*/
+    --bg-main: #E5EEFF;
+    /*pale cyan*/
+    --bg-fade-yellow: rgba(255, 209, 2, 0.5);
+    --button-black: #010002;
+    --button-yellow: #ffd102;
+    --red: #f34e4e;
+    --linear-gradient: linear-gradient(74.49deg, #F840D0 -67.13%, #53DDFF 46.94%, #53FA9C 184.38%);
+    --text-color: #333;
+    --primary-color: #4A69FF;
+    --border-radius: 15px;
+    --transition: all 0.3s ease;
+    --box-shadow: 0px 10px 60px 0px rgba(0, 0, 0, 0.1);
+    --sidebar-width: 320px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /*border: 1px solid grey;  ไว้ดูขนาดของทุกอย่าง */
+}
+
+body {
+    font-family: 'Manrope', 'Mali', 'Itim', sans-serif;
+    color: #333;
+    background-color: var(--bg-main);
+
+    /* รวม Flicker Fix มาไว้ในนี้เลย */
+    opacity: 0;
+    transition: opacity 0.1s ease-in;
+}
+
+/* (และลบ body ที่บรรทัด 192 ทิ้งไป) */
+
+/* ส่วน .loaded นี้ยังอยู่เหมือนเดิม */
+body.loaded {
+    opacity: 1;
+}
+.container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    background-color: var(--bg-main);
+}
+
+/* --- Breadcrumb Header Styles --- */
+
+/* * 1. .header (หรือ #breadcrumb-placeholder)
+ * นี่คือแถบหัวข้อหลัก 
+ */
+.header {
+    display: flex;
+    align-items: center; /* จัดให้ "ALL PET > Edit Pet" อยู่ในแถวเดียวกัน */
+    gap: 10px; /* ระยะห่างระหว่าง "ALL PET", ">", "Edit Pet" */
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ddd; /* เส้นคั่นข้างล่าง */
+}
+
+/* * 2. .breadcrumb-link
+ * ทำให้ "ALL PET" เป็นลิงก์ที่คลิกได้
+ */
+a.breadcrumb-link {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333; /* สีเทาเข้ม */
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a.breadcrumb-link:hover {
+    color: #007bff; /* สีฟ้าตอนชี้ */
+}
+
+/* * 3. .breadcrumb-separator
+ * ตัวคั่น (เครื่องหมาย >)
+ */
+.breadcrumb-separator {
+    font-size: 18px;
+    color: #6c757d; /* สีเทารอง */
+    font-weight: 600;
+}
+
+/* * 4. .breadcrumb-current
+ * หัวข้อของหน้าปัจจุบัน (เช่น "Add Pet", "Edit Pet", "Dashboard")
+ */
+h2.breadcrumb-current {
+    font-size: 24px;
+    font-weight: 400; /* ตัวจางกว่าลิงก์ (ตามดีไซน์) */
+    color: #333;
+    margin: 0; /* ล้าง margin ที่ h2 อาจจะมีมาเอง */
+    display: inline;
+}
+
+/*--- Sidebar --- */
+.sidebar {
+    position: fixed;   /* ตรึงกับ viewport */
+    top: 0;
+    left: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    padding: 50px 0;
+    white-space: nowrap;  /* hug content */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-light);
+    z-index: 1000;  /* อยู่เหนือ main */
+}
+
+/* logo */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: max-content;
+}
+
+.logo-icon {
+    width: 50px;
+    height: 50px;
+    background: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-text h2 {
+    font-size: 16px;
+    color: #333;
+    display: block;
+}
+
+/* menu */
+.nav-menu {
+    width: 100%;
+    height: 700px;
+    padding: 50px 0;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 60px;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: var(--bg-light);
+    border-left: 4px solid transparent;
+}
+
+/* menu icon */
+.nav-item img {
+    width: 20px;
+    height: 20px;
+}
+
+.nav-item:hover {
+    border-left-color: #5cd6d6;
+}
+
+.nav-item.active {
+    border-left-color: #53DDFF;
+}
+
+.nav-item.active span {
+    font-weight: 600;
+    background: var(--linear-gradient);
+    -webkit-background-clip: text;
+    /* 2. ตัด Background ให้แสดงเฉพาะส่วนที่เป็นข้อความ */
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* 3. ทำให้สีของข้อความเป็นแบบโปร่งใส (Transparent) */
+    color: transparent;
+    /* สำหรับเบราว์เซอร์เก่าบางตัว */
+}
+
+/* -------------------- สถานะเริ่มต้น: ไม่ Active (สีดำ) -------------------- */
+
+.nav-item img {
+    /* ซ่อนรูป Gradient โดยค่าเริ่มต้น */
+    display: none;
+}
+
+.nav-item img:first-child {
+    /* แสดงรูปภาพปกติ (สีดำ) */
+    display: block;
+}
+
+/* -------------------- สถานะ Active (Gradient) -------------------- */
+
+.nav-item.active img {
+    /* เมื่อ Active ให้ซ่อนรูปภาพปกติ (สีดำ) */
+    display: none;
+}
+
+.nav-item.active img.icon-active {
+    /* เมื่อ Active ให้แสดงรูปภาพ Gradient */
+    display: block;
+}
+
+.mini-nav-item {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-item span{
+    display: block;
+}
+
+
+.logout {
+    margin-top: auto;
+    width: 100%;
+}
+
+/*ส่วนของ main สำหรับทำงานคู่กับ sidebar*/
+/* Main จะถูกดันไปทางขวาโดยอัตโนมัติ */
+/* main ดันขวาให้เหลือพื้นที่ sidebar */
+main {
+    margin-left: var(--sidebar-width);
+    flex: 1;
+    padding: 50px 2%;
+    height: fit-content;
+}
+
+@media (max-width: 1024px) {
+    :root {
+        --sidebar-width: 240px; /* hug content */
+    }
+
+    .sidebar {
+        width: var(--sidebar-width);
+    }
+
+    main {
+        margin-left: var(--sidebar-width);
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --sidebar-width: 64px; /* hug content */
+    }
+    .nav-item span,
+    .logo-text {
+        display: none;
+    }
+
+    .nav-item {
+        padding: 15px 20px;
+    }
+}
+
+/* ==================== Logout Popup Styles ==================== */
+
+/* Overlay (พื้นหลังจางๆ) */
+.popup-overlay {
+    display: none; /* ซ่อนไว้ก่อน */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+
+/* แสดง popup เมื่อมี class 'show' */
+.popup-overlay.show {
+    display: flex;
+}
+
+/* กล่อง popup */
+.popup-content {
+    background: white;
+    border-radius: 20px;
+    padding: 40px 50px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    animation: popupSlideIn 0.3s ease;
+}
+
+@keyframes popupSlideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Warning Icon (อีโมจิ) */
+.popup-icon {
+    font-size: 100px;
+    margin-bottom: 20px;
+    line-height: 1;
+}
+
+.lsicon--circle-warning-outline {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23ffd102' stroke-linejoin='round' d='M8 3v7m6.5-2a6.5 6.5 0 1 1-13 0a6.5 6.5 0 0 1 13 0ZM8 11.75h.005v.005H8zm.25 0a.25.25 0 1 1-.5 0a.25.25 0 0 1 .5 0Z' stroke-width='1'/%3E%3C/svg%3E");
+}
+
+/* หัวข้อ */
+.popup-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+/* ข้อความ */
+.popup-message {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+/* กลุ่มปุ่ม */
+.popup-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+/* ปุ่มทั่วไป */
+.popup-btn {
+    padding: 12px 35px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* ปุ่ม Cancel */
+.btn-cancel {
+    background: #e8e8e8;
+    color: #333;
+}
+
+.btn-cancel:hover {
+    background: #d0d0d0;
+}
+
+/* ปุ่ม Yes */
+.btn-yes {
+    background: #ff5252;
+    color: white;
+}
+
+.btn-yes:hover {
+    background: #e63946;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .popup-content {
+        padding: 30px 25px;
+        max-width: 320px;
+    }
+    
+    .popup-icon {
+        font-size: 60px;
+    }
+    
+    .popup-title {
+        font-size: 20px;
+    }
+    
+    .popup-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .popup-btn {
+        width: 100%;
+    }
+}
