@@ -2,7 +2,7 @@
 IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = N'Petadopt')
 BEGIN
     PRINT 'Creating database [Petadopt]...';
-    CREATE DATABASE [Petadopt];
+    CREATE DATABASE [petadopt];
 END
 ELSE
 BEGIN
